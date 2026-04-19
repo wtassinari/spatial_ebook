@@ -247,35 +247,4 @@ blockquote {
   }
 }
 
-/* ============================================================
-   DESTAQUE: Search Box e Navegação
-   ============================================================ */
 
-/* Search simples com destaque */
-.sidebar-search {
-  background-color: #e8f8f5 !important;
-  border-left: 4px solid #18bc9c !important;
-  padding: 12px !important;
-  border-radius: 4px !important;
-  margin: 1.5em 0 !important;
-}
-
-/* Navigation simples */
-.nav-page-navigation {
-  margin-top: 2em !important;
-  padding: 1.5em 0 !important;
-  border-top: 2px solid #18bc9c !important;
-  border-bottom: 2px solid #18bc9c !important;
-  display: flex !important;
-  justify-content: space-between !important;
-}
-
-.nav-page-navigation a {
-  color: #18bc9c !important;
-  font-weight: 600 !important;
-  text-decoration: none !important;
-}
-
-.nav-page-navigation a:hover {
-  color: #0d8a71 !important;
-}
