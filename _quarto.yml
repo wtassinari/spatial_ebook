@@ -13,7 +13,7 @@ book:
   date-format: "YYYY"
   cover-image: "figuras/capa_ebook.png"
   favicon: "figuras/capa_ebook.png"
-  site-url: "https://mkram01.github.io/EPI563-SpatialEPI/"
+  site-url: "https://wtassinari.github.io/spatial_ebook/"
   description: |
     Material do curso de Estatística Espacial: Métodos e Aplicações em Epidemiologia.
     Abrange dados de área, padrões pontuais e geoestatística com aplicações em R.
@@ -50,7 +50,7 @@ book:
       Construído com [Quarto](https://quarto.org/)
 
   search: true
-  repo-url: "https://github.com/mkram01/EPI563-SpatialEPI"
+  repo-url: "https://wtassinari.github.io/spatial_ebook/"
   repo-actions: [edit, issue]
   downloads: [pdf, epub]
   sharing: [twitter, facebook, linkedin]
@@ -89,6 +89,8 @@ format:
       sidebar-width: 280px
       body-width: 900px
       margin-width: 200px
+pdf:
+    prefer-html: true    # ← ADICIONE ESTA LINHA
 
 execute:
   echo: true
