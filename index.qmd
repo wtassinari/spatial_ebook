@@ -28,6 +28,7 @@ O material está organizado em capítulos segundo a **tipologia dos dados espaci
 | **4. Padrões Pontuais** | Teoria + Aplicações (Queimadas, John Snow) |
 | **5. Geoestatística** | Teoria + Aplicação (Pluviosidade no Rio de Janeiro) |
 | **6. Trabalho Final** | Roteiro e instruções para o trabalho avaliativo |
+| **7. Referências Bibliográficas** | Referências Bibliográficas |
 
 ## Dados do Curso
 

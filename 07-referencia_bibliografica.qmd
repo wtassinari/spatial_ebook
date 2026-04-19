@@ -1,0 +1,21 @@
+# Referências Bibliográficas
+
+A seguir, apresentamos uma seleção de referências fundamentais para o aprofundamento nos temas abordados neste curso.
+
+- **Druck, S.; Carvalho, M.S.; Câmara, G.; Monteiro, A.V.M.** (eds). [Análise Espacial de Dados Geográficos](http://www.dpi.inpe.br/gilberto/livro/analise/). Brasília: EMBRAPA, 2004.
+
+- **Bailey, T.C.; Gatrell, A.C.** *Interactive Spatial Data Analysis*. Routledge, 1995.
+
+- **Waller, L.A.; Gotway, C.A.** *Applied Spatial Statistics for Public Health Data*. Wiley-Interscience, 2004.
+
+- **Bivand, R.S.; Pebesma, E.; Gomez-Rubio, V.** *Applied Spatial Data Analysis with R*. Springer, 2ª ed., 2013.
+
+- **Lovelace, R.; Nowosad, J.; Muenchow, J.** [Geocomputation with R](https://geocompr.robinlovelace.net/), 2021.
+
+- **Solymosi, R.; Medina, J.** [Crime Mapping in R](https://maczokni.github.io/crime_mapping_textbook/). University of Manchester.
+
+- **Hijmans, R.J.** [Spatial Data Science with R](https://rspatial.org/raster/index.html).
+
+- **Comber, L.** [GeoComputation and Spatial Analysis practicals](https://bookdown.org/lexcomber/GEOG3195/).
+
+

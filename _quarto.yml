@@ -30,6 +30,7 @@ book:
         - 04-padroes_pontuais.qmd
         - 05-geoestatistica.qmd
     - 06-trabalho_final.qmd
+    - 07-referencia_bibliografica.qmd
 
   navbar:
     background: "#2c3e50"
