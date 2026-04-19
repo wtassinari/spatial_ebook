@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Material do curso de Estatística Espacial: Métodos e Aplicações em Epidemiologia. Abrange dados de área, padrões pontuais e geoestatística com aplicações em R.">
+
+<title>6&nbsp; Trabalho Final – Estatística Espacial</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./05-geoestatistica.html" rel="prev">
+<link href="./figuras/capa_ebook_v2.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ae0b5334a1ec0bf99af3d0c304a697d2.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-ae0b5334a1ec0bf99af3d0c304a697d2.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ae0b5334a1ec0bf99af3d0c304a697d2.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c1b5b7b3f24d620334eceabad0444597.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-6cf0ad18cb0d5146c3e756227100402a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-c1b5b7b3f24d620334eceabad0444597.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Estatística Espacial</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-wide tools-end">
+    <a href="https://wtassinari.github.io/spatial_ebook/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-git"></i></a>
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="./Estatística-Espacial.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="./Estatística-Espacial.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
+</div>
+          <div id="quarto-search" class="" title="Procurar"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-trabalho_final.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Trabalho Final</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bem-vindo</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Fundamentos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-introducao.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução à Estatística Espacial</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-tipos_dados.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Tipologia dos Dados Espaciais</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Análise por Tipo de Dado</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-dados_area.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Dados de Área</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-padroes_pontuais.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dados de Padrões Pontuais</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-geoestatistica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dados Geoestatísticos</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-trabalho_final.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Trabalho Final</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Neste Capítulo</h2>
+   
+  <ul>
+  <li><a href="#enunciado" id="toc-enunciado" class="nav-link active" data-scroll-target="#enunciado"><span class="header-section-number">6.1</span> 📌 Enunciado</a></li>
+  <li><a href="#estrutura-do-trabalho" id="toc-estrutura-do-trabalho" class="nav-link" data-scroll-target="#estrutura-do-trabalho"><span class="header-section-number">6.2</span> 🗂️ Estrutura do Trabalho</a>
+  <ul class="collapse">
+  <li><a href="#seleção-dos-dados" id="toc-seleção-dos-dados" class="nav-link" data-scroll-target="#seleção-dos-dados"><span class="header-section-number">6.2.1</span> 1. Seleção dos Dados</a></li>
+  <li><a href="#análises-estatísticas-e-espaciais" id="toc-análises-estatísticas-e-espaciais" class="nav-link" data-scroll-target="#análises-estatísticas-e-espaciais"><span class="header-section-number">6.2.2</span> 2. Análises Estatísticas e Espaciais</a></li>
+  <li><a href="#conclusões-e-discussões" id="toc-conclusões-e-discussões" class="nav-link" data-scroll-target="#conclusões-e-discussões"><span class="header-section-number">6.2.3</span> 3. Conclusões e Discussões</a></li>
+  </ul></li>
+  <li><a href="#entrega" id="toc-entrega" class="nav-link" data-scroll-target="#entrega"><span class="header-section-number">6.3</span> 📎 Entrega</a></li>
+  <li><a href="#critérios-de-avaliação" id="toc-critérios-de-avaliação" class="nav-link" data-scroll-target="#critérios-de-avaliação"><span class="header-section-number">6.4</span> ✅ Critérios de Avaliação</a></li>
+  <li><a href="#referências-recomendadas" id="toc-referências-recomendadas" class="nav-link" data-scroll-target="#referências-recomendadas"><span class="header-section-number">6.5</span> 📚 Referências Recomendadas</a></li>
+  <li><a href="#pacotes-r-necessários" id="toc-pacotes-r-necessários" class="nav-link" data-scroll-target="#pacotes-r-necessários"><span class="header-section-number">6.6</span> 🔧 Pacotes R Necessários</a></li>
+  <li><a href="#dicas-importantes" id="toc-dicas-importantes" class="nav-link" data-scroll-target="#dicas-importantes"><span class="header-section-number">6.7</span> 💡 Dicas Importantes</a></li>
+  <li><a href="#dúvidas-e-suporte" id="toc-dúvidas-e-suporte" class="nav-link" data-scroll-target="#dúvidas-e-suporte"><span class="header-section-number">6.8</span> 📬 Dúvidas e Suporte</a></li>
+  <li><a href="#referências-bibliográficas" id="toc-referências-bibliográficas" class="nav-link" data-scroll-target="#referências-bibliográficas">Referências Bibliográficas</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://wtassinari.github.io/spatial_ebook/edit/main/06-trabalho_final.qmd" class="toc-action"><i class="bi bi-git"></i>Editar essa página</a></li><li><a href="https://wtassinari.github.io/spatial_ebook/issues/new" class="toc-action"><i class="bi empty"></i>Criar uma issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Trabalho Final</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Informações Importantes
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Formato de entrega:</strong> <code>.qmd</code> ou <code>.Rmd</code> com código reprodutível</li>
+<li><strong>Prazo:</strong> 22/06/2025 até 00:00</li>
+<li><strong>Envio:</strong> <a href="mailto:tassinari@ufrrj.br">tassinari@ufrrj.br</a></li>
+<li><strong>Modalidade:</strong> Individual</li>
+</ul>
+</div>
+</div>
+<section id="enunciado" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="enunciado"><span class="header-section-number">6.1</span> 📌 Enunciado</h2>
+<p>Este trabalho tem por objetivo aplicar os conhecimentos adquiridos ao longo do curso de <strong>Estatística Espacial</strong> utilizando dados geográficos de <strong>área</strong> (Análise Espacial em Dados de Área).</p>
+<p>Os alunos deverão trabalhar <strong>individualmente</strong> e a entrega será feita em formato <strong>Quarto (.qmd)</strong> ou <strong>RMarkdown (.Rmd)</strong> ou <strong>Word (.docx)</strong> até o dia <strong>21/06 às 00:00</strong>.</p>
+<hr>
+</section>
+<section id="estrutura-do-trabalho" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="estrutura-do-trabalho"><span class="header-section-number">6.2</span> 🗂️ Estrutura do Trabalho</h2>
+<section id="seleção-dos-dados" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="seleção-dos-dados"><span class="header-section-number">6.2.1</span> 1. Seleção dos Dados</h3>
+<p>O aluno deverá:</p>
+<ul>
+<li><p>Utilizar a função <code>geobr::read_municipality()</code> para baixar a malha do estatdo de Tocantins dividida por municípios;</p></li>
+<li><p>As variáveis doa tabela que será utilizada para o trabalho é <a href="dados/trabalho_final/dados_tocantins_aeda.csv"><code>dados_tocantins_aeda.csv</code></a> e <a href="dados/trabalho_final/dados_tocantins_aeda.xlsx"><code>dados_tocantins_aeda.xlsx</code></a> são:</p></li>
+</ul>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Coluna</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>codigo</code></td>
+<td>Código IBGE do município</td>
+</tr>
+<tr class="even">
+<td><code>municipio</code></td>
+<td>Nome oficial do município</td>
+</tr>
+<tr class="odd">
+<td><code>tmi</code></td>
+<td>Taxa de Mortalidade Infantil</td>
+</tr>
+<tr class="even">
+<td><code>idhm</code></td>
+<td>IDH Municipal</td>
+</tr>
+<tr class="odd">
+<td><code>renda</code></td>
+<td>Renda per capita</td>
+</tr>
+<tr class="even">
+<td><code>densidade</code></td>
+<td>Densidade demográfica</td>
+</tr>
+<tr class="odd">
+<td><code>populacao</code></td>
+<td>População</td>
+</tr>
+<tr class="even">
+<td><code>escolaridade</code></td>
+<td>Escolaridade média</td>
+</tr>
+<tr class="odd">
+<td><code>temperatura</code></td>
+<td>Temperatura média</td>
+</tr>
+<tr class="even">
+<td><code>esperanca_vida</code></td>
+<td>Esperança de vida</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>A variável principal (Resposta/Dependente) será a <code>tmi</code>.</li>
+</ul>
+</section>
+<section id="análises-estatísticas-e-espaciais" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="análises-estatísticas-e-espaciais"><span class="header-section-number">6.2.2</span> 2. Análises Estatísticas e Espaciais</h3>
+<p>O trabalho deverá conter as seguintes etapas:</p>
+<section id="análise-descritiva-espacial-aede" class="level4">
+<h4 class="anchored" data-anchor-id="análise-descritiva-espacial-aede">📊 <strong>Análise Descritiva Espacial (AEDE)</strong></h4>
+<ul>
+<li>Carregamento e integração dos dados com a malha espacial;</li>
+<li>Estatísticas descritivas da variável resposta (média, mediana, desvio padrão, quartis);</li>
+<li><strong>Mapas coropléticos</strong> mostrando a distribuição espacial da variável resposta;</li>
+<li>Mapas das variáveis explicativas mais importantes;</li>
+<li>Histogramas, boxplots e tabelas resumo.</li>
+</ul>
+</section>
+<section id="medidas-de-autocorrelação-espacial" class="level4">
+<h4 class="anchored" data-anchor-id="medidas-de-autocorrelação-espacial">📍 <strong>Medidas de Autocorrelação Espacial</strong></h4>
+<ul>
+<li>Construção da <strong>matriz de vizinhança</strong> (contiguidade Rainha ou Torre);</li>
+<li>Cálculo de <strong>pesos espaciais</strong> (<code>nb2listw()</code> com normalização row-standardized);</li>
+<li><strong>Teste de Moran I Global</strong> para avaliar autocorrelação espacial global;</li>
+<li><strong>Índice de Moran I Local (LISA)</strong> para identificar clusters espaciais locais;</li>
+<li>Classificação de clusters: Alto-Alto (hotspots), Baixo-Baixo (coldspots), Alto-Baixo, Baixo-Alto;</li>
+<li><strong>Mapa LISA</strong> mostrando a distribuição espacial dos clusters;</li>
+<li>Discussão dos padrões espaciais encontrados.</li>
+</ul>
+</section>
+<section id="modelagem-espacial" class="level4">
+<h4 class="anchored" data-anchor-id="modelagem-espacial">📈 <strong>Modelagem Espacial</strong></h4>
+<ul>
+<li><strong>Modelo 1: Regressão Linear Ordinária (OLS)</strong>
+<ul>
+<li>Ajuste do modelo com variáveis explicativas;</li>
+<li>Teste de Moran nos resíduos para verificar adequação do modelo.</li>
+</ul></li>
+<li><strong>Modelo 2: Regressão Espacial SAR (Spatial Autoregressive)</strong>
+<ul>
+<li>Incorporação da dependência espacial na variável resposta;</li>
+<li>Interpretação do coeficiente de autocorrelação espacial (ρ).</li>
+</ul></li>
+<li><strong>Modelo 3: Regressão Espacial CAR (Conditional Autoregressive)</strong>
+<ul>
+<li>Incorporação da dependência espacial no termo de erro;</li>
+<li>Interpretação do coeficiente de autocorrelação espacial (λ).</li>
+</ul></li>
+<li><strong>Comparação de Modelos:</strong>
+<ul>
+<li>Cálculo do AIC (Akaike Information Criterion) para cada modelo;</li>
+<li>Identificação do modelo com melhor ajuste;</li>
+<li>Discussão das diferenças entre os modelos.</li>
+</ul></li>
+<li><strong>Análise de Resíduos:</strong>
+<ul>
+<li>Visualização da distribuição dos resíduos (histogramas, Q-Q plots);</li>
+<li>Teste de normalidade (Shapiro-Wilk);</li>
+<li>Verificação de autocorrelação espacial nos resíduos.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="conclusões-e-discussões" class="level3" data-number="6.2.3">
+<h3 data-number="6.2.3" class="anchored" data-anchor-id="conclusões-e-discussões"><span class="header-section-number">6.2.3</span> 3. Conclusões e Discussões</h3>
+<ul>
+<li><strong>Resumo das descobertas:</strong> Principais padrões espaciais identificados;</li>
+<li><strong>Interpretação dos resultados:</strong> O que os testes e modelos revelam sobre a variável de interesse;</li>
+<li><strong>Discussão das limitações:</strong> Limitações dos dados, do modelo escolhido e das análises realizadas;</li>
+<li><strong>Sugestões para estudos futuros:</strong> Como o trabalho poderia ser expandido ou melhorado.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="entrega" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="entrega"><span class="header-section-number">6.3</span> 📎 Entrega</h2>
+<ul>
+<li><strong>Formato:</strong> <code>.qmd</code> ou <code>.Rmd</code> com código reprodutível;</li>
+<li><strong>Prazo final:</strong> <strong>21/06/2026 até 00:00</strong>;</li>
+<li><strong>Trabalho:</strong> Individual;</li>
+<li><strong>Organização:</strong> Utilize títulos e seções claras com boa organização visual do documento.</li>
+</ul>
+<hr>
+</section>
+<section id="critérios-de-avaliação" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="critérios-de-avaliação"><span class="header-section-number">6.4</span> ✅ Critérios de Avaliação</h2>
+<ul>
+<li><strong>Coerência técnica</strong> na aplicação dos métodos espaciais;</li>
+<li><strong>Clareza</strong> na apresentação dos mapas, tabelas e modelos;</li>
+<li><strong>Interpretação correta</strong> dos resultados;</li>
+<li><strong>Reprodutibilidade</strong> do código;</li>
+<li><strong>Qualidade da redação</strong> e organização do documento.</li>
+</ul>
+<hr>
+</section>
+<section id="referências-recomendadas" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="referências-recomendadas"><span class="header-section-number">6.5</span> 📚 Referências Recomendadas</h2>
+<ul>
+<li>Bailey, T. C., &amp; Gatrell, A. C. (1995). <em>Interactive Spatial Data Analysis</em>. Routledge.</li>
+<li>Cressie, N. (1993). <em>Statistics for Spatial Data</em> (Revised edition). Wiley.</li>
+<li>Waller, L. A., &amp; Gotway, C. A. (2004). <em>Applied Spatial Statistics for Public Health Data</em>. Wiley-Interscience.</li>
+<li>Bivand, R. S., Pebesma, E., &amp; Gómez-Rubio, V. (2013). <em>Applied Spatial Data Analysis with R</em>. Springer.</li>
+<li>Fotheringham, A. S., Brunsdon, C., &amp; Charlton, M. (2002). <em>Geographically Weighted Regression</em>. Wiley.</li>
+</ul>
+<hr>
+</section>
+<section id="pacotes-r-necessários" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="pacotes-r-necessários"><span class="header-section-number">6.6</span> 🔧 Pacotes R Necessários</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pacotes principais</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)              <span class="co"># Manipulação de dados espaciais</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)       <span class="co"># Manipulação e visualização de dados</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geobr)           <span class="co"># Download de mapas do Brasil</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spdep)           <span class="co"># Análise de dependência espacial</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spatialreg)      <span class="co"># Modelos de regressão espacial</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)         <span class="co"># Visualização gráfica</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)       <span class="co"># Combinação de gráficos</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="dicas-importantes" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="dicas-importantes"><span class="header-section-number">6.7</span> 💡 Dicas Importantes</h2>
+<ol type="1">
+<li><p><strong>Reprodutibilidade:</strong> Certifique-se de que todo o código está comentado e que alguém consegue reproduzir sua análise executando o arquivo <code>.qmd</code> ou <code>.rmd</code></p></li>
+<li><p><strong>Visualizações:</strong> Mapas e gráficos são fundamentais. Use cores apropriadas e legendas claras.</p></li>
+<li><p><strong>Interpretações:</strong> Não apenas apresente os resultados, mas <strong>interprete-os</strong>.</p></li>
+<li><p><strong>Limitações:</strong> Seja honesto sobre as limitações do seu trabalho. Nenhuma análise é perfeita.</p></li>
+</ol>
+<hr>
+</section>
+<section id="dúvidas-e-suporte" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="dúvidas-e-suporte"><span class="header-section-number">6.8</span> 📬 Dúvidas e Suporte</h2>
+<p>Em caso de dúvidas ou dificuldade, entre em contato por e-mail: <strong>tassinari@ufrrj.br</strong></p>
+<hr>
+<p><strong>Boa sorte e mãos à obra! 🚀</strong></p>
+<hr>
+</section>
+<section id="referências-bibliográficas" class="level1 unnumbered">
+<h1 class="unnumbered">Referências Bibliográficas</h1>
+<p>A seguir, apresentamos uma seleção de referências fundamentais para o aprofundamento nos temas abordados neste curso.</p>
+<ul>
+<li><p><strong>Druck, S.; Carvalho, M.S.; Câmara, G.; Monteiro, A.V.M.</strong> (eds). <a href="http://www.dpi.inpe.br/gilberto/livro/analise/">Análise Espacial de Dados Geográficos</a>. Brasília: EMBRAPA, 2004.</p></li>
+<li><p><strong>Bailey, T.C.; Gatrell, A.C.</strong> <em>Interactive Spatial Data Analysis</em>. Routledge, 1995.</p></li>
+<li><p><strong>Waller, L.A.; Gotway, C.A.</strong> <em>Applied Spatial Statistics for Public Health Data</em>. Wiley-Interscience, 2004.</p></li>
+<li><p><strong>Bivand, R.S.; Pebesma, E.; Gomez-Rubio, V.</strong> <em>Applied Spatial Data Analysis with R</em>. Springer, 2ª ed., 2013.</p></li>
+<li><p><strong>Lovelace, R.; Nowosad, J.; Muenchow, J.</strong> <a href="https://geocompr.robinlovelace.net/">Geocomputation with R</a>, 2021.</p></li>
+<li><p><strong>Solymosi, R.; Medina, J.</strong> <a href="https://maczokni.github.io/crime_mapping_textbook/">Crime Mapping in R</a>. University of Manchester.</p></li>
+<li><p><strong>Hijmans, R.J.</strong> <a href="https://rspatial.org/raster/index.html">Spatial Data Science with R</a>.</p></li>
+<li><p><strong>Comber, L.</strong> <a href="https://bookdown.org/lexcomber/GEOG3195/">GeoComputation and Spatial Analysis practicals</a>.</p></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/wtassinari\.github\.io\/spatial_ebook\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./05-geoestatistica.html" class="pagination-link" aria-label="Dados Geoestatísticos">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dados Geoestatísticos</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><strong>Estatística Espacial</strong> — Prof.&nbsp;Wagner Tassinari (FIOCRUZ / UFRRJ)</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://wtassinari.github.io/spatial_ebook/edit/main/06-trabalho_final.qmd" class="toc-action"><i class="bi bi-git"></i>Editar essa página</a></li><li><a href="https://wtassinari.github.io/spatial_ebook/issues/new" class="toc-action"><i class="bi empty"></i>Criar uma issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Construído com <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
