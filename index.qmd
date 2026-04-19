@@ -1,17 +1,8 @@
 # Bem-vindo {.unnumbered}
 
-<div style="display: flex; align-items: center; gap: 2em; margin: 2em 0;">
-  
-  <!-- Imagem MAIOR (esquerda) -->
+<div style="text-align:center; margin: 2em 0;">
   <img src="figuras/capa_ebook_v3.png" 
-       alt="Capa do Ebook" 
-       style="max-width: 60%; box-shadow: 0 4px 16px rgba(0,0,0,0.2); border-radius: 6px;">
-  
-  <!-- Imagem MENOR (direita) -->
-  <img src="figuras/capa_ebook_v3.png" 
-       alt="Outra Imagem" 
-       style="max-width: 35%; box-shadow: 0 4px 16px rgba(0,0,0,0.2); border-radius: 6px;">
-  
+       style="max-width:60%; box-shadow: 0 4px 16px rgba(0,0,0,0.2); border-radius:6px;">
 </div>
 
 
