@@ -11,8 +11,8 @@ book:
       email: "tassinari@ufrrj.br"
   date: "2026"
   date-format: "YYYY"
-  cover-image: "figuras/capa_ebook.png"
-  favicon: "figuras/capa_ebook.png"
+  cover-image: "figuras/capa_ebook_v2.png"
+  favicon: "figuras/capa_ebook_v2.png"
   site-url: "https://wtassinari.github.io/spatial_ebook/"
   description: |
     Material do curso de Estatística Espacial: Métodos e Aplicações em Epidemiologia.
