@@ -246,3 +246,78 @@ blockquote {
     font-size: 1.6em;
   }
 }
+
+/* ============================================================
+   DESTAQUE: Search Box e Navegação
+   ============================================================ */
+
+/* Caixa de Search em alto relevo */
+.sidebar-search {
+  background: linear-gradient(135deg, #18bc9c, #0d8a71) !important;
+  border: 2px solid #18bc9c !important;
+  border-radius: 8px !important;
+  padding: 12px !important;
+  box-shadow: 0 4px 12px rgba(24, 188, 156, 0.3) !important;
+  margin: 1.5em 0 !important;
+}
+
+.sidebar-search input {
+  background-color: white !important;
+  border: 1px solid #18bc9c !important;
+  padding: 10px 12px !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+}
+
+.sidebar-search input::placeholder {
+  color: #18bc9c !important;
+  font-style: italic !important;
+}
+
+.sidebar-search input:focus {
+  outline: none !important;
+  border-color: #0d8a71 !important;
+  box-shadow: 0 0 8px rgba(24, 188, 156, 0.5) !important;
+}
+
+/* Setas de navegação em alto relevo */
+.nav-page-navigation {
+  margin-top: 3em !important;
+  padding: 2em !important;
+  background-color: #f8f9fa !important;
+  border: 2px solid #18bc9c !important;
+  border-radius: 8px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+}
+
+.nav-page-navigation a {
+  color: #18bc9c !important;
+  font-weight: 600 !important;
+  font-size: 1.1em !important;
+  padding: 12px 20px !important;
+  border-radius: 6px !important;
+  transition: all 0.3s ease !important;
+  text-decoration: none !important;
+}
+
+.nav-page-navigation a:hover {
+  background-color: #18bc9c !important;
+  color: white !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 4px 8px rgba(24, 188, 156, 0.3) !important;
+}
+
+/* Texto "« Capítulo anterior" */
+.nav-page-navigation a:first-child {
+  border-left: 4px solid #18bc9c !important;
+  padding-left: 16px !important;
+}
+
+/* Texto "Próximo capítulo »" */
+.nav-page-navigation a:last-child {
+  border-right: 4px solid #18bc9c !important;
+  padding-right: 16px !important;
+}
