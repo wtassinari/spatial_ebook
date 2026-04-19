@@ -1,0 +1,42 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Estatística Espacial",
+    "section": "",
+    "text": "Bem-vindo\nEste ebook reúne o material do curso de Estatística Espacial: Uma Breve Introdução, ministrado pelo Prof. Wagner Tassinari na Universidade Federal Rural do Rio de Janeiro (UFRRJ)\n📧 Contato: tassinari@ufrrj.br",
+    "crumbs": [
+      "Bem-vindo"
+    ]
+  },
+  {
+    "objectID": "index.html#sobre-o-curso",
+    "href": "index.html#sobre-o-curso",
+    "title": "Estatística Espacial",
+    "section": "Sobre o Curso",
+    "text": "Sobre o Curso\nO curso apresenta os fundamentos e aplicações da estatística espacial para estudantes de pós-graduação nas mais diversas áreas do conhecimento, com ênfase em epidemiologia e saúde pública. O material abrange desde a introdução conceitual até aplicações práticas com dados reais, utilizando a linguagem R como principal ferramenta computacional.",
+    "crumbs": [
+      "Bem-vindo"
+    ]
+  },
+  {
+    "objectID": "index.html#estrutura-do-ebook",
+    "href": "index.html#estrutura-do-ebook",
+    "title": "Estatística Espacial",
+    "section": "Estrutura do Ebook",
+    "text": "Estrutura do Ebook\nO material está organizado em capítulos segundo a tipologia dos dados espaciais, seguindo a classificação clássica de Cressie (1993):\n\n\n\n\n\n\n\nCapítulo\nConteúdo\n\n\n\n\n1. Introdução\nConceitos fundamentais, ferramentas e bibliotecas R\n\n\n2. Tipologia dos Dados\nVisão geral dos três tipos de dados espaciais\n\n\n3. Dados de Área\nTeoria + Aplicações (Dengue, Hanseníase, Regressão Espacial)\n\n\n4. Padrões Pontuais\nTeoria + Aplicações (Queimadas, John Snow)\n\n\n5. Geoestatística\nTeoria + Aplicação (Pluviosidade no Rio de Janeiro)\n\n\n6. Trabalho Final\nRoteiro e instruções para o trabalho avaliativo",
+    "crumbs": [
+      "Bem-vindo"
+    ]
+  },
+  {
+    "objectID": "index.html#dados-do-curso",
+    "href": "index.html#dados-do-curso",
+    "title": "Estatística Espacial",
+    "section": "Dados do Curso",
+    "text": "Dados do Curso\n📥 Clique aqui para baixar os dados que serão utilizados durante as aulas\n\nBaixe o arquivo Estatistica_Espacial.zip e descomprima;\nClique no arquivo que representa o projeto em R: Estatistica_Espacial.Rproj.\n\n\n\n\n\n\n\n\nPré-requisitos\n\n\n\nPara acompanhar o material, recomenda-se conhecimento básico de R e RStudio, além de noções elementares de estatística descritiva e inferencial.",
+    "crumbs": [
+      "Bem-vindo"
+    ]
+  }
+]
