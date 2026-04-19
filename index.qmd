@@ -1,9 +1,10 @@
 # Bem-vindo {.unnumbered}
 
 <div style="text-align:center; margin: 2em 0;">
-  <img src="figuras/capa_ebook_v2.png" alt="Capa do Ebook Estatística Espacial" 
-       style="max-width:60%; box-shadow: 0 4px 16px rgba(0,0,0,0.2); border-radius:6px;">
+  <img src="figuras/capa_ebook_v3.png" alt="Capa do Ebook Estatística Espacial" 
+       style="max-width:70%; box-shadow: 0 8px 24px rgba(0,0,0,0.15); border-radius:8px;">
 </div>
+
 
 Este ebook reúne o material do curso de **Estatística Espacial: Uma Breve Introdução**, ministrado pelo **Prof. Wagner Tassinari** na **Universidade Federal Rural do Rio de Janeiro (UFRRJ)**
 
