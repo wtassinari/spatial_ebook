@@ -1,0 +1,105 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Estatística Espacial"
+  subtitle: "Introdução aos Conceitos em Estatística Espacial"
+  author:
+    - name: "Prof. Wagner Tassinari"
+      affiliation: "FIOCRUZ / UFRRJ"
+      email: "tassinari@ufrrj.br"
+  date: "2026"
+  date-format: "YYYY"
+  cover-image: "figuras/capa_ebook.png"
+  favicon: "figuras/capa_ebook.png"
+  site-url: "https://mkram01.github.io/EPI563-SpatialEPI/"
+  description: |
+    Material do curso de Estatística Espacial: Métodos e Aplicações em Epidemiologia.
+    Abrange dados de área, padrões pontuais e geoestatística com aplicações em R.
+  
+  chapters:
+    - index.qmd
+    - part: "Fundamentos"
+      chapters:
+        - 01-introducao.qmd
+        - 02-tipos_dados.qmd
+    - part: "Análise por Tipo de Dado"
+      chapters:
+        - 03-dados_area.qmd
+        - 04-padroes_pontuais.qmd
+        - 05-geoestatistica.qmd
+    - 06-trabalho_final.qmd
+
+  navbar:
+    background: "#2c3e50"
+    foreground: "white"
+   # logo: "figuras/logo_ufrrj.png"
+    logo-alt: "Logo UFRRJ"
+
+  sidebar:
+    style: "docked"
+    background: "light"
+    search: true
+    collapse-level: 2
+
+  page-footer:
+    left: |
+      **Estatística Espacial** — Prof. Wagner Tassinari (FIOCRUZ / UFRRJ)
+    right: |
+      Construído com [Quarto](https://quarto.org/)
+
+  search: true
+  repo-url: "https://github.com/mkram01/EPI563-SpatialEPI"
+  repo-actions: [edit, issue]
+  downloads: [pdf, epub]
+  sharing: [twitter, facebook, linkedin]
+
+bibliography: references.bib
+csl: abnt.csl
+
+format:
+  html:
+    theme:
+      light: [flatly, styles.css]
+      dark: [darkly, styles.css]
+    toc: true
+    toc-depth: 3
+    toc-title: "Neste Capítulo"
+    number-sections: true
+    number-depth: 3
+    code-fold: true
+    code-tools: true
+    code-copy: true
+    code-overflow: scroll
+    highlight-style: pygments
+    df-print: paged
+    fig-align: center
+    fig-cap-location: bottom
+    crossref:
+      fig-title: "Figura"
+      tbl-title: "Tabela"
+      eq-title: "Equação"
+      fig-prefix: "Figura"
+      tbl-prefix: "Tabela"
+      eq-prefix: "Equação"
+      sec-prefix: "Seção"
+    lang: pt-BR
+    grid:
+      sidebar-width: 280px
+      body-width: 900px
+      margin-width: 200px
+
+execute:
+  echo: true
+  warning: false
+  message: false
+  cache: true
+  freeze: auto
+
+knitr:
+  opts_chunk:
+    comment: "#>"
+    fig.align: "center"
+    out.width: "90%"
+    cache.lazy: false

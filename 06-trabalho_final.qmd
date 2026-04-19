@@ -1,0 +1,187 @@
+# Trabalho Final
+
+::: {.callout-important}
+## Informações Importantes
+- **Formato de entrega:** `.qmd` ou `.Rmd` com código reprodutível
+- **Prazo:** 22/06/2025 até 00:00
+- **Envio:** [tassinari@ufrrj.br](mailto:tassinari@ufrrj.br)
+- **Modalidade:** Individual
+:::
+
+
+## 📌 Enunciado
+
+Este trabalho tem por objetivo aplicar os conhecimentos adquiridos ao longo do curso de **Estatística Espacial** utilizando dados geográficos de **área** (Análise Espacial em Dados de Área).
+
+Os alunos deverão trabalhar **individualmente** e a entrega será feita em formato **Quarto (.qmd)** ou **RMarkdown (.Rmd)** ou **Word (.docx)** até o dia **21/06 às 00:00**.
+
+---
+
+## 🗂️ Estrutura do Trabalho
+
+### 1. Seleção dos Dados
+
+O aluno deverá:
+
+- Utilizar a função `geobr::read_municipality()` para baixar a malha do estatdo de Tocantins dividida por municípios;
+
+- As variáveis doa tabela que será utilizada para o trabalho é [`dados_tocantins_aeda.csv`](dados/trabalho_final/dados_tocantins_aeda.csv) e [`dados_tocantins_aeda.xlsx`](dados/trabalho_final/dados_tocantins_aeda.xlsx) são:
+
+| Coluna           | Descrição                    |
+| ---------------- | ---------------------------- |
+| `codigo`         | Código IBGE do município     |
+| `municipio`      | Nome oficial do município    |
+| `tmi`            | Taxa de Mortalidade Infantil |
+| `idhm`           | IDH Municipal                |
+| `renda`          | Renda per capita             |
+| `densidade`      | Densidade demográfica        |
+| `populacao`      | População                    |
+| `escolaridade`   | Escolaridade média           |
+| `temperatura`    | Temperatura média            |
+| `esperanca_vida` | Esperança de vida            |
+
+- A variável principal (Resposta/Dependente) será a `tmi`.
+
+
+### 2. Análises Estatísticas e Espaciais
+
+O trabalho deverá conter as seguintes etapas:
+
+#### 📊 **Análise Descritiva Espacial (AEDE)**
+
+- Carregamento e integração dos dados com a malha espacial;
+- Estatísticas descritivas da variável resposta (média, mediana, desvio padrão, quartis);
+- **Mapas coropléticos** mostrando a distribuição espacial da variável resposta;
+- Mapas das variáveis explicativas mais importantes;
+- Histogramas, boxplots e tabelas resumo.
+
+#### 📍 **Medidas de Autocorrelação Espacial**
+
+- Construção da **matriz de vizinhança** (contiguidade Rainha ou Torre);
+- Cálculo de **pesos espaciais** (`nb2listw()` com normalização row-standardized);
+- **Teste de Moran I Global** para avaliar autocorrelação espacial global;
+- **Índice de Moran I Local (LISA)** para identificar clusters espaciais locais;
+- Classificação de clusters: Alto-Alto (hotspots), Baixo-Baixo (coldspots), Alto-Baixo, Baixo-Alto;
+- **Mapa LISA** mostrando a distribuição espacial dos clusters;
+- Discussão dos padrões espaciais encontrados.
+
+#### 📈 **Modelagem Espacial**
+
+- **Modelo 1: Regressão Linear Ordinária (OLS)**
+  - Ajuste do modelo com variáveis explicativas;
+  - Teste de Moran nos resíduos para verificar adequação do modelo.
+
+- **Modelo 2: Regressão Espacial SAR (Spatial Autoregressive)**
+  - Incorporação da dependência espacial na variável resposta;
+  - Interpretação do coeficiente de autocorrelação espacial (ρ).
+
+- **Modelo 3: Regressão Espacial CAR (Conditional Autoregressive)**
+  - Incorporação da dependência espacial no termo de erro;
+  - Interpretação do coeficiente de autocorrelação espacial (λ).
+
+- **Comparação de Modelos:**
+  - Cálculo do AIC (Akaike Information Criterion) para cada modelo;
+  - Identificação do modelo com melhor ajuste;
+  - Discussão das diferenças entre os modelos.
+
+- **Análise de Resíduos:**
+  - Visualização da distribuição dos resíduos (histogramas, Q-Q plots);
+  - Teste de normalidade (Shapiro-Wilk);
+  - Verificação de autocorrelação espacial nos resíduos.
+
+### 3. Conclusões e Discussões
+
+- **Resumo das descobertas:** Principais padrões espaciais identificados;
+- **Interpretação dos resultados:** O que os testes e modelos revelam sobre a variável de interesse;
+- **Discussão das limitações:** Limitações dos dados, do modelo escolhido e das análises realizadas;
+- **Sugestões para estudos futuros:** Como o trabalho poderia ser expandido ou melhorado.
+
+---
+
+## 📎 Entrega
+
+- **Formato:** `.qmd` ou `.Rmd` com código reprodutível;
+- **Prazo final:** **21/06/2026 até 00:00**;
+- **Trabalho:** Individual;
+- **Organização:** Utilize títulos e seções claras com boa organização visual do documento.
+
+---
+
+## ✅ Critérios de Avaliação
+
+- **Coerência técnica** na aplicação dos métodos espaciais;
+- **Clareza** na apresentação dos mapas, tabelas e modelos;
+- **Interpretação correta** dos resultados;
+- **Reprodutibilidade** do código;
+- **Qualidade da redação** e organização do documento.
+
+---
+
+## 📚 Referências Recomendadas
+
+- Bailey, T. C., & Gatrell, A. C. (1995). *Interactive Spatial Data Analysis*. Routledge.
+- Cressie, N. (1993). *Statistics for Spatial Data* (Revised edition). Wiley.
+- Waller, L. A., & Gotway, C. A. (2004). *Applied Spatial Statistics for Public Health Data*. Wiley-Interscience.
+- Bivand, R. S., Pebesma, E., & Gómez-Rubio, V. (2013). *Applied Spatial Data Analysis with R*. Springer.
+- Fotheringham, A. S., Brunsdon, C., & Charlton, M. (2002). *Geographically Weighted Regression*. Wiley.
+
+---
+
+## 🔧 Pacotes R Necessários
+
+```r
+# Pacotes principais
+library(sf)              # Manipulação de dados espaciais
+library(tidyverse)       # Manipulação e visualização de dados
+library(geobr)           # Download de mapas do Brasil
+library(spdep)           # Análise de dependência espacial
+library(spatialreg)      # Modelos de regressão espacial
+library(ggplot2)         # Visualização gráfica
+library(gridExtra)       # Combinação de gráficos
+```
+
+---
+
+## 💡 Dicas Importantes
+
+1. **Reprodutibilidade:** Certifique-se de que todo o código está comentado e que alguém consegue reproduzir sua análise executando o arquivo `.qmd` ou `.rmd`
+
+2. **Visualizações:** Mapas e gráficos são fundamentais. Use cores apropriadas e legendas claras.
+
+3. **Interpretações:** Não apenas apresente os resultados, mas **interprete-os**. 
+
+4. **Limitações:** Seja honesto sobre as limitações do seu trabalho. Nenhuma análise é perfeita.
+
+---
+
+## 📬 Dúvidas e Suporte
+
+Em caso de dúvidas ou dificuldade, entre em contato por e-mail: **tassinari@ufrrj.br**
+
+---
+
+**Boa sorte e mãos à obra! 🚀**
+
+
+---
+
+# Referências Bibliográficas {.unnumbered}
+
+A seguir, apresentamos uma seleção de referências fundamentais para o aprofundamento nos temas abordados neste curso.
+
+- **Druck, S.; Carvalho, M.S.; Câmara, G.; Monteiro, A.V.M.** (eds). [Análise Espacial de Dados Geográficos](http://www.dpi.inpe.br/gilberto/livro/analise/). Brasília: EMBRAPA, 2004.
+
+- **Bailey, T.C.; Gatrell, A.C.** *Interactive Spatial Data Analysis*. Routledge, 1995.
+
+- **Waller, L.A.; Gotway, C.A.** *Applied Spatial Statistics for Public Health Data*. Wiley-Interscience, 2004.
+
+- **Bivand, R.S.; Pebesma, E.; Gomez-Rubio, V.** *Applied Spatial Data Analysis with R*. Springer, 2ª ed., 2013.
+
+- **Lovelace, R.; Nowosad, J.; Muenchow, J.** [Geocomputation with R](https://geocompr.robinlovelace.net/), 2021.
+
+- **Solymosi, R.; Medina, J.** [Crime Mapping in R](https://maczokni.github.io/crime_mapping_textbook/). University of Manchester.
+
+- **Hijmans, R.J.** [Spatial Data Science with R](https://rspatial.org/raster/index.html).
+
+- **Comber, L.** [GeoComputation and Spatial Analysis practicals](https://bookdown.org/lexcomber/GEOG3195/).
+

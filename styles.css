@@ -1,0 +1,248 @@
+/* ============================================================
+   Estatística Espacial — Estilos do Ebook Quarto
+   Prof. Wagner Tassinari | FIOCRUZ / UFRRJ | 2026
+   ============================================================ */
+
+/*-- scss:defaults --*/
+
+/* Fontes */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+/* Variáveis de cor */
+:root {
+  --primary-color: #2c3e50;
+  --accent-color: #18bc9c;
+  --accent-dark: #0d8a71;
+  --warning-color: #e74c3c;
+  --info-color: #3498db;
+  --light-bg: #f8f9fa;
+  --border-color: #dee2e6;
+  --text-muted: #6c757d;
+  --code-bg: #f4f4f4;
+}
+
+/*-- scss:rules --*/
+
+/* Corpo principal */
+body {
+  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #333;
+}
+
+/* Títulos */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-top: 1.8em;
+  margin-bottom: 0.6em;
+}
+
+h1 {
+  font-size: 2em;
+  border-bottom: 3px solid var(--accent-color);
+  padding-bottom: 12px;
+  margin-bottom: 1em;
+}
+
+h2 {
+  font-size: 1.5em;
+  border-left: 4px solid var(--accent-color);
+  padding-left: 12px;
+}
+
+h3 {
+  font-size: 1.2em;
+  color: #34495e;
+}
+
+/* Links */
+a {
+  color: var(--accent-dark);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+
+/* Tabelas */
+table {
+  width: 100%;
+  margin: 1.5rem 0;
+  border-collapse: collapse;
+  font-size: 0.95em;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+table th {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+}
+
+table td {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+table tr:nth-child(even) {
+  background-color: var(--light-bg);
+}
+
+table tr:hover {
+  background-color: #e8f5f2;
+}
+
+/* Código */
+code {
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 0.88em;
+  background-color: var(--code-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #c0392b;
+}
+
+pre code {
+  color: inherit;
+  background: none;
+  padding: 0;
+}
+
+/* Callouts customizados */
+.callout {
+  border-radius: 6px;
+  margin: 1.5em 0;
+}
+
+/* Box de dica customizado */
+.box-dica {
+  background-color: #e8f8f5;
+  border-left: 4px solid var(--accent-color);
+  padding: 15px 20px;
+  margin: 1.5em 0;
+  border-radius: 0 6px 6px 0;
+}
+
+.box-dica2 {
+  background-color: #eaf2fb;
+  border-left: 4px solid var(--info-color);
+  padding: 15px 20px;
+  margin: 1.5em 0;
+  border-radius: 0 6px 6px 0;
+}
+
+.box-dica3 {
+  background-color: #fef9e7;
+  border-left: 4px solid #f39c12;
+  padding: 15px 20px;
+  margin: 1.5em 0;
+  border-radius: 0 6px 6px 0;
+}
+
+/* Figuras */
+figure {
+  text-align: center;
+  margin: 2em auto;
+}
+
+figure img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+
+figcaption {
+  font-size: 0.85em;
+  color: var(--text-muted);
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* Capa do livro */
+.book-cover {
+  text-align: center;
+  margin: 2em 0;
+}
+
+.book-cover img {
+  max-width: 55%;
+  height: auto;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  border-radius: 6px;
+}
+
+/* Equações */
+.math {
+  overflow-x: auto;
+}
+
+/* Sidebar */
+.sidebar-navigation {
+  font-size: 0.92em;
+}
+
+/* Navbar */
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.1em;
+}
+
+/* Rodapé */
+.nav-footer {
+  font-size: 0.85em;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-color);
+  padding-top: 1em;
+}
+
+/* Destaque para termos importantes */
+strong {
+  color: var(--primary-color);
+}
+
+/* Bloco de citação */
+blockquote {
+  border-left: 4px solid var(--accent-color);
+  padding: 10px 20px;
+  background-color: var(--light-bg);
+  margin: 1.5em 0;
+  border-radius: 0 4px 4px 0;
+  font-style: italic;
+}
+
+/* Badges de aplicação */
+.aplicacao-badge {
+  display: inline-block;
+  background-color: var(--accent-color);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8em;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+  
+  .book-cover img {
+    max-width: 85%;
+  }
+  
+  h1 {
+    font-size: 1.6em;
+  }
+}

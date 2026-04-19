@@ -1,0 +1,306 @@
+# Dados de Padrões Pontuais
+
+::: {.callout-tip}
+## Objetivos do Capítulo
+Ao final deste capítulo, o estudante deverá ser capaz de:
+
+- Compreender a estrutura dos dados de padrões pontuais;
+- Testar hipóteses sobre a aleatoriedade espacial completa (CSR);
+- Aplicar estimativas de densidade de Kernel (mapas de calor);
+- Realizar análises de padrões pontuais com dados reais de saúde pública.
+:::
+
+Os dados de padrões pontuais referem-se a eventos que ocorrem em localizações discretas e aleatórias no espaço, como casos de doenças, crimes, acidentes ou ocorrências ambientais. O objetivo principal é investigar se esses eventos seguem um padrão aleatório, regular ou agrupado (*clustered*).
+
+## **Aplicação V:** Análise dos pontos de ocorrência de focos de queimadas no estado do Rio de Janeiro/Brasil em dezembro de 2025
+
+#### Lendo os dados
+
+```{r, echo=T, out.width='90%'}
+library(readxl)
+  
+# Carregar o arquivo
+dados_pontos <- read_excel("dados/queimadas/queimadas_pontos.xlsx")
+```
+  
+```{r, echo=T, out.width='90%'}
+library(sf)
+pontos_sf <- st_as_sf(dados_pontos, 
+                      coords = c("longitude", "latitude"),
+                       crs = 4326)
+```
+
+#### Baixando o mapa
+
+```{r, echo=T, out.width='90%', message=FALSE, warning=FALSE, comments=NA}
+library(geobr)
+
+# Baixar polígono do RJ (código IBGE = 33)
+rj <- read_state(code_state = 33, year = 2020)
+```
+  
+
+```{r, echo=T, out.width='90%', message=FALSE, warning=FALSE, comments=NA}
+plot(rj, title = "Contorno no estato do Rio de Janeiro")
+```
+  
+  
+```{r, echo=T, out.width='90%'}
+library(ggplot2)
+# Plotar
+ggplot() +
+   geom_sf(data = rj, fill = "lightgreen", color = "black") +
+   geom_sf(data = pontos_sf, color = "red", size = 1.0, alpha = 0.7) +
+   labs(title = "Focos de Queimadas - Rio de Janeiro",
+       caption = "Fonte: INPE") +
+  theme_minimal()
+```
+  
+#### Possíveis distribuições dos pontos
+  
+```{r echo=F, fig.align="center", out.width= "65%", fig.show='hold'}
+knitr::include_graphics('figuras/Cluster2.png')
+```
+  
+#### Investigando os padrões pontuais
+  
+  
+```{r echo=F, fig.align="center", message=FALSE, warning=FALSE, comments=NA, out.width="70%", comment=NA}
+knitr::include_graphics('figuras/pontos1.jpg')
+```
+  
+  
+#### Estimativas de Kernel (ou Mapas de Calor)
+  
+As estimativas de densidade kernel são uma técnica amplamente utilizada para **representar visualmente a concentração espacial de eventos pontuais**, como casos de doenças, crimes ou ocorrências de focos de calor. Essa abordagem transforma um conjunto de pontos em uma superfície contínua de intensidade, evidenciando áreas com maior ou menor densidade (nesse caso a frequencia) de eventos.
+  
+```{r echo=FALSE, fig.align="center", out.width="60%", fig.cap="Localização da ocorrência de casos de dengue em Belo Horizonte/MG"}
+  knitr::include_graphics('figuras/dengueBH.png')
+```
+  
+A técnica foi aplicada para identificar áreas de maior risco de dengue em Belo Horizonte/MG. O mapa resultante revela zonas de alta concentração de casos, o que pode subsidiar ações de controle vetorial e políticas públicas de saúde mais direcionadas.
+  
+O objetivo principal é estimar a função de intensidade espacial $\hat{\lambda}_{\tau}(u)$, que descreve a probabilidade de ocorrência de eventos em diferentes locais da região de estudo.
+  
+  
+```{r echo=F, fig.align="center", out.width= "45%", fig.show='hold'}
+knitr::include_graphics('figuras/kernel2.png')
+```
+  
+* Estimador de intensidade de distribuição de pontos: 
+    
+$$\hat{\lambda}_{\tau}(u) = \dfrac{1}{\tau^2}\sum k(\dfrac{d(u_i , u)}{\tau}) \text{   ,   } d(u_i , u) \leq \tau$$
+    
+Sabendo que:
+    
+- $\hat{\lambda}_{\tau}(u)$: estimativa da intensidade do processo pontual no ponto $u$.
+  
+- $u_i$: coordenadas dos pontos observados no plano (ex.: localização dos eventos).
+  
+- $\tau$: parâmetro de suavização (largura de banda), define o raio de influência dos pontos ao redor de $u$.
+  
+- $d(u_i, u)$: distância entre o ponto observado $u_i$ e o ponto de avaliação $u$. Normalmente, a distância euclidiana.
+  
+- Condição $d(u_i, u) \leq \tau$: garante que apenas os pontos dentro da vizinhança (de raio $\tau$) contribuam para a estimativa.
+  
+- $k(\cdot)$: função kernel que define o peso atribuído a cada ponto com base na distância. Exemplos:
+    
+i) **Kernel gaussiano**: atribui maior peso aos pontos mais próximos.
+ii) **Kernel uniforme**: todos os pontos dentro do raio recebem o mesmo peso.
+iii) **Kernel Epanechnikov**: pesos decrescem com a distância, chegando a zero na borda.
+
+
+#### Como funciona:
+
+- Para cada ponto no espaço, é aplicado um funil de suavização (kernel) que distribui "peso" ao redor do ponto, atribuindo maior peso às áreas próximas e menor peso conforme a distância aumenta.
+
+- Ou seja, esse peso decresce com o aumento da distância a partir do centro, de acordo com uma função $k(\cdot)$, e é controlado por um parâmetro chamado largura de banda ($\tau$).
+
+- O resultado é uma superfície contínua de densidade, onde regiões com cores mais quentes (vermelho, laranja) indicam maior concentração de eventos.
+
+::: box-dica1
+
+🌧️ **Analogia intuitiva:**
+  
+  O kernel atua como um *limpador de para-brisa*, pesando mais os eventos próximos e menos os eventos muito distantes. A escolha do tamanho do limpador ($\tau$) e do tipo de movimento (forma da função kernel) define o quanto você vê ao redor do ponto onde está focando.
+:::
+  
+#### **Localização da ocorrência de roubo em Belo Horizonte/MG**
+  
+```{r echo=F, fig.align="center", out.width= "50%", fig.show='hold'}
+knitr::include_graphics('figuras/kernel3.png')
+```
+
+A figura acima mostra como diferentes larguras de banda ($500 m$, $1.500 m$ e $2.500 m$) alteram o grau de suavização:
+  
+A imagem mostra a distribuição espacial dos casos de dengue em Belo Horizonte (MG) em três larguras de banda ($\tau$) diferentes: 500 m, 1500 m e 2500 m. As cores indicam a intensidade da ocorrência, sendo azul/verde áreas com menor concentração e amarelo/vermelho áreas com maior concentração de casos.
+
+No mapa de 500 metros, observam-se muitos pequenos focos, com maior detalhamento local. Essa escala é útil para ações pontuais e operacionais, mas pode apresentar mais variações muito específicas do território. No de 1500 metros, os padrões tornam-se mais contínuos e estáveis, facilitando a identificação de áreas prioritárias em nível regional. Já no de 2500 metros, aparecem apenas grandes zonas de maior concentração, sendo mais adequado para decisões estratégicas em nível municipal.
+
+O importante é notar que a escala de análise influencia a forma como enxergamos o problema. O fenômeno é o mesmo, mas sua interpretação muda conforme a “lente” utilizada, algo fundamental para o planejamento e a tomada de decisão na gestão pública.
+
+
+[*Fonte: Referência científica: Druck, S.; Carvalho, M.S.; Câmara, G.; Monteiro, A.V.M. (eds) "Análise Espacial de Dados Geográficos". Brasília, EMBRAPA, 2004](http://www.dpi.inpe.br/gilberto/livro/analise/cap2-eventos.pdf)
+
+
+## **Aplicação VI:** Estudo de John Snow
+
+- Segue algumas aplicações com os dados do pacote `cholera`, que contêm as localizações das mortes por cólera no famoso estudo de John Snow (Londres, 1854).
+
+```{r, echo=T, out.width='90%'}
+# install.packages("cholera")
+library(cholera)
+
+#  Mortes por cólera
+head(fatalities[,1:3])
+```
+
+```{r, echo=T, out.width='90%'}
+# Dados das Bombas de Água
+head(pumps[,1:4])
+```
+
+
+```{r, echo=T, out.width='90%'}
+# Visualizar mapa 
+snowMap(add.cases = TRUE, add.pumps = TRUE, case.col = "darkred")
+
+```
+
+```{r, echo=T, out.width='90%'}
+# Instalar e carregar pacotes necessários
+# install.packages(c("spatstat", "MASS", "sf", "raster"))
+library(spatstat)
+library(MASS)
+library(sf)
+library(raster)
+library(viridis)
+
+# Carregar dados
+data(fatalities)
+data(pumps)
+data(roads)
+```
+
+```{r, echo=T, out.width='90%'}
+# Kernel 2D simples
+kernel_simple <- kde2d(fatalities$x, fatalities$y, 
+                       n = 100,  # Resolução
+                       lims = c(range(fatalities$x), 
+                                range(fatalities$y)))
+
+# Plotar
+par(mfrow = c(1, 2))
+
+# Contorno
+contour(kernel_simple, 
+        main = "Densidade de Kernel - Contorno",
+        xlab = "Coordenada X", 
+        ylab = "Coordenada Y",
+        col = "darkred",
+        lwd = 2)
+points(fatalities$x, fatalities$y, pch = ".", col = "red")
+points(pumps$x, pumps$y, pch = 4, col = "blue", cex = 1.5, lwd = 2)
+
+# Imagem de calor
+image(kernel_simple, 
+      main = "Densidade de Kernel - Heatmap",
+      col = heat.colors(50))
+contour(kernel_simple, add = TRUE, col = "white")
+points(pumps$x, pumps$y, pch = 4, col = "blue", cex = 1.5, lwd = 2)
+```
+
+
+
+```{r, echo=T, out.width='90%'}
+#  Comparação de Diferentes Bandwidths
+# Criar diferentes kernels
+# Calcular cada kernel individualmente
+kernel_02 <- kde2d(fatalities$x, fatalities$y, h = 0.2, n = 100,
+                   lims = c(range(fatalities$x), range(fatalities$y)))
+
+kernel_05 <- kde2d(fatalities$x, fatalities$y, h = 0.5, n = 100,
+                   lims = c(range(fatalities$x), range(fatalities$y)))
+
+kernel_1 <- kde2d(fatalities$x, fatalities$y, h = 1, n = 100,
+                  lims = c(range(fatalities$x), range(fatalities$y)))
+
+kernel_2 <- kde2d(fatalities$x, fatalities$y, h = 2, n = 100,
+                  lims = c(range(fatalities$x), range(fatalities$y)))
+
+
+# --- Plot 1: bandwidths 0.2 e 0.5 ---
+par(mfrow = c(1, 2))
+
+image(kernel_02, main = "Bandwidth = 0.2", col = terrain.colors(50), xlab = "X", ylab = "Y")
+contour(kernel_02, add = TRUE, col = "white", lwd = 0.5)
+points(pumps$x, pumps$y, pch = 4, col = "blue", cex = 1.2, lwd = 1.5)
+mtext(paste("Mortes:", nrow(fatalities)), side = 3, line = 0.3, cex = 0.8)
+
+image(kernel_05, main = "Bandwidth = 0.5", col = terrain.colors(50), xlab = "X", ylab = "Y")
+contour(kernel_05, add = TRUE, col = "white", lwd = 0.5)
+points(pumps$x, pumps$y, pch = 4, col = "blue", cex = 1.2, lwd = 1.5)
+mtext(paste("Mortes:", nrow(fatalities)), side = 3, line = 0.3, cex = 0.8)
+
+
+# --- Plot 2: bandwidths 1 e 2 ---
+par(mfrow = c(1, 2))
+
+image(kernel_1, main = "Bandwidth = 1", col = terrain.colors(50), xlab = "X", ylab = "Y")
+contour(kernel_1, add = TRUE, col = "white", lwd = 0.5)
+points(pumps$x, pumps$y, pch = 4, col = "blue", cex = 1.2, lwd = 1.5)
+mtext(paste("Mortes:", nrow(fatalities)), side = 3, line = 0.3, cex = 0.8)
+
+image(kernel_2, main = "Bandwidth = 2", col = terrain.colors(50), xlab = "X", ylab = "Y")
+contour(kernel_2, add = TRUE, col = "white", lwd = 0.5)
+points(pumps$x, pumps$y, pch = 4, col = "blue", cex = 1.2, lwd = 1.5)
+mtext(paste("Mortes:", nrow(fatalities)), side = 3, line = 0.3, cex = 0.8)
+
+```
+
+
+```{r, echo=T, out.width='90%'}
+# Kernel 3D 
+
+library(plotly)
+
+# Calcular kernel
+kernel_3d <- kde2d(fatalities$x, fatalities$y, n = 50)
+
+# Criar plot 3D
+plot_ly() |>
+  add_surface(
+    x = kernel_3d$x,
+    y = kernel_3d$y,
+    z = kernel_3d$z,
+    colorscale = list(c(0, "white"), c(1, "red")),
+    opacity = 0.8,
+    name = "Densidade"
+  ) |>
+  add_markers(
+    x = fatalities$x,
+    y = fatalities$y,
+    z = rep(0, nrow(fatalities)),
+    marker = list(size = 3, color = "black", symbol = "circle"),
+    name = "Mortes"
+  ) |>
+  add_markers(
+    x = pumps$x,
+    y = pumps$y,
+    z = rep(0, nrow(pumps)),
+    marker = list(size = 8, color = "blue", symbol = "x"),
+    name = "Bombas"
+  ) |>
+  layout(
+    title = "DENSIDADE 3D DO SURTO DE CÓLERA",
+    scene = list(
+      xaxis = list(title = "Coordenada X"),
+      yaxis = list(title = "Coordenada Y"),
+      zaxis = list(title = "Densidade"),
+      camera = list(eye = list(x = 1.5, y = 1.5, z = 1.5))
+    ),
+    showlegend = TRUE
+  )
+```
+
+

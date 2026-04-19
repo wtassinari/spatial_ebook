@@ -1,0 +1,45 @@
+# Bem-vindo {.unnumbered}
+
+<div style="text-align:center; margin: 2em 0;">
+  <img src="figuras/capa_ebook.png" alt="Capa do Ebook Estatística Espacial" 
+       style="max-width:60%; box-shadow: 0 4px 16px rgba(0,0,0,0.2); border-radius:6px;">
+</div>
+
+Este ebook reúne o material do curso de **Estatística Espacial: Uma Breve Introdução**, ministrado pelo **Prof. Wagner Tassinari** na **Universidade Federal Rural do Rio de Janeiro (UFRRJ)**
+
+📧 Contato: [tassinari@ufrrj.br](mailto:tassinari@ufrrj.br)
+
+---
+
+## Sobre o Curso
+
+O curso apresenta os fundamentos e aplicações da estatística espacial para estudantes de pós-graduação nas mais diversas áreas do conhecimento, com ênfase em epidemiologia e saúde pública. O material abrange desde a introdução conceitual até aplicações práticas com dados reais, utilizando a linguagem **R** como principal ferramenta computacional.
+
+## Estrutura do Ebook
+
+O material está organizado em capítulos segundo a **tipologia dos dados espaciais**, seguindo a classificação clássica de Cressie (1993):
+
+| Capítulo | Conteúdo |
+|----------|----------|
+| **1. Introdução** | Conceitos fundamentais, ferramentas e bibliotecas R |
+| **2. Tipologia dos Dados** | Visão geral dos três tipos de dados espaciais |
+| **3. Dados de Área** | Teoria + Aplicações (Dengue, Hanseníase, Regressão Espacial) |
+| **4. Padrões Pontuais** | Teoria + Aplicações (Queimadas, John Snow) |
+| **5. Geoestatística** | Teoria + Aplicação (Pluviosidade no Rio de Janeiro) |
+| **6. Trabalho Final** | Roteiro e instruções para o trabalho avaliativo |
+
+## Dados do Curso
+
+📥 [Clique aqui para baixar os dados que serão utilizados durante as aulas](https://drive.google.com/drive/folders/1lBUWVYcwFDBqrxdz6s0oxaiCS8gAVWj7?usp=sharing)
+
+1. Baixe o arquivo `Estatistica_Espacial.zip` e descomprima;
+2. Clique no arquivo que representa o projeto em R: `Estatistica_Espacial.Rproj`.
+
+---
+
+::: {.callout-note}
+## Pré-requisitos
+
+Para acompanhar o material, recomenda-se conhecimento básico de **R** e **RStudio**, além de noções elementares de estatística descritiva e inferencial.
+:::
+

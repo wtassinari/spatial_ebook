@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" language="pt-BR">
+  <info>
+    <title>ABNT (Associação Brasileira de Normas Técnicas)</title>
+    <id>http://www.zotero.org/styles/abnt</id>
+    <link href="http://www.zotero.org/styles/abnt" rel="self"/>
+    <link href="http://www.zotero.org/styles/abnt" rel="documentation"/>
+    <author>
+      <name>Fabio Batalha</name>
+      <email>fabio.batalha@gmail.com</email>
+    </author>
+    <contributor>
+      <name>Charles Parnot</name>
+      <email>charles@mreader.com</email>
+    </contributor>
+    <category citation-format="author-date"/>
+    <category field="generic-base"/>
+    <updated>2023-01-01T00:00:00+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <locale xml:lang="pt-BR">
+    <terms>
+      <term name="accessed">Acesso em</term>
+      <term name="and">e</term>
+      <term name="and others">et al</term>
+      <term name="anonymous">Anônimo</term>
+      <term name="book">livro</term>
+      <term name="by">por</term>
+      <term name="circa">circa</term>
+      <term name="cited">citado</term>
+      <term name="container-title">em</term>
+      <term name="ed">ed.</term>
+      <term name="eds">eds.</term>
+      <term name="edition">edição</term>
+      <term name="et-al">et al.</term>
+      <term name="in">In</term>
+      <term name="internet">internet</term>
+      <term name="interview">entrevista</term>
+      <term name="no date">s.d.</term>
+      <term name="online">on-line</term>
+      <term name="pp">pp.</term>
+      <term name="p">p.</term>
+      <term name="presented at">apresentado no</term>
+      <term name="reference">referência</term>
+      <term name="retrieved">disponível em</term>
+      <term name="URL">URL</term>
+      <term name="version">versão</term>
+      <term name="vol">vol.</term>
+      <term name="volume">volume</term>
+    </terms>
+  </locale>
+  <macro name="author">
+    <names variable="author">
+      <name and="symbol" delimiter="; " name-as-sort-order="all" sort-separator=", ">
+        <name-part name="family" text-transform="uppercase"/>
+        <name-part name="given"/>
+      </name>
+      <label form="short" prefix=" "/>
+      <substitute>
+        <names variable="editor"/>
+        <names variable="translator"/>
+        <text variable="title"/>
+      </substitute>
+    </names>
+  </macro>
+  <macro name="author-short">
+    <names variable="author">
+      <name form="short" and="symbol" delimiter="; " name-as-sort-order="all">
+        <name-part name="family" text-transform="uppercase"/>
+      </name>
+      <substitute>
+        <names variable="editor"/>
+        <names variable="translator"/>
+        <text variable="title" form="short"/>
+      </substitute>
+    </names>
+  </macro>
+  <macro name="access">
+    <text term="accessed" suffix=" "/>
+    <date variable="accessed">
+      <date-part name="day" suffix=" de "/>
+      <date-part name="month" suffix=" de "/>
+      <date-part name="year"/>
+    </date>
+  </macro>
+  <macro name="date">
+    <choose>
+      <if variable="issued">
+        <date variable="issued">
+          <date-part name="day" suffix=" de "/>
+          <date-part name="month" suffix=" de "/>
+          <date-part name="year"/>
+        </date>
+      </if>
+      <else>
+        <text term="no date"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="date-short">
+    <choose>
+      <if variable="issued">
+        <date variable="issued">
+          <date-part name="year"/>
+        </date>
+      </if>
+      <else>
+        <text term="no date"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="title">
+    <choose>
+      <if type="book map" match="any">
+        <text variable="title" font-style="italic"/>
+      </if>
+      <else-if type="article-journal article-magazine article-newspaper" match="any">
+        <text variable="title"/>
+      </else-if>
+      <else-if type="chapter paper-conference" match="any">
+        <text variable="title"/>
+      </else-if>
+      <else-if type="webpage post" match="any">
+        <text variable="title" font-style="italic"/>
+      </else-if>
+      <else>
+        <text variable="title" font-style="italic"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="container-title">
+    <choose>
+      <if type="article-journal article-magazine article-newspaper" match="any">
+        <text variable="container-title" font-style="italic"/>
+      </if>
+      <else-if type="chapter paper-conference" match="any">
+        <text variable="container-title" font-style="italic"/>
+      </else-if>
+    </choose>
+  </macro>
+  <macro name="editor">
+    <names variable="editor">
+      <name and="symbol" delimiter="; " name-as-sort-order="all">
+        <name-part name="family" text-transform="uppercase"/>
+        <name-part name="given"/>
+      </name>
+      <label form="short" prefix=" (" suffix=")"/>
+    </names>
+  </macro>
+  <macro name="publisher">
+    <text variable="publisher-place" suffix=": "/>
+    <text variable="publisher"/>
+  </macro>
+  <macro name="pages">
+    <choose>
+      <if variable="page">
+        <label form="short" variable="page" suffix=" "/>
+        <text variable="page"/>
+      </if>
+    </choose>
+  </macro>
+  <macro name="volume">
+    <choose>
+      <if variable="volume">
+        <text term="vol" suffix=" "/>
+        <text variable="volume"/>
+      </if>
+    </choose>
+  </macro>
+  <macro name="issue">
+    <choose>
+      <if variable="issue">
+        <text variable="issue" prefix=", n. "/>
+      </if>
+    </choose>
+  </macro>
+  <citation et-al-min="3" et-al-use-first="1" disambiguate-add-year-suffix="true" disambiguate-add-names="false" disambiguate-add-givenname="false" collapse="year">
+    <sort>
+      <key macro="author-short"/>
+      <key macro="date-short"/>
+    </sort>
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <group delimiter=" ">
+        <text macro="author-short"/>
+        <text macro="date-short"/>
+      </group>
+    </layout>
+  </citation>
+  <bibliography entry-spacing="1" line-spacing="1.5" hanging-indent="true">
+    <sort>
+      <key macro="author"/>
+      <key variable="issued"/>
+    </sort>
+    <layout>
+      <group delimiter=" ">
+        <text macro="author" suffix="."/>
+        <text macro="title" suffix="."/>
+        <choose>
+          <if type="book map" match="any">
+            <text macro="publisher" suffix=", "/>
+            <text macro="date-short" suffix="."/>
+          </if>
+          <else-if type="article-journal article-magazine article-newspaper" match="any">
+            <text macro="container-title" suffix=", "/>
+            <text macro="volume"/>
+            <text macro="issue"/>
+            <text macro="pages" prefix=", "/>
+            <text macro="date-short" prefix=", " suffix="."/>
+          </else-if>
+          <else-if type="chapter paper-conference" match="any">
+            <text term="in" prefix=" " suffix=" "/>
+            <text macro="editor" suffix=". "/>
+            <text macro="container-title" suffix="."/>
+            <text macro="publisher" suffix=", "/>
+            <text macro="pages" prefix="p. " suffix=", "/>
+            <text macro="date-short" suffix="."/>
+          </else-if>
+          <else-if type="webpage post" match="any">
+            <text macro="publisher" suffix=". "/>
+            <text macro="access" suffix=". "/>
+            <text variable="URL" prefix="Disponível em: &lt;" suffix="&gt;."/>
+          </else-if>
+          <else>
+            <text macro="publisher" suffix=", "/>
+            <text macro="date-short" suffix="."/>
+          </else>
+        </choose>
+      </group>
+    </layout>
+  </bibliography>
+</style>
