@@ -69,7 +69,7 @@ format:
     number-sections: true
     number-depth: 3
     code-fold: true
-    code-tools: true
+    code-tools: false
     code-copy: true
     code-overflow: scroll
     highlight-style: pygments
@@ -89,8 +89,6 @@ format:
       sidebar-width: 280px
       body-width: 900px
       margin-width: 200px
-pdf:
-    prefer-html: true    # ← ADICIONE ESTA LINHA
 
 execute:
   echo: true
