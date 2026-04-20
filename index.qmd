@@ -1,22 +1,22 @@
-<div style="display: flex; gap: 20px;">
+# Bem-vindo {.unnumbered}
 
-<div style="flex: 1;">
-
-## Bem-vindo
-
-Este ebook reúne o material do curso de **Estatística Espacial**...
-
+<div style="text-align:center; margin: 2em 0;">
+  <img src="figuras/capa_ebook_v2.png" 
+       style="max-width:60%; height:auto; box-shadow: 0 4px 16px rgba(0,0,0,0.2); border-radius:6px;">
 </div>
 
-<div style="flex: 0 0 40%;">
 
-![Capa do Ebook](figuras/capa_ebook_v3.png)
+Este ebook reúne o material do curso de **Estatística Espacial: Uma Breve Introdução**, ministrado pelo **Prof. Wagner Tassinari** na **Universidade Federal Rural do Rio de Janeiro (UFRRJ)**
 
-</div>
+📧 Contato: [tassinari@ufrrj.br](mailto:tassinari@ufrrj.br)
 
-</div>
+---
 
-## Estrutura do Ebook
+## Sobre o Curso
+
+O curso apresenta os fundamentos e aplicações da estatística espacial para estudantes de pós-graduação nas mais diversas áreas do conhecimento, com ênfase em epidemiologia e saúde pública. O material abrange desde a introdução conceitual até aplicações práticas com dados reais, utilizando a linguagem **R** como principal ferramenta computacional.
+
+## Estrutura do Ebook {.unnumbered}
 
 O material está organizado em capítulos segundo a **tipologia dos dados espaciais**, seguindo a classificação clássica de Cressie (1993):
 
@@ -30,7 +30,7 @@ O material está organizado em capítulos segundo a **tipologia dos dados espaci
 | **6. Trabalho Final** | Roteiro e instruções para o trabalho avaliativo |
 | **7. Referências Bibliográficas** | Referências Bibliográficas |
 
-## Dados do Curso
+## Dados do Curso {.unnumbered}
 
 📥 [Clique aqui para baixar os dados que serão utilizados durante as aulas](https://drive.google.com/drive/folders/1lBUWVYcwFDBqrxdz6s0oxaiCS8gAVWj7?usp=sharing)
 
