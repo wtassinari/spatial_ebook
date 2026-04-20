@@ -51,9 +51,9 @@ book:
       Construído com [Quarto](https://quarto.org/)
 
   search: true
-  repo-url: "https://wtassinari.github.io/spatial_ebook/"
-  repo-actions: [edit, issue]
-  downloads: [pdf, epub]
+  repo-url: "https://github.com/wtassinari/spatial_ebook"
+  # repo-actions: [edit, issue]
+  # downloads: [pdf, epub]
   sharing: [twitter, facebook, linkedin]
 
 bibliography: references.bib
@@ -63,13 +63,13 @@ format:
   html:
     theme:
       light: [flatly, styles.css]
-      dark: [darkly, styles.css]
+      dark: [slate, styles.css]
     toc: true
     toc-depth: 3
     toc-title: "Neste Capítulo"
     number-sections: true
     number-depth: 3
-    code-fold: true
+    code-fold: false
     code-tools: false
     code-copy: true
     code-overflow: scroll

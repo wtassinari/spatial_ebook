@@ -1,0 +1,139 @@
+---
+title: "Módulo 4: Mapeamento Espacial em R e Bayes Empírico Espacial"
+author: "Curso de Estatística Espacial"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    theme: cosmo
+    code-fold: true
+    code-tools: true
+execute:
+  warning: false
+  message: false
+---
+
+# Pensamento Espacial em Epidemiologia
+
+Até este ponto, embora tenhamos representado dados em mapas (contextualizando-os espacialmente), não incorporamos formalmente as relações espaciais em nenhum aspecto da análise. Os estimadores de Bayes Empírico (EB) asespaciais tratam cada unidade espacial como se fosse espacialmente ou geograficamente independente de todas as outras unidades [1].
+
+A suposição de que as unidades são geograficamente independentes é o que caracteriza a análise asespacial. No entanto, a dimensão fundamental para as relações espaciais na geografia é a distância (e, consequentemente, a ideia de proximidade), seja ela euclidiana (em linha reta), distância social ou distância de rede.
+
+## A Relevância do Espaço
+
+Com base na Primeira Lei da Geografia de Tobler, "todas as coisas estão relacionadas com todas as outras coisas, mas coisas próximas estão mais relacionadas do que coisas distantes". Isso implica uma espécie de dependência ou correlação entre unidades locais que pode não ser evidente em uma análise global.
+
+Podemos "emprestar" informações estatísticas de vizinhos espaciais para complementar a estimativa de parâmetros locais de doenças. É exatamente isso que faremos com a estimativa de Bayes Empírico Espacial, onde, em vez de usar a taxa global (geral) da doença como priori, usaremos a taxa local dos vizinhos ao redor de cada entidade como uma espécie de priori personalizada e específica do local.
+
+# Definições de Vizinhança
+
+A tabela abaixo ilustra que podemos definir quais unidades estão próximas de quais outras unidades usando diferentes definições, e essas definições têm suposições e resultados ligeiramente diferentes [1].
+
+| Métrica Básica | Descrição |
+| :--- | :--- |
+| **Torre (Rook)** | Contiguidade: A unidade A e a unidade B são vizinhas se, e somente se, compartilharem bordas de limite. |
+| **Rainha (Queen)** | Contiguidade: A unidade A e a unidade B são vizinhas se compartilharem bordas de limite ou cantos de limite (vértices). |
+| **Distância Fixa** | Distância: A unidade A é vizinha da unidade B se a unidade A (ou seu centroide) cair dentro de um buffer de distância fixa criado ao redor da unidade B. |
+| **K-Vizinhos Mais Próximos (KNN)** | Distância: A unidade A é vizinha da unidade B se, ao criar uma ordem de classificação dos vizinhos mais próximos aos mais distantes da Unidade B, a Unidade A for classificada como $\le k$. |
+| **Distância Inversa** | Distância: Em vez de usar um limite fixo de distância, esta estratégia descreve a proximidade como o inverso da distância euclidiana ou da rede rodoviária. |
+
+A escolha de qual definição de vizinho usar é influenciada por vários fatores específicos do estudo, como a variação no tamanho das unidades de área, as suposições da análise estatística, o significado assumido do espaço e o propósito do mapa.
+
+# Análise Espacial em Epidemiologia com R
+
+Para aplicar esses conceitos à análise espacial, utilizaremos o pacote `spdep` no R, que possui uma série de funções úteis para criar matrizes de pesos espaciais. O processo de passar de um objeto espacial (como um objeto da classe `sf`) para uma matriz de pesos espaciais utilizável requer mais de uma etapa.
+
+## Criando Objetos de Vizinhança por Contiguidade
+
+Como estamos começando com dados de área (polígonos), o ponto de partida é usar a função utilitária `poly2nb()`, que recebe um objeto espacial de polígono e determina quais regiões específicas são contíguas a outras regiões.
+
+```{r}
+#| label: criacao-vizinhanca
+#| message: false
+#| warning: false
+
+# Carregando pacotes necessários
+library(sf)
+library(spdep)
+library(SpatialEpi)
+library(dplyr)
+
+# Simulando um grid espacial (como se fossem condados)
+# Criando um grid 10x10
+grid <- st_make_grid(st_bbox(c(xmin = 0, xmax = 10, ymin = 0, ymax = 10)), n = c(10, 10))
+grid_sf <- st_sf(id = 1:100, geometry = grid)
+
+# Simulando dados epidemiológicos
+set.seed(42)
+grid_sf <- grid_sf %>%
+  mutate(
+    populacao = round(runif(100, 1000, 5000)),
+    casos_observados = rpois(100, lambda = 5),
+    risco_global = sum(casos_observados) / sum(populacao),
+    casos_esperados = populacao * risco_global,
+    SMR = casos_observados / casos_esperados
+  )
+
+# Criando uma lista de vizinhos por contiguidade Rainha (Queen)
+vizinhos_rainha <- poly2nb(grid_sf, queen = TRUE)
+
+# Examinando o objeto resultante
+summary(vizinhos_rainha)
+```
+
+A função `summary()` para objetos `nb` (objetos de vizinhos no `spdep`) fornece informações de alto nível, como regiões sem vizinhos e a distribuição de vizinhos. A simetria espacial significa que se uma região é vizinha de outra, o inverso também é verdadeiro, o que se aplica a vizinhos baseados em contiguidade.
+
+# Bayes Empírico Espacial (Local)
+
+Como vimos no módulo anterior, a suavização de taxas de doenças por Bayes Empírico é um processo pelo qual consideramos cada região e perguntamos: "Qual é a taxa subjacente mais verdadeira de doença neste local?".
+
+No Bayes Empírico Aspacial, usamos a taxa média geral para toda a região de estudo como a priori. No Bayes Empírico Espacial, ao usar nossas definições recém-criadas de vizinhos locais, estendemos a abordagem EB alterando a fonte da informação a priori. Em vez de um risco de referência global, usamos a média dos vizinhos como uma priori [1].
+
+Isso produz uma espécie de "empréstimo" de informações estatísticas através do espaço, sob a suposição de que os condados locais nos dizem mais sobre um local específico do que condados distantes.
+
+## Exemplo Prático em R: Bayes Empírico Espacial
+
+A função para estimar o Bayes Empírico espacial é `EBlocal()` do pacote `spdep`. Ela requer a contagem de eventos, a população em risco para cada área e um objeto de vizinhança `nb`.
+
+```{r}
+#| label: bayes-empirico-espacial
+#| message: false
+#| warning: false
+
+# Estimativa de Bayes Empírico Global (Aspacial) para comparação
+eb_global <- eBayes(Y = grid_sf$casos_observados, E = grid_sf$casos_esperados)
+grid_sf$SMR_EB_Global <- eb_global$RR
+
+# Estimativa de Bayes Empírico Espacial (Local) sob a definição de contiguidade Rainha
+eb_local <- EBlocal(ri = grid_sf$casos_observados, 
+                    ni = grid_sf$populacao, 
+                    nb = vizinhos_rainha)
+
+# A saída de EBlocal() é um data.frame. A segunda coluna (est) é a estimativa EB
+grid_sf$SMR_EB_Local <- eb_local$est
+
+# Comparando as estimativas
+resumo_comparacao <- grid_sf %>%
+  st_drop_geometry() %>%
+  select(id, casos_observados, SMR, SMR_EB_Global, SMR_EB_Local) %>%
+  head(10)
+
+knitr::kable(resumo_comparacao, digits = 3, 
+             caption = "Comparação entre SMR Bruta, EB Global e EB Local")
+```
+
+# Considerações Finais: Fazendo Escolhas
+
+Reunimos várias ferramentas analíticas para lidar com a heterogeneidade espacial na presença de instabilidade de taxas e incerteza devido à esparsidade de dados. Essas estratégias incluem as duas abordagens para suavização de Bayes Empírico, mas também a miríade de definições de vizinhos.
+
+Não existe uma regra simples para escolher entre elas. Abaixo está um resumo das considerações:
+
+* **Bayes Empírico Aspacial**: Suaviza as taxas locais em direção à taxa de referência global. É recomendado quando a melhor estimativa a priori de taxas plausíveis é a média geral, e a razão para a esparsidade envolve tanto o numerador (doença rara) quanto o denominador (pequenas populações).
+* **Bayes Empírico Espacial**: Suaviza as taxas locais em direção à referência local. É recomendado quando há pelo menos alguma autocorrelação espacial nas taxas, de modo que as regiões próximas servem como uma priori mais informativa do que a média global. É especialmente útil quando a doença não é rara, mas a população em risco é pequena.
+
+Como em muitas coisas na análise epidemiológica, há um papel importante para a ciência, mas também uma necessidade de especialistas que possam se envolver na "arte" da análise.
+
+# Referências
+
+[1] Peterson, E. (2010). Spatial Epidemiology Workshop - Module 3: Disease Mapping: Spatial Empirical Bayes. Disponível em: https://bookdown.org/epeterson_2010/spatial_epidemiology_workshop/Module_4.html

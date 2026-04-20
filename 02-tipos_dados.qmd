@@ -10,7 +10,7 @@ Ao final deste capítulo, o estudante deverá ser capaz de:
 - Realizar a leitura e visualização básica de dados espaciais em R.
 :::
 
-# 🧩 Tipologia dos Dados Espaciais
+# Tipologia dos Dados Espaciais
 
 Os dados espaciais podem ser classificados segundo diferentes categorias, com base na natureza estocástica de suas observações e na forma como a informação geográfica é representada. Essa tipologia orienta a escolha de métodos estatísticos apropriados para análise.
 
@@ -22,7 +22,7 @@ ii) <span style="color:darkmagenta; font-weight:bold;"> **Dados de Geoestatísti
 
 iii) <span style="color:darkmagenta; font-weight:bold;"> **Dados de Área**</span>: Representam fenômenos agregados por unidades geográficas, como municípios, distritos ou setores censitários. As análises incluem autocorrelação espacial (ex: I de Moran) e modelos de regressão espacial adaptados a dados agregados.
 
-## 📍 Padrões Pontuais
+## Padrões Pontuais
 
 O principal interesse está no conjunto de coordenadas geográficas representando as localizações exatas de eventos.
 
@@ -145,7 +145,7 @@ ggplot() +
 
 
 
-## 🌐 Geoestatística
+## Geoestatística
   
 Dados usados em geoestatística são atributos contínuos medidos em localizações fixas, na maioria das vezes amostrados no espaço geográfico, e que queremos analisar para entender como um fenômeno varia no espaço.
 
@@ -255,7 +255,7 @@ ggplot() +
   theme_minimal()
 ```
 
-## 🗺️ Dados de Área
+## Dados de Área
 
 Na análise espacial por áreas, o atributo de interesse costuma ser uma medida agregada (como contagem de casos, taxa de mortalidade, média de renda, etc.) calculada dentro de uma unidade geográfica bem definidas (como bairros, municípios, setores censitários ou regiões administrativas.)
 

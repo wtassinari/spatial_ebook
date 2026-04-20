@@ -1,0 +1,167 @@
+---
+title: "Módulo 3: Mapeamento de Doenças e Bayes Empírico Aspacial"
+author: "Curso de Estatística Espacial"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    theme: cosmo
+    code-fold: true
+    code-tools: true
+execute:
+  warning: false
+  message: false
+---
+
+# Introdução ao Mapeamento de Doenças
+
+O mapeamento de doenças situa-se na interseção entre a estatística, a geografia e a epidemiologia. Tradicionalmente, envolve o uso de Sistemas de Informação Geográfica (SIG) para coletar, analisar e exibir dados espaciais. No entanto, pesquisadores têm expandido essa abordagem utilizando modelos estatísticos para controlar fatores de confusão e melhorar a precisão dos mapas gerados [1].
+
+A principal motivação para o mapeamento de doenças é fornecer uma visão inovadora sobre os padrões geográficos de saúde e doença, caracterizando a distribuição e os determinantes da saúde nas populações. Ao descrever espacialmente a distribuição de uma doença, os epidemiologistas buscam responder a duas perguntas fundamentais:
+
+1. A intensidade da doença ou da saúde é espacialmente heterogênea ou homogênea?
+2. Existe uma estrutura espacial ou correlação espacial na localização da intensidade da doença?
+
+A heterogeneidade espacial indica que existem diferenças na intensidade da doença em algumas sub-regiões em comparação com outras. Em contraste, a homogeneidade espacial sugere que a ocorrência da doença é semelhante em toda a área de estudo, com variações apenas devido ao acaso. A busca por heterogeneidade é a principal razão para o mapeamento, pois se a ocorrência da doença fosse a mesma em todos os lugares, um mapa não forneceria muitas informações úteis.
+
+## O Problema da Esparsidade de Dados
+
+Um dos principais desafios no mapeamento de doenças é a instabilidade das estimativas de parâmetros devido a dados esparsos ou eventos raros. Quando uma doença é muito rara (resultando em um numerador pequeno) ou a população em risco é muito esparsa (resultando em um denominador pequeno), a estimativa da carga da doença torna-se inerentemente instável ou imprecisa.
+
+Nesses casos, a adição de apenas um ou dois eventos ou pessoas em risco pode ter um impacto notável na estimativa. Para lidar com esse problema, os pesquisadores frequentemente recorrem à agregação de dados ao longo do tempo ou do espaço, ou utilizam técnicas de suavização espacial, como o método de Bayes Empírico, para compartilhar informações entre áreas e estabilizar as taxas extremas.
+
+# Modelos de Probabilidade no Mapeamento de Doenças
+
+Na epidemiologia, um esforço considerável é dedicado a separar o "ruído" do "sinal" nos dados. O erro aleatório, que surge do acaso e está relacionado ao tamanho da amostra, é frequentemente modelado utilizando distribuições de probabilidade estatística.
+
+## Distribuições Comuns
+
+Quando lidamos com contagens de eventos e populações em risco agregadas por unidades de área, podemos utilizar distribuições de probabilidade paramétricas comuns na epidemiologia:
+
+* **Distribuição de Poisson**: É a distribuição clássica para avaliar contagens de eventos, frequentemente ajustada pelo tempo em risco ou pessoas-ano. A distribuição de Poisson assume que a média da distribuição é igual à sua variância e aproxima bem a taxa de intensidade da doença para processos de doenças raras.
+* **Distribuição Binomial**: É útil para caracterizar a ocorrência de doenças para processos não raros ou comuns.
+
+Essas distribuições modelam as contagens observadas ($Y_i$) como uma função da contagem esperada ($E_i$), da população em risco ($N_i$) e do parâmetro de risco desconhecido ($\theta_i$).
+
+# Razão de Morbidade/Mortalidade Padronizada (SMR)
+
+A Razão de Morbidade/Mortalidade Padronizada (SMR) é uma medida de risco relativo em excesso. Ela quantifica o desvio de uma prevalência ou taxa populacional em relação a um valor de referência (por exemplo, o risco para todo o estado).
+
+A SMR é calculada como a contagem observada de eventos ($Y_i$) dividida pela contagem esperada de eventos ($E_i$):
+
+$$ SMR_i = \frac{Y_i}{E_i} $$
+
+Para calcular as contagens esperadas, primeiro determinamos o risco global para toda a região de estudo ($r$) e, em seguida, multiplicamos esse valor pela população em risco em cada unidade de área ($N_i$). Isso nos dá os eventos esperados se houvesse homogeneidade no risco, ou seja, se a SMR fosse igual a 1,0 para todas as áreas.
+
+## Exemplo Prático em R: Cálculo da SMR
+
+Abaixo, apresentamos um exemplo de como calcular a SMR utilizando a linguagem R. Neste exemplo simulado, criaremos um conjunto de dados fictício representando condados, suas populações e o número de casos observados de uma doença.
+
+```{r}
+#| label: calculo-smr
+#| message: false
+#| warning: false
+
+# Carregando pacotes necessários
+library(dplyr)
+library(sf)
+library(spdep)
+library(SpatialEpi)
+library(ggplot2)
+
+# Simulando dados para o exemplo
+set.seed(123)
+n_counties <- 50
+dados_simulados <- data.frame(
+  id_condado = 1:n_counties,
+  populacao = round(runif(n_counties, 5000, 100000)),
+  casos_observados = rpois(n_counties, lambda = 15)
+)
+
+# Calculando o risco global (taxa de referência)
+risco_global <- sum(dados_simulados$casos_observados) / sum(dados_simulados$populacao)
+
+# Calculando os casos esperados e a SMR
+dados_simulados <- dados_simulados %>%
+  mutate(
+    casos_esperados = populacao * risco_global,
+    SMR = casos_observados / casos_esperados
+  )
+
+# Visualizando os primeiros registros
+head(dados_simulados)
+```
+
+# Suavização de Taxas com Bayes Empírico Global
+
+No contexto da estimativa de pequenas áreas, o objetivo é extrair o sinal ou a tendência espacial subjacente nos dados, eliminando o ruído aleatório induzido por pequenas contagens de eventos e tamanhos populacionais amplamente variáveis.
+
+A estimativa de Bayes Empírico (EB) é uma técnica para produzir estimativas de parâmetros de pequenas áreas mais robustas. O EB é uma abordagem de "encolhimento" (shrinkage) de parâmetros, na qual estimativas extremas (como a SMR) são julgadas como confiáveis ou não com base em sua variância, que por sua vez é uma função do número de eventos.
+
+Se uma área possui uma SMR extrema e uma contagem pequena de eventos, esse parâmetro é considerado menos confiável e é "encolhido" em direção à média global. Por outro lado, se uma área possui uma SMR extrema, mas com muitos eventos, esse valor extremo é considerado mais confiável e sofre menos encolhimento.
+
+## Exemplo Prático em R: Bayes Empírico Aspacial
+
+Utilizando o pacote `SpatialEpi`, podemos calcular as estimativas suavizadas por Bayes Empírico. A função `eBayes()` estima o risco relativo suavizado com base na mistura Poisson-Gama.
+
+```{r}
+#| label: bayes-empirico
+#| message: false
+#| warning: false
+
+# Calculando as estimativas de Bayes Empírico Global
+eb_global <- eBayes(Y = dados_simulados$casos_observados, 
+                    E = dados_simulados$casos_esperados)
+
+# Adicionando as estimativas suavizadas ao conjunto de dados
+dados_simulados <- dados_simulados %>%
+  mutate(
+    SMR_suavizada_EB = eb_global$RR
+  )
+
+# Comparando a SMR bruta com a SMR suavizada
+resumo_comparacao <- dados_simulados %>%
+  select(id_condado, populacao, casos_observados, SMR, SMR_suavizada_EB) %>%
+  arrange(desc(SMR)) %>%
+  head(10)
+
+knitr::kable(resumo_comparacao, digits = 3, 
+             caption = "Comparação entre SMR Bruta e SMR Suavizada (Bayes Empírico)")
+```
+
+Como podemos observar, as estimativas suavizadas por Bayes Empírico tendem a ser menos extremas do que as SMRs brutas, especialmente para áreas com populações menores ou contagens de eventos mais baixas.
+
+# Probabilidades de Excedência Bayesiana
+
+Além de obter estimativas pontuais suavizadas, é frequentemente útil quantificar a incerteza associada a essas estimativas. Os intervalos de credibilidade no Bayes Empírico refletem a faixa dentro da qual o verdadeiro valor de um parâmetro, como a SMR, provavelmente se encontra, com base na distribuição a posteriori.
+
+Para descrever quão provável ou improvável é que o risco relativo suavizado por EB para uma determinada área seja diferente do valor nulo de 1, podemos usar as probabilidades de excedência Bayesiana. Essa probabilidade responde à pergunta: "Qual é a probabilidade de que o verdadeiro parâmetro $\theta$ seja maior que 1,0, dados a priori e os dados observados?" [1].
+
+```{r}
+#| label: probabilidade-excedencia
+#| message: false
+#| warning: false
+
+# Calculando a probabilidade de excedência (probabilidade de SMR > 1)
+dados_simulados$prob_excedencia <- EBpostthresh(
+  Y = dados_simulados$casos_observados,
+  E = dados_simulados$casos_esperados,
+  alpha = eb_global$alpha,
+  beta = eb_global$beta,
+  rrthresh = 1
+)
+
+# Identificando áreas com alta probabilidade de risco elevado (ex: > 95%)
+dados_simulados <- dados_simulados %>%
+  mutate(
+    risco_significativo = ifelse(prob_excedencia > 0.95, "Sim", "Não")
+  )
+
+# Resumo das áreas com risco significativamente elevado
+table(dados_simulados$risco_significativo)
+```
+
+# Referências
+
+[1] Peterson, E. (2010). Spatial Epidemiology Workshop - Module 2: Disease Mapping: Aspatial Empirical Bayes. Disponível em: https://bookdown.org/epeterson_2010/spatial_epidemiology_workshop/Module_3.html
