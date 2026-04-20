@@ -7,10 +7,296 @@ Ao final deste capítulo, o estudante deverá ser capaz de:
 - Compreender a estrutura dos dados de padrões pontuais;
 - Testar hipóteses sobre a aleatoriedade espacial completa (CSR);
 - Aplicar estimativas de densidade de Kernel (mapas de calor);
-- Realizar análises de padrões pontuais com dados reais de saúde pública.
+- Realizar análises de padrões pontuais com dados reais.
 :::
 
 Os dados de padrões pontuais referem-se a eventos que ocorrem em localizações discretas e aleatórias no espaço, como casos de doenças, crimes, acidentes ou ocorrências ambientais. O objetivo principal é investigar se esses eventos seguem um padrão aleatório, regular ou agrupado (*clustered*).
+
+
+## Definição dos Processos Pontuais
+
+i) **Processo de primeira ordem:** Considerados globais ou de larga escala, que correspondem a variações no valor médio do processo no espaço.  Tal processo pode ser representado por mensurações da intensidade baseado na densidade dos pontos (média dos eventos) na área de estudo (ex: Estimativa de Kernel).
+
+ii) **Processo de segunda ordem:** Denominados locais ou de pequena escala, é o processo representado pela interação entre dois pontos arbitrários. O objetivo desse processo é a mensuração da dependência espacial baseado na distância entre os pontos (ex: Vizinhos mais próximos, Função K).
+
+## Completa Aletoriedade Espacial (CSR - *Complete Spatial Randomness*)
+
+ princípio da **Completa Aleatoriedade Espacial (CSR – *Complete Spatial Randomness*)** assume que os pontos seguem um processo de Poisson homogêneo na área de estudo. Com base nisso, podemos formular as hipóteses do teste:
+
+- **$H_0$:** Os pontos estão distribuídos aleatoriamente no espaço  
+- **$H_1$:** Os pontos não seguem aleatoriedade, podendo apresentar **agregação (clusters)** ou **dispersão (regularidade)**  
+
+O teste `quadrat.test()` avalia essas hipóteses comparando as contagens observadas de pontos em subáreas (quadrantes) com aquelas esperadas sob CSR, por meio da estatística qui-quadrado:
+
+\[
+X^2 = \sum_{i=1}^{k}\frac{(O_i - E_i)^2}{E_i}
+\]
+
+onde \(O_i\) é o número observado de pontos no quadrante \(i\) e \(E_i\) é o número esperado sob aleatoriedade.
+
+
+
+#### Vamos simular dados de padrões pontuais para ilustrar os conceitos:
+
+```{r, echo=T, out.width='90%'}
+library(splancs)
+
+set.seed(9999)
+# Criando uma caixa envoltoria
+caixa <- rbind(c(0,0),c(0,1),c(1,1),c(1,0),c(0,0))
+
+# Simulando um processo espacial aletaorio
+alea.spp <- csr(caixa,100)
+
+# Processo de poisson clusterizado
+clu.spp <- pcp.sim(rho=20,m=10,s2=0.005, region.poly=caixa)
+# rho= intensidade do processo de poisson "pai"(gerador)
+# m=media 
+# s2=variancia 
+
+# Distribuicao regular
+uni.spp <- jitter(gridpts(caixa,100),2)
+# o comando jitter cria uma flutuacao aleatoria sobre os valores
+# o comando gridpts gera uma grade regular
+# 2 é o fator de confusao adicionado ao grid regular
+```
+
+```{r, echo=T, out.width='90%'}
+par(mfrow=c(1, 3))
+plot(alea.spp, main="Aleatório")
+plot(uni.spp, main="Regular")
+plot(clu.spp, main="Agregado")
+```
+Esses três gráficos mostram padrões clássicos de processos pontuais espaciais: Aleatório (CSR), Regular e Agregado (Clusterizado). O padrão aleatório apresenta pontos distribuídos sem um padrão aparente, o regular mostra uma distribuição mais uniforme, enquanto o agregado evidencia a presença de clusters ou agrupamentos de pontos.
+
+
+#### Verificando a distribuição dos pontos por quadrantes
+
+```{r, echo=T, out.width='90%'}
+# Convertendo para a class ppp
+library(spatstat)
+alea.ppp <- as.ppp(alea.spp, c(0,1,0,1))
+uni.ppp <- as.ppp(uni.spp, c(0,1,0,1))
+clu.ppp <- as.ppp(clu.spp, c(0,1,0,1))
+
+# Construindo os quadrantes com as respectivas contagens
+aleatorioQ <- quadratcount(alea.ppp, nx = 4, ny = 4)
+regularQ <- quadratcount(uni.ppp, nx = 4, ny = 4)
+agregadoQ <- quadratcount(clu.ppp, nx = 4, ny = 4)
+
+
+par(mfrow=c(1, 3))
+plot(aleatorioQ, main="Aleatório")
+plot(alea.ppp, add = TRUE)
+
+plot(regularQ, main="Regular")
+plot(uni.ppp, add = TRUE)
+
+plot(agregadoQ, main="Agregado")
+plot(clu.ppp, add = TRUE)
+```
+
+Esta figura vai além de uma simples inspeção visual ao apresentar uma quantificação da heterogeneidade espacial por meio da contagem em quadrantes (`quadratcount`).
+
+- **Aleatório:** As contagens variam entre quadrantes, mas sem padrão definido, refletindo apenas flutuações ao acaso.
+
+- **Regular:** As contagens são semelhantes entre os quadrantes, indicando distribuição homogênea e repulsão entre os pontos.
+
+- **Agregado:** As contagens são muito desiguais, com alguns quadrantes concentrando muitos pontos e outros quase vazios, evidenciando clusterização.
+
+#### Testando a Completa Aletoriedade Espacial (CSR - *Complete Spatial Randomness*)
+
+```{r, echo=T, out.width='90%'}
+quadrat.test(aleatorioQ)
+```
+
+Não rejeitamos \(H_0\). O padrão é compatível com completa aleatoriedade espacial, e as variações observadas entre quadrantes são explicadas por flutuações ao acaso.
+
+```{r, echo=T, out.width='90%'}
+quadrat.test(agregadoQ)
+```
+
+Rejeitamos \(H_0\). O padrão apresenta forte heterogeneidade espacial, com evidência de **clusterização**, ou seja, concentração de pontos em determinadas regiões.
+
+```{r, echo=T, out.width='90%'}
+quadrat.test(regularQ)
+```
+
+Rejeitamos \(H_0\). Apesar do valor baixo de \(X^2\), o resultado indica que as contagens são **mais homogêneas do que o esperado sob CSR**, caracterizando um padrão **regular**, com evidência de repulsão entre os pontos.
+
+Em termos intuitivos, o teste verifica o quanto as contagens por quadrantes diferem do esperado:  
+- variação “normal” $\rightarrow$ padrão aleatório  
+- variação maior  $\rightarrow$ padrão agregado  
+- variação menor  $\rightarrow$ padrão regular  
+
+
+## Função K de Ripley (ou apenas função K)
+
+A **função K de Ripley** é uma ferramenta usada para analisar padrões espaciais, considerando não apenas a distribuição geral dos pontos, mas também como eles se comportam em diferentes **distâncias**.
+
+A função K responde basicamente à pergunta "Quantos pontos existem, em média, dentro de um raio h ao redor de um ponto qualquer ?" Mas com um detalhe importante, ela compara isso com o que seria esperado sob aleatoriedade espacial (CSR).
+
+Ela mede o número médio de pontos dentro de uma distância \(h\) de um ponto qualquer, ajustado pela intensidade do processo.
+
+\[
+K(h) = \frac{1}{\lambda} \, E[\text{número de pontos a distância } \leq h]
+\]
+
+onde:
+
+- \(h\) = distância  
+- \(\lambda\) = intensidade (número médio de pontos por unidade de área)
+
+### Caso de aleatoriedade (CSR)
+
+Se os pontos seguem um padrão completamente aleatório:
+
+\[
+K(h) = \pi h^2
+\]
+
+Ou seja, o valor esperado é simplesmente a área de um círculo de raio \(h\).
+
+### Estimador empírico
+
+Na prática, a função K é estimada a partir dos dados:
+
+\[
+\hat{K}(h) = \frac{1}{\lambda^2 |R|} \sum_{i \neq j} I(d_{ij} \leq h)
+\]
+
+nde:
+
+- \(d_{ij}\) = distância entre os pontos \(i\) e \(j\)  
+- \(I(\cdot)\) = função indicadora (vale 1 se a condição for verdadeira, 0 caso contrário)  
+- \(|R|\) = área da região de estudo  
+
+
+### Interpretação
+
+A função K é sempre comparada com o que seria esperado sob **aleatoriedade espacial completa (CSR)**.
+
+-  **Agregação (clusters)**: \(K(h) > \pi h^2\) ou \(L(h) - h > 0\) $\rightarrow$ Se houver **mais pontos próximos do que o esperado**  
+
+- **Regularidade (repulsão)**: \(K(h) < \pi h^2\) ou \(L(h) - h < 0\) $\rightarrow$ Se houver **menos pontos próximos** 
+
+- **Aleatoriedade (CSR)**: \(K(h) \approx \pi h^2\) $\rightarrow$ Se estiver próximo do esperado 
+
+Na prática o raciocínio é simples:
+
+1. Escolhe-se um ponto  
+2. Desenha-se um círculo de raio \(h\) ao redor dele  
+3. Conta-se quantos outros pontos caem dentro desse círculo  
+4. Repete-se isso para todos os pontos  
+5. Calcula-se uma média  
+
+### Por que usar a função K ?
+
+- Analisa padrões em **múltiplas escalas (vários valores de \(h\))**  
+- Não depende de dividir o espaço em quadrantes  
+- Detecta tanto **agregação quanto dispersão**
+
+
+```{r, echo=T, out.width='90%'}
+# Função K de Ripley 
+# Estimar a função K para cada padrão
+K.alea <- Kest(alea.ppp, correction="border")
+K.uni <- Kest(uni.ppp, correction="border")
+K.clu <- Kest(clu.ppp, correction="border")
+
+# Função teórica para processo aleatório (CSR)
+# K(r) = π*r²
+K.teor <- function(r) { pi * r^2 }
+```
+
+```{r, echo=T, out.width='90%'}
+# Plotar as funções K
+
+par(mfrow=c(1, 3), mar=c(5, 5, 3, 1))
+
+# Gráfico 1: Processo Aleatório
+plot(K.alea, main="K(r) - Padrão Aleatório", 
+     xlim=c(0, 0.35), ylim=c(0, 0.08),
+     xlab="Distância (r)", ylab="K(r)")
+curve(K.teor, from=0, to=0.35, col="red", lty=2, lwd=2, add=TRUE)
+legend("topleft", c("K estimada", "K teórica (CSR)"), 
+       col=c("black", "red"), lty=c(1, 2), lwd=2)
+grid()
+
+# Gráfico 2: Processo Regular
+plot(K.uni, main="K(r) - Padrão Regular", 
+     xlim=c(0, 0.35), ylim=c(0, 0.08),
+     xlab="Distância (r)", ylab="K(r)")
+curve(K.teor, from=0, to=0.35, col="red", lty=2, lwd=2, add=TRUE)
+legend("topleft", c("K estimada", "K teórica (CSR)"), 
+       col=c("black", "red"), lty=c(1, 2), lwd=2)
+grid()
+
+# Gráfico 3: Processo Agregado
+plot(K.clu, main="K(r) - Padrão Agregado", 
+     xlim=c(0, 0.35), ylim=c(0, 0.08),
+     xlab="Distância (r)", ylab="K(r)")
+curve(K.teor, from=0, to=0.35, col="red", lty=2, lwd=2, add=TRUE)
+legend("topleft", c("K estimada", "K teórica (CSR)"), 
+       col=c("black", "red"), lty=c(1, 2), lwd=2)
+grid()
+
+```
+
+
+Os gráficos mostram a comparação entre:
+
+- **Linha preta:** \( \hat{K}(r) \) (estimada a partir dos dados)  
+- **Linha vermelha tracejada:** \( K(r) = \pi r^2 \) (esperado sob aleatoriedade – CSR)
+
+A interpretação é feita comparando essas duas curvas.
+
+
+- **Padrão Aleatório**: A curva estimada \( \hat{K}(r) \) acompanha de perto a curva teórica (CSR). O padrão é compatível com **completa aleatoriedade espacial**.  Não há evidência de interação entre os pontos (nem atração nem repulsão).
+
+- **Padrão Regular**: A curva estimada \( \hat{K}(r) \) fica **abaixo** da curva teórica. 
+Há **menos pontos próximos do que o esperado** sob aleatoriedade. Isso indica **repulsão entre os pontos**, ou seja, um padrão **regular** (disperso).
+
+- **Padrão Agregado**: A curva estimada \( \hat{K}(r) \) fica **acima** da curva teórica. Há **mais pontos próximos do que o esperado**. Isso caracteriza **clusterização (agregação)**, com formação de grupos no espaço.
+
+
+
+```{r, echo=T, out.width='90%'}
+# Gráfico comparativo
+par(mfrow=c(1, 1), mar=c(5, 5, 3, 1))
+
+plot(K.alea$r, K.alea$border, type="l", 
+     xlim=c(0, 0.35), ylim=c(0, 0.08),
+     xlab="Distância (r)", ylab="K(r)",
+     main="Comparação da Função K - Três Padrões",
+     col="black", lwd=2)
+
+lines(K.uni$r, K.uni$border, col="green", lwd=2)
+lines(K.clu$r, K.clu$border, col="blue", lwd=2)
+curve(K.teor, from=0, to=0.35, col="red", lty=2, lwd=2, add=TRUE)
+
+legend("topleft", 
+       c("K - Aleatório", "K - Regular", "K - Agregado", "K teórica (CSR)"),
+       col=c("black", "green", "blue", "red"), 
+       lty=c(1, 1, 1, 2), lwd=2, cex=1)
+
+grid()
+
+```
+
+### Resumo geral
+
+A função K avalia o número de vizinhos dentro de uma distância \(r\):
+
+- \( \hat{K}(r) \approx K_{CSR}(r) \) $\rightarrow$ **Aleatório**  
+- \( \hat{K}(r) < K_{CSR}(r) \) $\rightarrow$ **Regular (repulsão)**  
+- \( \hat{K}(r) > K_{CSR}(r) \) $\rightarrow$ **Agregado (cluster)** 
+
+
+- Menos vizinhos → pontos se evitam $\rightarrow$ **regular**  
+- Mais vizinhos → pontos se agrupam $\rightarrow$ **agregado**  
+- Igual ao esperado $\rightarrow$ **aleatório**
+
 
 ## **Aplicação V:** Análise dos pontos de ocorrência de focos de queimadas no estado do Rio de Janeiro/Brasil em dezembro de 2025
 
@@ -148,6 +434,7 @@ O importante é notar que a escala de análise influencia a forma como enxergamo
 - Segue algumas aplicações com os dados do pacote `cholera`, que contêm as localizações das mortes por cólera no famoso estudo de John Snow (Londres, 1854).
 
 ```{r, echo=T, out.width='90%'}
+library(threejs)
 # install.packages("cholera")
 library(cholera)
 

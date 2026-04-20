@@ -5,12 +5,12 @@
 Ao final deste capítulo, o estudante deverá ser capaz de:
 
 - Compreender o conceito de análise estatística espacial e sua importância;
-- Conhecer a origem histórica da disciplina e seus principais marcos;
+- Conhecer a origem histórica da disciplina;
 - Identificar as principais ferramentas computacionais disponíveis;
 - Instalar e carregar as bibliotecas R necessárias para o curso.
 :::
 
-# 📍 Introdução à Estatística Espacial 
+# Introdução à Estatística Espacial 
 
 ## O que é Análise Estatística Espacial ?
 
