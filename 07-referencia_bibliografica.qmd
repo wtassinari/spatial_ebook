@@ -18,4 +18,5 @@ A seguir, apresentamos uma seleção de referências fundamentais para o aprofun
 
 - **Comber, L.** [GeoComputation and Spatial Analysis practicals](https://bookdown.org/lexcomber/GEOG3195/).
 
+- **Peterson, E.** [Spatial Epidemiology Workshop](https://bookdown.org/epeterson_2010/spatial_epidemiology_workshop), 2010.
 

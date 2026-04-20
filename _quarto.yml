@@ -63,7 +63,7 @@ format:
   html:
     theme:
       light: [flatly, styles.css]
-      dark: [slate, styles.css]
+      dark: [darkly, styles.css]
     toc: true
     toc-depth: 3
     toc-title: "Neste Capítulo"

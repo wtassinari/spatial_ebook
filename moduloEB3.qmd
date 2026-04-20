@@ -14,6 +14,11 @@ execute:
   message: false
 ---
 
+::: {.callout-note}
+## Fonte Original
+Este módulo foi adaptado do conteúdo disponível em [**Spatial Epidemiology Workshop**](https://bookdown.org/epeterson_2010/spatial_epidemiology_workshop/), mantendo a estrutura e exemplos originais com ajustes pedagógicos.
+:::
+
 # Introdução ao Mapeamento de Doenças
 
 O mapeamento de doenças situa-se na interseção entre a estatística, a geografia e a epidemiologia. Tradicionalmente, envolve o uso de Sistemas de Informação Geográfica (SIG) para coletar, analisar e exibir dados espaciais. No entanto, pesquisadores têm expandido essa abordagem utilizando modelos estatísticos para controlar fatores de confusão e melhorar a precisão dos mapas gerados [1].
@@ -164,4 +169,6 @@ table(dados_simulados$risco_significativo)
 
 # Referências
 
-[1] Peterson, E. (2010). Spatial Epidemiology Workshop - Module 2: Disease Mapping: Aspatial Empirical Bayes. Disponível em: https://bookdown.org/epeterson_2010/spatial_epidemiology_workshop/Module_3.html
+[1] Peterson, E. (2010). Spatial Epidemiology Workshop - Module 3: Disease Mapping: Aspatial Empirical Bayes. Disponível em: https://bookdown.org/epeterson_2010/spatial_epidemiology_workshop/Module_3.html
+
+Peterson, E. (2010). **Spatial Epidemiology Workshop**. Disponível em: https://bookdown.org/epeterson_2010/spatial_epidemiology_workshop/

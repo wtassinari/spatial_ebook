@@ -952,34 +952,245 @@ p3
 plot(mapa_rj$incidencia_suavizada, mapa_rj$incidencia)
 ```
 
-## **Aplicação III:** Utilizando o Estimador de Bayes Empírico  nos dados de Hanseniase no Mato Grosso
+## **Aplicação III:** Utilizando o Estimador de Bayes Empírico
 
-```{r, echo=T, out.width='90%'}
-# ============================================================================
-# LER A PLANILHA
-# ============================================================================
-hansen <- read.csv2("dados/hansen/dados_hanseniase_mt.csv") |>
-    mutate(
-        tx_detecao = casos / pop2022 * 100000
-    )
+::: {.callout-note}
+## Fonte Original
+Este módulo foi adaptado do conteúdo disponível em [**Spatial Epidemiology Workshop**](https://bookdown.org/epeterson_2010/spatial_epidemiology_workshop/), mantendo a estrutura e exemplos originais com ajustes pedagógicos.
+:::
 
-head(hansen)
+
+A heterogeneidade espacial indica que existem diferenças na intensidade de um determinado fenômeno em algumas sub-regiões em comparação com outras. Em contraste, a homogeneidade espacial sugere que a ocorrência de um fenômeno é semelhante em toda a área de estudo, com variações apenas devido ao acaso. A busca por heterogeneidade é a principal razão para o mapeamento, pois se a ocorrência desse fenômeno fosse a mesma em todos os lugares, um mapa não forneceria muitas informações úteis.
+
+Na área da epidemiologia, um dos principais desafios da distribuição espacial de doenças é a instabilidade das estimativas de parâmetros devido a dados com excessos de zeros, *missing data* (`NA`) ou eventos raros. Quando uma doença é muito rara (resultando em um numerador pequeno) ou a população em risco é muito esparsa (resultando em um denominador pequeno), a estimativa da carga da doença torna-se inerentemente instável ou imprecisa.
+
+Nesses casos, a adição de apenas um ou dois eventos ou pessoas em risco pode ter um impacto notável na estimativa. Para lidar com esse problema, os pesquisadores frequentemente recorrem à agregação de dados ao longo do tempo ou do espaço, ou utilizam técnicas de suavização espacial, como o método de Bayes Empírico, para compartilhar informações entre áreas e estabilizar as taxas extremas.
+
+Por isso, na epidemiologia, um esforço considerável é dedicado a separar o "ruído" do "sinal" nos dados. O erro aleatório, que surge do acaso e está relacionado ao tamanho da amostra, é frequentemente modelado utilizando distribuições de probabilidade estatística.
+
+Quando lidamos com contagens de eventos e populações em risco agregadas por unidades de área, podemos utilizar distribuições de probabilidade paramétricas comuns na epidemiologia:
+
+* **Distribuição de Poisson**: É a distribuição clássica para avaliar contagens de eventos, frequentemente ajustada pelo tempo em risco ou pessoas-ano. A distribuição de Poisson assume que a média da distribuição é igual à sua variância e aproxima bem a taxa de intensidade da doença para processos de doenças raras.
+
+* **Distribuição Binomial**: É útil para caracterizar a ocorrência de doenças para processos não raros ou comuns.
+
+Essas distribuições modelam as contagens observadas ($Y_i$) como uma função da contagem esperada ($E_i$), da população em risco ($N_i$) e do parâmetro de risco desconhecido ($\theta_i$).
+
+### Razão de Morbidade/Mortalidade Padronizada (SMR)
+
+A Razão de Morbidade/Mortalidade Padronizada (SMR) é uma medida de risco relativo em excesso. Ela quantifica o desvio de uma prevalência ou taxa populacional em relação a um valor de referência (por exemplo, o risco para todo o estado).
+
+A SMR é calculada como a contagem observada de eventos ($Y_i$) dividida pela contagem esperada de eventos ($E_i$):
+
+$$ SMR_i = \frac{Y_i}{E_i} $$
+
+Para calcular as contagens esperadas, primeiro determinamos o risco global para toda a região de estudo ($r$) e, em seguida, multiplicamos esse valor pela população em risco em cada unidade de área ($N_i$). Isso nos dá os eventos esperados se houvesse homogeneidade no risco, ou seja, se a SMR fosse igual a 1,0 para todas as áreas.
+
+### Exemplo Prático em R: Cálculo da SMR
+
+Abaixo, apresentamos um exemplo de como calcular a SMR utilizando a linguagem R. Neste exemplo simulado, criaremos um conjunto de dados fictício representando condados, suas populações e o número de casos observados de uma doença.
+
+```{r}
+#| label: calculo-smr
+#| message: false
+#| warning: false
+
+# Carregando pacotes necessários
+library(dplyr)
+library(sf)
+library(spdep)
+library(SpatialEpi)
+library(ggplot2)
+
+# Simulando dados para o exemplo
+set.seed(123)
+n_counties <- 50
+dados_simulados <- data.frame(
+  id_condado = 1:n_counties,
+  populacao = round(runif(n_counties, 5000, 100000)),
+  casos_observados = rpois(n_counties, lambda = 15)
+)
+
+# Calculando o risco global (taxa de referência)
+risco_global <- sum(dados_simulados$casos_observados) / sum(dados_simulados$populacao)
+
+# Calculando os casos esperados e a SMR
+dados_simulados <- dados_simulados %>%
+  mutate(
+    casos_esperados = populacao * risco_global,
+    SMR = casos_observados / casos_esperados
+  )
+
+# Visualizando os primeiros registros
+head(dados_simulados)
 ```
 
-#### Lendo o Mapa via `geobr`
+#### Suavização de Taxas com Bayes Empírico Global
 
-Para acessar os dados dos limites territoriais de todos os estados brasileiros é necessário utilizar a função `read_state`.
+No contexto da estimativa de pequenas áreas, o objetivo é extrair o sinal ou a tendência espacial subjacente nos dados, eliminando o ruído aleatório induzido por pequenas contagens de eventos e tamanhos populacionais amplamente variáveis.
 
-```{r, echo=T, out.width='90%', message=FALSE, warning=FALSE, comments=NA}
-library(geobr)
+A estimativa de Bayes Empírico (EB) é uma técnica para produzir estimativas de parâmetros de pequenas áreas mais robustas. O EB é uma abordagem de "encolhimento" (shrinkage) de parâmetros, na qual estimativas extremas (como a SMR) são julgadas como confiáveis ou não com base em sua variância, que por sua vez é uma função do número de eventos.
 
-# Baixar a malha municipal do estado do MAto Grosso
-# code_muni = 33 (código do estado do RJ)
+Se uma área possui uma SMR extrema e uma contagem pequena de eventos, esse parâmetro é considerado menos confiável e é "encolhido" em direção à média global. Por outro lado, se uma área possui uma SMR extrema, mas com muitos eventos, esse valor extremo é considerado mais confiável e sofre menos encolhimento.
 
-mapa_mt <- read_municipality(code_muni = 51, year = 2024) |>
-        mutate(code_muni = as.character(code_muni))
+### Exemplo Prático em R: Bayes Empírico Aspacial
+
+Utilizando o pacote `SpatialEpi`, podemos calcular as estimativas suavizadas por Bayes Empírico. A função `eBayes()` estima o risco relativo suavizado com base na mistura Poisson-Gama.
+
+```{r}
+#| label: bayes-empirico
+#| message: false
+#| warning: false
+
+# Calculando as estimativas de Bayes Empírico Global
+eb_global <- eBayes(Y = dados_simulados$casos_observados, 
+                    E = dados_simulados$casos_esperados)
+
+# Adicionando as estimativas suavizadas ao conjunto de dados
+dados_simulados <- dados_simulados %>%
+  mutate(
+    SMR_suavizada_EB = eb_global$RR
+  )
+
+# Comparando a SMR bruta com a SMR suavizada
+resumo_comparacao <- dados_simulados %>%
+  select(id_condado, populacao, casos_observados, SMR, SMR_suavizada_EB) %>%
+  arrange(desc(SMR)) %>%
+  head(10)
+
+knitr::kable(resumo_comparacao, digits = 3, 
+             caption = "Comparação entre SMR Bruta e SMR Suavizada (Bayes Empírico)")
 ```
-  
+
+Como podemos observar, as estimativas suavizadas por Bayes Empírico tendem a ser menos extremas do que as SMRs brutas, especialmente para áreas com populações menores ou contagens de eventos mais baixas.
+
+### Probabilidades de Excedência Bayesiana
+
+Além de obter estimativas pontuais suavizadas, é frequentemente útil quantificar a incerteza associada a essas estimativas. Os intervalos de credibilidade no Bayes Empírico refletem a faixa dentro da qual o verdadeiro valor de um parâmetro, como a SMR, provavelmente se encontra, com base na distribuição a posteriori.
+
+Para descrever quão provável ou improvável é que o risco relativo suavizado por EB para uma determinada área seja diferente do valor nulo de 1, podemos usar as probabilidades de excedência Bayesiana. Essa probabilidade responde à pergunta: "Qual é a probabilidade de que o verdadeiro parâmetro $\theta$ seja maior que 1,0, dados a priori e os dados observados?" [1].
+
+```{r}
+#| label: probabilidade-excedencia
+#| message: false
+#| warning: false
+
+# Calculando a probabilidade de excedência (probabilidade de SMR > 1)
+dados_simulados$prob_excedencia <- EBpostthresh(
+  Y = dados_simulados$casos_observados,
+  E = dados_simulados$casos_esperados,
+  alpha = eb_global$alpha,
+  beta = eb_global$beta,
+  rrthresh = 1
+)
+
+# Identificando áreas com alta probabilidade de risco elevado (ex: > 95%)
+dados_simulados <- dados_simulados %>%
+  mutate(
+    risco_significativo = ifelse(prob_excedencia > 0.95, "Sim", "Não")
+  )
+
+# Resumo das áreas com risco significativamente elevado
+table(dados_simulados$risco_significativo)
+```
+
+Até aqui, os dados foram apenas representados em mapas, sem incorporar explicitamente as relações espaciais na análise. Os estimadores de Bayes Empírico não espaciais tratam cada área como independente das demais, o que caracteriza uma abordagem asespacial. No entanto, em geografia, as relações espaciais dependem da distância e da proximidade entre unidades, seja ela física, social ou em rede.
+
+Podemos "emprestar" informações estatísticas de vizinhos espaciais para complementar a estimativa de parâmetros locais de doenças. É exatamente isso que faremos com a estimativa de Bayes Empírico Espacial, onde, em vez de usar a taxa global (geral) da doença como priori, usaremos a taxa local dos vizinhos ao redor de cada entidade como uma espécie de priori personalizada e específica do local.
+
+Para aplicar esses conceitos à análise espacial, utilizaremos o pacote `spdep` no R, que possui uma série de funções úteis para criar matrizes de pesos espaciais. O processo de passar de um objeto espacial (como um objeto da classe `sf`) para uma matriz de pesos espaciais utilizável requer mais de uma etapa.
+
+### Criando Objetos de Vizinhança por Contiguidade
+
+Como estamos começando com dados de área (polígonos), o ponto de partida é usar a função utilitária `poly2nb()`, que recebe um objeto espacial de polígono e determina quais regiões específicas são contíguas a outras regiões.
+
+```{r}
+#| label: criacao-vizinhanca
+#| message: false
+#| warning: false
+
+# Carregando pacotes necessários
+library(sf)
+library(spdep)
+library(SpatialEpi)
+library(dplyr)
+
+# Simulando um grid espacial (como se fossem condados)
+# Criando um grid 10x10
+grid <- st_make_grid(st_bbox(c(xmin = 0, xmax = 10, ymin = 0, ymax = 10)), n = c(10, 10))
+grid_sf <- st_sf(id = 1:100, geometry = grid)
+
+# Simulando dados epidemiológicos
+set.seed(42)
+grid_sf <- grid_sf %>%
+  mutate(
+    populacao = round(runif(100, 1000, 5000)),
+    casos_observados = rpois(100, lambda = 5),
+    risco_global = sum(casos_observados) / sum(populacao),
+    casos_esperados = populacao * risco_global,
+    SMR = casos_observados / casos_esperados
+  )
+
+# Criando uma lista de vizinhos por contiguidade Rainha (Queen)
+vizinhos_rainha <- poly2nb(grid_sf, queen = TRUE)
+
+# Examinando o objeto resultante
+summary(vizinhos_rainha)
+```
+
+A função `summary()` para objetos `nb` (objetos de vizinhos no `spdep`) fornece informações de alto nível, como regiões sem vizinhos e a distribuição de vizinhos. A simetria espacial significa que se uma região é vizinha de outra, o inverso também é verdadeiro, o que se aplica a vizinhos baseados em contiguidade.
+
+### Bayes Empírico Espacial (Local)
+
+Como vimos no módulo anterior, a suavização de taxas de doenças por Bayes Empírico é um processo pelo qual consideramos cada região e perguntamos: "Qual é a taxa subjacente mais verdadeira de doença neste local?".
+
+No Bayes Empírico Aspacial, usamos a taxa média geral para toda a região de estudo como a priori. No Bayes Empírico Espacial, ao usar nossas definições recém-criadas de vizinhos locais, estendemos a abordagem EB alterando a fonte da informação a priori. Em vez de um risco de referência global, usamos a média dos vizinhos como uma priori [1].
+
+Isso produz uma espécie de "empréstimo" de informações estatísticas através do espaço, sob a suposição de que os condados locais nos dizem mais sobre um local específico do que condados distantes.
+
+### Exemplo Prático em R: Bayes Empírico Espacial
+
+A função para estimar o Bayes Empírico espacial é `EBlocal()` do pacote `spdep`. Ela requer a contagem de eventos, a população em risco para cada área e um objeto de vizinhança `nb`.
+
+```{r}
+#| label: bayes-empirico-espacial
+#| message: false
+#| warning: false
+
+# Estimativa de Bayes Empírico Global (Aspacial) para comparação
+eb_global <- eBayes(Y = grid_sf$casos_observados, E = grid_sf$casos_esperados)
+grid_sf$SMR_EB_Global <- eb_global$RR
+
+# Estimativa de Bayes Empírico Espacial (Local) sob a definição de contiguidade Rainha
+eb_local <- EBlocal(ri = grid_sf$casos_observados, 
+                    ni = grid_sf$populacao, 
+                    nb = vizinhos_rainha)
+
+# A saída de EBlocal() é um data.frame. A segunda coluna (est) é a estimativa EB
+grid_sf$SMR_EB_Local <- eb_local$est
+
+# Comparando as estimativas
+resumo_comparacao <- grid_sf %>%
+  st_drop_geometry() %>%
+  select(id, casos_observados, SMR, SMR_EB_Global, SMR_EB_Local) %>%
+  head(10)
+
+knitr::kable(resumo_comparacao, digits = 3, 
+             caption = "Comparação entre SMR Bruta, EB Global e EB Local")
+```
+
+### Considerações Finais: Fazendo Escolhas
+
+Reunimos várias ferramentas analíticas para lidar com a heterogeneidade espacial na presença de instabilidade de taxas e incerteza devido à esparsidade de dados. Essas estratégias incluem as duas abordagens para suavização de Bayes Empírico, mas também a miríade de definições de vizinhos.
+
+Não existe uma regra simples para escolher entre elas. Abaixo está um resumo das considerações:
+
+* **Bayes Empírico**: Suaviza as taxas locais em direção à taxa de referência global. É recomendado quando a melhor estimativa a priori de taxas plausíveis é a média geral, e a razão para a esparsidade envolve tanto o numerador (doença rara) quanto o denominador (pequenas populações).
+
+* **Bayes Empírico Espacial**: Suaviza as taxas locais em direção à referência local. É recomendado quando há pelo menos alguma autocorrelação espacial nas taxas, de modo que as regiões próximas servem como uma priori mais informativa do que a média global. É especialmente útil quando a doença não é rara, mas a população em risco é pequena.
+
+Como em muitas coisas na análise epidemiológica, há um papel importante para a ciência, mas também uma necessidade de especialistas que possam se envolver na "arte" da análise.
+
 ## **Aplicação IV:** Utilizando dos modelos de regressão espaciais nos dados de queimadas no estado do Rio de Janeiro.
 
 ####  Introdução aos Modelos de Regressão Espacial

@@ -14,6 +14,11 @@ execute:
   message: false
 ---
 
+::: {.callout-note}
+## Fonte Original
+Este módulo foi adaptado do conteúdo disponível em [**Spatial Epidemiology Workshop**](https://bookdown.org/epeterson_2010/spatial_epidemiology_workshop/), mantendo a estrutura e exemplos originais com ajustes pedagógicos.
+:::
+
 # Pensamento Espacial em Epidemiologia
 
 Até este ponto, embora tenhamos representado dados em mapas (contextualizando-os espacialmente), não incorporamos formalmente as relações espaciais em nenhum aspecto da análise. Os estimadores de Bayes Empírico (EB) asespaciais tratam cada unidade espacial como se fosse espacialmente ou geograficamente independente de todas as outras unidades [1].
@@ -136,4 +141,6 @@ Como em muitas coisas na análise epidemiológica, há um papel importante para 
 
 # Referências
 
-[1] Peterson, E. (2010). Spatial Epidemiology Workshop - Module 3: Disease Mapping: Spatial Empirical Bayes. Disponível em: https://bookdown.org/epeterson_2010/spatial_epidemiology_workshop/Module_4.html
+[1] Peterson, E. (2010). Spatial Epidemiology Workshop - Module 4: Disease Mapping: Spatial Empirical Bayes. Disponível em: https://bookdown.org/epeterson_2010/spatial_epidemiology_workshop/Module_4.html
+
+Peterson, E. (2010). **Spatial Epidemiology Workshop**. Disponível em: https://bookdown.org/epeterson_2010/spatial_epidemiology_workshop/

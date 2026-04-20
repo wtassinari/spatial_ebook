@@ -81,7 +81,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-c1b5b7b3f24d620334eceabad0444597.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-cd73638a99f15e358ada7ea89b2217f3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-dark-6cf0ad18cb0d5146c3e756227100402a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <link href="site_libs/bootstrap/bootstrap-c1b5b7b3f24d620334eceabad0444597.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -457,7 +457,17 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#aplicação-i-mapa-temático-mundial-da-expectativa-de-vida-entre-os-países" id="toc-aplicação-i-mapa-temático-mundial-da-expectativa-de-vida-entre-os-países" class="nav-link" data-scroll-target="#aplicação-i-mapa-temático-mundial-da-expectativa-de-vida-entre-os-países"><span class="header-section-number">4.1</span> <strong>Aplicação I:</strong> Mapa Temático Mundial da Expectativa de Vida entre os Países</a></li>
   <li><a href="#aplicação-ii-análise-exploratória-espacial-da-incidência-de-dengue-no-estado-do-rio-de-janeiro" id="toc-aplicação-ii-análise-exploratória-espacial-da-incidência-de-dengue-no-estado-do-rio-de-janeiro" class="nav-link" data-scroll-target="#aplicação-ii-análise-exploratória-espacial-da-incidência-de-dengue-no-estado-do-rio-de-janeiro"><span class="header-section-number">4.2</span> <strong>Aplicação II:</strong> Análise exploratória espacial da incidência de dengue no estado do Rio de Janeiro</a></li>
-  <li><a href="#aplicação-iii-utilizando-o-estimador-de-bayes-empírico-nos-dados-de-hanseniase-no-mato-grosso" id="toc-aplicação-iii-utilizando-o-estimador-de-bayes-empírico-nos-dados-de-hanseniase-no-mato-grosso" class="nav-link" data-scroll-target="#aplicação-iii-utilizando-o-estimador-de-bayes-empírico-nos-dados-de-hanseniase-no-mato-grosso"><span class="header-section-number">4.3</span> <strong>Aplicação III:</strong> Utilizando o Estimador de Bayes Empírico nos dados de Hanseniase no Mato Grosso</a></li>
+  <li><a href="#aplicação-iii-utilizando-o-estimador-de-bayes-empírico" id="toc-aplicação-iii-utilizando-o-estimador-de-bayes-empírico" class="nav-link" data-scroll-target="#aplicação-iii-utilizando-o-estimador-de-bayes-empírico"><span class="header-section-number">4.3</span> <strong>Aplicação III:</strong> Utilizando o Estimador de Bayes Empírico</a>
+  <ul class="collapse">
+  <li><a href="#razão-de-morbidademortalidade-padronizada-smr" id="toc-razão-de-morbidademortalidade-padronizada-smr" class="nav-link" data-scroll-target="#razão-de-morbidademortalidade-padronizada-smr"><span class="header-section-number">4.3.1</span> Razão de Morbidade/Mortalidade Padronizada (SMR)</a></li>
+  <li><a href="#exemplo-prático-em-r-cálculo-da-smr" id="toc-exemplo-prático-em-r-cálculo-da-smr" class="nav-link" data-scroll-target="#exemplo-prático-em-r-cálculo-da-smr"><span class="header-section-number">4.3.2</span> Exemplo Prático em R: Cálculo da SMR</a></li>
+  <li><a href="#exemplo-prático-em-r-bayes-empírico-aspacial" id="toc-exemplo-prático-em-r-bayes-empírico-aspacial" class="nav-link" data-scroll-target="#exemplo-prático-em-r-bayes-empírico-aspacial"><span class="header-section-number">4.3.3</span> Exemplo Prático em R: Bayes Empírico Aspacial</a></li>
+  <li><a href="#probabilidades-de-excedência-bayesiana" id="toc-probabilidades-de-excedência-bayesiana" class="nav-link" data-scroll-target="#probabilidades-de-excedência-bayesiana"><span class="header-section-number">4.3.4</span> Probabilidades de Excedência Bayesiana</a></li>
+  <li><a href="#criando-objetos-de-vizinhança-por-contiguidade" id="toc-criando-objetos-de-vizinhança-por-contiguidade" class="nav-link" data-scroll-target="#criando-objetos-de-vizinhança-por-contiguidade"><span class="header-section-number">4.3.5</span> Criando Objetos de Vizinhança por Contiguidade</a></li>
+  <li><a href="#bayes-empírico-espacial-local" id="toc-bayes-empírico-espacial-local" class="nav-link" data-scroll-target="#bayes-empírico-espacial-local"><span class="header-section-number">4.3.6</span> Bayes Empírico Espacial (Local)</a></li>
+  <li><a href="#exemplo-prático-em-r-bayes-empírico-espacial" id="toc-exemplo-prático-em-r-bayes-empírico-espacial" class="nav-link" data-scroll-target="#exemplo-prático-em-r-bayes-empírico-espacial"><span class="header-section-number">4.3.7</span> Exemplo Prático em R: Bayes Empírico Espacial</a></li>
+  <li><a href="#considerações-finais-fazendo-escolhas" id="toc-considerações-finais-fazendo-escolhas" class="nav-link" data-scroll-target="#considerações-finais-fazendo-escolhas"><span class="header-section-number">4.3.8</span> Considerações Finais: Fazendo Escolhas</a></li>
+  </ul></li>
   <li><a href="#aplicação-iv-utilizando-dos-modelos-de-regressão-espaciais-nos-dados-de-queimadas-no-estado-do-rio-de-janeiro." id="toc-aplicação-iv-utilizando-dos-modelos-de-regressão-espaciais-nos-dados-de-queimadas-no-estado-do-rio-de-janeiro." class="nav-link" data-scroll-target="#aplicação-iv-utilizando-dos-modelos-de-regressão-espaciais-nos-dados-de-queimadas-no-estado-do-rio-de-janeiro."><span class="header-section-number">4.4</span> <strong>Aplicação IV:</strong> Utilizando dos modelos de regressão espaciais nos dados de queimadas no estado do Rio de Janeiro.</a></li>
   </ul></li>
   </ul>
@@ -1696,38 +1706,404 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 </section>
 </section>
 </section>
-<section id="aplicação-iii-utilizando-o-estimador-de-bayes-empírico-nos-dados-de-hanseniase-no-mato-grosso" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="aplicação-iii-utilizando-o-estimador-de-bayes-empírico-nos-dados-de-hanseniase-no-mato-grosso"><span class="header-section-number">4.3</span> <strong>Aplicação III:</strong> Utilizando o Estimador de Bayes Empírico nos dados de Hanseniase no Mato Grosso</h2>
+<section id="aplicação-iii-utilizando-o-estimador-de-bayes-empírico" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="aplicação-iii-utilizando-o-estimador-de-bayes-empírico"><span class="header-section-number">4.3</span> <strong>Aplicação III:</strong> Utilizando o Estimador de Bayes Empírico</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Fonte Original
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Este módulo foi adaptado do conteúdo disponível em <a href="https://bookdown.org/epeterson_2010/spatial_epidemiology_workshop/"><strong>Spatial Epidemiology Workshop</strong></a>, mantendo a estrutura e exemplos originais com ajustes pedagógicos.</p>
+</div>
+</div>
+<p>A heterogeneidade espacial indica que existem diferenças na intensidade de um determinado fenômeno em algumas sub-regiões em comparação com outras. Em contraste, a homogeneidade espacial sugere que a ocorrência de um fenômeno é semelhante em toda a área de estudo, com variações apenas devido ao acaso. A busca por heterogeneidade é a principal razão para o mapeamento, pois se a ocorrência desse fenômeno fosse a mesma em todos os lugares, um mapa não forneceria muitas informações úteis.</p>
+<p>Na área da epidemiologia, um dos principais desafios da distribuição espacial de doenças é a instabilidade das estimativas de parâmetros devido a dados com excessos de zeros, <em>missing data</em> (<code>NA</code>) ou eventos raros. Quando uma doença é muito rara (resultando em um numerador pequeno) ou a população em risco é muito esparsa (resultando em um denominador pequeno), a estimativa da carga da doença torna-se inerentemente instável ou imprecisa.</p>
+<p>Nesses casos, a adição de apenas um ou dois eventos ou pessoas em risco pode ter um impacto notável na estimativa. Para lidar com esse problema, os pesquisadores frequentemente recorrem à agregação de dados ao longo do tempo ou do espaço, ou utilizam técnicas de suavização espacial, como o método de Bayes Empírico, para compartilhar informações entre áreas e estabilizar as taxas extremas.</p>
+<p>Por isso, na epidemiologia, um esforço considerável é dedicado a separar o “ruído” do “sinal” nos dados. O erro aleatório, que surge do acaso e está relacionado ao tamanho da amostra, é frequentemente modelado utilizando distribuições de probabilidade estatística.</p>
+<p>Quando lidamos com contagens de eventos e populações em risco agregadas por unidades de área, podemos utilizar distribuições de probabilidade paramétricas comuns na epidemiologia:</p>
+<ul>
+<li><p><strong>Distribuição de Poisson</strong>: É a distribuição clássica para avaliar contagens de eventos, frequentemente ajustada pelo tempo em risco ou pessoas-ano. A distribuição de Poisson assume que a média da distribuição é igual à sua variância e aproxima bem a taxa de intensidade da doença para processos de doenças raras.</p></li>
+<li><p><strong>Distribuição Binomial</strong>: É útil para caracterizar a ocorrência de doenças para processos não raros ou comuns.</p></li>
+</ul>
+<p>Essas distribuições modelam as contagens observadas (<span class="math inline">\(Y_i\)</span>) como uma função da contagem esperada (<span class="math inline">\(E_i\)</span>), da população em risco (<span class="math inline">\(N_i\)</span>) e do parâmetro de risco desconhecido (<span class="math inline">\(\theta_i\)</span>).</p>
+<section id="razão-de-morbidademortalidade-padronizada-smr" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="razão-de-morbidademortalidade-padronizada-smr"><span class="header-section-number">4.3.1</span> Razão de Morbidade/Mortalidade Padronizada (SMR)</h3>
+<p>A Razão de Morbidade/Mortalidade Padronizada (SMR) é uma medida de risco relativo em excesso. Ela quantifica o desvio de uma prevalência ou taxa populacional em relação a um valor de referência (por exemplo, o risco para todo o estado).</p>
+<p>A SMR é calculada como a contagem observada de eventos (<span class="math inline">\(Y_i\)</span>) dividida pela contagem esperada de eventos (<span class="math inline">\(E_i\)</span>):</p>
+<p><span class="math display">\[ SMR_i = \frac{Y_i}{E_i} \]</span></p>
+<p>Para calcular as contagens esperadas, primeiro determinamos o risco global para toda a região de estudo (<span class="math inline">\(r\)</span>) e, em seguida, multiplicamos esse valor pela população em risco em cada unidade de área (<span class="math inline">\(N_i\)</span>). Isso nos dá os eventos esperados se houvesse homogeneidade no risco, ou seja, se a SMR fosse igual a 1,0 para todas as áreas.</p>
+</section>
+<section id="exemplo-prático-em-r-cálculo-da-smr" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="exemplo-prático-em-r-cálculo-da-smr"><span class="header-section-number">4.3.2</span> Exemplo Prático em R: Cálculo da SMR</h3>
+<p>Abaixo, apresentamos um exemplo de como calcular a SMR utilizando a linguagem R. Neste exemplo simulado, criaremos um conjunto de dados fictício representando condados, suas populações e o número de casos observados de uma doença.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================================</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co"># LER A PLANILHA</span></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================================</span></span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>hansen <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"dados/hansen/dados_hanseniase_mt.csv"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">tx_detecao =</span> casos <span class="sc">/</span> pop2022 <span class="sc">*</span> <span class="dv">100000</span></span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(hansen)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregando pacotes necessários</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spdep)</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SpatialEpi)</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulando dados para o exemplo</span></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>n_counties <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>dados_simulados <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">id_condado =</span> <span class="dv">1</span><span class="sc">:</span>n_counties,</span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">populacao =</span> <span class="fu">round</span>(<span class="fu">runif</span>(n_counties, <span class="dv">5000</span>, <span class="dv">100000</span>)),</span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">casos_observados =</span> <span class="fu">rpois</span>(n_counties, <span class="at">lambda =</span> <span class="dv">15</span>)</span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculando o risco global (taxa de referência)</span></span>
+<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a>risco_global <span class="ot">&lt;-</span> <span class="fu">sum</span>(dados_simulados<span class="sc">$</span>casos_observados) <span class="sc">/</span> <span class="fu">sum</span>(dados_simulados<span class="sc">$</span>populacao)</span>
+<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculando os casos esperados e a SMR</span></span>
+<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a>dados_simulados <span class="ot">&lt;-</span> dados_simulados <span class="sc">%&gt;%</span></span>
+<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb48-23"><a href="#cb48-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">casos_esperados =</span> populacao <span class="sc">*</span> risco_global,</span>
+<span id="cb48-24"><a href="#cb48-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">SMR =</span> casos_observados <span class="sc">/</span> casos_esperados</span>
+<span id="cb48-25"><a href="#cb48-25" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb48-26"><a href="#cb48-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-27"><a href="#cb48-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizando os primeiros registros</span></span>
+<span id="cb48-28"><a href="#cb48-28" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dados_simulados)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["code_muni"],"name":[1],"type":["int"],"align":["right"]},{"label":["name_muni"],"name":[2],"type":["chr"],"align":["left"]},{"label":["pop2022"],"name":[3],"type":["int"],"align":["right"]},{"label":["casos"],"name":[4],"type":["int"],"align":["right"]},{"label":["tx_detecao"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"5100102","2":"Acorizal","3":"5000","4":"3","5":"60.00000","_rn_":"1"},{"1":"5100201","2":"Água Boa","3":"11000","4":"80","5":"727.27273","_rn_":"2"},{"1":"5100250","2":"Alta Floresta","3":"24000","4":"36","5":"150.00000","_rn_":"3"},{"1":"5100300","2":"Alto Araguaia","3":"7000","4":"1","5":"14.28571","_rn_":"4"},{"1":"5100359","2":"Alto Boa Vista","3":"8000","4":"6","5":"75.00000","_rn_":"5"},{"1":"5100409","2":"Alto Garças","3":"5000","4":"3","5":"60.00000","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["id_condado"],"name":[1],"type":["int"],"align":["right"]},{"label":["populacao"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["casos_observados"],"name":[3],"type":["int"],"align":["right"]},{"label":["casos_esperados"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["SMR"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"32320","3":"8","4":"8.530187","5":"0.9378458","_rn_":"1"},{"1":"2","2":"79889","3":"10","4":"21.085029","5":"0.4742702","_rn_":"2"},{"1":"3","2":"43853","3":"10","4":"11.574081","5":"0.8639995","_rn_":"3"},{"1":"4","2":"88887","3":"13","4":"23.459862","5":"0.5541380","_rn_":"4"},{"1":"5","2":"94344","3":"9","4":"24.900123","5":"0.3614440","_rn_":"5"},{"1":"6","2":"9328","3":"18","4":"2.461930","5":"7.3113363","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
-<section id="lendo-o-mapa-via-geobr" class="level4">
-<h4 class="anchored" data-anchor-id="lendo-o-mapa-via-geobr">Lendo o Mapa via <code>geobr</code></h4>
-<p>Para acessar os dados dos limites territoriais de todos os estados brasileiros é necessário utilizar a função <code>read_state</code>.</p>
-<div class="cell" data-layout-align="center" data-comments="null">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geobr)</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Baixar a malha municipal do estado do MAto Grosso</span></span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="co"># code_muni = 33 (código do estado do RJ)</span></span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>mapa_mt <span class="ot">&lt;-</span> <span class="fu">read_municipality</span>(<span class="at">code_muni =</span> <span class="dv">51</span>, <span class="at">year =</span> <span class="dv">2024</span>) <span class="sc">|&gt;</span></span>
-<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">code_muni =</span> <span class="fu">as.character</span>(code_muni))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="suavização-de-taxas-com-bayes-empírico-global" class="level4">
+<h4 class="anchored" data-anchor-id="suavização-de-taxas-com-bayes-empírico-global">Suavização de Taxas com Bayes Empírico Global</h4>
+<p>No contexto da estimativa de pequenas áreas, o objetivo é extrair o sinal ou a tendência espacial subjacente nos dados, eliminando o ruído aleatório induzido por pequenas contagens de eventos e tamanhos populacionais amplamente variáveis.</p>
+<p>A estimativa de Bayes Empírico (EB) é uma técnica para produzir estimativas de parâmetros de pequenas áreas mais robustas. O EB é uma abordagem de “encolhimento” (shrinkage) de parâmetros, na qual estimativas extremas (como a SMR) são julgadas como confiáveis ou não com base em sua variância, que por sua vez é uma função do número de eventos.</p>
+<p>Se uma área possui uma SMR extrema e uma contagem pequena de eventos, esse parâmetro é considerado menos confiável e é “encolhido” em direção à média global. Por outro lado, se uma área possui uma SMR extrema, mas com muitos eventos, esse valor extremo é considerado mais confiável e sofre menos encolhimento.</p>
+</section>
+</section>
+<section id="exemplo-prático-em-r-bayes-empírico-aspacial" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="exemplo-prático-em-r-bayes-empírico-aspacial"><span class="header-section-number">4.3.3</span> Exemplo Prático em R: Bayes Empírico Aspacial</h3>
+<p>Utilizando o pacote <code>SpatialEpi</code>, podemos calcular as estimativas suavizadas por Bayes Empírico. A função <code>eBayes()</code> estima o risco relativo suavizado com base na mistura Poisson-Gama.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculando as estimativas de Bayes Empírico Global</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>eb_global <span class="ot">&lt;-</span> <span class="fu">eBayes</span>(<span class="at">Y =</span> dados_simulados<span class="sc">$</span>casos_observados, </span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">E =</span> dados_simulados<span class="sc">$</span>casos_esperados)</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Adicionando as estimativas suavizadas ao conjunto de dados</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>dados_simulados <span class="ot">&lt;-</span> dados_simulados <span class="sc">%&gt;%</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">SMR_suavizada_EB =</span> eb_global<span class="sc">$</span>RR</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparando a SMR bruta com a SMR suavizada</span></span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>resumo_comparacao <span class="ot">&lt;-</span> dados_simulados <span class="sc">%&gt;%</span></span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id_condado, populacao, casos_observados, SMR, SMR_suavizada_EB) <span class="sc">%&gt;%</span></span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(SMR)) <span class="sc">%&gt;%</span></span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(resumo_comparacao, <span class="at">digits =</span> <span class="dv">3</span>, </span>
+<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">"Comparação entre SMR Bruta e SMR Suavizada (Bayes Empírico)"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Comparação entre SMR Bruta e SMR Suavizada (Bayes Empírico)</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">id_condado</th>
+<th style="text-align: right;">populacao</th>
+<th style="text-align: right;">casos_observados</th>
+<th style="text-align: right;">SMR</th>
+<th style="text-align: right;">SMR_suavizada_EB</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">9328</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">7.311</td>
+<td style="text-align: right;">4.687</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">7338</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">5.680</td>
+<td style="text-align: right;">3.520</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">8996</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">4.633</td>
+<td style="text-align: right;">3.164</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">14778</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">4.615</td>
+<td style="text-align: right;">3.535</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">19482</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">3.306</td>
+<td style="text-align: right;">2.776</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">18187</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">2.917</td>
+<td style="text-align: right;">2.472</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">18566</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">2.857</td>
+<td style="text-align: right;">2.436</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">28378</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2.537</td>
+<td style="text-align: right;">2.297</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">27004</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">2.526</td>
+<td style="text-align: right;">2.279</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">25559</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">2.520</td>
+<td style="text-align: right;">2.264</td>
+</tr>
+</tbody>
+</table>
 </div>
+</div>
+<p>Como podemos observar, as estimativas suavizadas por Bayes Empírico tendem a ser menos extremas do que as SMRs brutas, especialmente para áreas com populações menores ou contagens de eventos mais baixas.</p>
+</section>
+<section id="probabilidades-de-excedência-bayesiana" class="level3" data-number="4.3.4">
+<h3 data-number="4.3.4" class="anchored" data-anchor-id="probabilidades-de-excedência-bayesiana"><span class="header-section-number">4.3.4</span> Probabilidades de Excedência Bayesiana</h3>
+<p>Além de obter estimativas pontuais suavizadas, é frequentemente útil quantificar a incerteza associada a essas estimativas. Os intervalos de credibilidade no Bayes Empírico refletem a faixa dentro da qual o verdadeiro valor de um parâmetro, como a SMR, provavelmente se encontra, com base na distribuição a posteriori.</p>
+<p>Para descrever quão provável ou improvável é que o risco relativo suavizado por EB para uma determinada área seja diferente do valor nulo de 1, podemos usar as probabilidades de excedência Bayesiana. Essa probabilidade responde à pergunta: “Qual é a probabilidade de que o verdadeiro parâmetro <span class="math inline">\(\theta\)</span> seja maior que 1,0, dados a priori e os dados observados?” [1].</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculando a probabilidade de excedência (probabilidade de SMR &gt; 1)</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>dados_simulados<span class="sc">$</span>prob_excedencia <span class="ot">&lt;-</span> <span class="fu">EBpostthresh</span>(</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Y =</span> dados_simulados<span class="sc">$</span>casos_observados,</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">E =</span> dados_simulados<span class="sc">$</span>casos_esperados,</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> eb_global<span class="sc">$</span>alpha,</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta =</span> eb_global<span class="sc">$</span>beta,</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">rrthresh =</span> <span class="dv">1</span></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Identificando áreas com alta probabilidade de risco elevado (ex: &gt; 95%)</span></span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>dados_simulados <span class="ot">&lt;-</span> dados_simulados <span class="sc">%&gt;%</span></span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">risco_significativo =</span> <span class="fu">ifelse</span>(prob_excedencia <span class="sc">&gt;</span> <span class="fl">0.95</span>, <span class="st">"Sim"</span>, <span class="st">"Não"</span>)</span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Resumo das áreas com risco significativamente elevado</span></span>
+<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dados_simulados<span class="sc">$</span>risco_significativo)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt; Não Sim 
+#&gt;  37  13</code></pre>
+</div>
+</div>
+<p>Até aqui, os dados foram apenas representados em mapas, sem incorporar explicitamente as relações espaciais na análise. Os estimadores de Bayes Empírico não espaciais tratam cada área como independente das demais, o que caracteriza uma abordagem asespacial. No entanto, em geografia, as relações espaciais dependem da distância e da proximidade entre unidades, seja ela física, social ou em rede.</p>
+<p>Podemos “emprestar” informações estatísticas de vizinhos espaciais para complementar a estimativa de parâmetros locais de doenças. É exatamente isso que faremos com a estimativa de Bayes Empírico Espacial, onde, em vez de usar a taxa global (geral) da doença como priori, usaremos a taxa local dos vizinhos ao redor de cada entidade como uma espécie de priori personalizada e específica do local.</p>
+<p>Para aplicar esses conceitos à análise espacial, utilizaremos o pacote <code>spdep</code> no R, que possui uma série de funções úteis para criar matrizes de pesos espaciais. O processo de passar de um objeto espacial (como um objeto da classe <code>sf</code>) para uma matriz de pesos espaciais utilizável requer mais de uma etapa.</p>
+</section>
+<section id="criando-objetos-de-vizinhança-por-contiguidade" class="level3" data-number="4.3.5">
+<h3 data-number="4.3.5" class="anchored" data-anchor-id="criando-objetos-de-vizinhança-por-contiguidade"><span class="header-section-number">4.3.5</span> Criando Objetos de Vizinhança por Contiguidade</h3>
+<p>Como estamos começando com dados de área (polígonos), o ponto de partida é usar a função utilitária <code>poly2nb()</code>, que recebe um objeto espacial de polígono e determina quais regiões específicas são contíguas a outras regiões.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregando pacotes necessários</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spdep)</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SpatialEpi)</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulando um grid espacial (como se fossem condados)</span></span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando um grid 10x10</span></span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="fu">st_make_grid</span>(<span class="fu">st_bbox</span>(<span class="fu">c</span>(<span class="at">xmin =</span> <span class="dv">0</span>, <span class="at">xmax =</span> <span class="dv">10</span>, <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="dv">10</span>)), <span class="at">n =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">10</span>))</span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>grid_sf <span class="ot">&lt;-</span> <span class="fu">st_sf</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">geometry =</span> grid)</span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulando dados epidemiológicos</span></span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a>grid_sf <span class="ot">&lt;-</span> grid_sf <span class="sc">%&gt;%</span></span>
+<span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb52-16"><a href="#cb52-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">populacao =</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">100</span>, <span class="dv">1000</span>, <span class="dv">5000</span>)),</span>
+<span id="cb52-17"><a href="#cb52-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">casos_observados =</span> <span class="fu">rpois</span>(<span class="dv">100</span>, <span class="at">lambda =</span> <span class="dv">5</span>),</span>
+<span id="cb52-18"><a href="#cb52-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">risco_global =</span> <span class="fu">sum</span>(casos_observados) <span class="sc">/</span> <span class="fu">sum</span>(populacao),</span>
+<span id="cb52-19"><a href="#cb52-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">casos_esperados =</span> populacao <span class="sc">*</span> risco_global,</span>
+<span id="cb52-20"><a href="#cb52-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">SMR =</span> casos_observados <span class="sc">/</span> casos_esperados</span>
+<span id="cb52-21"><a href="#cb52-21" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb52-22"><a href="#cb52-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-23"><a href="#cb52-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando uma lista de vizinhos por contiguidade Rainha (Queen)</span></span>
+<span id="cb52-24"><a href="#cb52-24" aria-hidden="true" tabindex="-1"></a>vizinhos_rainha <span class="ot">&lt;-</span> <span class="fu">poly2nb</span>(grid_sf, <span class="at">queen =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb52-25"><a href="#cb52-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-26"><a href="#cb52-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Examinando o objeto resultante</span></span>
+<span id="cb52-27"><a href="#cb52-27" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(vizinhos_rainha)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; Neighbour list object:
+#&gt; Number of regions: 100 
+#&gt; Number of nonzero links: 684 
+#&gt; Percentage nonzero weights: 6.84 
+#&gt; Average number of links: 6.84 
+#&gt; Link number distribution:
+#&gt; 
+#&gt;  3  5  8 
+#&gt;  4 32 64 
+#&gt; 4 least connected regions:
+#&gt; 1 10 91 100 with 3 links
+#&gt; 64 most connected regions:
+#&gt; 12 13 14 15 16 17 18 19 22 23 24 25 26 27 28 29 32 33 34 35 36 37 38 39 42 43 44 45 46 47 48 49 52 53 54 55 56 57 58 59 62 63 64 65 66 67 68 69 72 73 74 75 76 77 78 79 82 83 84 85 86 87 88 89 with 8 links</code></pre>
+</div>
+</div>
+<p>A função <code>summary()</code> para objetos <code>nb</code> (objetos de vizinhos no <code>spdep</code>) fornece informações de alto nível, como regiões sem vizinhos e a distribuição de vizinhos. A simetria espacial significa que se uma região é vizinha de outra, o inverso também é verdadeiro, o que se aplica a vizinhos baseados em contiguidade.</p>
+</section>
+<section id="bayes-empírico-espacial-local" class="level3" data-number="4.3.6">
+<h3 data-number="4.3.6" class="anchored" data-anchor-id="bayes-empírico-espacial-local"><span class="header-section-number">4.3.6</span> Bayes Empírico Espacial (Local)</h3>
+<p>Como vimos no módulo anterior, a suavização de taxas de doenças por Bayes Empírico é um processo pelo qual consideramos cada região e perguntamos: “Qual é a taxa subjacente mais verdadeira de doença neste local?”.</p>
+<p>No Bayes Empírico Aspacial, usamos a taxa média geral para toda a região de estudo como a priori. No Bayes Empírico Espacial, ao usar nossas definições recém-criadas de vizinhos locais, estendemos a abordagem EB alterando a fonte da informação a priori. Em vez de um risco de referência global, usamos a média dos vizinhos como uma priori [1].</p>
+<p>Isso produz uma espécie de “empréstimo” de informações estatísticas através do espaço, sob a suposição de que os condados locais nos dizem mais sobre um local específico do que condados distantes.</p>
+</section>
+<section id="exemplo-prático-em-r-bayes-empírico-espacial" class="level3" data-number="4.3.7">
+<h3 data-number="4.3.7" class="anchored" data-anchor-id="exemplo-prático-em-r-bayes-empírico-espacial"><span class="header-section-number">4.3.7</span> Exemplo Prático em R: Bayes Empírico Espacial</h3>
+<p>A função para estimar o Bayes Empírico espacial é <code>EBlocal()</code> do pacote <code>spdep</code>. Ela requer a contagem de eventos, a população em risco para cada área e um objeto de vizinhança <code>nb</code>.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimativa de Bayes Empírico Global (Aspacial) para comparação</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>eb_global <span class="ot">&lt;-</span> <span class="fu">eBayes</span>(<span class="at">Y =</span> grid_sf<span class="sc">$</span>casos_observados, <span class="at">E =</span> grid_sf<span class="sc">$</span>casos_esperados)</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>grid_sf<span class="sc">$</span>SMR_EB_Global <span class="ot">&lt;-</span> eb_global<span class="sc">$</span>RR</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimativa de Bayes Empírico Espacial (Local) sob a definição de contiguidade Rainha</span></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>eb_local <span class="ot">&lt;-</span> <span class="fu">EBlocal</span>(<span class="at">ri =</span> grid_sf<span class="sc">$</span>casos_observados, </span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ni =</span> grid_sf<span class="sc">$</span>populacao, </span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">nb =</span> vizinhos_rainha)</span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a><span class="co"># A saída de EBlocal() é um data.frame. A segunda coluna (est) é a estimativa EB</span></span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>grid_sf<span class="sc">$</span>SMR_EB_Local <span class="ot">&lt;-</span> eb_local<span class="sc">$</span>est</span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparando as estimativas</span></span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a>resumo_comparacao <span class="ot">&lt;-</span> grid_sf <span class="sc">%&gt;%</span></span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, casos_observados, SMR, SMR_EB_Global, SMR_EB_Local) <span class="sc">%&gt;%</span></span>
+<span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb54-18"><a href="#cb54-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-19"><a href="#cb54-19" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(resumo_comparacao, <span class="at">digits =</span> <span class="dv">3</span>, </span>
+<span id="cb54-20"><a href="#cb54-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">"Comparação entre SMR Bruta, EB Global e EB Local"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Comparação entre SMR Bruta, EB Global e EB Local</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">id</th>
+<th style="text-align: right;">casos_observados</th>
+<th style="text-align: right;">SMR</th>
+<th style="text-align: right;">SMR_EB_Global</th>
+<th style="text-align: right;">SMR_EB_Local</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.793</td>
+<td style="text-align: right;">0.914</td>
+<td style="text-align: right;">0.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.389</td>
+<td style="text-align: right;">0.672</td>
+<td style="text-align: right;">0.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.861</td>
+<td style="text-align: right;">0.998</td>
+<td style="text-align: right;">0.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.570</td>
+<td style="text-align: right;">0.791</td>
+<td style="text-align: right;">0.002</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">1.554</td>
+<td style="text-align: right;">1.334</td>
+<td style="text-align: right;">0.002</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">1.802</td>
+<td style="text-align: right;">1.439</td>
+<td style="text-align: right;">0.002</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.936</td>
+<td style="text-align: right;">1.005</td>
+<td style="text-align: right;">0.002</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2.401</td>
+<td style="text-align: right;">1.515</td>
+<td style="text-align: right;">0.003</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0.849</td>
+<td style="text-align: right;">0.962</td>
+<td style="text-align: right;">0.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.497</td>
+<td style="text-align: right;">0.001</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="considerações-finais-fazendo-escolhas" class="level3" data-number="4.3.8">
+<h3 data-number="4.3.8" class="anchored" data-anchor-id="considerações-finais-fazendo-escolhas"><span class="header-section-number">4.3.8</span> Considerações Finais: Fazendo Escolhas</h3>
+<p>Reunimos várias ferramentas analíticas para lidar com a heterogeneidade espacial na presença de instabilidade de taxas e incerteza devido à esparsidade de dados. Essas estratégias incluem as duas abordagens para suavização de Bayes Empírico, mas também a miríade de definições de vizinhos.</p>
+<p>Não existe uma regra simples para escolher entre elas. Abaixo está um resumo das considerações:</p>
+<ul>
+<li><p><strong>Bayes Empírico</strong>: Suaviza as taxas locais em direção à taxa de referência global. É recomendado quando a melhor estimativa a priori de taxas plausíveis é a média geral, e a razão para a esparsidade envolve tanto o numerador (doença rara) quanto o denominador (pequenas populações).</p></li>
+<li><p><strong>Bayes Empírico Espacial</strong>: Suaviza as taxas locais em direção à referência local. É recomendado quando há pelo menos alguma autocorrelação espacial nas taxas, de modo que as regiões próximas servem como uma priori mais informativa do que a média global. É especialmente útil quando a doença não é rara, mas a população em risco é pequena.</p></li>
+</ul>
+<p>Como em muitas coisas na análise epidemiológica, há um papel importante para a ciência, mas também uma necessidade de especialistas que possam se envolver na “arte” da análise.</p>
 </section>
 </section>
 <section id="aplicação-iv-utilizando-dos-modelos-de-regressão-espaciais-nos-dados-de-queimadas-no-estado-do-rio-de-janeiro." class="level2" data-number="4.4">
@@ -1806,21 +2182,21 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <section id="lendo-os-dados-de-queimadas-no-estado-do-rio-de-janeiro-em-2025" class="level4">
 <h4 class="anchored" data-anchor-id="lendo-os-dados-de-queimadas-no-estado-do-rio-de-janeiro-em-2025">Lendo os dados de queimadas no estado do Rio de Janeiro em 2025</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lendo a base de queimadas</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"dados/queimadas/queimadas_area.xlsx"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lendo a base de queimadas</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"dados/queimadas/queimadas_area.xlsx"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="lendo-o-mapa-do-rio-de-janeiro-e-fazendo-o-merge-com-os-dados-de-queimadas" class="level4">
 <h4 class="anchored" data-anchor-id="lendo-o-mapa-do-rio-de-janeiro-e-fazendo-o-merge-com-os-dados-de-queimadas">Lendo o mapa do Rio de Janeiro e fazendo o merge com os dados de queimadas</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lendo o mapa do Rio de Janeiro</span></span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Ler o arquivo</span></span>
-<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>mapa_rj <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"malhas/mapa_rj.shp"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lendo o mapa do Rio de Janeiro</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Ler o arquivo</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>mapa_rj <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"malhas/mapa_rj.shp"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Reading layer `mapa_rj' from data source 
-#&gt;   `/home/wagner/Downloads/spatial_ebook_quarto/spatial_ebook_project/malhas/mapa_rj.shp' 
+#&gt;   `/home/wagner/Google Drive/UFRRJ/spatial_ebook/malhas/mapa_rj.shp' 
 #&gt;   using driver `ESRI Shapefile'
 #&gt; Simple feature collection with 92 features and 7 fields
 #&gt; Geometry type: MULTIPOLYGON
@@ -1830,37 +2206,37 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Padronizar os nomes dos municípios em ambos os dataframes</span></span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>mapa_rj <span class="ot">&lt;-</span> mapa_rj <span class="sc">%&gt;%</span></span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name_mn =</span> <span class="fu">tolower</span>(name_mn))</span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> dados <span class="sc">%&gt;%</span></span>
-<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name_mn =</span> <span class="fu">tolower</span>(name_mn))</span>
-<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Fazer o left join usando as novas colunas padronizadas</span></span>
-<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>mapa_rj <span class="ot">&lt;-</span> mapa_rj <span class="sc">%&gt;%</span></span>
-<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(dados, <span class="at">by =</span> <span class="st">"name_mn"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Padronizar os nomes dos municípios em ambos os dataframes</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>mapa_rj <span class="ot">&lt;-</span> mapa_rj <span class="sc">%&gt;%</span></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name_mn =</span> <span class="fu">tolower</span>(name_mn))</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> dados <span class="sc">%&gt;%</span></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name_mn =</span> <span class="fu">tolower</span>(name_mn))</span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Fazer o left join usando as novas colunas padronizadas</span></span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>mapa_rj <span class="ot">&lt;-</span> mapa_rj <span class="sc">%&gt;%</span></span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(dados, <span class="at">by =</span> <span class="st">"name_mn"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="checando-a-variável-resposta-a-presença-de-autocorrelação." class="level4">
 <h4 class="anchored" data-anchor-id="checando-a-variável-resposta-a-presença-de-autocorrelação.">Checando a variável resposta a presença de autocorrelação.</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>mapa_seq <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span></span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> media_frp), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradientn</span>(</span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"#2c7bb6"</span>, <span class="st">"#abd9e9"</span>, <span class="st">"#ffffbf"</span>, <span class="st">"#fdae61"</span>, <span class="st">"#d7191c"</span>),</span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"FRP Médio"</span></span>
-<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Média do FRP - Personalizado"</span>) <span class="sc">+</span></span>
-<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
-<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>mapa_seq</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>mapa_seq <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> media_frp), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradientn</span>(</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"#2c7bb6"</span>, <span class="st">"#abd9e9"</span>, <span class="st">"#ffffbf"</span>, <span class="st">"#fdae61"</span>, <span class="st">"#d7191c"</span>),</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"FRP Médio"</span></span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Média do FRP - Personalizado"</span>) <span class="sc">+</span></span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a>mapa_seq</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="03-dados_area_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
+<p><img src="03-dados_area_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
 </figure>
 </div>
 </div>
@@ -1869,7 +2245,7 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <section id="moran-global-do-frp-médio" class="level4">
 <h4 class="anchored" data-anchor-id="moran-global-do-frp-médio">Moran Global do FRP Médio</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.test</span>(mapa_rj<span class="sc">$</span>media_frp, pesos.viz)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.test</span>(mapa_rj<span class="sc">$</span>media_frp, pesos.viz)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt;  Moran I test under randomisation
@@ -1888,8 +2264,8 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <section id="ajustando-o-modelo-de-regressão-linear-simples-vazio" class="level4">
 <h4 class="anchored" data-anchor-id="ajustando-o-modelo-de-regressão-linear-simples-vazio">Ajustando o modelo de regressão linear simples vazio</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>queimadas.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(media_frp <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> mapa_rj)</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(queimadas.lm)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>queimadas.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(media_frp <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> mapa_rj)</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(queimadas.lm)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt; Call:
@@ -1912,9 +2288,9 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <section id="colocando-a-variável-media_dias_sem_chuva-no-modelo" class="level4">
 <h4 class="anchored" data-anchor-id="colocando-a-variável-media_dias_sem_chuva-no-modelo">Colocando a variável <code>media_dias_sem_chuva</code> no modelo</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajustando o modelo de regressão linear simples</span></span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>queimadas.lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(media_frp <span class="sc">~</span> media_dias_sem_chuva, <span class="at">data =</span> mapa_rj)</span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(queimadas.lm2)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajustando o modelo de regressão linear simples</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>queimadas.lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(media_frp <span class="sc">~</span> media_dias_sem_chuva, <span class="at">data =</span> mapa_rj)</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(queimadas.lm2)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt; Call:
@@ -1940,9 +2316,9 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <section id="checando-os-residuos-para-verificar-a-presença-de-autocorrelação." class="level4">
 <h4 class="anchored" data-anchor-id="checando-os-residuos-para-verificar-a-presença-de-autocorrelação.">Checando os residuos para verificar a presença de autocorrelação.</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spdep)</span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>queimadas.lm<span class="sc">$</span>lmresid <span class="ot">&lt;-</span> <span class="fu">residuals</span>(queimadas.lm)</span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.test</span>(queimadas.lm<span class="sc">$</span>lmresid, pesos.viz)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spdep)</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>queimadas.lm<span class="sc">$</span>lmresid <span class="ot">&lt;-</span> <span class="fu">residuals</span>(queimadas.lm)</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.test</span>(queimadas.lm<span class="sc">$</span>lmresid, pesos.viz)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt;  Moran I test under randomisation
@@ -1963,9 +2339,9 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <p>O <strong>Modelo de Erro Espacial</strong> (<em>Spatial Error Model</em> - <strong>CAR</strong>), representado por:</p>
 <p><span class="math display">\[y_i = \beta_0 + \sum^{p}_{k} \beta_k x_{ik}  + \varepsilon_i\]</span> <span class="math display">\[\varepsilon_i = \lambda  W + \xi\]</span></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spatialreg)</span>
-<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>queimadas.car <span class="ot">&lt;-</span> <span class="fu">errorsarlm</span>(media_frp <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> mapa_rj, <span class="at">listw =</span> pesos.viz, <span class="at">Durbin =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(queimadas.car)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spatialreg)</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>queimadas.car <span class="ot">&lt;-</span> <span class="fu">errorsarlm</span>(media_frp <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> mapa_rj, <span class="at">listw =</span> pesos.viz, <span class="at">Durbin =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(queimadas.car)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt; Call:errorsarlm(formula = media_frp ~ 1, data = mapa_rj, listw = pesos.viz, 
@@ -2043,8 +2419,8 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <section id="colocando-a-variável-media_dias_sem_chuva-no-modelo-1" class="level4">
 <h4 class="anchored" data-anchor-id="colocando-a-variável-media_dias_sem_chuva-no-modelo-1">Colocando a variável <code>media_dias_sem_chuva</code> no modelo</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>queimadas.car2 <span class="ot">&lt;-</span> <span class="fu">errorsarlm</span>(media_frp <span class="sc">~</span> media_dias_sem_chuva, <span class="at">data =</span> mapa_rj, <span class="at">listw =</span> pesos.viz, <span class="at">Durbin =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(queimadas.car2)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>queimadas.car2 <span class="ot">&lt;-</span> <span class="fu">errorsarlm</span>(media_frp <span class="sc">~</span> media_dias_sem_chuva, <span class="at">data =</span> mapa_rj, <span class="at">listw =</span> pesos.viz, <span class="at">Durbin =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(queimadas.car2)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt; Call:errorsarlm(formula = media_frp ~ media_dias_sem_chuva, data = mapa_rj, 
@@ -2117,8 +2493,8 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <section id="checando-os-residuos-para-verificar-a-presença-de-autocorrelação" class="level4">
 <h4 class="anchored" data-anchor-id="checando-os-residuos-para-verificar-a-presença-de-autocorrelação">Checando os residuos para verificar a presença de autocorrelação</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>queimadas.car2<span class="sc">$</span>carresid <span class="ot">&lt;-</span> <span class="fu">residuals</span>(queimadas.car2)</span>
-<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.test</span>(queimadas.car2<span class="sc">$</span>carresid, pesos.viz)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>queimadas.car2<span class="sc">$</span>carresid <span class="ot">&lt;-</span> <span class="fu">residuals</span>(queimadas.car2)</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.test</span>(queimadas.car2<span class="sc">$</span>carresid, pesos.viz)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt;  Moran I test under randomisation
@@ -2142,20 +2518,20 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <li>Primeiro vamos extrair as coordenadas dos centróides dos municípios do estado do Rio de Janeiro</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Método 1: Converter para Spatial explicitamente</span></span>
-<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>mapa_rj_sp <span class="ot">&lt;-</span> <span class="fu">as</span>(mapa_rj, <span class="st">"Spatial"</span>)</span>
-<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular centróides</span></span>
-<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>centroides <span class="ot">&lt;-</span> <span class="fu">coordinates</span>(mapa_rj_sp)</span>
-<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(centroides) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"X"</span>, <span class="st">"Y"</span>)</span>
-<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a>centroides <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(centroides)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Método 1: Converter para Spatial explicitamente</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>mapa_rj_sp <span class="ot">&lt;-</span> <span class="fu">as</span>(mapa_rj, <span class="st">"Spatial"</span>)</span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular centróides</span></span>
+<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a>centroides <span class="ot">&lt;-</span> <span class="fu">coordinates</span>(mapa_rj_sp)</span>
+<span id="cb74-6"><a href="#cb74-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(centroides) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"X"</span>, <span class="st">"Y"</span>)</span>
+<span id="cb74-7"><a href="#cb74-7" aria-hidden="true" tabindex="-1"></a>centroides <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(centroides)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Biblioteca para ajustar o modelos GWR</span></span>
-<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spgwr)</span>
-<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimando a largura de banda “ideal” para o kernel</span></span>
-<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a>GWRbanda <span class="ot">&lt;-</span> <span class="fu">gwr.sel</span>(media_frp <span class="sc">~</span> media_dias_sem_chuva, <span class="at">data =</span> mapa_rj, <span class="at">coords =</span> <span class="fu">cbind</span>(centroides<span class="sc">$</span>X, centroides<span class="sc">$</span>Y), <span class="at">adapt =</span> T)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Biblioteca para ajustar o modelos GWR</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spgwr)</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimando a largura de banda “ideal” para o kernel</span></span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>GWRbanda <span class="ot">&lt;-</span> <span class="fu">gwr.sel</span>(media_frp <span class="sc">~</span> media_dias_sem_chuva, <span class="at">data =</span> mapa_rj, <span class="at">coords =</span> <span class="fu">cbind</span>(centroides<span class="sc">$</span>X, centroides<span class="sc">$</span>Y), <span class="at">adapt =</span> T)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Adaptive q: 0.381966 CV score: 293.4932 
 #&gt; Adaptive q: 0.618034 CV score: 296.7592 
@@ -2192,10 +2568,10 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <p><strong>OBS:</strong> Esse valor de <code>q</code> representa a proporção de vizinhos usada para construir o kernel. Depois, ao ajustar o modelo com a função <code>gwr()</code>, será calculada internamente a distância física real correspondente em metros para cada ponto com base nas coordenadas UTM.</p>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajustando o modelo GWR</span></span>
-<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>queimadas.gwr <span class="ot">=</span> <span class="fu">gwr</span>(media_frp <span class="sc">~</span> media_dias_sem_chuva, <span class="at">data =</span> mapa_rj, <span class="at">coords =</span> <span class="fu">cbind</span>(centroides<span class="sc">$</span>X, centroides<span class="sc">$</span>Y), <span class="at">adapt =</span> GWRbanda, <span class="at">hatmatrix =</span> <span class="cn">TRUE</span>, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>queimadas.gwr</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajustando o modelo GWR</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>queimadas.gwr <span class="ot">=</span> <span class="fu">gwr</span>(media_frp <span class="sc">~</span> media_dias_sem_chuva, <span class="at">data =</span> mapa_rj, <span class="at">coords =</span> <span class="fu">cbind</span>(centroides<span class="sc">$</span>X, centroides<span class="sc">$</span>Y), <span class="at">adapt =</span> GWRbanda, <span class="at">hatmatrix =</span> <span class="cn">TRUE</span>, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a>queimadas.gwr</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Call:
 #&gt; gwr(formula = media_frp ~ media_dias_sem_chuva, data = mapa_rj, 
@@ -2254,9 +2630,9 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <li><p>A redução do AIC em relação ao modelo OLS (que tinha <span class="math inline">\(AIC ≈ 371,57\)</span>) reforça a adequação do GWR (<span class="math inline">\(AIC ≈ 346,07\)</span>).</p></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocando a saída do modelo dentro de um objeto dataframe.</span></span>
-<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(queimadas.gwr<span class="sc">$</span>SDF)</span>
-<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(results)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colocando a saída do modelo dentro de um objeto dataframe.</span></span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(queimadas.gwr<span class="sc">$</span>SDF)</span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(results)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -2269,12 +2645,12 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <section id="verificando-a-distribuição-dos-coeficientes-de-regressão-para-a-variável-media_dias_sem_chuva" class="level4">
 <h4 class="anchored" data-anchor-id="verificando-a-distribuição-dos-coeficientes-de-regressão-para-a-variável-media_dias_sem_chuva">Verificando a distribuição dos coeficientes de regressão para a variável <code>media_dias_sem_chuva</code></h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(results<span class="sc">$</span>media_dias_sem_chuva)</span>
-<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">median</span>(results<span class="sc">$</span>media_dias_sem_chuva), <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(results<span class="sc">$</span>media_dias_sem_chuva)</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">median</span>(results<span class="sc">$</span>media_dias_sem_chuva), <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="03-dados_area_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+<p><img src="03-dados_area_files/figure-html/unnamed-chunk-50-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
 </figure>
 </div>
 </div>
@@ -2283,8 +2659,41 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <section id="verificando-a-distribuição-dos-localr2" class="level4">
 <h4 class="anchored" data-anchor-id="verificando-a-distribuição-dos-localr2">Verificando a distribuição dos <em>localR2</em></h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(results<span class="sc">$</span>localR2)</span>
-<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">median</span>(results<span class="sc">$</span>localR2), <span class="at">col =</span> <span class="st">"blue"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(results<span class="sc">$</span>localR2)</span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">median</span>(results<span class="sc">$</span>localR2), <span class="at">col =</span> <span class="st">"blue"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="03-dados_area_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="incorporando-alguns-parâmetros-de-saída-do-modelo-na-tabela-setor.sf" class="level4">
+<h4 class="anchored" data-anchor-id="incorporando-alguns-parâmetros-de-saída-do-modelo-na-tabela-setor.sf">Incorporando alguns parâmetros de saída do modelo na tabela <em>setor.sf</em></h4>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>coef_dias_sem_chuva <span class="ot">&lt;-</span> results<span class="sc">$</span>media_dias_sem_chuva</span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>localR2 <span class="ot">&lt;-</span> results<span class="sc">$</span>localR2</span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>pred.gwr <span class="ot">&lt;-</span> results<span class="sc">$</span>pred</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="mapa-dos-coeficientes-de-regressão-para-a-variável-lixo" class="level4">
+<h4 class="anchored" data-anchor-id="mapa-dos-coeficientes-de-regressão-para-a-variável-lixo">Mapa dos coeficientes de regressão para a variável lixo</h4>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>map.dias_sem_chuvas <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> coef_dias_sem_chuva), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(</span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">low =</span> <span class="st">"blue"</span>,      <span class="co"># para coeficientes negativos</span></span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mid =</span> <span class="st">"white"</span>,     <span class="co"># para valores próximos de zero</span></span>
+<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">high =</span> <span class="st">"darkred"</span>,      <span class="co"># para coeficientes positivos</span></span>
+<span id="cb83-7"><a href="#cb83-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">midpoint =</span> <span class="dv">0</span>,      <span class="co"># centraliza a escala no zero</span></span>
+<span id="cb83-8"><a href="#cb83-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Coef. dias sem chuva"</span></span>
+<span id="cb83-9"><a href="#cb83-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb83-10"><a href="#cb83-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Coef locais da variável dias sem chuva"</span>) <span class="sc">+</span></span>
+<span id="cb83-11"><a href="#cb83-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
+<span id="cb83-12"><a href="#cb83-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-13"><a href="#cb83-13" aria-hidden="true" tabindex="-1"></a>map.dias_sem_chuvas</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -2294,46 +2703,13 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 </div>
 </div>
 </section>
-<section id="incorporando-alguns-parâmetros-de-saída-do-modelo-na-tabela-setor.sf" class="level4">
-<h4 class="anchored" data-anchor-id="incorporando-alguns-parâmetros-de-saída-do-modelo-na-tabela-setor.sf">Incorporando alguns parâmetros de saída do modelo na tabela <em>setor.sf</em></h4>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>coef_dias_sem_chuva <span class="ot">&lt;-</span> results<span class="sc">$</span>media_dias_sem_chuva</span>
-<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>localR2 <span class="ot">&lt;-</span> results<span class="sc">$</span>localR2</span>
-<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>pred.gwr <span class="ot">&lt;-</span> results<span class="sc">$</span>pred</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="mapa-dos-coeficientes-de-regressão-para-a-variável-lixo" class="level4">
-<h4 class="anchored" data-anchor-id="mapa-dos-coeficientes-de-regressão-para-a-variável-lixo">Mapa dos coeficientes de regressão para a variável lixo</h4>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>map.dias_sem_chuvas <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span></span>
-<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> coef_dias_sem_chuva), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(</span>
-<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">low =</span> <span class="st">"blue"</span>,      <span class="co"># para coeficientes negativos</span></span>
-<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mid =</span> <span class="st">"white"</span>,     <span class="co"># para valores próximos de zero</span></span>
-<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">high =</span> <span class="st">"darkred"</span>,      <span class="co"># para coeficientes positivos</span></span>
-<span id="cb78-7"><a href="#cb78-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">midpoint =</span> <span class="dv">0</span>,      <span class="co"># centraliza a escala no zero</span></span>
-<span id="cb78-8"><a href="#cb78-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Coef. dias sem chuva"</span></span>
-<span id="cb78-9"><a href="#cb78-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb78-10"><a href="#cb78-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Coef locais da variável dias sem chuva"</span>) <span class="sc">+</span></span>
-<span id="cb78-11"><a href="#cb78-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
-<span id="cb78-12"><a href="#cb78-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-13"><a href="#cb78-13" aria-hidden="true" tabindex="-1"></a>map.dias_sem_chuvas</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="03-dados_area_files/figure-html/unnamed-chunk-55-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
 <section id="checando-os-residuos-para-verificar-a-presença-de-autocorrelação-para-o-modelo-gwr." class="level4">
 <h4 class="anchored" data-anchor-id="checando-os-residuos-para-verificar-a-presença-de-autocorrelação-para-o-modelo-gwr.">Checando os residuos para verificar a presença de autocorrelação para o modelo GWR.</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculando os resíduos para o modelo GWR</span></span>
-<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>results<span class="sc">$</span>residuos <span class="ot">&lt;-</span> mapa_rj<span class="sc">$</span>media_frp <span class="sc">-</span> results<span class="sc">$</span>pred</span>
-<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.test</span>(results<span class="sc">$</span>residuos, pesos.viz)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculando os resíduos para o modelo GWR</span></span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>results<span class="sc">$</span>residuos <span class="ot">&lt;-</span> mapa_rj<span class="sc">$</span>media_frp <span class="sc">-</span> results<span class="sc">$</span>pred</span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.test</span>(results<span class="sc">$</span>residuos, pesos.viz)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt;  Moran I test under randomisation
@@ -2366,30 +2742,30 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <p>O limiar de <span class="math inline">\(2\)</span> foi escolhido por ser uma aproximação prática do ponto de corte para um nível de significância de 5% (como (z = 1.96) na distribuição normal padrão).</p>
 <p>Essa abordagem permite visualizar espacialmente onde a variável <code>media_dias_sem_chuva</code> exerce um efeito estatisticamente significativo sobre a variável dependente <code>media_frp</code>.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculando a estatística de wald</span></span>
-<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>wald.teste <span class="ot">&lt;-</span> <span class="fu">abs</span>(results<span class="sc">$</span>media_dias_sem_chuva<span class="sc">/</span>results<span class="sc">$</span>media_dias_sem_chuva_se)</span>
-<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Dicotomizando a estatística de wald</span></span>
-<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>wald.teste_cat <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">ifelse</span>(mapa_rj<span class="sc">$</span>wald.teste <span class="sc">&lt;</span> <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb81-6"><a href="#cb81-6" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
-<span id="cb81-7"><a href="#cb81-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb81-8"><a href="#cb81-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb81-9"><a href="#cb81-9" aria-hidden="true" tabindex="-1"></a>map.wald <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span> </span>
-<span id="cb81-10"><a href="#cb81-10" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> wald.teste_cat), <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span> </span>
-<span id="cb81-11"><a href="#cb81-11" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"white"</span>, <span class="st">"purple"</span>), </span>
-<span id="cb81-12"><a href="#cb81-12" aria-hidden="true" tabindex="-1"></a>                              <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"&lt; 2"</span>, <span class="st">"&gt;= 2"</span>), </span>
-<span id="cb81-13"><a href="#cb81-13" aria-hidden="true" tabindex="-1"></a>                              <span class="at">name =</span> <span class="st">"Wald"</span>,</span>
-<span id="cb81-14"><a href="#cb81-14" aria-hidden="true" tabindex="-1"></a>                              <span class="at">drop =</span> <span class="cn">FALSE</span>) <span class="sc">+</span>  <span class="co"># Não dropar níveis</span></span>
-<span id="cb81-15"><a href="#cb81-15" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ggtitle</span>(<span class="st">"Teste Wald"</span>) <span class="sc">+</span> </span>
-<span id="cb81-16"><a href="#cb81-16" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_void</span>()</span>
-<span id="cb81-17"><a href="#cb81-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb81-18"><a href="#cb81-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb81-19"><a href="#cb81-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
-<span id="cb81-20"><a href="#cb81-20" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(map.dias_sem_chuvas, map.wald, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculando a estatística de wald</span></span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>wald.teste <span class="ot">&lt;-</span> <span class="fu">abs</span>(results<span class="sc">$</span>media_dias_sem_chuva<span class="sc">/</span>results<span class="sc">$</span>media_dias_sem_chuva_se)</span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Dicotomizando a estatística de wald</span></span>
+<span id="cb86-5"><a href="#cb86-5" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>wald.teste_cat <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">ifelse</span>(mapa_rj<span class="sc">$</span>wald.teste <span class="sc">&lt;</span> <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb86-6"><a href="#cb86-6" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb86-7"><a href="#cb86-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-8"><a href="#cb86-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-9"><a href="#cb86-9" aria-hidden="true" tabindex="-1"></a>map.wald <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span> </span>
+<span id="cb86-10"><a href="#cb86-10" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> wald.teste_cat), <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span> </span>
+<span id="cb86-11"><a href="#cb86-11" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"white"</span>, <span class="st">"purple"</span>), </span>
+<span id="cb86-12"><a href="#cb86-12" aria-hidden="true" tabindex="-1"></a>                              <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"&lt; 2"</span>, <span class="st">"&gt;= 2"</span>), </span>
+<span id="cb86-13"><a href="#cb86-13" aria-hidden="true" tabindex="-1"></a>                              <span class="at">name =</span> <span class="st">"Wald"</span>,</span>
+<span id="cb86-14"><a href="#cb86-14" aria-hidden="true" tabindex="-1"></a>                              <span class="at">drop =</span> <span class="cn">FALSE</span>) <span class="sc">+</span>  <span class="co"># Não dropar níveis</span></span>
+<span id="cb86-15"><a href="#cb86-15" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ggtitle</span>(<span class="st">"Teste Wald"</span>) <span class="sc">+</span> </span>
+<span id="cb86-16"><a href="#cb86-16" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_void</span>()</span>
+<span id="cb86-17"><a href="#cb86-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-18"><a href="#cb86-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-19"><a href="#cb86-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb86-20"><a href="#cb86-20" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(map.dias_sem_chuvas, map.wald, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="03-dados_area_files/figure-html/unnamed-chunk-57-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<p><img src="03-dados_area_files/figure-html/unnamed-chunk-55-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
@@ -2398,15 +2774,15 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <section id="mapa-dos-coeficientes-de-determinação-regionalizados-r2-local." class="level4">
 <h4 class="anchored" data-anchor-id="mapa-dos-coeficientes-de-determinação-regionalizados-r2-local.">Mapa dos coeficientes de determinação regionalizados (<span class="math inline">\(R^2\)</span> local).</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span></span>
-<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> localR2), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"viridis"</span>,, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">name =</span> <span class="fu">expression</span>(R<span class="sc">^</span><span class="dv">2</span><span class="sc">~</span>local)) <span class="sc">+</span></span>
-<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Mapa dos coeficientes de determinação regionalizados (R² local)"</span>) <span class="sc">+</span></span>
-<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> localR2), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"viridis"</span>,, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">name =</span> <span class="fu">expression</span>(R<span class="sc">^</span><span class="dv">2</span><span class="sc">~</span>local)) <span class="sc">+</span></span>
+<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Mapa dos coeficientes de determinação regionalizados (R² local)"</span>) <span class="sc">+</span></span>
+<span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="03-dados_area_files/figure-html/unnamed-chunk-58-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%"></p>
+<p><img src="03-dados_area_files/figure-html/unnamed-chunk-56-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%"></p>
 </figure>
 </div>
 </div>
@@ -2415,25 +2791,25 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <section id="verificando-a-distribuição-dos-preditos." class="level4">
 <h4 class="anchored" data-anchor-id="verificando-a-distribuição-dos-preditos.">Verificando a distribuição dos preditos.</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>histdens <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">titulo =</span> <span class="st">""</span>) {</span>
-<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>  densi <span class="ot">&lt;-</span> <span class="fu">density</span>(x)</span>
-<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>  xli <span class="ot">&lt;-</span> <span class="fu">range</span>(densi<span class="sc">$</span>x)</span>
-<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>  yli <span class="ot">&lt;-</span> <span class="fu">range</span>(densi<span class="sc">$</span>y)</span>
-<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hist</span>(x, <span class="at">col =</span> <span class="st">"orange"</span>, <span class="at">probability =</span> T, <span class="at">xlim =</span> xli, <span class="at">ylim =</span> yli, <span class="at">main =</span> titulo)</span>
-<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(densi, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb83-7"><a href="#cb83-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">median</span>(x), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb83-8"><a href="#cb83-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb83-9"><a href="#cb83-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb83-10"><a href="#cb83-10" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb83-11"><a href="#cb83-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb83-12"><a href="#cb83-12" aria-hidden="true" tabindex="-1"></a>hist.frp <span class="ot">&lt;-</span> <span class="fu">histdens</span>(mapa_rj<span class="sc">$</span>media_frp, <span class="st">"FRP médio"</span>)</span>
-<span id="cb83-13"><a href="#cb83-13" aria-hidden="true" tabindex="-1"></a>hist.lm <span class="ot">&lt;-</span> <span class="fu">histdens</span>(queimadas.lm2<span class="sc">$</span>fitted.values, <span class="st">"Pred LM"</span>)</span>
-<span id="cb83-14"><a href="#cb83-14" aria-hidden="true" tabindex="-1"></a>hist.car <span class="ot">&lt;-</span> <span class="fu">histdens</span>(queimadas.car2<span class="sc">$</span>fitted.values, <span class="st">"Pred CAR"</span>)</span>
-<span id="cb83-15"><a href="#cb83-15" aria-hidden="true" tabindex="-1"></a>hist.gwr <span class="ot">&lt;-</span> <span class="fu">histdens</span>(results<span class="sc">$</span>pred, <span class="st">"Pred GWR"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>histdens <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">titulo =</span> <span class="st">""</span>) {</span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>  densi <span class="ot">&lt;-</span> <span class="fu">density</span>(x)</span>
+<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>  xli <span class="ot">&lt;-</span> <span class="fu">range</span>(densi<span class="sc">$</span>x)</span>
+<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a>  yli <span class="ot">&lt;-</span> <span class="fu">range</span>(densi<span class="sc">$</span>y)</span>
+<span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hist</span>(x, <span class="at">col =</span> <span class="st">"orange"</span>, <span class="at">probability =</span> T, <span class="at">xlim =</span> xli, <span class="at">ylim =</span> yli, <span class="at">main =</span> titulo)</span>
+<span id="cb88-6"><a href="#cb88-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(densi, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb88-7"><a href="#cb88-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">median</span>(x), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb88-8"><a href="#cb88-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb88-9"><a href="#cb88-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-10"><a href="#cb88-10" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb88-11"><a href="#cb88-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-12"><a href="#cb88-12" aria-hidden="true" tabindex="-1"></a>hist.frp <span class="ot">&lt;-</span> <span class="fu">histdens</span>(mapa_rj<span class="sc">$</span>media_frp, <span class="st">"FRP médio"</span>)</span>
+<span id="cb88-13"><a href="#cb88-13" aria-hidden="true" tabindex="-1"></a>hist.lm <span class="ot">&lt;-</span> <span class="fu">histdens</span>(queimadas.lm2<span class="sc">$</span>fitted.values, <span class="st">"Pred LM"</span>)</span>
+<span id="cb88-14"><a href="#cb88-14" aria-hidden="true" tabindex="-1"></a>hist.car <span class="ot">&lt;-</span> <span class="fu">histdens</span>(queimadas.car2<span class="sc">$</span>fitted.values, <span class="st">"Pred CAR"</span>)</span>
+<span id="cb88-15"><a href="#cb88-15" aria-hidden="true" tabindex="-1"></a>hist.gwr <span class="ot">&lt;-</span> <span class="fu">histdens</span>(results<span class="sc">$</span>pred, <span class="st">"Pred GWR"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="03-dados_area_files/figure-html/unnamed-chunk-59-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<p><img src="03-dados_area_files/figure-html/unnamed-chunk-57-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
@@ -2479,75 +2855,75 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <section id="mapeando-os-valores-observados-e-preditos-dos-modelos-ajustados" class="level4">
 <h4 class="anchored" data-anchor-id="mapeando-os-valores-observados-e-preditos-dos-modelos-ajustados">Mapeando os valores observados e preditos dos modelos ajustados</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
-<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define faixas de classes abrangentes</span></span>
-<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>breaks_classes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">10</span>, <span class="cn">Inf</span>)</span>
-<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a>labels_classes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"&lt; 0"</span>, <span class="st">"0 - 2"</span>, <span class="st">"2 - 4"</span>, <span class="st">"4 - 10"</span>, <span class="st">"&gt; 10"</span>)</span>
-<span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-7"><a href="#cb84-7" aria-hidden="true" tabindex="-1"></a><span class="co"># -----------------------------------------</span></span>
-<span id="cb84-8"><a href="#cb84-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Taxa Bruta Observada</span></span>
-<span id="cb84-9"><a href="#cb84-9" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>brks <span class="ot">&lt;-</span> <span class="fu">cut</span>(mapa_rj<span class="sc">$</span>media_frp,</span>
-<span id="cb84-10"><a href="#cb84-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> breaks_classes,</span>
-<span id="cb84-11"><a href="#cb84-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb84-12"><a href="#cb84-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">right =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb84-13"><a href="#cb84-13" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> labels_classes)</span>
-<span id="cb84-14"><a href="#cb84-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-15"><a href="#cb84-15" aria-hidden="true" tabindex="-1"></a>tx.bruta <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span></span>
-<span id="cb84-16"><a href="#cb84-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> brks), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb84-17"><a href="#cb84-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"YlOrRd"</span>, <span class="at">name =</span> <span class="st">"Taxa"</span>) <span class="sc">+</span></span>
-<span id="cb84-18"><a href="#cb84-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Taxa Bruta"</span>) <span class="sc">+</span></span>
-<span id="cb84-19"><a href="#cb84-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
-<span id="cb84-20"><a href="#cb84-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-21"><a href="#cb84-21" aria-hidden="true" tabindex="-1"></a><span class="co"># -----------------------------------------</span></span>
-<span id="cb84-22"><a href="#cb84-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Predito - LM</span></span>
-<span id="cb84-23"><a href="#cb84-23" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>brks.lm <span class="ot">&lt;-</span> <span class="fu">cut</span>(queimadas.lm2<span class="sc">$</span>fitted.values,</span>
-<span id="cb84-24"><a href="#cb84-24" aria-hidden="true" tabindex="-1"></a>                        <span class="at">breaks =</span> breaks_classes,</span>
-<span id="cb84-25"><a href="#cb84-25" aria-hidden="true" tabindex="-1"></a>                        <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb84-26"><a href="#cb84-26" aria-hidden="true" tabindex="-1"></a>                        <span class="at">right =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb84-27"><a href="#cb84-27" aria-hidden="true" tabindex="-1"></a>                        <span class="at">labels =</span> labels_classes)</span>
-<span id="cb84-28"><a href="#cb84-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-29"><a href="#cb84-29" aria-hidden="true" tabindex="-1"></a>pred.lm <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span></span>
-<span id="cb84-30"><a href="#cb84-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> brks.lm), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb84-31"><a href="#cb84-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"YlOrRd"</span>, <span class="at">name =</span> <span class="st">"Taxa"</span>) <span class="sc">+</span></span>
-<span id="cb84-32"><a href="#cb84-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Taxa Predita - LM"</span>) <span class="sc">+</span></span>
-<span id="cb84-33"><a href="#cb84-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
-<span id="cb84-34"><a href="#cb84-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-35"><a href="#cb84-35" aria-hidden="true" tabindex="-1"></a><span class="co"># -----------------------------------------</span></span>
-<span id="cb84-36"><a href="#cb84-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Predito - CAR</span></span>
-<span id="cb84-37"><a href="#cb84-37" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>brks.car <span class="ot">&lt;-</span> <span class="fu">cut</span>(queimadas.car2<span class="sc">$</span>fitted.values,</span>
-<span id="cb84-38"><a href="#cb84-38" aria-hidden="true" tabindex="-1"></a>                         <span class="at">breaks =</span> breaks_classes,</span>
-<span id="cb84-39"><a href="#cb84-39" aria-hidden="true" tabindex="-1"></a>                         <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb84-40"><a href="#cb84-40" aria-hidden="true" tabindex="-1"></a>                         <span class="at">right =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb84-41"><a href="#cb84-41" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels =</span> labels_classes)</span>
-<span id="cb84-42"><a href="#cb84-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-43"><a href="#cb84-43" aria-hidden="true" tabindex="-1"></a>pred.car <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span></span>
-<span id="cb84-44"><a href="#cb84-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> brks.car), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb84-45"><a href="#cb84-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"YlOrRd"</span>, <span class="at">name =</span> <span class="st">"Taxa"</span>) <span class="sc">+</span></span>
-<span id="cb84-46"><a href="#cb84-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Taxa Predita - CAR"</span>) <span class="sc">+</span></span>
-<span id="cb84-47"><a href="#cb84-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
-<span id="cb84-48"><a href="#cb84-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-49"><a href="#cb84-49" aria-hidden="true" tabindex="-1"></a><span class="co"># -----------------------------------------</span></span>
-<span id="cb84-50"><a href="#cb84-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Predito - GWR</span></span>
-<span id="cb84-51"><a href="#cb84-51" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>brks.gwr <span class="ot">&lt;-</span> <span class="fu">cut</span>(results<span class="sc">$</span>pred,</span>
-<span id="cb84-52"><a href="#cb84-52" aria-hidden="true" tabindex="-1"></a>                         <span class="at">breaks =</span> breaks_classes,</span>
-<span id="cb84-53"><a href="#cb84-53" aria-hidden="true" tabindex="-1"></a>                         <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb84-54"><a href="#cb84-54" aria-hidden="true" tabindex="-1"></a>                         <span class="at">right =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb84-55"><a href="#cb84-55" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels =</span> labels_classes)</span>
-<span id="cb84-56"><a href="#cb84-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-57"><a href="#cb84-57" aria-hidden="true" tabindex="-1"></a>pred.gwr <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span></span>
-<span id="cb84-58"><a href="#cb84-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> brks.gwr), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb84-59"><a href="#cb84-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"YlOrRd"</span>, <span class="at">name =</span> <span class="st">"Taxa"</span>) <span class="sc">+</span></span>
-<span id="cb84-60"><a href="#cb84-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Taxa Predita - GWR"</span>) <span class="sc">+</span></span>
-<span id="cb84-61"><a href="#cb84-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
-<span id="cb84-62"><a href="#cb84-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-63"><a href="#cb84-63" aria-hidden="true" tabindex="-1"></a><span class="co"># -----------------------------------------</span></span>
-<span id="cb84-64"><a href="#cb84-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar mapas lado a lado</span></span>
-<span id="cb84-65"><a href="#cb84-65" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(tx.bruta, pred.lm, pred.car, pred.gwr, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define faixas de classes abrangentes</span></span>
+<span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a>breaks_classes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">10</span>, <span class="cn">Inf</span>)</span>
+<span id="cb89-5"><a href="#cb89-5" aria-hidden="true" tabindex="-1"></a>labels_classes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"&lt; 0"</span>, <span class="st">"0 - 2"</span>, <span class="st">"2 - 4"</span>, <span class="st">"4 - 10"</span>, <span class="st">"&gt; 10"</span>)</span>
+<span id="cb89-6"><a href="#cb89-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-7"><a href="#cb89-7" aria-hidden="true" tabindex="-1"></a><span class="co"># -----------------------------------------</span></span>
+<span id="cb89-8"><a href="#cb89-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Taxa Bruta Observada</span></span>
+<span id="cb89-9"><a href="#cb89-9" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>brks <span class="ot">&lt;-</span> <span class="fu">cut</span>(mapa_rj<span class="sc">$</span>media_frp,</span>
+<span id="cb89-10"><a href="#cb89-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> breaks_classes,</span>
+<span id="cb89-11"><a href="#cb89-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb89-12"><a href="#cb89-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">right =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb89-13"><a href="#cb89-13" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> labels_classes)</span>
+<span id="cb89-14"><a href="#cb89-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-15"><a href="#cb89-15" aria-hidden="true" tabindex="-1"></a>tx.bruta <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span></span>
+<span id="cb89-16"><a href="#cb89-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> brks), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb89-17"><a href="#cb89-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"YlOrRd"</span>, <span class="at">name =</span> <span class="st">"Taxa"</span>) <span class="sc">+</span></span>
+<span id="cb89-18"><a href="#cb89-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Taxa Bruta"</span>) <span class="sc">+</span></span>
+<span id="cb89-19"><a href="#cb89-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
+<span id="cb89-20"><a href="#cb89-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-21"><a href="#cb89-21" aria-hidden="true" tabindex="-1"></a><span class="co"># -----------------------------------------</span></span>
+<span id="cb89-22"><a href="#cb89-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Predito - LM</span></span>
+<span id="cb89-23"><a href="#cb89-23" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>brks.lm <span class="ot">&lt;-</span> <span class="fu">cut</span>(queimadas.lm2<span class="sc">$</span>fitted.values,</span>
+<span id="cb89-24"><a href="#cb89-24" aria-hidden="true" tabindex="-1"></a>                        <span class="at">breaks =</span> breaks_classes,</span>
+<span id="cb89-25"><a href="#cb89-25" aria-hidden="true" tabindex="-1"></a>                        <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb89-26"><a href="#cb89-26" aria-hidden="true" tabindex="-1"></a>                        <span class="at">right =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb89-27"><a href="#cb89-27" aria-hidden="true" tabindex="-1"></a>                        <span class="at">labels =</span> labels_classes)</span>
+<span id="cb89-28"><a href="#cb89-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-29"><a href="#cb89-29" aria-hidden="true" tabindex="-1"></a>pred.lm <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span></span>
+<span id="cb89-30"><a href="#cb89-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> brks.lm), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb89-31"><a href="#cb89-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"YlOrRd"</span>, <span class="at">name =</span> <span class="st">"Taxa"</span>) <span class="sc">+</span></span>
+<span id="cb89-32"><a href="#cb89-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Taxa Predita - LM"</span>) <span class="sc">+</span></span>
+<span id="cb89-33"><a href="#cb89-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
+<span id="cb89-34"><a href="#cb89-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-35"><a href="#cb89-35" aria-hidden="true" tabindex="-1"></a><span class="co"># -----------------------------------------</span></span>
+<span id="cb89-36"><a href="#cb89-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Predito - CAR</span></span>
+<span id="cb89-37"><a href="#cb89-37" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>brks.car <span class="ot">&lt;-</span> <span class="fu">cut</span>(queimadas.car2<span class="sc">$</span>fitted.values,</span>
+<span id="cb89-38"><a href="#cb89-38" aria-hidden="true" tabindex="-1"></a>                         <span class="at">breaks =</span> breaks_classes,</span>
+<span id="cb89-39"><a href="#cb89-39" aria-hidden="true" tabindex="-1"></a>                         <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb89-40"><a href="#cb89-40" aria-hidden="true" tabindex="-1"></a>                         <span class="at">right =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb89-41"><a href="#cb89-41" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels =</span> labels_classes)</span>
+<span id="cb89-42"><a href="#cb89-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-43"><a href="#cb89-43" aria-hidden="true" tabindex="-1"></a>pred.car <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span></span>
+<span id="cb89-44"><a href="#cb89-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> brks.car), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb89-45"><a href="#cb89-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"YlOrRd"</span>, <span class="at">name =</span> <span class="st">"Taxa"</span>) <span class="sc">+</span></span>
+<span id="cb89-46"><a href="#cb89-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Taxa Predita - CAR"</span>) <span class="sc">+</span></span>
+<span id="cb89-47"><a href="#cb89-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
+<span id="cb89-48"><a href="#cb89-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-49"><a href="#cb89-49" aria-hidden="true" tabindex="-1"></a><span class="co"># -----------------------------------------</span></span>
+<span id="cb89-50"><a href="#cb89-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Predito - GWR</span></span>
+<span id="cb89-51"><a href="#cb89-51" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>brks.gwr <span class="ot">&lt;-</span> <span class="fu">cut</span>(results<span class="sc">$</span>pred,</span>
+<span id="cb89-52"><a href="#cb89-52" aria-hidden="true" tabindex="-1"></a>                         <span class="at">breaks =</span> breaks_classes,</span>
+<span id="cb89-53"><a href="#cb89-53" aria-hidden="true" tabindex="-1"></a>                         <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb89-54"><a href="#cb89-54" aria-hidden="true" tabindex="-1"></a>                         <span class="at">right =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb89-55"><a href="#cb89-55" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels =</span> labels_classes)</span>
+<span id="cb89-56"><a href="#cb89-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-57"><a href="#cb89-57" aria-hidden="true" tabindex="-1"></a>pred.gwr <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span></span>
+<span id="cb89-58"><a href="#cb89-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> brks.gwr), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb89-59"><a href="#cb89-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"YlOrRd"</span>, <span class="at">name =</span> <span class="st">"Taxa"</span>) <span class="sc">+</span></span>
+<span id="cb89-60"><a href="#cb89-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Taxa Predita - GWR"</span>) <span class="sc">+</span></span>
+<span id="cb89-61"><a href="#cb89-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
+<span id="cb89-62"><a href="#cb89-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-63"><a href="#cb89-63" aria-hidden="true" tabindex="-1"></a><span class="co"># -----------------------------------------</span></span>
+<span id="cb89-64"><a href="#cb89-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar mapas lado a lado</span></span>
+<span id="cb89-65"><a href="#cb89-65" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(tx.bruta, pred.lm, pred.car, pred.gwr, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="03-dados_area_files/figure-html/unnamed-chunk-60-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<p><img src="03-dados_area_files/figure-html/unnamed-chunk-58-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
@@ -2556,35 +2932,35 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <section id="comparando-a-distribuição-dos-resíduos-dos-modelos-ajustados" class="level4">
 <h4 class="anchored" data-anchor-id="comparando-a-distribuição-dos-resíduos-dos-modelos-ajustados">Comparando a distribuição dos resíduos dos modelos ajustados</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vioplot)</span>
-<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define os resíduos</span></span>
-<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>res_lm  <span class="ot">&lt;-</span> queimadas.lm2<span class="sc">$</span>residuals</span>
-<span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a>res_car <span class="ot">&lt;-</span> queimadas.car2<span class="sc">$</span>residuals</span>
-<span id="cb85-6"><a href="#cb85-6" aria-hidden="true" tabindex="-1"></a>res_gwr <span class="ot">&lt;-</span> results<span class="sc">$</span>residuos</span>
-<span id="cb85-7"><a href="#cb85-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb85-8"><a href="#cb85-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Paleta de cores agradável</span></span>
-<span id="cb85-9"><a href="#cb85-9" aria-hidden="true" tabindex="-1"></a>cores <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#66C2A5"</span>, <span class="st">"#FC8D62"</span>, <span class="st">"#8DA0CB"</span>)  <span class="co"># Paleta Set2 do RColorBrewer</span></span>
-<span id="cb85-10"><a href="#cb85-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb85-11"><a href="#cb85-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico violin com visual melhorado</span></span>
-<span id="cb85-12"><a href="#cb85-12" aria-hidden="true" tabindex="-1"></a><span class="fu">vioplot</span>(</span>
-<span id="cb85-13"><a href="#cb85-13" aria-hidden="true" tabindex="-1"></a>  res_lm, res_car, res_gwr,</span>
-<span id="cb85-14"><a href="#cb85-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"LM"</span>, <span class="st">"CAR"</span>, <span class="st">"GWR"</span>),</span>
-<span id="cb85-15"><a href="#cb85-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">col =</span> cores,</span>
-<span id="cb85-16"><a href="#cb85-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">border =</span> <span class="st">"black"</span>,</span>
-<span id="cb85-17"><a href="#cb85-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">drawRect =</span> <span class="cn">TRUE</span>     <span class="co"># mediana dos resíduos</span></span>
-<span id="cb85-18"><a href="#cb85-18" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb85-19"><a href="#cb85-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb85-20"><a href="#cb85-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Título e rótulo do eixo Y</span></span>
-<span id="cb85-21"><a href="#cb85-21" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">main =</span> <span class="st">"Distribuição dos Resíduos por Modelo"</span>, <span class="at">cex.main =</span> <span class="fl">1.2</span>)</span>
-<span id="cb85-22"><a href="#cb85-22" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">"Resíduos"</span>, <span class="at">side =</span> <span class="dv">2</span>, <span class="at">line =</span> <span class="fl">2.5</span>, <span class="at">cex =</span> <span class="fl">1.1</span>)</span>
-<span id="cb85-23"><a href="#cb85-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb85-24"><a href="#cb85-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Linha horizontal em y = 0 para referência</span></span>
-<span id="cb85-25"><a href="#cb85-25" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"grey40"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vioplot)</span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define os resíduos</span></span>
+<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a>res_lm  <span class="ot">&lt;-</span> queimadas.lm2<span class="sc">$</span>residuals</span>
+<span id="cb90-5"><a href="#cb90-5" aria-hidden="true" tabindex="-1"></a>res_car <span class="ot">&lt;-</span> queimadas.car2<span class="sc">$</span>residuals</span>
+<span id="cb90-6"><a href="#cb90-6" aria-hidden="true" tabindex="-1"></a>res_gwr <span class="ot">&lt;-</span> results<span class="sc">$</span>residuos</span>
+<span id="cb90-7"><a href="#cb90-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-8"><a href="#cb90-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Paleta de cores agradável</span></span>
+<span id="cb90-9"><a href="#cb90-9" aria-hidden="true" tabindex="-1"></a>cores <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#66C2A5"</span>, <span class="st">"#FC8D62"</span>, <span class="st">"#8DA0CB"</span>)  <span class="co"># Paleta Set2 do RColorBrewer</span></span>
+<span id="cb90-10"><a href="#cb90-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-11"><a href="#cb90-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico violin com visual melhorado</span></span>
+<span id="cb90-12"><a href="#cb90-12" aria-hidden="true" tabindex="-1"></a><span class="fu">vioplot</span>(</span>
+<span id="cb90-13"><a href="#cb90-13" aria-hidden="true" tabindex="-1"></a>  res_lm, res_car, res_gwr,</span>
+<span id="cb90-14"><a href="#cb90-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"LM"</span>, <span class="st">"CAR"</span>, <span class="st">"GWR"</span>),</span>
+<span id="cb90-15"><a href="#cb90-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">col =</span> cores,</span>
+<span id="cb90-16"><a href="#cb90-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">border =</span> <span class="st">"black"</span>,</span>
+<span id="cb90-17"><a href="#cb90-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">drawRect =</span> <span class="cn">TRUE</span>     <span class="co"># mediana dos resíduos</span></span>
+<span id="cb90-18"><a href="#cb90-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb90-19"><a href="#cb90-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-20"><a href="#cb90-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Título e rótulo do eixo Y</span></span>
+<span id="cb90-21"><a href="#cb90-21" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">main =</span> <span class="st">"Distribuição dos Resíduos por Modelo"</span>, <span class="at">cex.main =</span> <span class="fl">1.2</span>)</span>
+<span id="cb90-22"><a href="#cb90-22" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">"Resíduos"</span>, <span class="at">side =</span> <span class="dv">2</span>, <span class="at">line =</span> <span class="fl">2.5</span>, <span class="at">cex =</span> <span class="fl">1.1</span>)</span>
+<span id="cb90-23"><a href="#cb90-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-24"><a href="#cb90-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Linha horizontal em y = 0 para referência</span></span>
+<span id="cb90-25"><a href="#cb90-25" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"grey40"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="03-dados_area_files/figure-html/unnamed-chunk-61-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%"></p>
+<p><img src="03-dados_area_files/figure-html/unnamed-chunk-59-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%"></p>
 </figure>
 </div>
 </div>
@@ -2634,81 +3010,81 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <section id="mapeando-os-resíduos-dos-modelos-ajustados" class="level4">
 <h4 class="anchored" data-anchor-id="mapeando-os-resíduos-dos-modelos-ajustados">Mapeando os resíduos dos modelos ajustados</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(colorspace)</span>
-<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
-<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb86-5"><a href="#cb86-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Quebras e rótulos</span></span>
-<span id="cb86-6"><a href="#cb86-6" aria-hidden="true" tabindex="-1"></a>breaks_res <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">5</span>)</span>
-<span id="cb86-7"><a href="#cb86-7" aria-hidden="true" tabindex="-1"></a>labels_res <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"-5 a -2"</span>, <span class="st">"-2 a -1"</span>, <span class="st">"-1 a 1"</span>, <span class="st">"1 a 2"</span>, <span class="st">"2 a 5"</span>)</span>
-<span id="cb86-8"><a href="#cb86-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb86-9"><a href="#cb86-9" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------</span></span>
-<span id="cb86-10"><a href="#cb86-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Resíduos - LM</span></span>
-<span id="cb86-11"><a href="#cb86-11" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>brks.res.lm <span class="ot">&lt;-</span> <span class="fu">cut</span>(queimadas.lm2<span class="sc">$</span>residuals,</span>
-<span id="cb86-12"><a href="#cb86-12" aria-hidden="true" tabindex="-1"></a>                            <span class="at">breaks =</span> breaks_res,</span>
-<span id="cb86-13"><a href="#cb86-13" aria-hidden="true" tabindex="-1"></a>                            <span class="at">labels =</span> labels_res,</span>
-<span id="cb86-14"><a href="#cb86-14" aria-hidden="true" tabindex="-1"></a>                            <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb86-15"><a href="#cb86-15" aria-hidden="true" tabindex="-1"></a>                            <span class="at">right =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb86-16"><a href="#cb86-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb86-17"><a href="#cb86-17" aria-hidden="true" tabindex="-1"></a>res.lm <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span></span>
-<span id="cb86-18"><a href="#cb86-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> brks.res.lm), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb86-19"><a href="#cb86-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete_sequential</span>(</span>
-<span id="cb86-20"><a href="#cb86-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="st">"Purple-Yellow"</span>,</span>
-<span id="cb86-21"><a href="#cb86-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Resíduo"</span>,</span>
-<span id="cb86-22"><a href="#cb86-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.value =</span> <span class="st">"grey75"</span>,</span>
-<span id="cb86-23"><a href="#cb86-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">drop =</span> <span class="cn">FALSE</span></span>
-<span id="cb86-24"><a href="#cb86-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb86-25"><a href="#cb86-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span>  <span class="co"># INVERTE A LEGENDA</span></span>
-<span id="cb86-26"><a href="#cb86-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Resíduos - LM"</span>) <span class="sc">+</span></span>
-<span id="cb86-27"><a href="#cb86-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
-<span id="cb86-28"><a href="#cb86-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb86-29"><a href="#cb86-29" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------</span></span>
-<span id="cb86-30"><a href="#cb86-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Resíduos - CAR</span></span>
-<span id="cb86-31"><a href="#cb86-31" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>brks.res.car <span class="ot">&lt;-</span> <span class="fu">cut</span>(queimadas.car2<span class="sc">$</span>residuals,</span>
-<span id="cb86-32"><a href="#cb86-32" aria-hidden="true" tabindex="-1"></a>                             <span class="at">breaks =</span> breaks_res,</span>
-<span id="cb86-33"><a href="#cb86-33" aria-hidden="true" tabindex="-1"></a>                             <span class="at">labels =</span> labels_res,</span>
-<span id="cb86-34"><a href="#cb86-34" aria-hidden="true" tabindex="-1"></a>                             <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb86-35"><a href="#cb86-35" aria-hidden="true" tabindex="-1"></a>                             <span class="at">right =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb86-36"><a href="#cb86-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb86-37"><a href="#cb86-37" aria-hidden="true" tabindex="-1"></a>res.car <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span></span>
-<span id="cb86-38"><a href="#cb86-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> brks.res.car), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb86-39"><a href="#cb86-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete_sequential</span>(</span>
-<span id="cb86-40"><a href="#cb86-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="st">"Purple-Yellow"</span>,</span>
-<span id="cb86-41"><a href="#cb86-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Resíduo"</span>,</span>
-<span id="cb86-42"><a href="#cb86-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.value =</span> <span class="st">"grey75"</span>,</span>
-<span id="cb86-43"><a href="#cb86-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">drop =</span> <span class="cn">FALSE</span></span>
-<span id="cb86-44"><a href="#cb86-44" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb86-45"><a href="#cb86-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span>  <span class="co"># INVERTE A LEGENDA</span></span>
-<span id="cb86-46"><a href="#cb86-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Resíduos - CAR"</span>) <span class="sc">+</span></span>
-<span id="cb86-47"><a href="#cb86-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
-<span id="cb86-48"><a href="#cb86-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb86-49"><a href="#cb86-49" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------</span></span>
-<span id="cb86-50"><a href="#cb86-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Resíduos - GWR</span></span>
-<span id="cb86-51"><a href="#cb86-51" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>brks.res.gwr <span class="ot">&lt;-</span> <span class="fu">cut</span>(results<span class="sc">$</span>residuos,</span>
-<span id="cb86-52"><a href="#cb86-52" aria-hidden="true" tabindex="-1"></a>                             <span class="at">breaks =</span> breaks_res,</span>
-<span id="cb86-53"><a href="#cb86-53" aria-hidden="true" tabindex="-1"></a>                             <span class="at">labels =</span> labels_res,</span>
-<span id="cb86-54"><a href="#cb86-54" aria-hidden="true" tabindex="-1"></a>                             <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb86-55"><a href="#cb86-55" aria-hidden="true" tabindex="-1"></a>                             <span class="at">right =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb86-56"><a href="#cb86-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb86-57"><a href="#cb86-57" aria-hidden="true" tabindex="-1"></a>res.gwr <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span></span>
-<span id="cb86-58"><a href="#cb86-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> brks.res.gwr), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb86-59"><a href="#cb86-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete_sequential</span>(</span>
-<span id="cb86-60"><a href="#cb86-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="st">"Purple-Yellow"</span>,</span>
-<span id="cb86-61"><a href="#cb86-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Resíduo"</span>,</span>
-<span id="cb86-62"><a href="#cb86-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.value =</span> <span class="st">"grey75"</span>,</span>
-<span id="cb86-63"><a href="#cb86-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">drop =</span> <span class="cn">FALSE</span></span>
-<span id="cb86-64"><a href="#cb86-64" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb86-65"><a href="#cb86-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span>  <span class="co"># INVERTE A LEGENDA</span></span>
-<span id="cb86-66"><a href="#cb86-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Resíduos - GWR"</span>) <span class="sc">+</span></span>
-<span id="cb86-67"><a href="#cb86-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
-<span id="cb86-68"><a href="#cb86-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb86-69"><a href="#cb86-69" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------</span></span>
-<span id="cb86-70"><a href="#cb86-70" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibir mapas</span></span>
-<span id="cb86-71"><a href="#cb86-71" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(res.lm, res.car, res.gwr, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(colorspace)</span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-5"><a href="#cb91-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Quebras e rótulos</span></span>
+<span id="cb91-6"><a href="#cb91-6" aria-hidden="true" tabindex="-1"></a>breaks_res <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">5</span>)</span>
+<span id="cb91-7"><a href="#cb91-7" aria-hidden="true" tabindex="-1"></a>labels_res <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"-5 a -2"</span>, <span class="st">"-2 a -1"</span>, <span class="st">"-1 a 1"</span>, <span class="st">"1 a 2"</span>, <span class="st">"2 a 5"</span>)</span>
+<span id="cb91-8"><a href="#cb91-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-9"><a href="#cb91-9" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------</span></span>
+<span id="cb91-10"><a href="#cb91-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Resíduos - LM</span></span>
+<span id="cb91-11"><a href="#cb91-11" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>brks.res.lm <span class="ot">&lt;-</span> <span class="fu">cut</span>(queimadas.lm2<span class="sc">$</span>residuals,</span>
+<span id="cb91-12"><a href="#cb91-12" aria-hidden="true" tabindex="-1"></a>                            <span class="at">breaks =</span> breaks_res,</span>
+<span id="cb91-13"><a href="#cb91-13" aria-hidden="true" tabindex="-1"></a>                            <span class="at">labels =</span> labels_res,</span>
+<span id="cb91-14"><a href="#cb91-14" aria-hidden="true" tabindex="-1"></a>                            <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb91-15"><a href="#cb91-15" aria-hidden="true" tabindex="-1"></a>                            <span class="at">right =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb91-16"><a href="#cb91-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-17"><a href="#cb91-17" aria-hidden="true" tabindex="-1"></a>res.lm <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span></span>
+<span id="cb91-18"><a href="#cb91-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> brks.res.lm), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb91-19"><a href="#cb91-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete_sequential</span>(</span>
+<span id="cb91-20"><a href="#cb91-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="st">"Purple-Yellow"</span>,</span>
+<span id="cb91-21"><a href="#cb91-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Resíduo"</span>,</span>
+<span id="cb91-22"><a href="#cb91-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.value =</span> <span class="st">"grey75"</span>,</span>
+<span id="cb91-23"><a href="#cb91-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">drop =</span> <span class="cn">FALSE</span></span>
+<span id="cb91-24"><a href="#cb91-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb91-25"><a href="#cb91-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span>  <span class="co"># INVERTE A LEGENDA</span></span>
+<span id="cb91-26"><a href="#cb91-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Resíduos - LM"</span>) <span class="sc">+</span></span>
+<span id="cb91-27"><a href="#cb91-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
+<span id="cb91-28"><a href="#cb91-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-29"><a href="#cb91-29" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------</span></span>
+<span id="cb91-30"><a href="#cb91-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Resíduos - CAR</span></span>
+<span id="cb91-31"><a href="#cb91-31" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>brks.res.car <span class="ot">&lt;-</span> <span class="fu">cut</span>(queimadas.car2<span class="sc">$</span>residuals,</span>
+<span id="cb91-32"><a href="#cb91-32" aria-hidden="true" tabindex="-1"></a>                             <span class="at">breaks =</span> breaks_res,</span>
+<span id="cb91-33"><a href="#cb91-33" aria-hidden="true" tabindex="-1"></a>                             <span class="at">labels =</span> labels_res,</span>
+<span id="cb91-34"><a href="#cb91-34" aria-hidden="true" tabindex="-1"></a>                             <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb91-35"><a href="#cb91-35" aria-hidden="true" tabindex="-1"></a>                             <span class="at">right =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb91-36"><a href="#cb91-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-37"><a href="#cb91-37" aria-hidden="true" tabindex="-1"></a>res.car <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span></span>
+<span id="cb91-38"><a href="#cb91-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> brks.res.car), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb91-39"><a href="#cb91-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete_sequential</span>(</span>
+<span id="cb91-40"><a href="#cb91-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="st">"Purple-Yellow"</span>,</span>
+<span id="cb91-41"><a href="#cb91-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Resíduo"</span>,</span>
+<span id="cb91-42"><a href="#cb91-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.value =</span> <span class="st">"grey75"</span>,</span>
+<span id="cb91-43"><a href="#cb91-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">drop =</span> <span class="cn">FALSE</span></span>
+<span id="cb91-44"><a href="#cb91-44" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb91-45"><a href="#cb91-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span>  <span class="co"># INVERTE A LEGENDA</span></span>
+<span id="cb91-46"><a href="#cb91-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Resíduos - CAR"</span>) <span class="sc">+</span></span>
+<span id="cb91-47"><a href="#cb91-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
+<span id="cb91-48"><a href="#cb91-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-49"><a href="#cb91-49" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------</span></span>
+<span id="cb91-50"><a href="#cb91-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Resíduos - GWR</span></span>
+<span id="cb91-51"><a href="#cb91-51" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>brks.res.gwr <span class="ot">&lt;-</span> <span class="fu">cut</span>(results<span class="sc">$</span>residuos,</span>
+<span id="cb91-52"><a href="#cb91-52" aria-hidden="true" tabindex="-1"></a>                             <span class="at">breaks =</span> breaks_res,</span>
+<span id="cb91-53"><a href="#cb91-53" aria-hidden="true" tabindex="-1"></a>                             <span class="at">labels =</span> labels_res,</span>
+<span id="cb91-54"><a href="#cb91-54" aria-hidden="true" tabindex="-1"></a>                             <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb91-55"><a href="#cb91-55" aria-hidden="true" tabindex="-1"></a>                             <span class="at">right =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb91-56"><a href="#cb91-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-57"><a href="#cb91-57" aria-hidden="true" tabindex="-1"></a>res.gwr <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span></span>
+<span id="cb91-58"><a href="#cb91-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> brks.res.gwr), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb91-59"><a href="#cb91-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete_sequential</span>(</span>
+<span id="cb91-60"><a href="#cb91-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="st">"Purple-Yellow"</span>,</span>
+<span id="cb91-61"><a href="#cb91-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Resíduo"</span>,</span>
+<span id="cb91-62"><a href="#cb91-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.value =</span> <span class="st">"grey75"</span>,</span>
+<span id="cb91-63"><a href="#cb91-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">drop =</span> <span class="cn">FALSE</span></span>
+<span id="cb91-64"><a href="#cb91-64" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb91-65"><a href="#cb91-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span>  <span class="co"># INVERTE A LEGENDA</span></span>
+<span id="cb91-66"><a href="#cb91-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Resíduos - GWR"</span>) <span class="sc">+</span></span>
+<span id="cb91-67"><a href="#cb91-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
+<span id="cb91-68"><a href="#cb91-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-69"><a href="#cb91-69" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------</span></span>
+<span id="cb91-70"><a href="#cb91-70" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibir mapas</span></span>
+<span id="cb91-71"><a href="#cb91-71" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(res.lm, res.car, res.gwr, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="03-dados_area_files/figure-html/unnamed-chunk-62-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<p><img src="03-dados_area_files/figure-html/unnamed-chunk-60-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
