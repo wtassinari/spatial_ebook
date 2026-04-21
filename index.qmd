@@ -24,8 +24,8 @@ O material está organizado em capítulos segundo a **tipologia dos dados espaci
 |----------|----------|
 | **1. Introdução** | Conceitos fundamentais, ferramentas e bibliotecas R |
 | **2. Tipologia dos Dados** | Visão geral dos três tipos de dados espaciais |
-| **3. Dados de Área** | Teoria + Aplicações (Dengue, Hanseníase, Regressão Espacial) |
-| **4. Padrões Pontuais** | Teoria + Aplicações (Queimadas, John Snow) |
+| **3. Padrões Pontuais** | Teoria + Aplicações (Queimadas, John Snow) |
+| **4. Dados de Área** | Teoria + Aplicações (Dengue, Hanseníase, Regressão Espacial) |
 | **5. Geoestatística** | Teoria + Aplicação (Pluviosidade no Rio de Janeiro) |
 | **6. Trabalho Final** | Roteiro e instruções para o trabalho avaliativo |
 | **7. Referências Bibliográficas** | Referências Bibliográficas |

@@ -148,6 +148,47 @@ pre code {
   border-radius: 0 6px 6px 0;
 }
 
+
+.box-dica11 {
+  background-color:  #e8f5e9; /* azul claro */
+  border-left: 5px solid #4caf50; /* azul escuro */
+  padding: 15px;
+  margin: 1em 0;
+  border-radius: 6px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+}
+
+.box-dica12 {
+  background-color: #fff8e1;       /* amarelo bem claro */
+  border-left: 5px solid #ffb300;  /* amarelo ouro */
+  padding: 15px;
+  margin: 1em 0;
+  border-radius: 6px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+}
+
+.box-dica13 {
+  background-color: #fce4ec;       /* rosa claro */
+  border-left: 5px solid #ec407a;  /* rosa forte */
+  padding: 15px;
+  margin: 1em 0;
+  border-radius: 6px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+}
+
+.box-dica14 {
+  background-color: #f5f5f5;       /* cinza claro */
+  border-left: 5px solid #757575;  /* cinza médio */
+  padding: 15px;
+  margin: 1em 0;
+  border-radius: 6px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+}
+
 /* Figuras */
 figure {
   text-align: center;

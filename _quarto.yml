@@ -26,8 +26,8 @@ book:
         - 02-tipos_dados.qmd
     - part: "Análise por Tipo de Dado"
       chapters:
-        - 03-dados_area.qmd
-        - 04-padroes_pontuais.qmd
+        - 03-padroes_pontuais.qmd
+        - 04-dados_area.qmd
         - 05-geoestatistica.qmd
     - 06-trabalho_final.qmd
     - 07-referencia_bibliografica.qmd

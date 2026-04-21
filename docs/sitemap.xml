@@ -2,23 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://wtassinari.github.io/spatial_ebook/index.html</loc>
-    <lastmod>2026-04-20T10:18:37.701Z</lastmod>
+    <lastmod>2026-04-21T11:26:53.305Z</lastmod>
   </url>
   <url>
     <loc>https://wtassinari.github.io/spatial_ebook/01-introducao.html</loc>
-    <lastmod>2026-04-20T19:20:44.454Z</lastmod>
+    <lastmod>2026-04-21T10:45:47.572Z</lastmod>
   </url>
   <url>
     <loc>https://wtassinari.github.io/spatial_ebook/02-tipos_dados.html</loc>
     <lastmod>2026-04-20T10:28:52.718Z</lastmod>
   </url>
   <url>
-    <loc>https://wtassinari.github.io/spatial_ebook/03-dados_area.html</loc>
-    <lastmod>2026-04-20T11:15:53.530Z</lastmod>
+    <loc>https://wtassinari.github.io/spatial_ebook/03-padroes_pontuais.html</loc>
+    <lastmod>2026-04-21T21:05:03.715Z</lastmod>
   </url>
   <url>
-    <loc>https://wtassinari.github.io/spatial_ebook/04-padroes_pontuais.html</loc>
-    <lastmod>2026-04-20T20:33:31.376Z</lastmod>
+    <loc>https://wtassinari.github.io/spatial_ebook/04-dados_area.html</loc>
+    <lastmod>2026-04-21T11:24:26.144Z</lastmod>
   </url>
   <url>
     <loc>https://wtassinari.github.io/spatial_ebook/05-geoestatistica.html</loc>

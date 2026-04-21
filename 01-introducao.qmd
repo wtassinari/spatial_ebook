@@ -62,7 +62,7 @@ A imagem mostra homenagens a John Snow em Soho, Londres: um retrato na fachada d
 
 - *"Todas as coisas se parecem, porém coisas mais próximas tendem a ser mais semelhantes do que aquelas mais distantes."*  (Tobler, 1979). <span style="color:red; font-weight:bold;"> **Também conhecida como $1^a$ Lei da Geografia**</span>
 
-# 🛠️ Algumas Ferramentas para Estatística Espacial
+# Algumas Ferramentas para Estatística Espacial
   
 ## SiG QGIS
   
@@ -99,7 +99,7 @@ knitr::include_graphics('figuras/geopandas.png')
 Fonte: [Github Geopandas](https://geopandas.org/en/stable/)
   
   
-# 📚 Bibliotecas R utilizadas no curso
+# Bibliotecas R utilizadas no curso
 
 ### 📦 Manipulação e Leitura de Dados
 | Biblioteca     | Funcionalidade                                                              |
@@ -110,7 +110,7 @@ Fonte: [Github Geopandas](https://geopandas.org/en/stable/)
   
 ---
   
-### 📊 Visualização Gráfica (Gráficos, Mapas e Paletas)
+### Visualização Gráfica (Gráficos, Mapas e Paletas)
   
   | Biblioteca       | Funcionalidade                                                                 |
   |------------------|---------------------------------------------------------------------------------|
@@ -128,7 +128,7 @@ Fonte: [Github Geopandas](https://geopandas.org/en/stable/)
 ---
   
   
-### 🌍 Dados Espaciais e Geoprocessamento
+### Dados Espaciais e Geoprocessamento
   | Biblioteca     | Funcionalidade                                                                  |
   |----------------|----------------------------------------------------------------------------------|
   | `sf`           | Manipulação de dados espaciais com o padrão Simple Features                     |
@@ -140,7 +140,7 @@ Fonte: [Github Geopandas](https://geopandas.org/en/stable/)
   
   ---
   
-### 📈 Estatística Espacial e Modelagem
+### Estatística Espacial e Modelagem
   | Biblioteca     | Funcionalidade                                                                         |
   |----------------|-----------------------------------------------------------------------------------------|
   | `spatstat`     | Análise de padrões de pontos no espaço bidimensional                                   |
