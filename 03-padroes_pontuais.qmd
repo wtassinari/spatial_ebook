@@ -401,7 +401,7 @@ A função K avalia o número de vizinhos dentro de uma distância $r$:
 - Igual ao esperado $\rightarrow$ **aleatório**
 :::
 
-## **Aplicação I:** Análise dos pontos de ocorrência de focos de queimadas no estado do Rio de Janeiro/Brasil em dezembro de 2025
+## Aplicação I: Análise dos pontos de ocorrência de focos de queimadas no estado do Rio de Janeiro/Brasil em dezembro de 2025
 
 #### Lendo os dados
 
@@ -642,7 +642,7 @@ plot(K_env, legend = FALSE, main = "Função K de Ripley com Envelope de Simula�
 O gráfico da Função K de Ripley revela que os focos de queimadas apresentam um forte padrão de aglomeração espacial (clustering) em distâncias menores (até aproximadamente $r = 42.000$ km), uma vez que a linha preta (valores observados) encontra-se significativamente acima do envelope de simulações (área cinza) e da linha teórica de completa aleatoriedade espacial (linha tracejada vermelha). No entanto, a partir dessa distância, observa-se uma queda abrupta na curva observada, que passa a se situar abaixo do envelope de simulações, indicando que, em escalas espaciais maiores (acima de $r = 42.000$ km), os focos de queimadas tendem a um padrão de dispersão ou regularidade.
 
 
-## **Aplicação II:** Estudo de John Snow
+## Aplicação II: Estudo de John Snow
 
 - Segue algumas aplicações com os dados do pacote `cholera`, que contêm as localizações das mortes por cólera no famoso estudo de John Snow (Londres, 1854).
 

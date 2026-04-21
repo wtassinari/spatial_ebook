@@ -13,11 +13,11 @@ Ao final deste capítulo, o estudante deverá ser capaz de:
 
 Os dados de área representam fenômenos agregados por unidades geográficas discretas, como municípios, estados, distritos censitários ou setores epidemiológicos. Neste capítulo, apresentamos as principais técnicas de análise para esse tipo de dado, com aplicações práticas em saúde pública.
 
-# 👉 Aplicações da Estatística Espacial 
+## Mapa Temático
 
-## **Aplicação I:** Mapa Temático Mundial da Expectativa de Vida entre os Países
+### Mapa Temático Mundial da Expectativa de Vida entre os Países
 
-#### O mapa temático tem como principal objetivo visualizar e analisar a distribuição espacial de um fenômeno específico.
+O mapa temático tem como principal objetivo visualizar e analisar a distribuição espacial de um fenômeno específico.
 
 ```{r, echo=T, out.width='90%'}
 library(tmap)
@@ -27,7 +27,201 @@ tmap_style("classic")
 qtm(World, fill = "life_exp")
 ```
 
-## **Aplicação II:** Análise exploratória espacial da incidência de dengue no estado do Rio de Janeiro
+## Matriz de Vizinhança
+
+A matriz de vizinhança é um instrumento fundamental da Estatística Espacial utilizado para representar formalmente quais áreas são consideradas vizinhas entre si. Em termos simples, ela transforma o mapa em uma estrutura matemática que indica quem é vizinho de quem.
+
+Imagine os municípios de um estado. No mapa, visualmente conseguimos perceber quais compartilham fronteiras. A matriz de vizinhança traduz essa informação em números: se dois municípios são vizinhos, atribuímos valor $1$; se não são, atribuímos $0$. O resultado é uma tabela quadrada $(n \times n)$, onde $n$ é o número de municípios analisados.
+
+```{r echo=F, fig.align="center", out.width="55%"}
+knitr::include_graphics('figuras/vizinhanca.png')
+```
+
+#### **Exemplo Simplificado de Matriz de Vizinhança**
+
+**Municípios analisados:**  
+  Rio de Janeiro, Niterói, São Gonçalo, Duque de Caxias, Nova Iguaçu  
+
+**Critério:** Contiguidade do tipo *Rainha*  
+  (considera vizinhos os municípios que compartilham qualquer ponto de fronteira)
+
+
+|            | Rio | Niterói | S. Gonçalo | D. Caxias | N. Iguaçu |
+  |:-----------|:---:|:-------:|:----------:|:---------:|:---------:|
+  | **Rio**        |  0  |    1    |     1      |     1     |     1     |
+  | **Niterói**    |  1  |    0    |     1      |     0     |     0     |
+  | **S. Gonçalo** |  1  |    1    |     0      |     0     |     0     |
+  | **D. Caxias**  |  1  |    0    |     0      |     0     |     1     |
+  | **N. Iguaçu**  |  1  |    0    |     0      |     1     |     0     |
+  
+
+::: box-dica13
+
+Notas:
+  
+- **1** = municípios são vizinhos (compartilham fronteira)  
+- **0** = municípios não são vizinhos  
+A **diagonal principal é zero**, pois um município não é vizinho de si mesmo.
+
+:::
+
+Essa matriz é essencial porque muitos fenômenos da gestão pública apresentam dependência espacial. Ou seja, o que acontece em um município pode influenciar municípios vizinhos. Exemplos incluem:
+  
+- Propagação de doenças (como dengue);
+- Dinâmica do desemprego;
+- Criminalidade;
+- Poluição ambiental;
+- Expansão urbana.
+
+Sem a matriz de vizinhança, os métodos estatísticos utilizados tratariam cada município como independente. Com ela, conseguimos incorporar a ideia de que “o território importa”.
+
+Existem diferentes critérios para definir vizinhança, e a escolha do critério depende do problema de pesquisa a ser analisado. Para doenças transmissíveis, por exemplo, a contiguidade territorial pode ser adequada. Já para fluxos econômicos, a distância ou conectividade pode fazer mais sentido. particularmente
+
+::: box-dica14
+
+**Tipos de Matrizes de Vizinhança no R**
+
+ o R (principalmente através do pacote `spdep`) oferece vários tipos de matrizes de vizinhança para análise espacial:
+
+1. Vizinhança por Contiguidade (Adjacência)
+   - Rainha (Queen): `poly2nb(polygons, queen=TRUE)` considera vizinhos os municípios que compartilham qualquer ponto de fronteira (lateral ou diagonal).
+   - Torre (Rook): `poly2nb(polygons, queen=FALSE)` considera vizinhos apenas os municípios que compartilham uma fronteira lateral.
+   
+2. Vizinhança por Distância
+   - Raio Fixo: `dnearneigh(coords, d1, d2)` define vizinhos como aqueles dentro de uma distância mínima (d1) e máxima (d2).
+   - k-Vizinhos Mais Próximos: `knn2nb(knearneigh(coords, k))` define vizinhos como os k mais próximos, independentemente da distância real.
+
+3. Vizinhança por Gráficos Geométricos
+   - Delaunay: `tri2nb(coords)` define vizinhos com base na triangulação de Delaunay.
+   - Voronoi: `voronoi.nb(coords)` define vizinhos com base nas células de Voronoi.
+
+4. Personalizadas/Customizadas
+    - Definir manualmente os vizinhos
+    - Combinar diferentes tipos
+
+:::
+
+## Autocorrelação espacial
+
+### **Moran Global**
+
+O Moran Global é uma medida sintética que avalia se existe autocorrelação espacial em todo o território analisado. Em outras palavras, ele indica se municípios vizinhos tendem a apresentar valores semelhantes para determinado indicador, como renda, taxa de mortalidade ou incidência de dengue. Quando o índice é positivo e estatisticamente significativo, significa que áreas próximas apresentam padrões semelhantes (alto com alto, baixo com baixo), revelando a existência de agrupamentos espaciais. Quando é próximo de zero, sugere ausência de padrão espacial. 
+
+O Moran Global é importante porque permite verificar se o fenômeno analisado possui organização territorial, indicando a necessidade de políticas regionais integradas em vez de intervenções isoladas.
+
+$$I = \frac{ \sum_{i=1}^{n} \sum_{j=1}^{n} w_{ij} (y_i - \bar{y})(y_j - \bar{y}) }{ \sum_{i=1}^{n} (y_i - \bar{y})^2 }$$
+  
+::: box-dica4
+
+* $I > 0$: valores similares estão próximos (agrupamento positivo).
+
+* $I < 0$: valores diferentes estão próximos (dispersão).
+
+* $I \approx 0$: padrão aleatório.
+
+:::
+  
+Sabendo que:
+  
+- \( I \): valor do índice de Moran global.
+- \( n \): número total de unidades espaciais (regiões).
+- \( y_i \): valor da variável de interesse na região \( i \).
+- \( \bar{y} \): média dos valores de \( y \) em todas as regiões.
+- \( w_{ij} \): elemento da matriz de vizinhança que representa a relação espacial entre as regiões \( i \) e \( j \).
+- \( w_{ij} = 1 \) se \( i \) e \( j \) são vizinhos, 0 caso contrário (ou ponderado).
+- O numerador mede a covariância espacial ponderada, e o denominador é a variância total de \( y \).
+
+
+### **Moran Local (LISA)**
+
+O Moran Local, também conhecido como LISA (*Local Indicators of Spatial Association*), aprofunda a análise ao avaliar a autocorrelação espacial em cada unidade territorial individualmente. Diferentemente do Moran Global, que fornece um único valor para todo o estado ou país, o Moran Local identifica onde exatamente estão os agrupamentos espaciais e possíveis áreas atípicas. Ele permite classificar cada município como parte de um cluster de valores altos, um cluster de valores baixos ou como um ponto fora do padrão em relação aos seus vizinhos. Essa análise é fundamental para identificar territórios prioritários e direcionar recursos de forma mais estratégica.
+
+Avalia a autocorrelação espacial **local**, permitindo identificar regiões com agrupamentos (clusters) ou comportamentos atípicos.
+
+$$I^{(i)} = \frac{n}{\sum_{j=1}^{n} (z_j - \bar{z})^2} \sum_{j=1}^{n} w_{ij} (z_i - \bar{z})(z_j - \bar{z})$$
+  
+Sabendo que:
+  
+- \( I^{(i)} \): índice de Moran local para a região \( i \).
+- \( n \): número total de regiões.
+- \( z_i \): valor padronizado (ou original, dependendo da convenção) da variável na região \( i \).
+- \( \bar{z} \): média da variável \( z \).
+- \( w_{ij} \): peso espacial entre as regiões \( i \) e \( j \).
+- A soma considera a influência dos vizinhos \( j \) sobre o ponto \( i \), ponderada pela matriz de vizinhança.
+
+
+### **LISA Map**
+
+O LISA Map é um mapa temático que representa graficamente os resultados do Índice de Moran Local, ele identifica:
+  
+- Clustering local (agrupamento de valores semelhantes)
+
+- Outliers espaciais (valores discrepantes em relação aos vizinhos)
+
+- Regiões não significativas (sem padrão espacial detectável)
+
+
+| Tipo de Associação        | Descrição                                                | Interpretação Espacial                                                |
+  | ------------------------- | -------------------------------------------------------- | --------------------------------------------------------------------- |
+  | 🔴 **Alto-Alto (High-High)** | Valor alto cercado por vizinhos também com valores altos | Indica **cluster de altas magnitudes**, também chamado de **hotspot** |
+  | 🔵 **Baixo-Baixo (Low-Low)** | Valor baixo cercado por vizinhos com valores baixos      | Indica **cluster de baixas magnitudes**, ou **coldspot**              |
+  | 🟠 **Alto-Baixo (High-Low)** | Valor alto cercado por valores baixos                    | Indica um **outlier espacial positivo**                               |
+  | 🟡 **Baixo-Alto (Low-High)** | Valor baixo cercado por valores altos                    | Indica um **outlier espacial negativo**                               |
+  | ⚪ **Não significativo**     | Sem associação espacial relevante                        | O valor na região não apresenta padrão espacial detectável            |
+  
+  
+* Os valores do Moran Local são testados por permutação para verificar se o padrão observado é estatisticamente significativo ou poderia ocorrer por acaso.
+
+* Apenas as regiões significativas (p-valor < 0.05) costumam ser coloridas nos mapas.
+
+Esse mapa abaixo pertence ao artigo ["Are regions equal in adversity? A spatial analysis of the spread and dynamics of COVID-19 in Europe", de Amdaoud, Arcuri e Levratto (2021)](https://www.researchgate.net/publication/349729379_Are_regions_equal_in_adversity_A_spatial_analysis_of_the_spread_and_dynamics_of_COVID-19_in_Europe). O artigo realiza uma análise espacial detalhada da mortalidade por COVID-19 em 125 regiões europeias durante a primeira onda da pandemia (março a maio de 2020). 
+
+```{r echo=F, fig.align="center", out.width="80%"}
+knitr::include_graphics('figuras/lisa_map_covid.png')
+```
+
+Utilizando o índice de Moran Local (LISA), o estudo identifica padrões de autocorrelação espacial na mortalidade por COVID-19 entre as regiões europeias durante a primeira onda da pandemia. O resultado evidencia clusters espaciais significativos, com destaque para regiões High-High (altas taxas de mortalidade cercadas por outras com altas taxas), como o norte da Itália, Madrid e a região da Alsácia, na França. Ao mesmo tempo, regiões Low-Low, como o sul da Itália, Dinamarca e partes da Alemanha Oriental, apresentaram baixa mortalidade em vizinhança igualmente baixa. Esses padrões persistentes ao longo do tempo indicam que a disseminação da pandemia seguiu lógicas regionais, reforçando a importância de políticas públicas que considerem as desigualdades territoriais na resposta à crise sanitária.
+
+**Autocorrelação espacial dos casos confirmados de covid-19 em municípios sede de regionais
+de saúde e vizinhos, segundo a análise do Índice Local de Moran (LISA) Univariado. Paraná, Brasil,
+março de 2020 a janeiro de 2021.**
+
+```{r echo=F, fig.align="center", out.width="90%"}
+knitr::include_graphics('figuras/moran_local3_covid.png')
+```
+
+[COVRE, Eduardo Rocha et al. Correlação espacial da covid-19 com leitos de unidades de terapia intensiva no Paraná. Revista de Saúde Pública, v. 56, p. 14, 2022.](https://www.scielo.br/j/rsp/a/NDB7dYnVxgbtWPFskqxMgKR/?lang=pt)
+
+Na figura acima, observamos que o valor do Índice de Moran Global foi de $0,404$, com $p-valor < 0,001$, indicando uma autocorrelação espacial positiva moderada e estatisticamente significativa. Isso significa que a distribuição dos casos não ocorreu de forma aleatória no território paranaense – pelo contrário, municípios com taxas semelhantes de COVID-19 tenderam a se agrupar no espaço.
+
+Observando o mapa LISA (Indicadores Locais de Associação Espacial), podemos identificar diferentes padrões regionais. As áreas em vermelho (Alto-Alto) representam municípios com altas taxas da doença cercados por vizinhos igualmente afetados, formando verdadeiros "clusters de transmissão" que exigiam intervenções coordenadas e prioritárias. Por outro lado, as áreas em azul escuro (Baixo-Baixo) mostram regiões onde tanto o município quanto seus vizinhos mantiveram baixas taxas, sugerindo que estratégias de controle podem ter sido mais eficazes nessas localidades.
+
+As áreas em rosa (Alto-Baixo) e azul claro (Baixo-Alto) revelam situações de transição ou exceção, onde um município destoa do padrão de seus vizinhos. Estes são pontos de atenção para a vigilância em saúde, pois podem indicar locais onde a doença se comporta de forma diferente da região de entorno. Já as áreas em cinza (Não significante) não apresentaram padrão espacial definido, podendo refletir maior heterogeneidade local ou dinâmicas de transmissão mais complexas.
+
+::: box-dica13
+
+🎯 Diferença resumida
+
+* Moran Global → Existe padrão espacial no estado como um todo ?
+
+* Moran Local (LISA) → Onde estão esses padrões ?
+
+* LISA Map → Visualização espacial desses agrupamentos.
+
+:::
+
+::: box-dica2
+
+🗺️ Resumindo
+
+- **Moran Global** indica se há padrão geral de autocorrelação espacial (positivo, negativo ou aleatório).
+
+- **Moran Local** revela **onde** esses padrões ocorrem: clusters de alto/alto (*hotspots*), baixo/baixo (*coldspots*), alto/baixo (*outliers*), etc.
+
+:::
+
+
+## Aplicação I: Análise exploratória espacial da incidência de dengue no estado do Rio de Janeiro
 
 ```{r, echo=T, out.width='90%'}
 # ============================================================================
@@ -44,6 +238,7 @@ dengue <- read_excel("dados/dengue/dengue2025.xlsx") |>
 
 head(dengue)
 ```
+
 #### Lendo o Mapa {.tabset}
 
 ##### Baixando via `geobr`
@@ -224,60 +419,6 @@ ggplot() +
 ```
 
 
-#### Matriz de Vizinhança
-
-A matriz de vizinhança é um instrumento fundamental da Estatística Espacial utilizado para representar formalmente quais áreas são consideradas vizinhas entre si. Em termos simples, ela transforma o mapa em uma estrutura matemática que indica quem é vizinho de quem.
-
-Imagine os municípios de um estado. No mapa, visualmente conseguimos perceber quais compartilham fronteiras. A matriz de vizinhança traduz essa informação em números: se dois municípios são vizinhos, atribuímos valor 1; se não são, atribuímos 0. O resultado é uma tabela quadrada (n × n), onde n é o número de municípios analisados.
-
-```{r echo=F, fig.align="center", out.width="55%"}
-knitr::include_graphics('figuras/vizinhanca.png')
-```
-
-#### **Exemplo Simplificado de Matriz de Vizinhança**
-
-**Municípios analisados:**  
-  Rio de Janeiro, Niterói, São Gonçalo, Duque de Caxias, Nova Iguaçu  
-
-**Critério:** Contiguidade do tipo *Rainha*  
-  (considera vizinhos os municípios que compartilham qualquer ponto de fronteira)
-
-
-|            | Rio | Niterói | S. Gonçalo | D. Caxias | N. Iguaçu |
-  |:-----------|:---:|:-------:|:----------:|:---------:|:---------:|
-  | **Rio**        |  0  |    1    |     1      |     1     |     1     |
-  | **Niterói**    |  1  |    0    |     1      |     0     |     0     |
-  | **S. Gonçalo** |  1  |    1    |     0      |     0     |     0     |
-  | **D. Caxias**  |  1  |    0    |     0      |     0     |     1     |
-  | **N. Iguaçu**  |  1  |    0    |     0      |     1     |     0     |
-  
-  ---
-  
-Notas:
-  
-- **1** = municípios são vizinhos (compartilham fronteira)  
-- **0** = municípios não são vizinhos  
-A **diagonal principal é zero**, pois um município não é vizinho de si mesmo.
-
-Essa matriz é essencial porque muitos fenômenos da gestão pública apresentam dependência espacial. Ou seja, o que acontece em um município pode influenciar municípios vizinhos. Exemplos incluem:
-  
-- Propagação de doenças (como dengue);
-- Dinâmica do desemprego;
-- Criminalidade;
-- Poluição ambiental;
-- Expansão urbana.
-
-Sem a matriz de vizinhança, os métodos utilizados na estatísticos estatística tratariam cada município como independente. Com ela, conseguimos incorporar a ideia de que “o território importa”.
-
-Existem diferentes critérios para definir vizinhança:
-  
-- Contiguidade (compartilham fronteira);
-
-- Distância (municípios dentro de um raio específico);
-
-- k-vizinhos mais próximos (cada área tem um número fixo de vizinhos).
-
-A escolha do critério depende do problema de política pública analisado. Para doenças transmissíveis, por exemplo, a contiguidade territorial pode ser adequada. Já para fluxos econômicos, a distância ou conectividade pode fazer mais sentido.
 
 
 ```{r, echo=T, out.width='90%'}
@@ -371,36 +512,6 @@ mapa.viz
 ```
 
   
-#### Autocorrelação espacial
-
-🔎 **Moran Global**
-
-O Moran Global é uma medida sintética que avalia se existe autocorrelação espacial em todo o território analisado. Em outras palavras, ele indica se municípios vizinhos tendem a apresentar valores semelhantes para determinado indicador, como renda, taxa de mortalidade ou incidência de dengue. Quando o índice é positivo e estatisticamente significativo, significa que áreas próximas apresentam padrões semelhantes (alto com alto, baixo com baixo), revelando a existência de agrupamentos espaciais. Quando é próximo de zero, sugere ausência de padrão espacial. 
-
-O Moran Global é importante porque permite verificar se o fenômeno analisado possui organização territorial, indicando a necessidade de políticas regionais integradas em vez de intervenções isoladas.
-
-$$I = \frac{ \sum_{i=1}^{n} \sum_{j=1}^{n} w_{ij} (y_i - \bar{y})(y_j - \bar{y}) }{ \sum_{i=1}^{n} (y_i - \bar{y})^2 }$$
-  
-::: box-dica4
-
-* $I > 0$: valores similares estão próximos (agrupamento positivo).
-
-* $I < 0$: valores diferentes estão próximos (dispersão).
-
-* $I \approx 0$: padrão aleatório.
-
-:::
-  
-Sabendo que:
-  
-- \( I \): valor do índice de Moran global.
-- \( n \): número total de unidades espaciais (regiões).
-- \( y_i \): valor da variável de interesse na região \( i \).
-- \( \bar{y} \): média dos valores de \( y \) em todas as regiões.
-- \( w_{ij} \): elemento da matriz de vizinhança que representa a relação espacial entre as regiões \( i \) e \( j \).
-- \( w_{ij} = 1 \) se \( i \) e \( j \) são vizinhos, 0 caso contrário (ou ponderado).
-- O numerador mede a covariância espacial ponderada, e o denominador é a variância total de \( y \).
-
 #### Autocorrelação espacial dos casos de dengue nos municípios/RJ
 
 ```{r, echo=T, out.width='90%'}
@@ -417,23 +528,6 @@ moran.test(mapa$incidencia, pesos.viz)
 ```
 
 O teste de Moran indicou ausência de autocorrelação espacial significativa na incidência analisada $(I = −0,055; p-valor = 0,71)$. Como o valor do índice é próximo de zero e o $p-valor$ é superior a $0,05$, não há evidências para rejeitar a hipótese de aleatoriedade espacial. Assim, os dados não apresentam padrão de agrupamento ou dispersão no espaço, sugerindo que a variação observada não está associada à localização geográfica das áreas estudadas.
-
-📍 **Moran Local (LISA)**
-
-O Moran Local, também conhecido como LISA (*Local Indicators of Spatial Association*), aprofunda a análise ao avaliar a autocorrelação espacial em cada unidade territorial individualmente. Diferentemente do Moran Global, que fornece um único valor para todo o estado ou país, o Moran Local identifica onde exatamente estão os agrupamentos espaciais e possíveis áreas atípicas. Ele permite classificar cada município como parte de um cluster de valores altos, um cluster de valores baixos ou como um ponto fora do padrão em relação aos seus vizinhos. Essa análise é fundamental para identificar territórios prioritários e direcionar recursos de forma mais estratégica.
-
-Avalia a autocorrelação espacial **local**, permitindo identificar regiões com agrupamentos (clusters) ou comportamentos atípicos.
-
-$$I^{(i)} = \frac{n}{\sum_{j=1}^{n} (z_j - \bar{z})^2} \sum_{j=1}^{n} w_{ij} (z_i - \bar{z})(z_j - \bar{z})$$
-  
-Sabendo que:
-  
-- \( I^{(i)} \): índice de Moran local para a região \( i \).
-- \( n \): número total de regiões.
-- \( z_i \): valor padronizado (ou original, dependendo da convenção) da variável na região \( i \).
-- \( \bar{z} \): média da variável \( z \).
-- \( w_{ij} \): peso espacial entre as regiões \( i \) e \( j \).
-- A soma considera a influência dos vizinhos \( j \) sobre o ponto \( i \), ponderada pela matriz de vizinhança.
 
 #### Mapeando os polígonos que tiveram os p-valores mais significativos no Moran Local para os casos.
 
@@ -508,55 +602,6 @@ Neste mapa, podemos observar:
 
   * Negativo + significativo $\rightarrow$ outlier (ex: um valor alto cercado por baixos, ou o contrário).
   
-🗺 **LISA Map**
-
-O LISA Map é um mapa temático que representa graficamente os resultados do Índice de Moran Local, ele identifica:
-  
-- Clustering local (agrupamento de valores semelhantes)
-
-- Outliers espaciais (valores discrepantes em relação aos vizinhos)
-
-- Regiões não significativas (sem padrão espacial detectável)
-
-
-| Tipo de Associação        | Descrição                                                | Interpretação Espacial                                                |
-  | ------------------------- | -------------------------------------------------------- | --------------------------------------------------------------------- |
-  | 🔴 **Alto-Alto (High-High)** | Valor alto cercado por vizinhos também com valores altos | Indica **cluster de altas magnitudes**, também chamado de **hotspot** |
-  | 🔵 **Baixo-Baixo (Low-Low)** | Valor baixo cercado por vizinhos com valores baixos      | Indica **cluster de baixas magnitudes**, ou **coldspot**              |
-  | 🟠 **Alto-Baixo (High-Low)** | Valor alto cercado por valores baixos                    | Indica um **outlier espacial positivo**                               |
-  | 🟡 **Baixo-Alto (Low-High)** | Valor baixo cercado por valores altos                    | Indica um **outlier espacial negativo**                               |
-  | ⚪ **Não significativo**     | Sem associação espacial relevante                        | O valor na região não apresenta padrão espacial detectável            |
-  
-  
-* Os valores do Moran Local são testados por permutação para verificar se o padrão observado é estatisticamente significativo ou poderia ocorrer por acaso.
-
-* Apenas as regiões significativas (p-valor < 0.05) costumam ser coloridas nos mapas.
-
-Esse mapa abaixo pertence ao artigo ["Are regions equal in adversity? A spatial analysis of the spread and dynamics of COVID-19 in Europe", de Amdaoud, Arcuri e Levratto (2021)](https://www.researchgate.net/publication/349729379_Are_regions_equal_in_adversity_A_spatial_analysis_of_the_spread_and_dynamics_of_COVID-19_in_Europe). O artigo realiza uma análise espacial detalhada da mortalidade por COVID-19 em 125 regiões europeias durante a primeira onda da pandemia (março a maio de 2020). 
-
-```{r echo=F, fig.align="center", out.width="80%"}
-knitr::include_graphics('figuras/lisa_map_covid.png')
-```
-
-Utilizando o índice de Moran Local (LISA), o estudo identifica padrões de autocorrelação espacial na mortalidade por COVID-19 entre as regiões europeias durante a primeira onda da pandemia. O resultado evidencia clusters espaciais significativos, com destaque para regiões High-High (altas taxas de mortalidade cercadas por outras com altas taxas), como o norte da Itália, Madrid e a região da Alsácia, na França. Ao mesmo tempo, regiões Low-Low, como o sul da Itália, Dinamarca e partes da Alemanha Oriental, apresentaram baixa mortalidade em vizinhança igualmente baixa. Esses padrões persistentes ao longo do tempo indicam que a disseminação da pandemia seguiu lógicas regionais, reforçando a importância de políticas públicas que considerem as desigualdades territoriais na resposta à crise sanitária.
-
-**Autocorrelação espacial dos casos confirmados de covid-19 em municípios sede de regionais
-de saúde e vizinhos, segundo a análise do Índice Local de Moran (LISA) Univariado. Paraná, Brasil,
-março de 2020 a janeiro de 2021.**
-
-```{r echo=F, fig.align="center", out.width="90%"}
-knitr::include_graphics('figuras/moran_local3_covid.png')
-```
-
-[COVRE, Eduardo Rocha et al. Correlação espacial da covid-19 com leitos de unidades de terapia intensiva no Paraná. Revista de Saúde Pública, v. 56, p. 14, 2022.](https://www.scielo.br/j/rsp/a/NDB7dYnVxgbtWPFskqxMgKR/?lang=pt)
-
-Na figura acima, observamos que o valor do Índice de Moran Global foi de $0,404$, com $p-valor < 0,001$, indicando uma autocorrelação espacial positiva moderada e estatisticamente significativa. Isso significa que a distribuição dos casos não ocorreu de forma aleatória no território paranaense – pelo contrário, municípios com taxas semelhantes de COVID-19 tenderam a se agrupar no espaço.
-
-Observando o mapa LISA (Indicadores Locais de Associação Espacial), podemos identificar diferentes padrões regionais. As áreas em vermelho (Alto-Alto) representam municípios com altas taxas da doença cercados por vizinhos igualmente afetados, formando verdadeiros "clusters de transmissão" que exigiam intervenções coordenadas e prioritárias. Por outro lado, as áreas em azul escuro (Baixo-Baixo) mostram regiões onde tanto o município quanto seus vizinhos mantiveram baixas taxas, sugerindo que estratégias de controle podem ter sido mais eficazes nessas localidades.
-
-As áreas em rosa (Alto-Baixo) e azul claro (Baixo-Alto) revelam situações de transição ou exceção, onde um município destoa do padrão de seus vizinhos. Estes são pontos de atenção para a vigilância em saúde, pois podem indicar locais onde a doença se comporta de forma diferente da região de entorno. Já as áreas em cinza (Não significante) não apresentaram padrão espacial definido, podendo refletir maior heterogeneidade local ou dinâmicas de transmissão mais complexas.
-
-
 #### **LISA Map dos casos de dengue na cidade do Rio de Janeiro/RJ**
 
   
@@ -624,576 +669,7 @@ tm_shape(mapa) +
 
 ```
 
-🎯 Diferença resumida
-
-* Moran Global → Existe padrão espacial no estado como um todo ?
-
-* Moran Local (LISA) → Onde estão esses padrões ?
-
-* LISA Map → Visualização espacial desses agrupamentos.
-
-::: box-dica2
-
-🗺️ Resumindo
-
-- **Moran Global** indica se há padrão geral de autocorrelação espacial (positivo, negativo ou aleatório).
-
-- **Moran Local** revela **onde** esses padrões ocorrem: clusters de alto/alto (*hotspots*), baixo/baixo (*coldspots*), alto/baixo (*outliers*), etc.
-
-:::
-
-
-#### **# Bayesiano Empírico: Global e Local**
-
-##### A ideia central
-
-Imagine que você quer estimar a taxa de uma doença em vários municípios. O problema: municípios pequenos têm taxas **instáveis** — um único caso pode triplicar a taxa de um ano para o outro. Como resolver isso?
-
-O **Bayesiano Empírico** "suaviza" a taxa observada de cada área, combinando-a com uma **média de referência**:
-
-$$\hat{\theta}_i = w_i \cdot t_i + (1 - w_i) \cdot \mu$$
-
-**Leia assim:** a taxa estimada é uma média ponderada entre a taxa local ($t_i$) e uma referência ($\mu$), controlada pelo peso $w_i$.
-
-O peso $w_i$ depende do tamanho da população:
-
-- **Município grande** $\rightarrow$ $w_i$ próximo de 1 $\rightarrow$ confia na taxa observada
-
-- **Município pequeno** $\rightarrow$ $w_i$ próximo de 0 $\rightarrow$ puxa para a média de referência
-
-
-**Bayesiano Empírico Global**
-
-A referência é a **média geral de toda a região**. Um município com poucos habitantes é "puxado" para essa média geral.
-
-**Exemplo:** município rural com 1 caso em 200 pessoas (taxa altíssima). O método reconhece que a população é pequena e suaviza a estimativa em direção à média do estado.
-
-
-**Bayesiano Empírico Local**
-
-A referência é a **média dos municípios vizinhos**. A ideia é que municípios próximos tendem a ter condições parecidas (clima, renda, acesso à saúde).
-
-**Exemplo:** o mesmo município rural agora é comparado com seus vizinhos imediatos, não com todo o estado. Isso respeita melhor a heterogeneidade regional.
-
-
-**Global vs. Local: qual é a diferença ?**
-
-A diferença está em **quem é a referência** ($\mu$):
-
-| | **Global** | **Local** |
-|---|---|---|
-| **Referência** | Média de *todas* as áreas | Média dos *vizinhos* |
-| **Hipótese** | Todas as áreas se parecem | Áreas próximas se parecem |
-| **Quando usar** | Região homogênea | Quando há padrão espacial |
-
-
-
-
-
-```{r, echo=T,  out.width="70%"}
-# ============================================================================
-# CALCULAR CASOS ESPERADOS
-# ============================================================================
-
-# Calcular a taxa global de incidência
-taxa_global <- sum(mapa_rj$casos, na.rm = TRUE) / sum(mapa_rj$pop2022, na.rm = TRUE) * 100000
-
-# Calcular casos esperados (pop * taxa_global / 100000)
-mapa_rj <- mapa_rj |>
-    mutate(
-        casos_esperados = (pop2022 * taxa_global) / 100000,
-        risco_relativo_bruto = casos / casos_esperados,
-        incidencia_esperada = taxa_global
-    )
-```
-
-```{r, echo=T,  out.width="70%"}
-# ============================================================================
-# BAYES EMPÍRICO GLOBAL
-# ============================================================================
-library(SpatialEpi)
-
-# Aplicar a função eBayes do pacote SpatialEpi
-# Y = casos observados
-# E = casos esperados
-eb_results <- eBayes(
-    Y = mapa_rj$casos,
-    E = mapa_rj$casos_esperados
-)
-
-# Visualizar a estrutura dos resultados
-str(eb_results)
-
-# Adicionar resultados ao mapa
-mapa_rj <- mapa_rj |>
-    mutate(
-        # Risco Relativo Bayes Empírico (posterior mean)
-        rr_ebayes = eb_results$RR,
-        
-        # Mediana posterior
-        rr_ebayes_med = eb_results$RRmed,
-        
-        # SMR (Standardized Mortality Ratio)
-        smr = eb_results$SMR,
-        
-        # Incidência suavizada
-        incidencia_suavizada = rr_ebayes * taxa_global,
-        
-        # Parâmetros do modelo
-        alpha_eb = eb_results$alpha,
-        beta_eb = eb_results$beta
-    )
-
-# Verificar resultados
-summary(mapa_rj$rr_ebayes)
-summary(mapa_rj$incidencia_suavizada)
-```
-
-
-```{r}
-# ============================================================================
-# BAYES EMPÍRICO LOCAL
-# ============================================================================
-
-
-# ============================================================================
-# CRIAR A MATRIZ DE VIZINHANÇA
-# ============================================================================
-
-# Criar vizinhança baseada em contiguidade (critério rainha)
-nb <- poly2nb(mapa_rj, queen = TRUE)
-
-
-# ============================================================================
-# APLICAR O ESTIMADOR LOCAL DE BAYES EMPÍRICO
-# ============================================================================
-
-# Aplicar EBlocal
-# ri = casos observados
-# ni = população (ou denominador)
-# zero.policy = TRUE para áreas sem vizinhos (usa o próprio valor)
-eb_local <- EBlocal(
-    ri = mapa_rj$casos,
-    ni = mapa_rj$pop2022,
-    nb = nb,
-    zero.policy = TRUE,
-    geoda = FALSE  # Usa o algoritmo de Marshall (padrão)
-)
-
-# Visualizar a estrutura do resultado
-str(eb_local)
-
-# O resultado é um data.frame com:
-# - raw: taxas brutas (crude rates)
-# - est: estimativas suavizadas (local empirical Bayes)
-
-# Adicionar os resultados ao mapa
-mapa_rj <- mapa_rj |>
-    mutate(
-        taxa_bruta = eb_local$raw * 100000,           # taxa bruta por 100.000
-        taxa_suavizada_local = eb_local$est * 100000, # taxa suavizada local por 100.000
-        rr_suavizado_local = eb_local$est / (sum(casos)/sum(pop2022))  # risco relativo
-    )
-
-# ============================================================================
-# EXTRAIR OS PARÂMETROS LOCAIS (phi e gamma)
-# ============================================================================
-
-# Os parâmetros locais estão armazenados como atributo
-parametros_locais <- attr(eb_local, "parameters")
-
-# Adicionar ao mapa
-mapa_rj <- mapa_rj |>
-    mutate(
-        phi_local = parametros_locais$a,    # parâmetro phi (α local)
-        gamma_local = parametros_locais$m   # parâmetro gamma (β local)
-    )
-
-# ============================================================================
-# 5. COMPARAÇÃO: Bayes Empírico Global vs Local
-# ============================================================================
-
-# Se você já tem o Bayes Empírico global (ex: SpatialEpi::eBayes)
-# Vamos supor que já calculou eb_global anteriormente
-
-# Calcular Bayes Empírico global para comparação
-library(SpatialEpi)
-taxa_global <- sum(mapa_rj$casos) / sum(mapa_rj$pop2022)
-mapa_rj$casos_esperados <- mapa_rj$pop2022 * taxa_global
-eb_global <- eBayes(Y = mapa_rj$casos, E = mapa_rj$casos_esperados)
-
-mapa_rj <- mapa_rj |>
-    mutate(
-        rr_bayes_global = eb_global$RR,
-        taxa_suavizada_global = rr_bayes_global * taxa_global * 100000
-    )
-```
-
-
-```{r}
-# ============================================================================
-# 6. MAPAS COMPARATIVOS
-# ============================================================================
-
-# Mapa 1: Taxa Bruta
-p1 <- ggplot(mapa_rj) +
-    geom_sf(aes(fill = taxa_bruta), color = "gray50", size = 0.2) +
-    scale_fill_viridis_c(name = "Casos/100.000", direction = -1) +
-    labs(title = "A) Taxa Bruta") +
-    theme_minimal() +
-    theme(legend.position = "bottom")
-
-# Mapa 2: Bayes Empírico Global
-p2 <- ggplot(mapa_rj) +
-    geom_sf(aes(fill = taxa_suavizada_global), color = "gray50", size = 0.2) +
-    scale_fill_viridis_c(name = "Casos/100.000", direction = -1) +
-    labs(title = "B) Bayes Empírico Global") +
-    theme_minimal() +
-    theme(legend.position = "bottom")
-
-# Mapa 3: Bayes Empírico Local (EBlocal)
-p3 <- ggplot(mapa_rj) +
-    geom_sf(aes(fill = taxa_suavizada_local), color = "gray50", size = 0.2) +
-    scale_fill_viridis_c(name = "Casos/100.000", direction = -1) +
-    labs(title = "C) Bayes Empírico Local (EBlocal)") +
-    theme_minimal() +
-    theme(legend.position = "bottom")
-
-# Combinar
-library(patchwork)
-(p1 + p2 + p3)
-```
-
-
-
-```{r, echo=T,  out.width="70%"}
-# ============================================================================
-# MAPAS COM GGPLOT2
-# ============================================================================
-
-library(ggplot2)
-library(patchwork)
-library(viridis)
-
-# Definir tema comum
-theme_maps <- theme_minimal() +
-    theme(
-        plot.title = element_text(size = 14, face = "bold", hjust = 0.5),
-        plot.subtitle = element_text(size = 10, hjust = 0.5),
-        legend.position = "right",
-        legend.title = element_text(size = 10, face = "bold"),
-        legend.text = element_text(size = 8),
-        panel.grid = element_blank(),
-        axis.text = element_blank(),
-        axis.title = element_blank(),
-        plot.margin = margin(10, 10, 10, 10)
-    )
-
-# Mapa 1: Incidência Bruta
-p1 <- ggplot(mapa_rj) +
-    geom_sf(aes(fill = incidencia), color = "gray50", size = 0.2) +
-    scale_fill_viridis_c(
-        option = "plasma",
-        name = "Casos/100.000 hab",
-        labels = scales::comma,
-        direction = -1
-    ) +
-    labs(
-        title = "A) Incidência Bruta",
-        subtitle = "Dengue no Rio de Janeiro - 2025"
-    ) +
-    theme_maps
-
-# Mapa 2: Incidência Suavizada
-p2 <- ggplot(mapa_rj) +
-    geom_sf(aes(fill = incidencia_suavizada), color = "gray50", size = 0.2) +
-    scale_fill_viridis_c(
-        option = "plasma",
-        name = "Casos/100.000 hab",
-        labels = scales::comma,
-        direction = -1
-    ) +
-    labs(
-        title = "B) Incidência Suavizada",
-        subtitle = "Bayes Empírico - Posterior Mean"
-    ) +
-    theme_maps
-
-# Combinar os 3 mapas
-mapas_combinados_ggplot <- (p1 + p2)
-mapas_combinados_ggplot
-```
-
-
-```{r}
-# Mapa 3: Risco Relativo Bayes
-p3 <- ggplot(mapa_rj) +
-    geom_sf(aes(fill = rr_ebayes), color = "gray50", size = 0.2) +
-    scale_fill_gradient2(
-        low = "blue",
-        mid = "white",
-        high = "red",
-        midpoint = 1,
-        name = "Risco Relativo",
-        labels = scales::number,
-        limits = c(0, max(mapa_rj$rr_ebayes, na.rm = TRUE))
-    ) +
-    labs(
-        title = "C) Risco Relativo Bayesiano",
-        subtitle = "Risco em relação à média estadual (RR = 1)"
-    ) +
-    theme_maps
-
-p3
-```
-
-
-```{r}
-plot(mapa_rj$incidencia_suavizada, mapa_rj$incidencia)
-```
-
-## **Aplicação III:** Utilizando o Estimador de Bayes Empírico
-
-::: {.callout-note}
-## Fonte Original
-Este módulo foi adaptado do conteúdo disponível em [**Spatial Epidemiology Workshop**](https://bookdown.org/epeterson_2010/spatial_epidemiology_workshop/), mantendo a estrutura e exemplos originais com ajustes pedagógicos.
-:::
-
-
-A heterogeneidade espacial indica que existem diferenças na intensidade de um determinado fenômeno em algumas sub-regiões em comparação com outras. Em contraste, a homogeneidade espacial sugere que a ocorrência de um fenômeno é semelhante em toda a área de estudo, com variações apenas devido ao acaso. A busca por heterogeneidade é a principal razão para o mapeamento, pois se a ocorrência desse fenômeno fosse a mesma em todos os lugares, um mapa não forneceria muitas informações úteis.
-
-Na área da epidemiologia, um dos principais desafios da distribuição espacial de doenças é a instabilidade das estimativas de parâmetros devido a dados com excessos de zeros, *missing data* (`NA`) ou eventos raros. Quando uma doença é muito rara (resultando em um numerador pequeno) ou a população em risco é muito esparsa (resultando em um denominador pequeno), a estimativa da carga da doença torna-se inerentemente instável ou imprecisa.
-
-Nesses casos, a adição de apenas um ou dois eventos ou pessoas em risco pode ter um impacto notável na estimativa. Para lidar com esse problema, os pesquisadores frequentemente recorrem à agregação de dados ao longo do tempo ou do espaço, ou utilizam técnicas de suavização espacial, como o método de Bayes Empírico, para compartilhar informações entre áreas e estabilizar as taxas extremas.
-
-Por isso, na epidemiologia, um esforço considerável é dedicado a separar o "ruído" do "sinal" nos dados. O erro aleatório, que surge do acaso e está relacionado ao tamanho da amostra, é frequentemente modelado utilizando distribuições de probabilidade estatística.
-
-Quando lidamos com contagens de eventos e populações em risco agregadas por unidades de área, podemos utilizar distribuições de probabilidade paramétricas comuns na epidemiologia:
-
-* **Distribuição de Poisson**: É a distribuição clássica para avaliar contagens de eventos, frequentemente ajustada pelo tempo em risco ou pessoas-ano. A distribuição de Poisson assume que a média da distribuição é igual à sua variância e aproxima bem a taxa de intensidade da doença para processos de doenças raras.
-
-* **Distribuição Binomial**: É útil para caracterizar a ocorrência de doenças para processos não raros ou comuns.
-
-Essas distribuições modelam as contagens observadas ($Y_i$) como uma função da contagem esperada ($E_i$), da população em risco ($N_i$) e do parâmetro de risco desconhecido ($\theta_i$).
-
-### Razão de Morbidade/Mortalidade Padronizada (SMR)
-
-A Razão de Morbidade/Mortalidade Padronizada (SMR) é uma medida de risco relativo em excesso. Ela quantifica o desvio de uma prevalência ou taxa populacional em relação a um valor de referência (por exemplo, o risco para todo o estado).
-
-A SMR é calculada como a contagem observada de eventos ($Y_i$) dividida pela contagem esperada de eventos ($E_i$):
-
-$$ SMR_i = \frac{Y_i}{E_i} $$
-
-Para calcular as contagens esperadas, primeiro determinamos o risco global para toda a região de estudo ($r$) e, em seguida, multiplicamos esse valor pela população em risco em cada unidade de área ($N_i$). Isso nos dá os eventos esperados se houvesse homogeneidade no risco, ou seja, se a SMR fosse igual a 1,0 para todas as áreas.
-
-### Exemplo Prático em R: Cálculo da SMR
-
-Abaixo, apresentamos um exemplo de como calcular a SMR utilizando a linguagem R. Neste exemplo simulado, criaremos um conjunto de dados fictício representando condados, suas populações e o número de casos observados de uma doença.
-
-```{r}
-#| label: calculo-smr
-#| message: false
-#| warning: false
-
-# Carregando pacotes necessários
-library(dplyr)
-library(sf)
-library(spdep)
-library(SpatialEpi)
-library(ggplot2)
-
-# Simulando dados para o exemplo
-set.seed(123)
-n_counties <- 50
-dados_simulados <- data.frame(
-  id_condado = 1:n_counties,
-  populacao = round(runif(n_counties, 5000, 100000)),
-  casos_observados = rpois(n_counties, lambda = 15)
-)
-
-# Calculando o risco global (taxa de referência)
-risco_global <- sum(dados_simulados$casos_observados) / sum(dados_simulados$populacao)
-
-# Calculando os casos esperados e a SMR
-dados_simulados <- dados_simulados %>%
-  mutate(
-    casos_esperados = populacao * risco_global,
-    SMR = casos_observados / casos_esperados
-  )
-
-# Visualizando os primeiros registros
-head(dados_simulados)
-```
-
-#### Suavização de Taxas com Bayes Empírico Global
-
-No contexto da estimativa de pequenas áreas, o objetivo é extrair o sinal ou a tendência espacial subjacente nos dados, eliminando o ruído aleatório induzido por pequenas contagens de eventos e tamanhos populacionais amplamente variáveis.
-
-A estimativa de Bayes Empírico (EB) é uma técnica para produzir estimativas de parâmetros de pequenas áreas mais robustas. O EB é uma abordagem de "encolhimento" (shrinkage) de parâmetros, na qual estimativas extremas (como a SMR) são julgadas como confiáveis ou não com base em sua variância, que por sua vez é uma função do número de eventos.
-
-Se uma área possui uma SMR extrema e uma contagem pequena de eventos, esse parâmetro é considerado menos confiável e é "encolhido" em direção à média global. Por outro lado, se uma área possui uma SMR extrema, mas com muitos eventos, esse valor extremo é considerado mais confiável e sofre menos encolhimento.
-
-### Exemplo Prático em R: Bayes Empírico Aspacial
-
-Utilizando o pacote `SpatialEpi`, podemos calcular as estimativas suavizadas por Bayes Empírico. A função `eBayes()` estima o risco relativo suavizado com base na mistura Poisson-Gama.
-
-```{r}
-#| label: bayes-empirico
-#| message: false
-#| warning: false
-
-# Calculando as estimativas de Bayes Empírico Global
-eb_global <- eBayes(Y = dados_simulados$casos_observados, 
-                    E = dados_simulados$casos_esperados)
-
-# Adicionando as estimativas suavizadas ao conjunto de dados
-dados_simulados <- dados_simulados %>%
-  mutate(
-    SMR_suavizada_EB = eb_global$RR
-  )
-
-# Comparando a SMR bruta com a SMR suavizada
-resumo_comparacao <- dados_simulados %>%
-  select(id_condado, populacao, casos_observados, SMR, SMR_suavizada_EB) %>%
-  arrange(desc(SMR)) %>%
-  head(10)
-
-knitr::kable(resumo_comparacao, digits = 3, 
-             caption = "Comparação entre SMR Bruta e SMR Suavizada (Bayes Empírico)")
-```
-
-Como podemos observar, as estimativas suavizadas por Bayes Empírico tendem a ser menos extremas do que as SMRs brutas, especialmente para áreas com populações menores ou contagens de eventos mais baixas.
-
-### Probabilidades de Excedência Bayesiana
-
-Além de obter estimativas pontuais suavizadas, é frequentemente útil quantificar a incerteza associada a essas estimativas. Os intervalos de credibilidade no Bayes Empírico refletem a faixa dentro da qual o verdadeiro valor de um parâmetro, como a SMR, provavelmente se encontra, com base na distribuição a posteriori.
-
-Para descrever quão provável ou improvável é que o risco relativo suavizado por EB para uma determinada área seja diferente do valor nulo de 1, podemos usar as probabilidades de excedência Bayesiana. Essa probabilidade responde à pergunta: "Qual é a probabilidade de que o verdadeiro parâmetro $\theta$ seja maior que 1,0, dados a priori e os dados observados?" [1].
-
-```{r}
-#| label: probabilidade-excedencia
-#| message: false
-#| warning: false
-
-# Calculando a probabilidade de excedência (probabilidade de SMR > 1)
-dados_simulados$prob_excedencia <- EBpostthresh(
-  Y = dados_simulados$casos_observados,
-  E = dados_simulados$casos_esperados,
-  alpha = eb_global$alpha,
-  beta = eb_global$beta,
-  rrthresh = 1
-)
-
-# Identificando áreas com alta probabilidade de risco elevado (ex: > 95%)
-dados_simulados <- dados_simulados %>%
-  mutate(
-    risco_significativo = ifelse(prob_excedencia > 0.95, "Sim", "Não")
-  )
-
-# Resumo das áreas com risco significativamente elevado
-table(dados_simulados$risco_significativo)
-```
-
-Até aqui, os dados foram apenas representados em mapas, sem incorporar explicitamente as relações espaciais na análise. Os estimadores de Bayes Empírico não espaciais tratam cada área como independente das demais, o que caracteriza uma abordagem asespacial. No entanto, em geografia, as relações espaciais dependem da distância e da proximidade entre unidades, seja ela física, social ou em rede.
-
-Podemos "emprestar" informações estatísticas de vizinhos espaciais para complementar a estimativa de parâmetros locais de doenças. É exatamente isso que faremos com a estimativa de Bayes Empírico Espacial, onde, em vez de usar a taxa global (geral) da doença como priori, usaremos a taxa local dos vizinhos ao redor de cada entidade como uma espécie de priori personalizada e específica do local.
-
-Para aplicar esses conceitos à análise espacial, utilizaremos o pacote `spdep` no R, que possui uma série de funções úteis para criar matrizes de pesos espaciais. O processo de passar de um objeto espacial (como um objeto da classe `sf`) para uma matriz de pesos espaciais utilizável requer mais de uma etapa.
-
-### Criando Objetos de Vizinhança por Contiguidade
-
-Como estamos começando com dados de área (polígonos), o ponto de partida é usar a função utilitária `poly2nb()`, que recebe um objeto espacial de polígono e determina quais regiões específicas são contíguas a outras regiões.
-
-```{r}
-#| label: criacao-vizinhanca
-#| message: false
-#| warning: false
-
-# Carregando pacotes necessários
-library(sf)
-library(spdep)
-library(SpatialEpi)
-library(dplyr)
-
-# Simulando um grid espacial (como se fossem condados)
-# Criando um grid 10x10
-grid <- st_make_grid(st_bbox(c(xmin = 0, xmax = 10, ymin = 0, ymax = 10)), n = c(10, 10))
-grid_sf <- st_sf(id = 1:100, geometry = grid)
-
-# Simulando dados epidemiológicos
-set.seed(42)
-grid_sf <- grid_sf %>%
-  mutate(
-    populacao = round(runif(100, 1000, 5000)),
-    casos_observados = rpois(100, lambda = 5),
-    risco_global = sum(casos_observados) / sum(populacao),
-    casos_esperados = populacao * risco_global,
-    SMR = casos_observados / casos_esperados
-  )
-
-# Criando uma lista de vizinhos por contiguidade Rainha (Queen)
-vizinhos_rainha <- poly2nb(grid_sf, queen = TRUE)
-
-# Examinando o objeto resultante
-summary(vizinhos_rainha)
-```
-
-A função `summary()` para objetos `nb` (objetos de vizinhos no `spdep`) fornece informações de alto nível, como regiões sem vizinhos e a distribuição de vizinhos. A simetria espacial significa que se uma região é vizinha de outra, o inverso também é verdadeiro, o que se aplica a vizinhos baseados em contiguidade.
-
-### Bayes Empírico Espacial (Local)
-
-Como vimos no módulo anterior, a suavização de taxas de doenças por Bayes Empírico é um processo pelo qual consideramos cada região e perguntamos: "Qual é a taxa subjacente mais verdadeira de doença neste local?".
-
-No Bayes Empírico Aspacial, usamos a taxa média geral para toda a região de estudo como a priori. No Bayes Empírico Espacial, ao usar nossas definições recém-criadas de vizinhos locais, estendemos a abordagem EB alterando a fonte da informação a priori. Em vez de um risco de referência global, usamos a média dos vizinhos como uma priori [1].
-
-Isso produz uma espécie de "empréstimo" de informações estatísticas através do espaço, sob a suposição de que os condados locais nos dizem mais sobre um local específico do que condados distantes.
-
-### Exemplo Prático em R: Bayes Empírico Espacial
-
-A função para estimar o Bayes Empírico espacial é `EBlocal()` do pacote `spdep`. Ela requer a contagem de eventos, a população em risco para cada área e um objeto de vizinhança `nb`.
-
-```{r}
-#| label: bayes-empirico-espacial
-#| message: false
-#| warning: false
-
-# Estimativa de Bayes Empírico Global (Aspacial) para comparação
-eb_global <- eBayes(Y = grid_sf$casos_observados, E = grid_sf$casos_esperados)
-grid_sf$SMR_EB_Global <- eb_global$RR
-
-# Estimativa de Bayes Empírico Espacial (Local) sob a definição de contiguidade Rainha
-eb_local <- EBlocal(ri = grid_sf$casos_observados, 
-                    ni = grid_sf$populacao, 
-                    nb = vizinhos_rainha)
-
-# A saída de EBlocal() é um data.frame. A segunda coluna (est) é a estimativa EB
-grid_sf$SMR_EB_Local <- eb_local$est
-
-# Comparando as estimativas
-resumo_comparacao <- grid_sf %>%
-  st_drop_geometry() %>%
-  select(id, casos_observados, SMR, SMR_EB_Global, SMR_EB_Local) %>%
-  head(10)
-
-knitr::kable(resumo_comparacao, digits = 3, 
-             caption = "Comparação entre SMR Bruta, EB Global e EB Local")
-```
-
-### Considerações Finais: Fazendo Escolhas
-
-Reunimos várias ferramentas analíticas para lidar com a heterogeneidade espacial na presença de instabilidade de taxas e incerteza devido à esparsidade de dados. Essas estratégias incluem as duas abordagens para suavização de Bayes Empírico, mas também a miríade de definições de vizinhos.
-
-Não existe uma regra simples para escolher entre elas. Abaixo está um resumo das considerações:
-
-* **Bayes Empírico**: Suaviza as taxas locais em direção à taxa de referência global. É recomendado quando a melhor estimativa a priori de taxas plausíveis é a média geral, e a razão para a esparsidade envolve tanto o numerador (doença rara) quanto o denominador (pequenas populações).
-
-* **Bayes Empírico Espacial**: Suaviza as taxas locais em direção à referência local. É recomendado quando há pelo menos alguma autocorrelação espacial nas taxas, de modo que as regiões próximas servem como uma priori mais informativa do que a média global. É especialmente útil quando a doença não é rara, mas a população em risco é pequena.
-
-Como em muitas coisas na análise epidemiológica, há um papel importante para a ciência, mas também uma necessidade de especialistas que possam se envolver na "arte" da análise.
-
-## **Aplicação IV:** Utilizando dos modelos de regressão espaciais nos dados de queimadas no estado do Rio de Janeiro.
-
-####  Introdução aos Modelos de Regressão Espacial
+## Modelos de Regressão Espacial
 
 Além das análises exploratórias para os dados espaciais de área, é possível avançar na modelagem estatística dos dados por meio de modelos espaciais que consideram a dependência espacial dos dados. Entre os mais utilizados estão os modelos de autocorrelação espacial global, como o **SAR (Simultaneous Autoregressive Model)** e o **CAR (Conditional Autoregressive Model)** (CRESSIE, 1993). O modelo SAR incorpora a dependência espacial diretamente no valor da variável dependente, assumindo que o valor observado em uma região é influenciado pelos valores das regiões vizinhas. Já o modelo CAR considera essa dependência na estrutura do erro, sendo muito utilizado em abordagens bayesianas para modelagem de risco em áreas geográficas.
 
@@ -1210,7 +686,7 @@ Outra abordagem é a dos modelos com efeitos espaciais locais, como a **Regress�
 * <span style="color:darkblue; font-weight:bold;">**Detectada a autocorrelação espacial: e agora ?** </span> $\rightarrow$  É necessário adotar modelos de regressão que incorporem explicitamente os efeitos espaciais, evitando vieses nas estimativas dos coeficientes.
 
 
-#### i) Modelos Globais: 
+### Modelos Globais: 
 
 * Esses modelos assumem que a estrutura espacial é constante em todo o espaço geográfico. Utilizam um único parâmetro para captar a autocorrelação.
 
@@ -1219,6 +695,7 @@ Outra abordagem é a dos modelos com efeitos espaciais locais, como a **Regress�
   $$y_i = \beta_0 + \sum^{p}_{k} \beta_k x_{ik}  + \varepsilon_i \text{    , sendo  }  \varepsilon_i = \lambda  W + \xi$$
   
 ::: box-dica4
+
 Sendo:
   
 - $y_i$: valor observado da variável dependente na unidade $i$;
@@ -1252,7 +729,7 @@ $\rightarrow$ Podemos observar que os efeitos da autocorrelação espacial são 
   
   
   
-#### ii) Modelos Locais: 
+### Modelos Locais: 
   
 * Enquanto os modelos globais assumem uma relação espacial uniforme, os modelos locais admitem que os parâmetros da regressão variam ao longo do espaço geográfico.
 
@@ -1287,6 +764,9 @@ knitr::include_graphics('figuras/largura_banda_gwr.png')
 $\rightarrow$ Quanto menor $d_{ij}$, maior é o peso de $j$ na estimação de $\beta_k(u_i, v_i)$.
 
 [Fonte: ARDILLY, Pascal et al. Manuel d’analyse spatiale. 2018.](https://ec.europa.eu/eurostat/documents/3859598/9462709/INSEE-ESTAT-SPATIAL-ANA-18-EN.pdf)
+
+
+## Aplicação II: Utilizando dos modelos de regressão espaciais nos dados de queimadas no estado do Rio de Janeiro.
 
 
 #### Lendo os dados de queimadas no estado do Rio de Janeiro em 2025 
@@ -1414,7 +894,7 @@ summary(queimadas.car2)
 
 * Media de Dias Sem Chuva: $0,1585$ ($p < 0,001$), representa a cada aumento de 1 dia na média sem chuva, a intensidade das queimadas (FRP) aumenta **0.1585 unidades**
 
-* Lambda ($λ =  0,24717$), fazendo uma comparação com modelo nulo ($\lambda = 0.28059$), apresenta uma
+* Lambda ($\lambda =  0,24717$), fazendo uma comparação com modelo nulo ($\lambda = 0.28059$), apresenta uma
 redução de $0,28059 \rightarrow 0,24717$ $(\downarrow 11.9\%)$. Podemos dizer que a variável `media_dias_sem_chuva` explicou parte da dependência espacial.
 
 * Testes de Significância do Lambda
@@ -1875,4 +1355,311 @@ grid.arrange(res.lm, res.car, res.gwr, ncol = 2)
 
 ```
 
+## Bayesiano Empírico: Global e Local
 
+A heterogeneidade espacial indica que existem diferenças na intensidade de um determinado fenômeno em algumas sub-regiões em comparação com outras. Em contraste, a homogeneidade espacial sugere que a ocorrência de um fenômeno é semelhante em toda a área de estudo, com variações apenas devido ao acaso. A busca por heterogeneidade é a principal razão para o mapeamento, pois se a ocorrência desse fenômeno fosse a mesma em todos os lugares, um mapa não forneceria muitas informações úteis.
+
+Na epidemiologia, um dos principais desafios da distribuição espacial de doenças é a instabilidade das estimativas de parâmetros devido a dados com excessos de zeros, *missing data* (`NA`) ou eventos raros. Quando uma doença é muito rara (resultando em um numerador pequeno) ou a população em risco é muito esparsa (resultando em um denominador pequeno), a estimativa da carga da doença torna-se inerentemente instável ou imprecisa.
+
+Nesses casos, a adição de apenas um ou dois eventos ou pessoas em risco pode ter um impacto notável na estimativa. Para lidar com esse problema, os pesquisadores frequentemente recorrem à agregação de dados ao longo do tempo ou do espaço, ou utilizam técnicas de suavização espacial, como o método de Bayes Empírico, para compartilhar informações entre áreas e estabilizar as taxas extremas.
+
+Por isso, na epidemiologia, um esforço considerável é dedicado a separar o "ruído" do "sinal" nos dados. O erro aleatório, que surge do acaso e está relacionado ao tamanho da amostra, é frequentemente modelado utilizando distribuições de probabilidade estatística.
+
+::: box-dica13
+
+### A ideia central
+
+Imagine que você quer estimar a taxa de uma doença em vários municípios. O problema: municípios pequenos têm taxas **instáveis** — um único caso pode triplicar a taxa de um ano para o outro. Como resolver isso ?
+
+O **Bayesiano Empírico** "suaviza" a taxa observada de cada área, combinando-a com uma **média de referência**:
+:::
+
+
+
+Quando lidamos com contagens de eventos e populações em risco agregadas por unidades de área, podemos utilizar distribuições de probabilidade paramétricas comuns na epidemiologia:
+
+* **Distribuição de Poisson**: É a distribuição clássica para avaliar contagens de eventos, frequentemente ajustada pelo tempo em risco ou pessoas-ano. A distribuição de Poisson assume que a média da distribuição é igual à sua variância e aproxima bem a taxa de intensidade da doença para processos de doenças raras.
+
+* **Distribuição Binomial**: É útil para caracterizar a ocorrência de doenças para processos não raros ou comuns.
+
+Essas distribuições modelam as contagens observadas ($Y_i$) como uma função da contagem esperada ($E_i$), da população em risco ($N_i$) e do parâmetro de risco desconhecido ($\theta_i$).
+
+### Razão de Morbidade/Mortalidade Padronizada (SMR)
+
+A Razão de Morbidade/Mortalidade Padronizada (SMR) é uma medida de risco relativo em excesso. Ela quantifica o desvio de uma prevalência ou taxa populacional em relação a um valor de referência (por exemplo, o risco para todo o estado).
+
+A SMR é calculada como a contagem observada de eventos ($Y_i$) dividida pela contagem esperada de eventos ($E_i$):
+
+$$ SMR_i = \frac{Y_i}{E_i} $$
+
+Para calcular as contagens esperadas, primeiro determinamos o risco global para toda a região de estudo ($r$) e, em seguida, multiplicamos esse valor pela população em risco em cada unidade de área ($N_i$). Isso nos dá os eventos esperados se houvesse homogeneidade no risco, ou seja, se a SMR fosse igual a 1,0 para todas as áreas.
+
+
+$$E_i = r \times N_i$$
+
+::: box-dica12
+
+Sendo:
+
+- **$E_i$** = contagem esperada de eventos na unidade de área $i$
+- **$r$** = risco global (taxa de eventos por unidade de população em toda a região de estudo)
+- **$N_i$** = população em risco na unidade de área $i$
+
+:::
+
+E para o cálculo do risco global ($r$), temos:
+
+$$r = \frac{\text{Total de eventos observados}}{\text{População total da região}}$$
+::: box-dica13
+
+## Interpretação
+
+Dessa forma, se o risco fosse homogêneo em toda a região, a contagem esperada em cada área seria proporcional à sua população. A SMR compara então o observado ($Y_i$) com esse esperado ($E_i$) para identificar áreas com excesso ou déficit de eventos.
+
+:::
+
+## Aplicação Prática
+
+- **SMR** = Razão de Mortalidade Padronizada (ou Razão de Morbidade/Eventos)
+- **$Y_i$** = Contagem observada de eventos na área $i$
+- **Excesso de eventos**: quando $Y_i > E_i$
+- **Déficit de eventos**: quando $Y_i < E_i$
+### Bayesiano Empírico Global
+
+A referência é a **média geral de toda a região**. Um município com poucos habitantes é "puxado" para essa média geral.
+
+**Exemplo:** município rural com 1 caso em 200 pessoas (taxa altíssima). O método reconhece que a população é pequena e suaviza a estimativa em direção à média do estado.
+
+
+### Bayesiano Empírico Local
+
+A referência é a **média dos municípios vizinhos**. A ideia é que municípios próximos tendem a ter condições parecidas (clima, renda, acesso à saúde).
+
+**Exemplo:** o mesmo município rural agora é comparado com seus vizinhos imediatos, não com todo o estado. Isso respeita melhor a heterogeneidade regional.
+
+::: box-dica13
+
+**Global vs. Local: qual é a diferença ?**
+
+A diferença está em **quem é a referência** ($\mu$):
+
+| | **Global** | **Local** |
+|---|---|---|
+| **Referência** | Média de *todas* as áreas | Média dos *vizinhos* |
+| **Hipótese** | Todas as áreas se parecem | Áreas próximas se parecem |
+| **Quando usar** | Região homogênea | Quando há padrão espacial |
+
+::: 
+
+
+## Aplicação III: Utilizando o Estimador de Bayes Empírico
+
+::: {.callout-note}
+#### Fonte Original: Este módulo foi adaptado do conteúdo disponível em [**Spatial Epidemiology Workshop**](https://bookdown.org/epeterson_2010/spatial_epidemiology_workshop/), mantendo a estrutura e exemplos originais com ajustes pedagógicos.
+:::
+
+
+#### Exemplo Prático em R: Cálculo da SMR
+
+Abaixo, apresentamos um exemplo de como calcular a SMR utilizando a linguagem R. Neste exemplo simulado, criaremos um conjunto de dados fictício representando condados, suas populações e o número de casos observados de uma doença.
+
+```{r}
+#| label: calculo-smr
+#| message: false
+#| warning: false
+
+# Carregando pacotes necessários
+library(dplyr)
+library(sf)
+library(spdep)
+library(SpatialEpi)
+library(ggplot2)
+
+# Simulando dados para o exemplo
+set.seed(123)
+n_counties <- 50
+dados_simulados <- data.frame(
+  id_condado = 1:n_counties,
+  populacao = round(runif(n_counties, 5000, 100000)),
+  casos_observados = rpois(n_counties, lambda = 15)
+)
+
+# Calculando o risco global (taxa de referência)
+risco_global <- sum(dados_simulados$casos_observados) / sum(dados_simulados$populacao)
+
+# Calculando os casos esperados e a SMR
+dados_simulados <- dados_simulados %>%
+  mutate(
+    casos_esperados = populacao * risco_global,
+    SMR = casos_observados / casos_esperados
+  )
+
+# Visualizando os primeiros registros
+head(dados_simulados)
+```
+
+#### Suavização de Taxas com Bayes Empírico Global
+
+No contexto da estimativa de pequenas áreas, o objetivo é extrair o sinal ou a tendência espacial subjacente nos dados, eliminando o ruído aleatório induzido por pequenas contagens de eventos e tamanhos populacionais amplamente variáveis.
+
+A estimativa de Bayes Empírico (EB) é uma técnica para produzir estimativas de parâmetros de pequenas áreas mais robustas. O EB é uma abordagem de "encolhimento" (*shrinkage*) de parâmetros, na qual estimativas extremas (como a SMR) são julgadas como confiáveis ou não com base em sua variância, que por sua vez é uma função do número de eventos.
+
+Se uma área possui uma SMR extrema e uma contagem pequena de eventos, esse parâmetro é considerado menos confiável e é "encolhido" em direção à média global. Por outro lado, se uma área possui uma SMR extrema, mas com muitos eventos, esse valor extremo é considerado mais confiável e sofre menos encolhimento.
+
+### Exemplo Prático em R: Bayes Empírico Global
+
+Utilizando o pacote `SpatialEpi`, podemos calcular as estimativas suavizadas por Bayes Empírico. A função `eBayes()` estima o risco relativo suavizado com base na mistura Poisson-Gama.
+
+```{r}
+#| label: bayes-empirico
+#| message: false
+#| warning: false
+
+# Calculando as estimativas de Bayes Empírico Global
+eb_global <- eBayes(Y = dados_simulados$casos_observados, 
+                    E = dados_simulados$casos_esperados)
+
+# Adicionando as estimativas suavizadas ao conjunto de dados
+dados_simulados <- dados_simulados %>%
+  mutate(
+    SMR_suavizada_EB = eb_global$RR
+  )
+
+# Comparando a SMR bruta com a SMR suavizada
+resumo_comparacao <- dados_simulados %>%
+  select(id_condado, populacao, casos_observados, SMR, SMR_suavizada_EB) %>%
+  arrange(desc(SMR)) %>%
+  head(10)
+
+knitr::kable(resumo_comparacao, digits = 3, 
+             caption = "Comparação entre SMR Bruta e SMR Suavizada (Bayes Empírico)")
+```
+
+Como podemos observar, as estimativas suavizadas por Bayes Empírico tendem a ser menos extremas do que as SMRs brutas, especialmente para áreas com populações menores ou contagens de eventos mais baixas.
+
+### Probabilidades de Excedência Bayesiana
+
+Além de obter estimativas pontuais suavizadas, é frequentemente útil quantificar a incerteza associada a essas estimativas. Os intervalos de credibilidade no Bayes Empírico refletem a faixa dentro da qual o verdadeiro valor de um parâmetro, como a SMR, provavelmente se encontra, com base na distribuição a posteriori.
+
+Para descrever quão provável ou improvável é que o risco relativo suavizado por EB para uma determinada área seja diferente do valor nulo de 1, podemos usar as probabilidades de excedência Bayesiana. Essa probabilidade responde à pergunta: "Qual é a probabilidade de que o verdadeiro parâmetro $\theta$ seja maior que 1,0, dados a priori e os dados observados?".
+
+```{r}
+#| label: probabilidade-excedencia
+#| message: false
+#| warning: false
+
+# Calculando a probabilidade de excedência (probabilidade de SMR > 1)
+dados_simulados$prob_excedencia <- EBpostthresh(
+  Y = dados_simulados$casos_observados,
+  E = dados_simulados$casos_esperados,
+  alpha = eb_global$alpha,
+  beta = eb_global$beta,
+  rrthresh = 1
+)
+
+# Identificando áreas com alta probabilidade de risco elevado (ex: > 95%)
+dados_simulados <- dados_simulados %>%
+  mutate(
+    risco_significativo = ifelse(prob_excedencia > 0.95, "Sim", "Não")
+  )
+
+# Resumo das áreas com risco significativamente elevado
+table(dados_simulados$risco_significativo)
+```
+
+Até aqui, os dados foram apenas representados em mapas, sem incorporar explicitamente as relações espaciais na análise. Os estimadores de Bayes Empírico não espaciais tratam cada área como independente das demais, o que caracteriza uma abordagem asespacial. No entanto, em geografia, as relações espaciais dependem da distância e da proximidade entre unidades, seja ela física, social ou em rede.
+
+Podemos "emprestar" informações estatísticas de vizinhos espaciais para complementar a estimativa de parâmetros locais de doenças. É exatamente isso que faremos com a estimativa de Bayes Empírico Espacial, onde, em vez de usar a taxa global (geral) da doença como priori, usaremos a taxa local dos vizinhos ao redor de cada entidade como uma espécie de priori personalizada e específica do local.
+
+Para aplicar esses conceitos à análise espacial, utilizaremos o pacote `spdep` no R, que possui uma série de funções úteis para criar matrizes de pesos espaciais. O processo de passar de um objeto espacial (como um objeto da classe `sf`) para uma matriz de pesos espaciais utilizável requer mais de uma etapa.
+
+### Criando Objetos de Vizinhança por Contiguidade
+
+Como estamos começando com dados de área (polígonos), o ponto de partida é usar a função utilitária `poly2nb()`, que recebe um objeto espacial de polígono e determina quais regiões específicas são contíguas a outras regiões.
+
+```{r}
+#| label: criacao-vizinhanca
+#| message: false
+#| warning: false
+
+# Carregando pacotes necessários
+library(sf)
+library(spdep)
+library(SpatialEpi)
+library(dplyr)
+
+# Simulando um grid espacial (como se fossem condados)
+# Criando um grid 10x10
+grid <- st_make_grid(st_bbox(c(xmin = 0, xmax = 10, ymin = 0, ymax = 10)), n = c(10, 10))
+grid_sf <- st_sf(id = 1:100, geometry = grid)
+
+# Simulando dados epidemiológicos
+set.seed(42)
+grid_sf <- grid_sf %>%
+  mutate(
+    populacao = round(runif(100, 1000, 5000)),
+    casos_observados = rpois(100, lambda = 5),
+    risco_global = sum(casos_observados) / sum(populacao),
+    casos_esperados = populacao * risco_global,
+    SMR = casos_observados / casos_esperados
+  )
+
+# Criando uma lista de vizinhos por contiguidade Rainha (Queen)
+vizinhos_rainha <- poly2nb(grid_sf, queen = TRUE)
+
+# Examinando o objeto resultante
+summary(vizinhos_rainha)
+```
+
+A função `summary()` para objetos `nb` (objetos de vizinhos no `spdep`) fornece informações de alto nível, como regiões sem vizinhos e a distribuição de vizinhos. A simetria espacial significa que se uma região é vizinha de outra, o inverso também é verdadeiro, o que se aplica a vizinhos baseados em contiguidade.
+
+### Bayes Empírico Espacial (Local)
+
+Como vimos no módulo anterior, a suavização de taxas de doenças por Bayes Empírico é um processo pelo qual consideramos cada região e perguntamos: "Qual é a taxa subjacente mais verdadeira de doença neste local?".
+
+No Bayes Empírico Global, usamos a taxa média geral para toda a região de estudo como a priori. No Bayes Empírico Espacial, ao usar nossas definições recém-criadas de vizinhos locais, estendemos a abordagem EB alterando a fonte da informação a priori. Em vez de um risco de referência global, usamos a média dos vizinhos como uma priori.
+
+Isso produz uma espécie de "empréstimo" de informações estatísticas através do espaço, sob a suposição de que os condados locais nos dizem mais sobre um local específico do que condados distantes.
+
+### Exemplo Prático em R: Bayes Empírico Local
+
+A função para estimar o Bayes Empírico espacial é `EBlocal()` do pacote `spdep`. Ela requer a contagem de eventos, a população em risco para cada área e um objeto de vizinhança `nb`.
+
+```{r}
+#| label: bayes-empirico-espacial
+#| message: false
+#| warning: false
+
+# Estimativa de Bayes Empírico Global (Aspacial) para comparação
+eb_global <- eBayes(Y = grid_sf$casos_observados, E = grid_sf$casos_esperados)
+grid_sf$SMR_EB_Global <- eb_global$RR
+
+# Estimativa de Bayes Empírico Espacial (Local) sob a definição de contiguidade Rainha
+eb_local <- EBlocal(ri = grid_sf$casos_observados, 
+                    ni = grid_sf$populacao, 
+                    nb = vizinhos_rainha)
+
+# A saída de EBlocal() é um data.frame. A segunda coluna (est) é a estimativa EB
+grid_sf$SMR_EB_Local <- eb_local$est
+
+# Comparando as estimativas
+resumo_comparacao <- grid_sf %>%
+  st_drop_geometry() %>%
+  select(id, casos_observados, SMR, SMR_EB_Global, SMR_EB_Local) %>%
+  head(10)
+
+knitr::kable(resumo_comparacao, digits = 3, 
+             caption = "Comparação entre SMR Bruta, EB Global e EB Local")
+```
+
+### Considerações Finais: Fazendo Escolhas
+
+Reunimos várias ferramentas analíticas para lidar com a heterogeneidade espacial na presença de instabilidade de taxas e incerteza devido à esparsidade de dados. Essas estratégias incluem as duas abordagens para suavização de Bayes Empírico, mas também a miríade de definições de vizinhos.
+
+Não existe uma regra simples para escolher entre elas. Abaixo está um resumo das considerações:
+
+* **Bayes Empírico**: Suaviza as taxas locais em direção à taxa de referência global. É recomendado quando a melhor estimativa a priori de taxas plausíveis é a média geral, e a razão para a esparsidade envolve tanto o numerador (doença rara) quanto o denominador (pequenas populações).
+
+* **Bayes Empírico Espacial**: Suaviza as taxas locais em direção à referência local. É recomendado quando há pelo menos alguma autocorrelação espacial nas taxas, de modo que as regiões próximas servem como uma priori mais informativa do que a média global. É especialmente útil quando a doença não é rara, mas a população em risco é pequena.
+
+Como em muitas coisas na análise epidemiológica, há um papel importante para a ciência, mas também uma necessidade de especialistas que possam se envolver na "arte" da análise.
