@@ -1,6 +1,6 @@
 ---
 title: "Dados de Padrões Pontuais"
-subtitle: "Estatística Espacial: Métodos e Aplicações em Epidemiologia"
+subtitle: "Estatística Espacial"
 author: "Prof. Wagner Tassinari"
 format:
   revealjs:
