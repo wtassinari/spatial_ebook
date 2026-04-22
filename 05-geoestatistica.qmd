@@ -10,6 +10,11 @@ Ao final deste capítulo, o estudante deverá ser capaz de:
 - Avaliar a qualidade do ajuste por validação cruzada.
 :::
 
+::: {.callout-note}
+## Slides do Capítulo
+[Clique aqui para acessar a apresentação em Slides](apresentacoes/05-geoestatistica_slides.html){target="_blank"}
+:::
+
 A geoestatística lida com variáveis que são medidas em localizações contínuas ou irregulares no espaço, como temperatura, precipitação, concentração de poluentes ou altitude. A premissa fundamental é que observações próximas tendem a ser mais similares do que observações distantes — princípio conhecido como **dependência espacial** ou **autocorrelação espacial**.
 
 ## **Aplicação VII:** Geoestatística com dados de pluviosidade na cidade do Rio de Janeiro/RJ
@@ -635,8 +640,12 @@ pal <- colorNumeric(
 )
 ```
 
-```{r, echo=T, message=FALSE, warning=FALSE, out.width= "100%"}
+```{r, echo=T, echo=T, message=FALSE, warning=FALSE, out.width= "100%"}
 # 6. Construindo o mapa interativo
+# NOTA IMPORTANTE: Este código deve ser executado interativamente no RStudio
+# A renderização em documento Quarto pode causar conflitos com dependências jQuery do leaflet
+# Para usar este código, copie e execute diretamente no console do R
+
 leaflet(data = estacoes.longlat, options = leafletOptions(attributionControl = FALSE)) |>
   addProviderTiles("CartoDB.Positron", group = "Ruas") |>
   addProviderTiles("Esri.WorldImagery", options = providerTileOptions(opacity = 0.7), group = "Satélite") |>
@@ -675,6 +684,4 @@ leaflet(data = estacoes.longlat, options = leafletOptions(attributionControl = F
   # Oculta os bairros inicialmente
   hideGroup(group = c("Bairros"))
 ```
-  
-
 
