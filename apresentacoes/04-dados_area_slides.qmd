@@ -1,0 +1,73 @@
+---
+title: "Dados de Área"
+subtitle: "Estatística Espacial: Métodos e Aplicações em Epidemiologia"
+author: "Prof. Wagner Tassinari"
+format:
+  revealjs:
+    theme: default
+    slide-number: true
+    chalkboard: true
+    transition: fade
+    background-transition: fade
+    highlight-style: github
+    title-slide-attributes:
+      data-background-color: "#2c3e50"
+---
+
+## Objetivos da Aula
+
+- Compreender a estrutura e análise de dados de área.
+- Construir e interpretar mapas temáticos.
+- Calcular e interpretar a autocorrelação espacial (Índice de Moran's I).
+- Utilizar Indicadores Locais de Associação Espacial (LISA).
+- Aplicar modelos de regressão espacial (SAR, CAR, GWR).
+
+## O que são Dados de Área?
+
+Os dados de área representam fenômenos agregados por unidades geográficas bem definidas, como municípios, estados, bairros ou setores censitários.
+
+Diferente dos padrões pontuais, onde a localização exata é o foco, nos dados de área o interesse recai sobre os valores agregados dentro de polígonos fechados.
+
+## Mapas Temáticos
+
+A visualização de dados de área é frequentemente realizada através de mapas temáticos (ou coropléticos).
+
+Esses mapas utilizam cores ou padrões para representar a magnitude de uma variável em diferentes regiões geográficas, facilitando a identificação visual de padrões espaciais.
+
+## Autocorrelação Espacial
+
+A autocorrelação espacial mede o grau em que uma variável está correlacionada consigo mesma no espaço.
+
+O **Índice de Moran Global ($I$)** é a estatística mais comum para quantificar essa dependência. Valores positivos indicam agrupamento de valores semelhantes (altos com altos, baixos com baixos), enquanto valores negativos sugerem dispersão (altos próximos a baixos).
+
+## Indicadores Locais (LISA)
+
+Enquanto o Moran Global fornece uma medida única para toda a área de estudo, os **Indicadores Locais de Associação Espacial (LISA)** permitem identificar *clusters* espaciais locais e *outliers* espaciais.
+
+O Mapa LISA (LISA Map) classifica as regiões em categorias como Alto-Alto, Baixo-Baixo, Alto-Baixo e Baixo-Alto, destacando áreas de concentração significativa.
+
+## Regressão Espacial
+
+Quando a autocorrelação espacial está presente, os modelos de regressão linear clássicos (OLS) podem produzir estimativas enviesadas.
+
+Modelos de regressão espacial incorporam a estrutura de vizinhança para corrigir esse problema.
+
+## Modelos Globais
+
+Os modelos globais assumem que o processo espacial é estacionário em toda a área de estudo.
+
+- **Modelo SAR (Spatial Autoregressive):** Incorpora a dependência espacial na variável dependente (efeito de contágio).
+- **Modelo CAR (Conditional Autoregressive):** Modela a dependência espacial no termo de erro, útil quando a autocorrelação é vista como um ruído não observado.
+
+## Regressão Geograficamente Ponderada (GWR)
+
+A **GWR (Geographically Weighted Regression)** é uma técnica local que permite que os coeficientes de regressão variem no espaço.
+
+Em vez de estimar um único conjunto de parâmetros para toda a região, a GWR estima parâmetros locais para cada unidade geográfica, capturando a heterogeneidade espacial das relações entre as variáveis.
+
+## Aplicações Práticas no Curso
+
+- **Expectativa de vida mundial:** Construção de mapa temático mundial com dados de saúde.
+- **Dengue no Estado do Rio de Janeiro:** Análise de padrão espacial e autocorrelação.
+- **Hanseníase no Mato Grosso:** Aplicação de métodos de Bayes Empírico asspacial.
+- **Queimadas no RJ:** Modelagem com regressão espacial (SAR, CAR, GWR).

@@ -10,6 +10,11 @@ Ao final deste capítulo, o estudante deverá ser capaz de:
 - Realizar análises de padrões pontuais com dados reais.
 :::
 
+::: {.callout-note}
+## Slides do Capítulo
+[Clique aqui para acessar a apresentação em Slides](apresentacoes/03-padroes_pontuais_slides.html){target="_blank"}
+:::
+
 Os dados de padrões pontuais referem-se a eventos que ocorrem em localizações discretas e aleatórias no espaço, como casos de doenças, crimes, acidentes ou ocorrências ambientais. O objetivo principal é investigar se esses eventos seguem um padrão aleatório, regular ou agrupado (*clustered*).
 
 #### Possíveis distribuições dos pontos

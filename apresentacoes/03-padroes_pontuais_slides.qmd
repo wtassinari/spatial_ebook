@@ -1,0 +1,75 @@
+---
+title: "Dados de Padrões Pontuais"
+subtitle: "Estatística Espacial: Métodos e Aplicações em Epidemiologia"
+author: "Prof. Wagner Tassinari"
+format:
+  revealjs:
+    theme: default
+    slide-number: true
+    chalkboard: true
+    transition: fade
+    background-transition: fade
+    highlight-style: github
+    title-slide-attributes:
+      data-background-color: "#2c3e50"
+---
+
+## Objetivos da Aula
+
+- Compreender os processos de pontos espaciais;
+- Entender o conceito de Complete Spatial Randomness (CSR);
+- Aplicar a Análise Kernel (Kernel Density Estimation);
+- Utilizar as Funções K e L para análise de padrões;
+- Detectar clusters espaciais.
+
+## O que são Padrões Pontuais?
+
+- O principal interesse está no conjunto de coordenadas geográficas representando as localizações exatas de eventos.
+- O evento aleatório de interesse é a **posição espacial** onde o fenômeno ocorre.
+- A análise busca entender se os pontos seguem um padrão aleatório, agrupado (*clusters*) ou disperso no espaço.
+
+## Exemplos de Aplicação
+
+- 🏥 Localização de casos de uma doença notificados em uma cidade.
+- 🌳 Distribuição espacial de árvores em um parque urbano.
+- 🐾 Registros de avistamentos de animais silvestres em uma reserva.
+- 🔥 Pontos de ocorrência de focos de incêndio florestal detectados por satélite.
+- 🔫 Registros de ocorrências de crimes em uma área urbana.
+
+## Complete Spatial Randomness (CSR)
+
+**Aleatoriedade Espacial Completa**
+
+- É a hipótese nula padrão na análise de padrões pontuais.
+- Pressupõe que os eventos ocorrem de forma independente e com a mesma probabilidade em qualquer lugar da área de estudo.
+- Se a hipótese CSR for rejeitada, indica-se a presença de um padrão agrupado ou disperso.
+
+## Estimativas de Kernel (Mapas de Calor)
+
+- Técnica para representar visualmente a concentração espacial de eventos pontuais.
+- Transforma um conjunto de pontos em uma superfície contínua de intensidade.
+- Evidencia áreas com maior ou menor densidade de eventos.
+
+## Como Funciona o Kernel?
+
+- Para cada ponto no espaço, é aplicado um "funil de suavização" (kernel).
+- Distribui "peso" ao redor do ponto, atribuindo maior peso às áreas próximas.
+- O peso decresce com o aumento da distância, controlado por um parâmetro chamado **largura de banda** ($h$).
+- O resultado é uma superfície contínua de densidade (cores quentes = maior concentração).
+
+## Funções K e L de Ripley
+
+- Ferramentas para analisar a estrutura espacial de padrões pontuais em diferentes escalas de distância.
+- **Função K:** Mede o número esperado de eventos dentro de uma distância $r$ de um evento típico.
+- **Função L:** Uma transformação da Função K para facilitar a interpretação visual (estabiliza a variância).
+
+## Detecção de Clusters
+
+- Identificação de áreas onde a concentração de eventos é significativamente maior do que o esperado sob CSR.
+- Métodos comuns incluem a estatística de varredura espacial (Spatial Scan Statistic) de Kulldorff.
+- Fundamental para direcionar ações de saúde pública e controle vetorial.
+
+## Aplicações Práticas no Curso
+
+- **Focos de queimadas no Rio de Janeiro:** Análise Kernel de focos de fogo.
+- **Estudo histórico:** Recriação do estudo de Cólera em Londres (John Snow, 1854).

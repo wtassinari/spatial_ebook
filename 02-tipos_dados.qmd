@@ -10,6 +10,11 @@ Ao final deste capítulo, o estudante deverá ser capaz de:
 - Realizar a leitura e visualização básica de dados espaciais em R.
 :::
 
+::: {.callout-note}
+## Slides do Capítulo
+[Clique aqui para acessar a apresentação em Slides](apresentacoes/02-tipos_dados_slides.html){target="_blank"}
+:::
+
 # Tipologia dos Dados Espaciais
 
 Os dados espaciais podem ser classificados segundo diferentes categorias, com base na natureza estocástica de suas observações e na forma como a informação geográfica é representada. Essa tipologia orienta a escolha de métodos estatísticos apropriados para análise.

@@ -11,6 +11,11 @@ Ao final deste capítulo, o estudante deverá ser capaz de:
 - Ajustar modelos de regressão espacial (SAR, CAR e GWR).
 :::
 
+::: {.callout-note}
+## Slides do Capítulo
+[Clique aqui para acessar a apresentação em Slides](apresentacoes/04-dados_area_slides.html){target="_blank"}
+:::
+
 Os dados de área representam fenômenos agregados por unidades geográficas discretas, como municípios, estados, distritos censitários ou setores epidemiológicos. Neste capítulo, apresentamos as principais técnicas de análise para esse tipo de dado, com aplicações práticas em saúde pública.
 
 ## Mapa Temático

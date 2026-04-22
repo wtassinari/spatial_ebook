@@ -1,0 +1,80 @@
+---
+title: "Geoestatística"
+subtitle: "Estatística Espacial: Métodos e Aplicações em Epidemiologia"
+author: "Prof. Wagner Tassinari"
+format:
+  revealjs:
+    theme: default
+    slide-number: true
+    chalkboard: true
+    transition: fade
+    background-transition: fade
+    highlight-style: github
+    title-slide-attributes:
+      data-background-color: "#2c3e50"
+---
+
+## Objetivos da Aula
+
+- Compreender os fundamentos da geoestatística.
+- Analisar a estrutura espacial através de variogramas.
+- Ajustar modelos teóricos de variograma (esférico, exponencial, gaussiano).
+- Aplicar métodos de interpolação espacial (Krigagem Ordinária).
+- Incorporar covariáveis na krigagem.
+- Avaliar a qualidade das estimativas por validação cruzada.
+
+## O que é Geoestatística?
+
+A geoestatística lida com dados amostrados em localizações contínuas ou irregulares, onde o atributo de interesse é uma variável contínua (ex: temperatura, poluição, altitude).
+
+O objetivo principal é modelar a dependência espacial entre as observações e utilizar essa informação para prever (interpolar) valores em locais não amostrados.
+
+## O Semivariograma
+
+O **semivariograma** (ou simplesmente variograma) é a ferramenta central da geoestatística. Ele quantifica a dependência espacial medindo a variância da diferença entre valores em pares de pontos separados por uma distância $h$.
+
+A premissa básica é que pontos mais próximos tendem a ter valores mais semelhantes (menor semivariância) do que pontos mais distantes.
+
+## Componentes do Variograma
+
+Um variograma típico apresenta três parâmetros principais:
+
+- **Efeito Pepita (Nugget):** A variância em distância zero, representando erro de medição ou variação em microescala.
+- **Patamar (Sill):** O valor máximo de semivariância, onde a dependência espacial cessa.
+- **Alcance (Range):** A distância na qual o variograma atinge o patamar; além dessa distância, as amostras são espacialmente independentes.
+
+## Modelos Teóricos de Variograma
+
+Para realizar a krigagem, é necessário ajustar um modelo matemático contínuo ao variograma experimental (calculado a partir dos dados).
+
+Os modelos mais comuns incluem:
+
+- **Esférico:** Crescimento linear inicial, atingindo o patamar de forma abrupta.
+- **Exponencial:** Crescimento rápido inicial, aproximando-se assintoticamente do patamar.
+- **Gaussiano:** Comportamento parabólico na origem, indicando alta continuidade espacial.
+
+## Krigagem Ordinária
+
+A **Krigagem Ordinária** é o método de interpolação geoestatística mais utilizado. Ela estima o valor em um local não amostrado como uma combinação linear ponderada dos valores observados na vizinhança.
+
+Os pesos são determinados de forma a minimizar a variância do erro de predição, garantindo que o estimador seja não enviesado e ótimo (BLUE - Best Linear Unbiased Estimator).
+
+## Krigagem com Covariáveis
+
+Quando existem variáveis auxiliares (covariáveis) correlacionadas com a variável principal e disponíveis em toda a área de estudo, elas podem ser incorporadas para melhorar a precisão da interpolação.
+
+Métodos como a **Krigagem Universal** ou a **Krigagem com Deriva Externa (KED)** permitem modelar a tendência espacial em função dessas covariáveis, combinando regressão linear com a modelagem do resíduo espacial.
+
+## Validação Cruzada
+
+A **validação cruzada** é uma técnica essencial para avaliar o desempenho do modelo geoestatístico ajustado.
+
+O método *Leave-One-Out* remove temporariamente uma observação por vez, estima seu valor usando as restantes e compara a estimativa com o valor real. Métricas como o Erro Médio (ME) e a Raiz do Erro Quadrático Médio (RMSE) são utilizadas para quantificar a acurácia.
+
+## Aplicação Prática no Curso
+
+- **Interpolação de pluviosidade na Região Metropolitana do Rio de Janeiro:**
+  - Análise exploratória dos dados pluviométricos.
+  - Construção e ajuste do variograma experimental.
+  - Aplicação da Krigagem Ordinária para gerar um mapa contínuo de precipitação.
+  - Avaliação do modelo por validação cruzada.
