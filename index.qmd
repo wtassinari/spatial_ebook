@@ -34,8 +34,10 @@ O material está organizado em capítulos segundo a **tipologia dos dados espaci
 
 📥 [Clique aqui para baixar os dados (tabelas e malhas geográficas) e serão utilizados durante as aulas](https://drive.google.com/file/d/18BKjPIkesP3q4sb3GPKte1YN08BoLD9L/view?usp=drive_link) 
 
-1. Baixe o arquivo `Dados_Espacial.zip` e descomprima;
-2. Clique no arquivo que representa o projeto em R: `Dados_Espacial.Rproj`.
+1. Baixe o arquivo `Estistica_Espacial.zip` e descomprima;
+2. Clique no arquivo que representa o projeto em R: `Estatistica_Espacial.Rproj`.
+3. Explore as pastas `dados` e `malhas` para acessar os arquivos que serão utilizados durante as aulas.
+4. A dica é baixar esse materia e trabahar dentro desse diretório `Estistica_Espacial`.
 
 ---
 
