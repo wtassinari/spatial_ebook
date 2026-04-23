@@ -11,7 +11,7 @@ Ao final deste capítulo, o estudante deverá ser capaz de:
 :::
 
 ::: {.callout-note}
-## Slides do Capítulo
+## Slides do Capítulo 5 - Dados Geoestatísticos
 [Clique aqui para acessar a apresentação em Slides](apresentacoes/05-geoestatistica_slides.html){target="_blank"}
 :::
 

@@ -11,7 +11,7 @@ Ao final deste capítulo, o estudante deverá ser capaz de:
 :::
 
 ::: {.callout-note}
-## Slides do Capítulo
+## Slides do Capítulo 2 - Tipologia dos Dados Espaciais
 [Clique aqui para acessar a apresentação em Slides](apresentacoes/02-tipos_dados_slides.html){target="_blank"}
 :::
 

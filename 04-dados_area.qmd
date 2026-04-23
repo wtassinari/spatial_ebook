@@ -12,7 +12,7 @@ Ao final deste capítulo, o estudante deverá ser capaz de:
 :::
 
 ::: {.callout-note}
-## Slides do Capítulo
+## Slides do Capítulo 4 - Dados de Área
 [Clique aqui para acessar a apresentação em Slides](apresentacoes/04-dados_area_slides.html){target="_blank"}
 :::
 

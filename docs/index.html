@@ -393,6 +393,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#sobre-o-curso" id="toc-sobre-o-curso" class="nav-link" data-scroll-target="#sobre-o-curso">Sobre o Curso</a></li>
   <li><a href="#estrutura-do-ebook" id="toc-estrutura-do-ebook" class="nav-link" data-scroll-target="#estrutura-do-ebook">Estrutura do Ebook</a></li>
   <li><a href="#dados-do-curso" id="toc-dados-do-curso" class="nav-link" data-scroll-target="#dados-do-curso">Dados do Curso</a></li>
+  <li><a href="#tabela-de-bibliotecas-e-finalidades" id="toc-tabela-de-bibliotecas-e-finalidades" class="nav-link" data-scroll-target="#tabela-de-bibliotecas-e-finalidades">Tabela de Bibliotecas e Finalidades</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -456,7 +457,7 @@ ul.task-list li input[type="checkbox"] {
 <hr>
 <section id="sobre-o-curso" class="level2">
 <h2 class="anchored" data-anchor-id="sobre-o-curso">Sobre o Curso</h2>
-<p>O curso apresenta os fundamentos e aplicações da estatística espacial para estudantes de pós-graduação nas mais diversas áreas do conhecimento, com ênfase em epidemiologia e saúde pública. O material abrange desde a introdução conceitual até aplicações práticas com dados reais, utilizando a linguagem <strong>R</strong> como principal ferramenta computacional.</p>
+<p>O curso apresenta os fundamentos e aplicações da estatística espacial para estudantes de pós-graduação nas mais diversas áreas do conhecimento. O material abrange desde a introdução conceitual até aplicações práticas com dados reais, utilizando a linguagem <strong>R</strong> como principal ferramenta computacional.</p>
 </section>
 <section id="estrutura-do-ebook" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="estrutura-do-ebook">Estrutura do Ebook</h2>
@@ -487,7 +488,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><strong>4. Dados de Área</strong></td>
-<td>Teoria + Aplicações (Dengue, Hanseníase, Regressão Espacial)</td>
+<td>Teoria + Aplicações (Dengue, Queimadas)</td>
 </tr>
 <tr class="odd">
 <td><strong>5. Geoestatística</strong></td>
@@ -495,7 +496,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><strong>6. Trabalho Final</strong></td>
-<td>Roteiro e instruções para o trabalho avaliativo</td>
+<td>Roteiro e instruções para o trabalho final</td>
 </tr>
 <tr class="odd">
 <td><strong>7. Referências Bibliográficas</strong></td>
@@ -506,10 +507,10 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="dados-do-curso" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="dados-do-curso">Dados do Curso</h2>
-<p>📥 <a href="https://drive.google.com/drive/folders/1lBUWVYcwFDBqrxdz6s0oxaiCS8gAVWj7?usp=sharing">Clique aqui para baixar os dados que serão utilizados durante as aulas</a></p>
+<p>📥 <a href="https://drive.google.com/file/d/18BKjPIkesP3q4sb3GPKte1YN08BoLD9L/view?usp=drive_link">Clique aqui para baixar os dados (tabelas e malhas geográficas) e serão utilizados durante as aulas</a></p>
 <ol type="1">
-<li>Baixe o arquivo <code>Estatistica_Espacial.zip</code> e descomprima;</li>
-<li>Clique no arquivo que representa o projeto em R: <code>Estatistica_Espacial.Rproj</code>.</li>
+<li>Baixe o arquivo <code>Dados_Espacial.zip</code> e descomprima;</li>
+<li>Clique no arquivo que representa o projeto em R: <code>Dados_Espacial.Rproj</code>.</li>
 </ol>
 <hr>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -525,9 +526,149 @@ Pré-requisitos
 <p>Para acompanhar o material, recomenda-se conhecimento básico de <strong>R</strong> e <strong>RStudio</strong>, além de noções elementares de estatística descritiva e inferencial.</p>
 </div>
 </div>
-
-
 </section>
+<section id="tabela-de-bibliotecas-e-finalidades" class="level2 box-dica14">
+<h2 class="anchored" data-anchor-id="tabela-de-bibliotecas-e-finalidades">Tabela de Bibliotecas e Finalidades</h2>
+<p>Abaixo estão listadas as principais bibliotecas e pacotes R que serão utilizados ao longo do curso. Recomenda-se instalá-los previamente para garantir uma experiência fluida durante as aulas.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Categoria</th>
+<th style="text-align: left;">Biblioteca</th>
+<th style="text-align: left;">Finalidade</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Manipulação e Leitura de Dados</strong></td>
+<td style="text-align: left;"><code>dplyr</code></td>
+<td style="text-align: left;">Manipulação eficiente de dados (filtrar, agrupar, resumir, etc.).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>readr</code></td>
+<td style="text-align: left;">Leitura rápida de arquivos <code>.csv</code>, <code>.tsv</code>, etc.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>tidyverse</code></td>
+<td style="text-align: left;">Conjunto de pacotes para ciência de dados (inclui <code>ggplot2</code>, <code>dplyr</code>, etc.).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Visualização Gráfica</strong></td>
+<td style="text-align: left;"><code>ggplot2</code></td>
+<td style="text-align: left;">Sistema gráfico baseado em camadas para criação de gráficos sofisticados.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>tmap</code></td>
+<td style="text-align: left;">Criação de mapas temáticos estáticos e interativos.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>leaflet</code></td>
+<td style="text-align: left;">Geração de mapas interativos baseados em JavaScript.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>leaflet.extras2</code></td>
+<td style="text-align: left;">Extensões avançadas para <code>leaflet</code>, mini mapas e outros widgets.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>leafem</code></td>
+<td style="text-align: left;">Funcionalidades adicionais ao <code>leaflet</code>, como coordenadas do mouse, zoom por camada, etc.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>ggspatial</code></td>
+<td style="text-align: left;">Adiciona elementos cartográficos ao <code>ggplot2</code> (ex: escalas, bússolas).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>vioplot</code></td>
+<td style="text-align: left;">Geração de gráficos do tipo violin plot.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>RColorBrewer</code></td>
+<td style="text-align: left;">Paletas de cores predefinidas para mapas e gráficos.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>colorspace</code></td>
+<td style="text-align: left;">Manipulação e criação de paletas de cores.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Dados Espaciais e Geoprocessamento</strong></td>
+<td style="text-align: left;"><code>sf</code></td>
+<td style="text-align: left;">Manipulação de dados espaciais com o padrão Simple Features.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>sp</code></td>
+<td style="text-align: left;">Estrutura clássica para dados espaciais (anterior ao <code>sf</code>).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>geobr</code></td>
+<td style="text-align: left;">Importa mapas do Brasil (IBGE, municípios, estados, etc.).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>maptools</code></td>
+<td style="text-align: left;">Leitura e manipulação de dados espaciais vetoriais.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>raster</code></td>
+<td style="text-align: left;">Leitura e análise de dados geográficos em formato raster.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>lattice</code></td>
+<td style="text-align: left;">Sistema gráfico útil para visualização multivariada com suporte espacial.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Estatística Espacial e Modelagem</strong></td>
+<td style="text-align: left;"><code>spatstat</code></td>
+<td style="text-align: left;">Análise de padrões de pontos no espaço bidimensional.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>spdep</code></td>
+<td style="text-align: left;">Cálculo de dependência e autocorrelação espacial (ex: Moran, Geary).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>spatialreg</code></td>
+<td style="text-align: left;">Modelagem de regressão espacial (ex: SAR, SEM, SDM).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>spgwr</code></td>
+<td style="text-align: left;">Regressão ponderada geograficamente (GWR).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>gstat</code></td>
+<td style="text-align: left;">Geoestatística e krigagem.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>automap</code></td>
+<td style="text-align: left;">Krigagem automatizada com ajuste automático de variogramas.</td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
 </section>
 
 </main> <!-- /main -->

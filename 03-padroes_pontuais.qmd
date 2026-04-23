@@ -11,7 +11,7 @@ Ao final deste capítulo, o estudante deverá ser capaz de:
 :::
 
 ::: {.callout-note}
-## Slides do Capítulo
+## Slides do Capítulo 3 - Dados de Padrões Pontuais
 [Clique aqui para acessar a apresentação em Slides](apresentacoes/03-padroes_pontuais_slides.html){target="_blank"}
 :::
 
