@@ -207,115 +207,379 @@ Prof.&nbsp;Wagner Tassinari
 </div>
 
 </section>
-<section id="objetivos-da-aula" class="slide level2">
-<h2>Objetivos da Aula</h2>
-<ul>
-<li>Classificar os dados espaciais segundo a tipologia de Cressie (1993);</li>
-<li>Distinguir entre padrões pontuais, dados geoestatísticos e dados de área;</li>
-<li>Identificar a estrutura de dados adequada para cada tipo de análise;</li>
-<li>Realizar a leitura e visualização básica de dados espaciais em R.</li>
-</ul>
-</section>
 <section id="tipologia-dos-dados-espaciais" class="slide level2">
 <h2>Tipologia dos Dados Espaciais</h2>
-<p>A estatística espacial pode ser dividida em três grandes áreas (Cressie, 1993):</p>
+<h3 id="classificação-segundo-cressie-1993">Classificação Segundo Cressie (1993)</h3>
+<p>A estatística espacial pode ser dividida em <strong>três grandes áreas</strong>:</p>
+<div class="large">
 <ol type="1">
-<li><strong>Padrões Pontuais</strong></li>
-<li><strong>Geoestatística</strong></li>
-<li><strong>Dados de Área</strong></li>
+<li><strong>Padrões Pontuais</strong> (Point Patterns)</li>
+<li><strong>Geoestatística</strong> (Geostatistical Data)</li>
+<li><strong>Dados de Área</strong> (Areal Data)</li>
 </ol>
+</div>
 </section>
 <section id="padrões-pontuais" class="slide level2">
 <h2>1. Padrões Pontuais</h2>
+<h3 id="definição">Definição</h3>
+<div class="large">
+<p>As observações ocorrem de maneira <strong>aleatória no espaço</strong>, representando a localização exata de eventos.</p>
+</div>
+<h3 id="características">Características</h3>
 <ul>
-<li>Observações ocorrem de maneira aleatória no espaço.</li>
-<li><strong>Exemplos:</strong> Casos de uma doença, localização de crimes, focos de queimadas.</li>
-<li><strong>Objetivo:</strong> Entender padrões de agrupamento, dispersão ou aleatoriedade.</li>
+<li>O interesse está nas <strong>coordenadas geográficas exatas</strong> (latitude, longitude).</li>
+<li>Objetivo: Entender padrões de <strong>agrupamento, dispersão ou aleatoriedade</strong>.</li>
 </ul>
 </section>
-<section id="estrutura-de-padrões-pontuais" class="slide level2">
-<h2>Estrutura de Padrões Pontuais</h2>
+<section id="padrões-pontuais-1" class="slide level2">
+<h2>1. Padrões Pontuais</h2>
+<h3 id="exemplos-de-aplicação">Exemplos de Aplicação</h3>
+<div class="large">
 <ul>
-<li>O interesse está nas coordenadas geográficas exatas.</li>
-<li><strong>Exemplo de dados:</strong>
-<ul>
-<li>Latitude: -22.90, Longitude: -43.20</li>
-<li>Latitude: -22.91, Longitude: -43.22</li>
-</ul></li>
+<li>🏥 Localização de casos de uma doença notificados em uma cidade</li>
+<li>🌳 Distribuição espacial de árvores em um parque urbano</li>
+<li>🐾 Registros de avistamentos de animais silvestres em uma reserva</li>
+<li>🔥 Focos de incêndio florestal detectados por satélite</li>
+<li>🔫 Registros de ocorrências de crimes em uma área urbana</li>
 </ul>
+</div>
+</section>
+<section id="estrutura-de-dados-padrões-pontuais" class="slide level2">
+<h2>Estrutura de Dados: Padrões Pontuais</h2>
+<h3 id="formato-dos-dados">Formato dos Dados</h3>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Latitude</th>
+<th>Longitude</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>-22.90</td>
+<td>-43.20</td>
+</tr>
+<tr class="even">
+<td>-22.91</td>
+<td>-43.22</td>
+</tr>
+<tr class="odd">
+<td>-22.92</td>
+<td>-43.18</td>
+</tr>
+<tr class="even">
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="visualização-padrões-pontuais" class="slide level2">
+<h2>Visualização: Padrões Pontuais</h2>
 
-<img data-src="../figuras/padroes_pontuais.png" class="quarto-figure quarto-figure-center r-stretch" style="width:60.0%"></section>
+<img data-src="figuras/padroes_pontuais.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"><div style="text-align: center; font-size: 14px;">
+<p>Exemplo: Focos de queimadas no Rio de Janeiro</p>
+</div>
+</section>
+<section id="padrões-pontuais-no-r" class="slide level2">
+<h2>Padrões Pontuais no R</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># Lendo os dados</span></span>
+<span id="cb1-2"><a href=""></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-3"><a href=""></a></span>
+<span id="cb1-4"><a href=""></a>dados_pontos <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"dados/queimadas/queimadas_pontos.xlsx"</span>)</span>
+<span id="cb1-5"><a href=""></a></span>
+<span id="cb1-6"><a href=""></a><span class="fu">head</span>(dados_pontos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  latitude longitude
+     &lt;dbl&gt;     &lt;dbl&gt;
+1    -22.6     -42.1
+2    -22.6     -42.1
+3    -22.7     -43.3
+4    -22.6     -42.1
+5    -22.7     -43.8
+6    -21.1     -42.0</code></pre>
+</div>
+</div>
+</section>
+<section id="padrões-pontuais-no-r-1" class="slide level2">
+<h2>Padrões Pontuais no R</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="co"># Transformando em objeto espacial</span></span>
+<span id="cb3-2"><a href=""></a><span class="fu">library</span>(sf)</span>
+<span id="cb3-3"><a href=""></a></span>
+<span id="cb3-4"><a href=""></a>pontos_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(dados_pontos, </span>
+<span id="cb3-5"><a href=""></a>                      <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>),</span>
+<span id="cb3-6"><a href=""></a>                      <span class="at">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb3-7"><a href=""></a></span>
+<span id="cb3-8"><a href=""></a><span class="fu">plot</span>(pontos_sf<span class="sc">$</span>geometry, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">main =</span> <span class="st">"Focos de Queimadas"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="02-tipos_dados_slides_files/figure-revealjs/unnamed-chunk-2-1.png" style="width:110.0%" class="r-stretch"></section>
+<section id="entendendo-o-código-r" class="slide level2">
+<h2>Entendendo o Código R</h2>
+<h3 id="funções-principais">Funções principais</h3>
+<div class="small">
+<ul>
+<li><code>st_as_sf()</code>: Converte um data frame comum em um objeto espacial do tipo <strong>sf</strong> (Simple Features)</li>
+<li><code>coords = c("longitude", "latitude")</code>: Indica quais colunas representam as coordenadas geográficas</li>
+<li><code>crs = 4326</code>: Define o Sistema de Referência de Coordenadas (<strong>WGS 84</strong> - padrão do GPS)</li>
+</ul>
+</div>
+</section>
+<section id="o-que-é-crs-sistema-de-referência-de-coordenadas" class="slide level2">
+<h2>O que é CRS (Sistema de Referência de Coordenadas)</h2>
+<p>O CRS é como uma <strong>“regra de tradução”</strong> entre o que está em um mapa e o mundo real.</p>
+<ul>
+<li>Define como as coordenadas se relacionam com locais reais na Terra.</li>
+<li>Sem um CRS, uma coordenada não tem significado geográfico.</li>
+</ul>
+<p><small>- <strong>WGS 84 (EPSG:4326)</strong>: Usado por GPS e Google Maps (em graus)</small></p>
+<p><small>- <strong>UTM</strong>: Usado para mapas locais (em metros)</small></p>
+</section>
 <section id="geoestatística" class="slide level2">
 <h2>2. Geoestatística</h2>
+<h3 id="definição-1">Definição</h3>
+<div class="large">
+<p>Dados com <strong>atributo mensurável</strong> em localizações contínuas ou irregulares no espaço.</p>
+</div>
+<h3 id="características-1">Características</h3>
 <ul>
-<li>Observações com atributo mensurável em localizações contínuas ou irregulares.</li>
-<li><strong>Exemplos:</strong> Temperatura, poluição, altitude, teor de argila.</li>
-<li><strong>Objetivo:</strong> Analisar dependência espacial e interpolar valores para locais não amostrados (krigagem).</li>
+<li>Cada ponto tem uma <strong>variável medida</strong> associada.</li>
+<li>Objetivo: Analisar <strong>dependência espacial</strong> e <strong>interpolar valores</strong> para locais não amostrados.</li>
 </ul>
+<h3 id="exemplos-de-aplicação-1">Exemplos de Aplicação</h3>
+<div class="large">
+<ul>
+<li>🌧️ Medição da quantidade de chuva em diferentes locais</li>
+<li>🦟 Contagem de ovos de Aedes aegypti em ovitrampas</li>
+<li>🌫️ Concentração de poluentes no ar em pontos georreferenciados</li>
+<li>🌽 Análise da produtividade agrícola em diferentes talhões</li>
+</ul>
+</div>
+</section>
+<section id="estrutura-de-dados-geoestatística" class="slide level2">
+<h2>Estrutura de Dados: Geoestatística</h2>
+<h3 id="formato-dos-dados-1">Formato dos Dados</h3>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Latitude</th>
+<th>Longitude</th>
+<th>Atributo Mensurado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>-22.90</td>
+<td>-43.20</td>
+<td>5.4</td>
+</tr>
+<tr class="even">
+<td>-22.91</td>
+<td>-43.22</td>
+<td>6.1</td>
+</tr>
+<tr class="odd">
+<td>-22.92</td>
+<td>-43.18</td>
+<td>5.9</td>
+</tr>
+<tr class="even">
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="visualização-geoestatística" class="slide level2">
+<h2>Visualização: Geoestatística</h2>
+
+<img data-src="figuras/dados_geoestatisticos.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"><div style="text-align: center; font-size: 14px;">
+<p>Exemplo: Distribuição espacial de FRP (Fire Radiative Power)</p>
+</div>
+</section>
+<section id="trabalhando-com-dados-geoestatísticos-em-r" class="slide level2">
+<h2>Trabalhando com Dados Geoestatísticos em R</h2>
+<h3 id="lendo-os-dados">Lendo os dados</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="fu">library</span>(readxl)</span>
+<span id="cb4-2"><a href=""></a></span>
+<span id="cb4-3"><a href=""></a><span class="co"># Carregar o arquivo</span></span>
+<span id="cb4-4"><a href=""></a>dados_geo <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"dados/queimadas/queimadas_geo.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<h3 id="transformando-em-objeto-espacial">Transformando em objeto espacial</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">library</span>(sp)</span>
+<span id="cb5-2"><a href=""></a></span>
+<span id="cb5-3"><a href=""></a>sp<span class="sc">::</span><span class="fu">coordinates</span>(dados_geo) <span class="ot">&lt;-</span> <span class="er">~</span> longitude <span class="sc">+</span> latitude</span>
+<span id="cb5-4"><a href=""></a><span class="fu">proj4string</span>(dados_geo) <span class="ot">&lt;-</span> <span class="fu">CRS</span>(<span class="st">"+init=epsg:4326"</span>)  <span class="co"># WGS84</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="visualização-com-gradiente-de-cores" class="slide level2">
+<h2>Visualização com Gradiente de Cores</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb6-2"><a href=""></a><span class="fu">library</span>(sf)</span>
+<span id="cb6-3"><a href=""></a></span>
+<span id="cb6-4"><a href=""></a><span class="co"># Converter objetos sp para sf</span></span>
+<span id="cb6-5"><a href=""></a>dados_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(dados_geo)</span>
+<span id="cb6-6"><a href=""></a></span>
+<span id="cb6-7"><a href=""></a><span class="co"># Plotar com gradiente de cor</span></span>
+<span id="cb6-8"><a href=""></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb6-9"><a href=""></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> rj_contorno, <span class="at">fill =</span> <span class="st">"gray90"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb6-10"><a href=""></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> dados_sf, <span class="fu">aes</span>(<span class="at">color =</span> frp), <span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb6-11"><a href=""></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">name =</span> <span class="st">"FRP"</span>, <span class="at">option =</span> <span class="st">"plasma"</span>) <span class="sc">+</span></span>
+<span id="cb6-12"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribuição Espacial do FRP"</span>) <span class="sc">+</span></span>
+<span id="cb6-13"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="dados-de-área" class="slide level2">
 <h2>3. Dados de Área</h2>
+<h3 id="definição-2">Definição</h3>
+<div class="large">
+<p>Fenômenos <strong>agregados por unidades geográficas</strong> bem definidas, representados por <strong>polígonos</strong>.</p>
+</div>
+<h3 id="características-2">Características</h3>
 <ul>
-<li>Fenômenos agregados por unidades geográficas.</li>
-<li><strong>Exemplos:</strong> Municípios, distritos, setores censitários.</li>
-<li><strong>Objetivo:</strong> Autocorrelação espacial (I de Moran) e modelos de regressão espacial adaptados a dados agregados.</li>
+<li>Dados agregados dentro de unidades administrativas (municípios, bairros, setores censitários).</li>
+<li>Objetivo: Identificar <strong>autocorrelação espacial</strong> e aplicar <strong>modelos de regressão espacial</strong>.</li>
 </ul>
+<h3 id="exemplos-de-aplicação-2">Exemplos de Aplicação</h3>
+<div class="large">
+<ul>
+<li>📊 Taxa de mortalidade por município</li>
+<li>🏥 Número de casos de dengue por bairro</li>
+<li>💰 Renda média por setor censitário</li>
+<li>🎓 Taxa de alfabetização por região administrativa</li>
+</ul>
+</div>
 </section>
-<section id="trabalhando-com-dados-espaciais-no-r" class="slide level2">
-<h2>Trabalhando com Dados Espaciais no R</h2>
-<h3 id="o-pacote-sf-simple-features">O pacote <code>sf</code> (Simple Features)</h3>
-<ul>
-<li>Padrão moderno para dados espaciais no R.</li>
-<li>Converte data frames comuns em objetos espaciais.</li>
-</ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(sf)</span>
-<span id="cb1-2"><a href=""></a></span>
-<span id="cb1-3"><a href=""></a>pontos_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(dados_pontos, </span>
-<span id="cb1-4"><a href=""></a>                      <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>),</span>
-<span id="cb1-5"><a href=""></a>                      <span class="at">crs =</span> <span class="dv">4326</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="estrutura-de-dados-dados-de-área" class="slide level2">
+<h2>Estrutura de Dados: Dados de Área</h2>
+<h3 id="formato-dos-dados-2">Formato dos Dados</h3>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Polígono</th>
+<th>Nome do Polígono</th>
+<th>Atributo Mensurado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>110920</td>
+<td>Alta Esperança</td>
+<td>1000.50</td>
+</tr>
+<tr class="even">
+<td>123690</td>
+<td>Divino</td>
+<td>963.56</td>
+</tr>
+<tr class="odd">
+<td>130269</td>
+<td>Dourados</td>
+<td>801.01</td>
+</tr>
+<tr class="even">
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="o-que-é-crs" class="slide level2">
-<h2>O que é CRS?</h2>
-<p><strong>Coordinate Reference System (Sistema de Referência de Coordenadas)</strong></p>
-<ul>
-<li>Define como as coordenadas se relacionam com locais reais na Terra.</li>
-<li>O código <strong>4326</strong> corresponde ao <em>datum</em> <strong>WGS 84</strong> (padrão do GPS).</li>
-<li>Sem um CRS, uma coordenada não tem significado geográfico.</li>
-</ul>
+<section id="visualização-dados-de-área" class="slide level2">
+<h2>Visualização: Dados de Área</h2>
+
+<img data-src="figuras/dados_area.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"><div style="text-align: center; font-size: 14px;">
+<p>Exemplo: Mapa temático com dados agregados por município</p>
+</div>
+</section>
+<section id="trabalhando-com-dados-de-área-em-r" class="slide level2">
+<h2>Trabalhando com Dados de Área em R</h2>
+<h3 id="lendo-o-shapefile">Lendo o shapefile</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="fu">library</span>(sf)</span>
+<span id="cb7-2"><a href=""></a></span>
+<span id="cb7-3"><a href=""></a><span class="co"># Ler arquivo shapefile</span></span>
+<span id="cb7-4"><a href=""></a>municipios <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"malhas/municipios.shp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<h3 id="ou-baixando-via-geobr">Ou baixando via geobr</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="fu">library</span>(geobr)</span>
+<span id="cb8-2"><a href=""></a></span>
+<span id="cb8-3"><a href=""></a><span class="co"># Baixar polígono do RJ (código IBGE = 33)</span></span>
+<span id="cb8-4"><a href=""></a>rj_municipios <span class="ot">&lt;-</span> <span class="fu">read_municipality</span>(<span class="at">code_state =</span> <span class="dv">33</span>, <span class="at">year =</span> <span class="dv">2020</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="visualizando-dados-de-área" class="slide level2">
+<h2>Visualizando Dados de Área</h2>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb9-2"><a href=""></a></span>
+<span id="cb9-3"><a href=""></a><span class="co"># Plotar mapa temático</span></span>
+<span id="cb9-4"><a href=""></a><span class="fu">ggplot</span>(rj_municipios) <span class="sc">+</span></span>
+<span id="cb9-5"><a href=""></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> taxa_mortalidade), <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb9-6"><a href=""></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">name =</span> <span class="st">"Taxa de Mortalidade"</span>) <span class="sc">+</span></span>
+<span id="cb9-7"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Taxa de Mortalidade por Município - RJ"</span>) <span class="sc">+</span></span>
+<span id="cb9-8"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="resumo-da-tipologia" class="slide level2">
 <h2>Resumo da Tipologia</h2>
 <table class="caption-top">
-<colgroup>
-<col style="width: 28%">
-<col style="width: 53%">
-<col style="width: 18%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Tipo de Dado</th>
-<th>Característica Principal</th>
+<th>Característica</th>
+<th>Estrutura</th>
 <th>Exemplo</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td><strong>Pontual</strong></td>
-<td>Localização exata (x,y)</td>
-<td>Casos de Dengue</td>
+<td>Localização exata</td>
+<td>(x, y)</td>
+<td>Casos de dengue</td>
 </tr>
 <tr class="even">
 <td><strong>Geoestatístico</strong></td>
-<td>Variável contínua no espaço</td>
+<td>Variável contínua</td>
+<td>(x, y, z)</td>
 <td>Temperatura</td>
 </tr>
 <tr class="odd">
 <td><strong>Área</strong></td>
-<td>Dados agregados por polígonos</td>
-<td>Taxa de mortalidade por município</td>
+<td>Dados agregados</td>
+<td>Polígonos</td>
+<td>Taxa de mortalidade</td>
 </tr>
 </tbody>
 </table>
+</section>
+<section id="escolhendo-o-tipo-de-análise" class="slide level2">
+<h2>Escolhendo o Tipo de Análise</h2>
+<h3 id="pergunta-chave">Pergunta-chave:</h3>
+<div class="large">
+<p><strong>Qual é a natureza dos meus dados?</strong></p>
+<ul>
+<li>Tenho <strong>pontos exatos</strong> de eventos? → <strong>Padrões Pontuais</strong></li>
+<li>Tenho <strong>medições contínuas</strong> em locais? → <strong>Geoestatística</strong></li>
+<li>Tenho dados <strong>agregados por região</strong>? → <strong>Dados de Área</strong></li>
+</ul>
+</div>
+</section>
+<section id="próximos-passos" class="slide level2">
+<h2>Próximos Passos</h2>
+<h3 id="capítulos-seguintes">Capítulos seguintes:</h3>
+<div class="large">
+<ol type="1">
+<li><strong>Padrões Pontuais</strong> - Análise detalhada e métodos</li>
+<li><strong>Dados de Área</strong> - Autocorrelação e regressão espacial</li>
+<li><strong>Geoestatística</strong> - Variogramas e krigagem</li>
+</ol>
+</div>
+</section>
+<section id="referências" class="slide level2">
+<h2>Referências</h2>
+<ul>
+<li>Cressie, N. (1993). <em>Statistics for Spatial Data</em>. Wiley.</li>
+<li>Bivand, R.S. et al.&nbsp;(2013). <em>Applied Spatial Data Analysis with R</em>. Springer.</li>
+<li>Lovelace, R. et al.&nbsp;(2021). <em>Geocomputation with R</em>. CRC Press.</li>
+</ul>
 
 </section>
     </div>
@@ -481,7 +745,7 @@ Prof.&nbsp;Wagner Tassinari
         previewLinks: false,
 
         // Transition style (none/fade/slide/convex/concave/zoom)
-        transition: 'fade',
+        transition: 'convex',
 
         // Transition speed (default/fast/slow)
         transitionSpeed: 'default',
@@ -535,6 +799,44 @@ Prof.&nbsp;Wagner Tassinari
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
