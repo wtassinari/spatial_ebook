@@ -9,7 +9,10 @@ format:
     chalkboard: true
     transition: convex
     background-transition: fade
-    highlight-style: github
+    highlight-style: tango
+    code-background: true      # <-- adiciona fundo nos códigos
+    code-line-numbers: false    # <-- números nas linhas (opcional)
+    code-copy: true            # <-- botão de copiar código
     title-slide-attributes:
       data-background-color: "#2c3e50"
 ---
@@ -45,13 +48,17 @@ As observações ocorrem de maneira **aleatória no espaço**, representando a l
 
 ### Exemplos de Aplicação
 
-::: {.large}
+
 - 🏥 Localização de casos de uma doença notificados em uma cidade
+
 - 🌳 Distribuição espacial de árvores em um parque urbano
+
 - 🐾 Registros de avistamentos de animais silvestres em uma reserva
+
 - 🔥 Focos de incêndio florestal detectados por satélite
+
 - 🔫 Registros de ocorrências de crimes em uma área urbana
-:::
+
 
 ---
 
@@ -102,53 +109,83 @@ pontos_sf <- st_as_sf(dados_pontos,
 plot(pontos_sf$geometry, pch = 16, col = "red", main = "Focos de Queimadas")
 ```
 
-
 ## Entendendo o Código R
 
 ### Funções principais
 
-::: {.small}
+<div style="font-size: 70%;">
 - `st_as_sf()`: Converte um data frame comum em um objeto espacial do tipo **sf** (Simple Features)
 - `coords = c("longitude", "latitude")`: Indica quais colunas representam as coordenadas geográficas
 - `crs = 4326`: Define o Sistema de Referência de Coordenadas (**WGS 84** - padrão do GPS)
-:::
-
----
+</div>
 
 ## O que é CRS (Sistema de Referência de Coordenadas)
 
+<div style="font-size: 70%;">
 O CRS é como uma **"regra de tradução"** entre o que está em um mapa e o mundo real.
 
 - Define como as coordenadas se relacionam com locais reais na Terra.
 - Sem um CRS, uma coordenada não tem significado geográfico.
 
-<small>- **WGS 84 (EPSG:4326)**: Usado por GPS e Google Maps (em graus)</small>
+**WGS 84 (EPSG:4326)**: Usado por GPS e Google Maps (em graus)
 
-<small>- **UTM**: Usado para mapas locais (em metros)</small>
+**UTM**: Usado para mapas locais (em metros)
+</div>
 
----
+## Baixando o mapa via biblioteca `geobr`
 
-## 2. Geoestatística
+```{r, echo=T, out.width='90%', message=FALSE, warning=FALSE, comments=NA}
+library(geobr)
+
+# Baixar polígono do RJ (código IBGE = 33)
+rj_contorno <- read_state(code_state = 33, year = 2020)
+```
+
+#### Plotando o mapa
+
+```{r, echo=T, out.width='90%', message=FALSE, warning=FALSE, comments=NA}
+plot(rj_contorno, title = "Contorno no estato do Rio de Janeiro")
+```
+
+
+##  Visualizar o mapa com os pontos
+
+```{r, echo=T, out.width='100%'}
+library(ggplot2)
+# Plotar
+ggplot() +
+   geom_sf(data = rj_contorno, fill = "lightgreen", color = "black") +
+   geom_sf(data = pontos_sf, color = "red", size = 1.0, alpha = 0.7) +
+   labs(title = "Focos de Queimadas - Rio de Janeiro",
+       caption = "Fonte: INPE") +
+  theme_minimal()
+```
+
+
+
+## Geoestatística
 
 ### Definição
 
-::: {.large}
+
 Dados com **atributo mensurável** em localizações contínuas ou irregulares no espaço.
-:::
+
 
 ### Características
 
 - Cada ponto tem uma **variável medida** associada.
 - Objetivo: Analisar **dependência espacial** e **interpolar valores** para locais não amostrados.
 
-### Exemplos de Aplicação
+## Exemplos de Aplicação
 
-::: {.large}
 - 🌧️ Medição da quantidade de chuva em diferentes locais
+
 - 🦟 Contagem de ovos de Aedes aegypti em ovitrampas
+
 - 🌫️ Concentração de poluentes no ar em pontos georreferenciados
+
 - 🌽 Análise da produtividade agrícola em diferentes talhões
-:::
+
 
 ---
 
@@ -179,37 +216,46 @@ Exemplo: Distribuição espacial de FRP (Fire Radiative Power)
 
 ### Lendo os dados
 
-```r
+```{r, echo=T, out.width='90%', message=FALSE, warning=FALSE, comments=NA}
 library(readxl)
 
 # Carregar o arquivo
 dados_geo <- read_excel("dados/queimadas/queimadas_geo.xlsx")
+
+head(dados_geo)
 ```
 
-### Transformando em objeto espacial
+## Transformando em objeto espacial
 
-```r
-library(sp)
 
-sp::coordinates(dados_geo) <- ~ longitude + latitude
-proj4string(dados_geo) <- CRS("+init=epsg:4326")  # WGS84
+```{r, echo=T, out.width='90%', message=FALSE, warning=FALSE, comments=NA}
+library(sf)
+dados_geo_sf <- st_as_sf(dados_geo, coords = c("longitude", "latitude"), crs = 4326)
 ```
+
+<div style="font-size: 70%;">
+- `st_as_sf(dados_geo, ...)`: Converte um data frame comum em um objeto espacial do tipo sf
+
+- `coords = c("longitude", "latitude")`: Indica quais colunas representam as coordenadas geográficas (primeiro longitude, depois latitude)
+
+- `crs = 4326`: Define o Sistema de Referência de Coordenadas como WGS 84 (padrão GPS, coordenadas em graus)
+
+- `dados_geo_sf <-`: Armazena o resultado em um novo objeto já no formato espacial
+</div>
 
 ---
 
+
 ## Visualização com Gradiente de Cores
 
-```r
+```{r, echo=T, out.width='100%', message=FALSE, warning=FALSE, comments=NA}
 library(ggplot2)
 library(sf)
-
-# Converter objetos sp para sf
-dados_sf <- st_as_sf(dados_geo)
 
 # Plotar com gradiente de cor
 ggplot() +
   geom_sf(data = rj_contorno, fill = "gray90", color = "black") +
-  geom_sf(data = dados_sf, aes(color = frp), size = 2, alpha = 0.7) +
+  geom_sf(data = dados_geo_sf, aes(color = frp), size = 2, alpha = 0.7) +
   scale_color_viridis_c(name = "FRP", option = "plasma") +
   labs(title = "Distribuição Espacial do FRP") +
   theme_minimal()
@@ -217,27 +263,31 @@ ggplot() +
 
 ---
 
-## 3. Dados de Área
+## Dados de Área
 
-### Definição
+### Definição:
 
-::: {.large}
+
 Fenômenos **agregados por unidades geográficas** bem definidas, representados por **polígonos**.
-:::
 
-### Características
+
+### Características:
 
 - Dados agregados dentro de unidades administrativas (municípios, bairros, setores censitários).
+
 - Objetivo: Identificar **autocorrelação espacial** e aplicar **modelos de regressão espacial**.
 
-### Exemplos de Aplicação
 
-::: {.large}
+## Exemplos de Aplicação
+
 - 📊 Taxa de mortalidade por município
+
 - 🏥 Número de casos de dengue por bairro
+
 - 💰 Renda média por setor censitário
+
 - 🎓 Taxa de alfabetização por região administrativa
-:::
+
 
 ---
 
@@ -266,36 +316,75 @@ Exemplo: Mapa temático com dados agregados por município
 
 ## Trabalhando com Dados de Área em R
 
-### Lendo o shapefile
+<div style="font-size: 60%;">
+**Exemplo:** Quantidade de Focos de incêndios por município ocorridos no estado do Rio de Janeiro/Brasil no mês de dezembro de 2025.
+</div>
 
-```r
+####  Lendo os dados:
+
+```{r, echo=T,  out.width="70%"}
+# lendo a base de queimadas
+dados_area <- readxl::read_excel("dados/dengue/dengue2025.xlsx")
+dados_area <- dados_area |>
+              dplyr::mutate(tx_dengue = casos / pop2022 * 100000)
+head(dados_area)
+```
+
+## Lendo o Shapefile
+
+#### Lendo o shapefile via diretório
+```{r, echo=T, out.width='100%', message=FALSE, warning=FALSE, comments=NA}
 library(sf)
 
 # Ler arquivo shapefile
-municipios <- st_read("malhas/municipios.shp")
+rj_municipios <- st_read("malhas/mapa_rj.shp")
+names(rj_municipios)
 ```
 
-### Ou baixando via geobr
+## Lendo o shapefile
 
-```r
+#### Ou baixando via geobr
+
+```{r, echo=T, out.width='100%', message=FALSE, warning=FALSE, comments=NA}
 library(geobr)
 
 # Baixar polígono do RJ (código IBGE = 33)
-rj_municipios <- read_municipality(code_state = 33, year = 2020)
+rj_municipios <- read_municipality(year = 2020) %>%
+                 dplyr::filter(code_state == 33)
+
+names(rj_municipios)
+```
+
+## Padronizando as variaveis e as chaves primárias
+
+```{r, echo=T,  out.width="70%"}
+# Padronizar os nomes dos municípios em ambos os dataframes
+rj_municipios <- rj_municipios |>
+  dplyr::mutate(municipio = tolower(name_muni))
+
+dados_area <- dados_area |>
+  dplyr::mutate(municipio = tolower(municipio))
+
+# Fazer o left join usando as novas colunas padronizadas
+rj_municipios <- rj_municipios |>
+     dplyr::left_join(dados_area, by = "municipio")
+
+names(rj_municipios)
 ```
 
 ---
 
 ## Visualizando Dados de Área
 
-```r
+```{r, echo=T, out.width='100%', message=FALSE, warning=FALSE, comments=NA}
 library(ggplot2)
 
 # Plotar mapa temático
 ggplot(rj_municipios) +
-  geom_sf(aes(fill = taxa_mortalidade), color = "black") +
-  scale_fill_viridis_c(name = "Taxa de Mortalidade") +
-  labs(title = "Taxa de Mortalidade por Município - RJ") +
+  geom_sf(aes(fill = tx_dengue), color = "black") +
+  scale_fill_viridis_c(option = "F",
+    name = "Taxa de incidência de dengue", direction = -1) +
+  labs(title = "Taxa de incidência de dengue por Município - RJ") +
   theme_minimal()
 ```
 
@@ -315,30 +404,12 @@ ggplot(rj_municipios) +
 
 ### Pergunta-chave:
 
-::: {.large}
+
 **Qual é a natureza dos meus dados?**
 
 - Tenho **pontos exatos** de eventos? → **Padrões Pontuais**
 - Tenho **medições contínuas** em locais? → **Geoestatística**
 - Tenho dados **agregados por região**? → **Dados de Área**
-:::
 
----
 
-## Próximos Passos
 
-### Capítulos seguintes:
-
-::: {.large}
-1. **Padrões Pontuais** - Análise detalhada e métodos
-2. **Dados de Área** - Autocorrelação e regressão espacial
-3. **Geoestatística** - Variogramas e krigagem
-:::
-
----
-
-## Referências
-
-- Cressie, N. (1993). *Statistics for Spatial Data*. Wiley.
-- Bivand, R.S. et al. (2013). *Applied Spatial Data Analysis with R*. Springer.
-- Lovelace, R. et al. (2021). *Geocomputation with R*. CRC Press.

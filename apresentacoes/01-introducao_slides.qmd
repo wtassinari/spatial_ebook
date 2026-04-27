@@ -9,7 +9,10 @@ format:
     chalkboard: true
     transition: convex
     background-transition: fade
-    highlight-style: github
+    highlight-style: tango
+    code-background: true      # <-- adiciona fundo nos códigos
+    code-line-numbers: false    # <-- números nas linhas (opcional)
+    code-copy: true            # <-- botão de copiar código
     title-slide-attributes:
       data-background-color: "#2c3e50"
 ---
