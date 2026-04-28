@@ -10,67 +10,248 @@ format:
     transition: convex
     background-transition: fade
     highlight-style: tango
-    code-background: true      # <-- adiciona fundo nos códigos
-    code-line-numbers: false    # <-- números nas linhas (opcional)
-    code-copy: true            # <-- botão de copiar código
+    code-background: true
+    code-line-numbers: false
+    code-copy: true
     title-slide-attributes:
       data-background-color: "#2c3e50"
 ---
 
-## Objetivos da Aula
+## Objetivos do Capítulo
 
-- Compreender a estrutura e análise de dados de área.
-- Construir e interpretar mapas temáticos.
-- Calcular e interpretar a autocorrelação espacial (Índice de Moran's I).
-- Utilizar Indicadores Locais de Associação Espacial (LISA).
-- Aplicar modelos de regressão espacial (SAR, CAR, GWR).
+Ao final deste capítulo, você será capaz de:
+
+::: {.large}
+1. Construir e interpretar **mapas temáticos** (coropléticos).
+2. Calcular e interpretar medidas de **autocorrelação espacial global** (I de Moran).
+3. Aplicar a análise de **autocorrelação espacial local** (LISA).
+4. Utilizar o estimador de **Bayes Empírico** para suavização de taxas.
+5. Ajustar **modelos de regressão espacial** (SAR, CAR e GWR).
+:::
+
+---
 
 ## O que são Dados de Área?
 
-Os dados de área representam fenômenos agregados por unidades geográficas bem definidas, como municípios, estados, bairros ou setores censitários.
+#### Definição
 
-Diferente dos padrões pontuais, onde a localização exata é o foco, nos dados de área o interesse recai sobre os valores agregados dentro de polígonos fechados.
+Fenômenos **agregados por unidades geográficas** discretas, como municípios, estados e ou setores censitários.
 
-## Mapas Temáticos
+#### Características
 
-A visualização de dados de área é frequentemente realizada através de mapas temáticos (ou coropléticos).
+- Representados por **polígonos**.
+- Objetivo: Identificar **padrões espaciais**.
 
-Esses mapas utilizam cores ou padrões para representar a magnitude de uma variável em diferentes regiões geográficas, facilitando a identificação visual de padrões espaciais.
+
+---
+
+## Mapa Temático
+
+<div style="font-size: 70%;">
+O mapa temático tem como principal objetivo visualizar e analisar a distribuição espacial de um fenômeno específico.
+</div>
+
+```{r, echo=T, out.width='90%', message=FALSE, warning=FALSE}
+#| eval: false  # não executa o código
+#| echo: true   # mostra o código
+#| 
+library(tmap)
+data(World)
+tmap_style("classic")
+
+# Desenhando um rápido mapa temático mundial para esperança de vida.
+qtm(World, fill = "life_exp")
+```
+
+## Mapa Temático
+
+<div style="font-size: 70%;">
+O mapa temático tem como principal objetivo visualizar e analisar a distribuição espacial de um fenômeno específico.
+</div>
+
+```{r}
+#| fig-width: 12
+#| fig-height: 8
+#| out-width: 100%
+#| fig-align: center
+#| 
+library(tmap)
+data(World)
+tmap_style("classic")
+
+# Desenhando um rápido mapa temático mundial para esperança de vida.
+qtm(World, fill = "life_exp")
+```
+---
+
+## Matriz de Vizinhança
+
+#### O que é?
+
+A matriz de vizinhança (ou proximidade) é um instrumento fundamental que representa formalmente quais áreas são consideradas **vizinhas** entre si.
+
+- Transforma o mapa em uma estrutura matemática.
+- Por exemplo, se dois municípios são vizinhos, valor **1**; se não, valor **0**.
+- A diagonal principal é zero (um município não é vizinho de si mesmo).
+
+---
+
+## Matriz de Vizinhança: Exemplo
+
+![](figuras/vizinhanca.png){fig-align="center" width="55%"}
+
+<div style="text-align: center; font-size: 14px;">
+Exemplo de contiguidade do tipo Rainha (compartilham qualquer ponto de fronteira)
+</div>
+
+---
+
+## Tipos de Matrizes de Vizinhança no R
+
+<div style="font-size: 70%;">
+O pacote `spdep` oferece vários tipos de matrizes:
+
+1. **Vizinhança por Contiguidade (Adjacência)**
+   - **Rainha (Queen)**: Compartilham qualquer ponto de fronteira.
+   - **Torre (Rook)**: Compartilham apenas fronteira lateral.
+   
+2. **Vizinhança por Distância**
+   - **Raio Fixo**: Dentro de uma distância mínima e máxima.
+   - **k-Vizinhos Mais Próximos**: Os *k* mais próximos, independente da distância.
+
+3. **Vizinhança por Gráficos Geométricos**
+   - **Delaunay** e **Voronoi**.
+</div>
+
+---
 
 ## Autocorrelação Espacial
 
-A autocorrelação espacial mede o grau em que uma variável está correlacionada consigo mesma no espaço.
+### Moran Global
 
-O **Índice de Moran Global ($I$)** é a estatística mais comum para quantificar essa dependência. Valores positivos indicam agrupamento de valores semelhantes (altos com altos, baixos com baixos), enquanto valores negativos sugerem dispersão (altos próximos a baixos).
+Avalia se existe autocorrelação espacial em **todo o território** analisado.
 
-## Indicadores Locais (LISA)
+- **I > 0**: Valores similares estão próximos (agrupamento positivo).
+- **I < 0**: Valores diferentes estão próximos (dispersão).
+- **I ≈ 0**: Padrão aleatório.
 
-Enquanto o Moran Global fornece uma medida única para toda a área de estudo, os **Indicadores Locais de Associação Espacial (LISA)** permitem identificar *clusters* espaciais locais e *outliers* espaciais.
+Indica se o fenômeno possui organização territorial, sugerindo a necessidade de políticas regionais integradas.
 
-O Mapa LISA (LISA Map) classifica as regiões em categorias como Alto-Alto, Baixo-Baixo, Alto-Baixo e Baixo-Alto, destacando áreas de concentração significativa.
+---
 
-## Regressão Espacial
+## Autocorrelação Espacial Local
 
-Quando a autocorrelação espacial está presente, os modelos de regressão linear clássicos (OLS) podem produzir estimativas enviesadas.
+### Moran Local (LISA)
 
-Modelos de regressão espacial incorporam a estrutura de vizinhança para corrigir esse problema.
+O LISA (*Local Indicators of Spatial Association*) avalia a autocorrelação espacial em **cada unidade territorial** individualmente.
 
-## Modelos Globais
+- Identifica onde exatamente estão os agrupamentos espaciais e possíveis áreas atípicas.
+- Classifica cada município como parte de um cluster de valores altos, baixos ou como um ponto fora do padrão.
 
-Os modelos globais assumem que o processo espacial é estacionário em toda a área de estudo.
+---
 
-- **Modelo SAR (Spatial Autoregressive):** Incorpora a dependência espacial na variável dependente (efeito de contágio).
-- **Modelo CAR (Conditional Autoregressive):** Modela a dependência espacial no termo de erro, útil quando a autocorrelação é vista como um ruído não observado.
+## LISA Map: Tipos de Associação
 
-## Regressão Geograficamente Ponderada (GWR)
+| Tipo | Descrição | Interpretação |
+|------|-----------|---------------|
+| 🔴 **Alto-Alto** | Valor alto cercado por valores altos | **Hotspot** (cluster de altas magnitudes) |
+| 🔵 **Baixo-Baixo** | Valor baixo cercado por valores baixos | **Coldspot** (cluster de baixas magnitudes) |
+| 🟠 **Alto-Baixo** | Valor alto cercado por valores baixos | **Outlier espacial positivo** |
+| 🟡 **Baixo-Alto** | Valor baixo cercado por valores altos | **Outlier espacial negativo** |
+| ⚪ **Não sig.** | Sem associação espacial relevante | Sem padrão espacial detectável |
 
-A **GWR (Geographically Weighted Regression)** é uma técnica local que permite que os coeficientes de regressão variem no espaço.
+---
 
-Em vez de estimar um único conjunto de parâmetros para toda a região, a GWR estima parâmetros locais para cada unidade geográfica, capturando a heterogeneidade espacial das relações entre as variáveis.
+## Exemplo de LISA Map
 
-## Aplicações Práticas no Curso
+![](figuras/lisa_map_covid.png){fig-align="center" width="80%"}
 
-- **Expectativa de vida mundial:** Construção de mapa temático mundial com dados de saúde.
-- **Dengue no Estado do Rio de Janeiro:** Análise de padrão espacial e autocorrelação.
-- **Hanseníase no Mato Grosso:** Aplicação de métodos de Bayes Empírico asspacial.
-- **Queimadas no RJ:** Modelagem com regressão espacial (SAR, CAR, GWR).
+<div style="text-align: center; font-size: 14px;">
+Clusters espaciais de mortalidade por COVID-19 na Europa (Amdaoud et al., 2021)
+</div>
+
+---
+
+## Modelos de Regressão Espacial
+
+A hipótese de independência das observações em geral é **falsa** para dados espaciais. Existe dependência espacial!
+
+Se existir dependência, devemos incluir no modelo os **Efeitos Espaciais**, caso contrário, as estimativas podem ficar enviesadas.
+
+### Como verificar?
+Analisar os resíduos da regressão tradicional (OLS) com o índice de Moran.
+
+---
+
+## Modelos Globais vs. Locais
+
+### Modelos Globais (SAR, CAR)
+Assumem que a estrutura espacial é **constante** em todo o espaço geográfico. Utilizam um único parâmetro para captar a autocorrelação.
+- **SAR**: Dependência na variável dependente.
+- **CAR**: Dependência na estrutura do erro.
+
+### Modelos Locais (GWR)
+A Regressão Geograficamente Ponderada (GWR) permite que os coeficientes da regressão **variem ao longo do espaço**, ajustando uma equação específica para cada localidade.
+
+---
+
+## Exemplo Prático: GWR no R
+
+<div style="font-size: 70%;">
+O modelo GWR ajusta regressões locais, ponderando as observações pela distância.
+</div>
+
+```{r, eval=FALSE, echo=TRUE}
+library(spgwr)
+
+# Definindo a largura de banda (bandwidth)
+bwG <- gwr.sel(media_frp ~ media_dias_sem_chuva, 
+               data = mapa_rj, 
+               coords = cbind(mapa_rj$lon, mapa_rj$lat), 
+               adapt = TRUE)
+
+# Ajustando o modelo GWR
+queimadas.gwr <- gwr(media_frp ~ media_dias_sem_chuva, 
+                     data = mapa_rj, 
+                     coords = cbind(mapa_rj$lon, mapa_rj$lat), 
+                     adapt = bwG, 
+                     hatmatrix = TRUE, 
+                     se.fit = TRUE)
+```
+
+---
+
+## Comparação de Modelos
+
+| Modelo | Adesão à distribuição real | Interpretação |
+|--------|----------------------------|---------------|
+| **LM** | ❌ Fraca | Perda de variabilidade e deslocamento da média. |
+| **CAR** | ✅ Razoável | Aproxima-se da observada, mas apresenta suavização. |
+| **GWR** | ✅✅ Melhor | Preserva melhor a dispersão e a heterogeneidade espacial. |
+
+<div style="font-size: 70%; margin-top: 20px;">
+O modelo GWR é frequentemente superior por capturar a variabilidade local que os modelos globais ignoram.
+</div>
+
+---
+
+## Resumo do Capítulo
+
+1. **Dados de Área** são fundamentais para analisar fenômenos agregados.
+2. A **Matriz de Vizinhança** é a base matemática para a estatística espacial de área.
+3. O **Moran Global** indica se há padrão espacial geral, enquanto o **Moran Local (LISA)** aponta onde estão os clusters.
+4. Modelos tradicionais de regressão falham ao ignorar a dependência espacial.
+5. Modelos espaciais como **CAR** e **GWR** corrigem vieses e revelam dinâmicas locais.
+
+---
+
+## Referências Sugeridas
+
+<div style="font-size: 60%;">
+- Waller, L. A., & Gotway, C. A. (2004). *Applied Spatial Statistics for Public Health Data*. Wiley-Interscience.
+- Bivand, R. S., Pebesma, E., & Gomez-Rubio, V. (2013). *Applied Spatial Data Analysis with R* (2nd ed.). Springer.
+- Cressie, N. (1993). *Statistics for Spatial Data* (Revised edition). Wiley.
+- Druck, S., et al. (eds). (2004). *Análise Espacial de Dados Geográficos*. EMBRAPA.
+- Fotheringham, A. S., Brunsdon, C., & Charlton, M. (2002). *Geographically Weighted Regression*. Wiley.
+- Lovelace, R., Nowosad, J., & Muenchow, J. (2021). *Geocomputation with R*.
+</div>

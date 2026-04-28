@@ -28,6 +28,70 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  background-color: #f8f8f8; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ef2929; } /* Alert */
+    code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #204a87; } /* Attribute */
+    code span.bn { color: #0000cf; } /* BaseN */
+    code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4e9a06; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #8f5902; font-style: italic; } /* Comment */
+    code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+    code span.dt { color: #204a87; } /* DataType */
+    code span.dv { color: #0000cf; } /* DecVal */
+    code span.er { color: #a40000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #0000cf; } /* Float */
+    code span.fu { color: #204a87; font-weight: bold; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+    code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+    code span.ot { color: #8f5902; } /* Other */
+    code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+    code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+    code span.ss { color: #4e9a06; } /* SpecialString */
+    code span.st { color: #4e9a06; } /* String */
+    code span.va { color: #000000; } /* Variable */
+    code span.vs { color: #4e9a06; } /* VerbatimString */
+    code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="04-dados_area_slides_files/libs/revealjs/dist/theme/quarto-67af64ce27563527bdbf278b6012b166.css">
   <link href="04-dados_area_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -141,62 +205,256 @@ Prof.&nbsp;Wagner Tassinari
 </div>
 
 </section>
-<section id="objetivos-da-aula" class="slide level2">
-<h2>Objetivos da Aula</h2>
-<ul>
-<li>Compreender a estrutura e análise de dados de área.</li>
-<li>Construir e interpretar mapas temáticos.</li>
-<li>Calcular e interpretar a autocorrelação espacial (Índice de Moran’s I).</li>
-<li>Utilizar Indicadores Locais de Associação Espacial (LISA).</li>
-<li>Aplicar modelos de regressão espacial (SAR, CAR, GWR).</li>
-</ul>
+<section id="objetivos-do-capítulo" class="slide level2">
+<h2>Objetivos do Capítulo</h2>
+<p>Ao final deste capítulo, você será capaz de:</p>
+<div class="large">
+<ol type="1">
+<li>Construir e interpretar <strong>mapas temáticos</strong> (coropléticos).</li>
+<li>Calcular e interpretar medidas de <strong>autocorrelação espacial global</strong> (I de Moran).</li>
+<li>Aplicar a análise de <strong>autocorrelação espacial local</strong> (LISA).</li>
+<li>Utilizar o estimador de <strong>Bayes Empírico</strong> para suavização de taxas.</li>
+<li>Ajustar <strong>modelos de regressão espacial</strong> (SAR, CAR e GWR).</li>
+</ol>
+</div>
 </section>
 <section id="o-que-são-dados-de-área" class="slide level2">
 <h2>O que são Dados de Área?</h2>
-<p>Os dados de área representam fenômenos agregados por unidades geográficas bem definidas, como municípios, estados, bairros ou setores censitários.</p>
-<p>Diferente dos padrões pontuais, onde a localização exata é o foco, nos dados de área o interesse recai sobre os valores agregados dentro de polígonos fechados.</p>
+<h4 id="definição">Definição</h4>
+<p>Fenômenos <strong>agregados por unidades geográficas</strong> discretas, como municípios, estados e ou setores censitários.</p>
+<h4 id="características">Características</h4>
+<ul>
+<li>Representados por <strong>polígonos</strong>.</li>
+<li>Objetivo: Identificar <strong>padrões espaciais</strong>.</li>
+</ul>
 </section>
-<section id="mapas-temáticos" class="slide level2">
-<h2>Mapas Temáticos</h2>
-<p>A visualização de dados de área é frequentemente realizada através de mapas temáticos (ou coropléticos).</p>
-<p>Esses mapas utilizam cores ou padrões para representar a magnitude de uma variável em diferentes regiões geográficas, facilitando a identificação visual de padrões espaciais.</p>
+<section id="mapa-temático" class="slide level2">
+<h2>Mapa Temático</h2>
+<div style="font-size: 70%;">
+<p>O mapa temático tem como principal objetivo visualizar e analisar a distribuição espacial de um fenômeno específico.</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(World)</span>
+<span id="cb1-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_style</span>(<span class="st">"classic"</span>)</span>
+<span id="cb1-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Desenhando um rápido mapa temático mundial para esperança de vida.</span></span>
+<span id="cb1-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">qtm</span>(World, <span class="at">fill =</span> <span class="st">"life_exp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="mapa-temático-1" class="slide level2">
+<h2>Mapa Temático</h2>
+<div style="font-size: 70%;">
+<p>O mapa temático tem como principal objetivo visualizar e analisar a distribuição espacial de um fenômeno específico.</p>
+</div>
+
+<img data-src="04-dados_area_slides_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<section id="matriz-de-vizinhança" class="slide level2">
+<h2>Matriz de Vizinhança</h2>
+<h4 id="o-que-é">O que é?</h4>
+<p>A matriz de vizinhança (ou proximidade) é um instrumento fundamental que representa formalmente quais áreas são consideradas <strong>vizinhas</strong> entre si.</p>
+<ul>
+<li>Transforma o mapa em uma estrutura matemática.</li>
+<li>Por exemplo, se dois municípios são vizinhos, valor <strong>1</strong>; se não, valor <strong>0</strong>.</li>
+<li>A diagonal principal é zero (um município não é vizinho de si mesmo).</li>
+</ul>
+</section>
+<section id="matriz-de-vizinhança-exemplo" class="slide level2">
+<h2>Matriz de Vizinhança: Exemplo</h2>
+
+<img data-src="figuras/vizinhanca.png" class="quarto-figure quarto-figure-center r-stretch" style="width:55.0%"><div style="text-align: center; font-size: 14px;">
+<p>Exemplo de contiguidade do tipo Rainha (compartilham qualquer ponto de fronteira)</p>
+</div>
+</section>
+<section id="tipos-de-matrizes-de-vizinhança-no-r" class="slide level2">
+<h2>Tipos de Matrizes de Vizinhança no R</h2>
+<div style="font-size: 70%;">
+<p>O pacote <code>spdep</code> oferece vários tipos de matrizes:</p>
+<ol type="1">
+<li><strong>Vizinhança por Contiguidade (Adjacência)</strong>
+<ul>
+<li><strong>Rainha (Queen)</strong>: Compartilham qualquer ponto de fronteira.</li>
+<li><strong>Torre (Rook)</strong>: Compartilham apenas fronteira lateral.</li>
+</ul></li>
+<li><strong>Vizinhança por Distância</strong>
+<ul>
+<li><strong>Raio Fixo</strong>: Dentro de uma distância mínima e máxima.</li>
+<li><strong>k-Vizinhos Mais Próximos</strong>: Os <em>k</em> mais próximos, independente da distância.</li>
+</ul></li>
+<li><strong>Vizinhança por Gráficos Geométricos</strong>
+<ul>
+<li><strong>Delaunay</strong> e <strong>Voronoi</strong>.</li>
+</ul></li>
+</ol>
+</div>
 </section>
 <section id="autocorrelação-espacial" class="slide level2">
 <h2>Autocorrelação Espacial</h2>
-<p>A autocorrelação espacial mede o grau em que uma variável está correlacionada consigo mesma no espaço.</p>
-<p>O <strong>Índice de Moran Global (<span class="math inline">\(I\)</span>)</strong> é a estatística mais comum para quantificar essa dependência. Valores positivos indicam agrupamento de valores semelhantes (altos com altos, baixos com baixos), enquanto valores negativos sugerem dispersão (altos próximos a baixos).</p>
-</section>
-<section id="indicadores-locais-lisa" class="slide level2">
-<h2>Indicadores Locais (LISA)</h2>
-<p>Enquanto o Moran Global fornece uma medida única para toda a área de estudo, os <strong>Indicadores Locais de Associação Espacial (LISA)</strong> permitem identificar <em>clusters</em> espaciais locais e <em>outliers</em> espaciais.</p>
-<p>O Mapa LISA (LISA Map) classifica as regiões em categorias como Alto-Alto, Baixo-Baixo, Alto-Baixo e Baixo-Alto, destacando áreas de concentração significativa.</p>
-</section>
-<section id="regressão-espacial" class="slide level2">
-<h2>Regressão Espacial</h2>
-<p>Quando a autocorrelação espacial está presente, os modelos de regressão linear clássicos (OLS) podem produzir estimativas enviesadas.</p>
-<p>Modelos de regressão espacial incorporam a estrutura de vizinhança para corrigir esse problema.</p>
-</section>
-<section id="modelos-globais" class="slide level2">
-<h2>Modelos Globais</h2>
-<p>Os modelos globais assumem que o processo espacial é estacionário em toda a área de estudo.</p>
+<h3 id="moran-global">Moran Global</h3>
+<p>Avalia se existe autocorrelação espacial em <strong>todo o território</strong> analisado.</p>
 <ul>
-<li><strong>Modelo SAR (Spatial Autoregressive):</strong> Incorpora a dependência espacial na variável dependente (efeito de contágio).</li>
-<li><strong>Modelo CAR (Conditional Autoregressive):</strong> Modela a dependência espacial no termo de erro, útil quando a autocorrelação é vista como um ruído não observado.</li>
+<li><strong>I &gt; 0</strong>: Valores similares estão próximos (agrupamento positivo).</li>
+<li><strong>I &lt; 0</strong>: Valores diferentes estão próximos (dispersão).</li>
+<li><strong>I ≈ 0</strong>: Padrão aleatório.</li>
+</ul>
+<p>Indica se o fenômeno possui organização territorial, sugerindo a necessidade de políticas regionais integradas.</p>
+</section>
+<section id="autocorrelação-espacial-local" class="slide level2">
+<h2>Autocorrelação Espacial Local</h2>
+<h3 id="moran-local-lisa">Moran Local (LISA)</h3>
+<p>O LISA (<em>Local Indicators of Spatial Association</em>) avalia a autocorrelação espacial em <strong>cada unidade territorial</strong> individualmente.</p>
+<ul>
+<li>Identifica onde exatamente estão os agrupamentos espaciais e possíveis áreas atípicas.</li>
+<li>Classifica cada município como parte de um cluster de valores altos, baixos ou como um ponto fora do padrão.</li>
 </ul>
 </section>
-<section id="regressão-geograficamente-ponderada-gwr" class="slide level2">
-<h2>Regressão Geograficamente Ponderada (GWR)</h2>
-<p>A <strong>GWR (Geographically Weighted Regression)</strong> é uma técnica local que permite que os coeficientes de regressão variem no espaço.</p>
-<p>Em vez de estimar um único conjunto de parâmetros para toda a região, a GWR estima parâmetros locais para cada unidade geográfica, capturando a heterogeneidade espacial das relações entre as variáveis.</p>
+<section id="lisa-map-tipos-de-associação" class="slide level2">
+<h2>LISA Map: Tipos de Associação</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 34%">
+<col style="width: 46%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tipo</th>
+<th>Descrição</th>
+<th>Interpretação</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>🔴 <strong>Alto-Alto</strong></td>
+<td>Valor alto cercado por valores altos</td>
+<td><strong>Hotspot</strong> (cluster de altas magnitudes)</td>
+</tr>
+<tr class="even">
+<td>🔵 <strong>Baixo-Baixo</strong></td>
+<td>Valor baixo cercado por valores baixos</td>
+<td><strong>Coldspot</strong> (cluster de baixas magnitudes)</td>
+</tr>
+<tr class="odd">
+<td>🟠 <strong>Alto-Baixo</strong></td>
+<td>Valor alto cercado por valores baixos</td>
+<td><strong>Outlier espacial positivo</strong></td>
+</tr>
+<tr class="even">
+<td>🟡 <strong>Baixo-Alto</strong></td>
+<td>Valor baixo cercado por valores altos</td>
+<td><strong>Outlier espacial negativo</strong></td>
+</tr>
+<tr class="odd">
+<td>⚪ <strong>Não sig.</strong></td>
+<td>Sem associação espacial relevante</td>
+<td>Sem padrão espacial detectável</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="aplicações-práticas-no-curso" class="slide level2">
-<h2>Aplicações Práticas no Curso</h2>
+<section id="exemplo-de-lisa-map" class="slide level2">
+<h2>Exemplo de LISA Map</h2>
+
+<img data-src="figuras/lisa_map_covid.png" class="quarto-figure quarto-figure-center r-stretch" style="width:80.0%"><div style="text-align: center; font-size: 14px;">
+<p>Clusters espaciais de mortalidade por COVID-19 na Europa (Amdaoud et al., 2021)</p>
+</div>
+</section>
+<section id="modelos-de-regressão-espacial" class="slide level2">
+<h2>Modelos de Regressão Espacial</h2>
+<p>A hipótese de independência das observações em geral é <strong>falsa</strong> para dados espaciais. Existe dependência espacial!</p>
+<p>Se existir dependência, devemos incluir no modelo os <strong>Efeitos Espaciais</strong>, caso contrário, as estimativas podem ficar enviesadas.</p>
+<h3 id="como-verificar">Como verificar?</h3>
+<p>Analisar os resíduos da regressão tradicional (OLS) com o índice de Moran.</p>
+</section>
+<section id="modelos-globais-vs.-locais" class="slide level2">
+<h2>Modelos Globais vs.&nbsp;Locais</h2>
+<h3 id="modelos-globais-sar-car">Modelos Globais (SAR, CAR)</h3>
+<p>Assumem que a estrutura espacial é <strong>constante</strong> em todo o espaço geográfico. Utilizam um único parâmetro para captar a autocorrelação. - <strong>SAR</strong>: Dependência na variável dependente. - <strong>CAR</strong>: Dependência na estrutura do erro.</p>
+<h3 id="modelos-locais-gwr">Modelos Locais (GWR)</h3>
+<p>A Regressão Geograficamente Ponderada (GWR) permite que os coeficientes da regressão <strong>variem ao longo do espaço</strong>, ajustando uma equação específica para cada localidade.</p>
+</section>
+<section id="exemplo-prático-gwr-no-r" class="slide level2">
+<h2>Exemplo Prático: GWR no R</h2>
+<div style="font-size: 70%;">
+<p>O modelo GWR ajusta regressões locais, ponderando as observações pela distância.</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spgwr)</span>
+<span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Definindo a largura de banda (bandwidth)</span></span>
+<span id="cb2-4"><a href="" aria-hidden="true" tabindex="-1"></a>bwG <span class="ot">&lt;-</span> <span class="fu">gwr.sel</span>(media_frp <span class="sc">~</span> media_dias_sem_chuva, </span>
+<span id="cb2-5"><a href="" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> mapa_rj, </span>
+<span id="cb2-6"><a href="" aria-hidden="true" tabindex="-1"></a>               <span class="at">coords =</span> <span class="fu">cbind</span>(mapa_rj<span class="sc">$</span>lon, mapa_rj<span class="sc">$</span>lat), </span>
+<span id="cb2-7"><a href="" aria-hidden="true" tabindex="-1"></a>               <span class="at">adapt =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-8"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajustando o modelo GWR</span></span>
+<span id="cb2-10"><a href="" aria-hidden="true" tabindex="-1"></a>queimadas.gwr <span class="ot">&lt;-</span> <span class="fu">gwr</span>(media_frp <span class="sc">~</span> media_dias_sem_chuva, </span>
+<span id="cb2-11"><a href="" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> mapa_rj, </span>
+<span id="cb2-12"><a href="" aria-hidden="true" tabindex="-1"></a>                     <span class="at">coords =</span> <span class="fu">cbind</span>(mapa_rj<span class="sc">$</span>lon, mapa_rj<span class="sc">$</span>lat), </span>
+<span id="cb2-13"><a href="" aria-hidden="true" tabindex="-1"></a>                     <span class="at">adapt =</span> bwG, </span>
+<span id="cb2-14"><a href="" aria-hidden="true" tabindex="-1"></a>                     <span class="at">hatmatrix =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb2-15"><a href="" aria-hidden="true" tabindex="-1"></a>                     <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="comparação-de-modelos" class="slide level2">
+<h2>Comparação de Modelos</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 54%">
+<col style="width: 29%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th>Adesão à distribuição real</th>
+<th>Interpretação</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>LM</strong></td>
+<td>❌ Fraca</td>
+<td>Perda de variabilidade e deslocamento da média.</td>
+</tr>
+<tr class="even">
+<td><strong>CAR</strong></td>
+<td>✅ Razoável</td>
+<td>Aproxima-se da observada, mas apresenta suavização.</td>
+</tr>
+<tr class="odd">
+<td><strong>GWR</strong></td>
+<td>✅✅ Melhor</td>
+<td>Preserva melhor a dispersão e a heterogeneidade espacial.</td>
+</tr>
+</tbody>
+</table>
+<div style="font-size: 70%; margin-top: 20px;">
+<p>O modelo GWR é frequentemente superior por capturar a variabilidade local que os modelos globais ignoram.</p>
+</div>
+</section>
+<section id="resumo-do-capítulo" class="slide level2">
+<h2>Resumo do Capítulo</h2>
+<ol type="1">
+<li><strong>Dados de Área</strong> são fundamentais para analisar fenômenos agregados.</li>
+<li>A <strong>Matriz de Vizinhança</strong> é a base matemática para a estatística espacial de área.</li>
+<li>O <strong>Moran Global</strong> indica se há padrão espacial geral, enquanto o <strong>Moran Local (LISA)</strong> aponta onde estão os clusters.</li>
+<li>Modelos tradicionais de regressão falham ao ignorar a dependência espacial.</li>
+<li>Modelos espaciais como <strong>CAR</strong> e <strong>GWR</strong> corrigem vieses e revelam dinâmicas locais.</li>
+</ol>
+</section>
+<section id="referências-sugeridas" class="slide level2">
+<h2>Referências Sugeridas</h2>
+<div style="font-size: 60%;">
 <ul>
-<li><strong>Expectativa de vida mundial:</strong> Construção de mapa temático mundial com dados de saúde.</li>
-<li><strong>Dengue no Estado do Rio de Janeiro:</strong> Análise de padrão espacial e autocorrelação.</li>
-<li><strong>Hanseníase no Mato Grosso:</strong> Aplicação de métodos de Bayes Empírico asspacial.</li>
-<li><strong>Queimadas no RJ:</strong> Modelagem com regressão espacial (SAR, CAR, GWR).</li>
+<li>Waller, L. A., &amp; Gotway, C. A. (2004). <em>Applied Spatial Statistics for Public Health Data</em>. Wiley-Interscience.</li>
+<li>Bivand, R. S., Pebesma, E., &amp; Gomez-Rubio, V. (2013). <em>Applied Spatial Data Analysis with R</em> (2nd ed.). Springer.</li>
+<li>Cressie, N. (1993). <em>Statistics for Spatial Data</em> (Revised edition). Wiley.</li>
+<li>Druck, S., et al.&nbsp;(eds). (2004). <em>Análise Espacial de Dados Geográficos</em>. EMBRAPA.</li>
+<li>Fotheringham, A. S., Brunsdon, C., &amp; Charlton, M. (2002). <em>Geographically Weighted Regression</em>. Wiley.</li>
+<li>Lovelace, R., Nowosad, J., &amp; Muenchow, J. (2021). <em>Geocomputation with R</em>.</li>
 </ul>
+</div>
 
 </section>
     </div>
@@ -416,6 +674,44 @@ Prof.&nbsp;Wagner Tassinari
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
