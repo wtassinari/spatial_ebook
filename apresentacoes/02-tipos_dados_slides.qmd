@@ -31,13 +31,13 @@ A estatística espacial pode ser dividida em **três grandes áreas**:
 
 ---
 
-## 1. Padrões Pontuais
+## Padrões Pontuais
 
 ### Definição
 
-::: {.large}
+
 As observações ocorrem de maneira **aleatória no espaço**, representando a localização exata de eventos.
-:::
+
 
 ### Características
 
@@ -98,20 +98,43 @@ head(dados_pontos)
 
 ## Padrões Pontuais no R
 
-```{r, echo=T, out.width='110%'}
+```{r}
+#| eval: false  # não executa o código
+#| echo: true   # mostra o código
+
 # Transformando em objeto espacial
 library(sf)
 
-pontos_sf <- st_as_sf(dados_pontos, 
+pontos_sf <- st_as_sf(dados_pontos,
                       coords = c("longitude", "latitude"),
                       crs = 4326)
 
-plot(pontos_sf$geometry, pch = 16, col = "red", main = "Focos de Queimadas")
+plot(pontos_sf$geometry, pch = 16, col = "red",
+     main = "Focos de Queimadas")
+```
+
+## Padrões Pontuais no R
+
+```{r}
+#| fig-width: 12
+#| fig-height: 8
+#| out-width: 100%
+#| fig-align: center
+
+# Transformando em objeto espacial
+library(sf)
+
+pontos_sf <- st_as_sf(dados_pontos,
+                      coords = c("longitude", "latitude"),
+                      crs = 4326)
+
+plot(pontos_sf$geometry, pch = 16, col = "red",
+     main = "Focos de Queimadas")
 ```
 
 ## Entendendo o Código R
 
-### Funções principais
+#### Funções principais
 
 <div style="font-size: 70%;">
 - `st_as_sf()`: Converte um data frame comum em um objeto espacial do tipo **sf** (Simple Features)
@@ -134,23 +157,62 @@ O CRS é como uma **"regra de tradução"** entre o que está em um mapa e o mun
 
 ## Baixando o mapa via biblioteca `geobr`
 
-```{r, echo=T, out.width='90%', message=FALSE, warning=FALSE, comments=NA}
+```{r, message=FALSE, warning=FALSE, comments=NA}
+#| eval: false  # não executa o código
+#| echo: true   # mostra o código
+#| 
 library(geobr)
 
 # Baixar polígono do RJ (código IBGE = 33)
 rj_contorno <- read_state(code_state = 33, year = 2020)
+
+# Plotando o mapa
+plot(rj_contorno, title = "Contorno no estato do Rio de Janeiro")
 ```
 
-#### Plotando o mapa
+## Baixando o mapa via biblioteca `geobr`
 
-```{r, echo=T, out.width='90%', message=FALSE, warning=FALSE, comments=NA}
+```{r, message=FALSE, warning=FALSE, comments=NA}
+#| fig-width: 12
+#| fig-height: 8
+#| out-width: 100%
+#| fig-align: center
+#| 
+library(geobr)
+
+# Baixar polígono do RJ (código IBGE = 33)
+rj_contorno <- read_state(year = 2020) |>
+                 dplyr::filter(code_state == 33)
+
+# Plotando o mapa
 plot(rj_contorno, title = "Contorno no estato do Rio de Janeiro")
 ```
 
 
 ##  Visualizar o mapa com os pontos
 
-```{r, echo=T, out.width='100%'}
+```{r}
+#| eval: false  # não executa o código
+#| echo: true   # mostra o código
+#| 
+library(ggplot2)
+# Plotar
+ggplot() +
+   geom_sf(data = rj_contorno, fill = "lightgreen", color = "black") +
+   geom_sf(data = pontos_sf, color = "red", size = 1.0, alpha = 0.7) +
+   labs(title = "Focos de Queimadas - Rio de Janeiro",
+       caption = "Fonte: INPE") +
+  theme_minimal()
+```
+
+##  Visualizar o mapa com os pontos
+
+```{r}
+#| fig-width: 12
+#| fig-height: 8
+#| out-width: 100%
+#| fig-align: center
+#| 
 library(ggplot2)
 # Plotar
 ggplot() +
@@ -248,7 +310,10 @@ dados_geo_sf <- st_as_sf(dados_geo, coords = c("longitude", "latitude"), crs = 4
 
 ## Visualização com Gradiente de Cores
 
-```{r, echo=T, out.width='100%', message=FALSE, warning=FALSE, comments=NA}
+```{r, message=FALSE, warning=FALSE, comments=NA}
+#| eval: false  # não executa o código
+#| echo: true   # mostra o código
+#| 
 library(ggplot2)
 library(sf)
 
@@ -261,7 +326,25 @@ ggplot() +
   theme_minimal()
 ```
 
----
+## Visualização com Gradiente de Cores
+
+```{r, message=FALSE, warning=FALSE, comments=NA}
+#| fig-width: 12
+#| fig-height: 8
+#| out-width: 100%
+#| fig-align: center
+#| 
+library(ggplot2)
+library(sf)
+
+# Plotar com gradiente de cor
+ggplot() +
+  geom_sf(data = rj_contorno, fill = "gray90", color = "black") +
+  geom_sf(data = dados_geo_sf, aes(color = frp), size = 2, alpha = 0.7) +
+  scale_color_viridis_c(name = "FRP", option = "plasma") +
+  labs(title = "Distribuição Espacial do FRP") +
+  theme_minimal()
+```
 
 ## Dados de Área
 
@@ -376,7 +459,29 @@ names(rj_municipios)
 
 ## Visualizando Dados de Área
 
-```{r, echo=T, out.width='100%', message=FALSE, warning=FALSE, comments=NA}
+```{r, message=FALSE, warning=FALSE, comments=NA}
+#| eval: false  # não executa o código
+#| echo: true   # mostra o código
+#| 
+library(ggplot2)
+
+# Plotar mapa temático
+ggplot(rj_municipios) +
+  geom_sf(aes(fill = tx_dengue), color = "black") +
+  scale_fill_viridis_c(option = "F",
+    name = "Taxa de incidência de dengue", direction = -1) +
+  labs(title = "Taxa de incidência de dengue por Município - RJ") +
+  theme_minimal()
+```
+
+## Visualizando Dados de Área
+
+```{r, message=FALSE, warning=FALSE, comments=NA}
+#| fig-width: 12
+#| fig-height: 8
+#| out-width: 100%
+#| fig-align: center
+#| 
 library(ggplot2)
 
 # Plotar mapa temático
