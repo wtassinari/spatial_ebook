@@ -38,7 +38,7 @@ A matriz de vizinhança é um instrumento fundamental da Estatística Espacial u
 
 Imagine os municípios de um estado. No mapa, visualmente conseguimos perceber quais compartilham fronteiras. A matriz de vizinhança traduz essa informação em números: se dois municípios são vizinhos, atribuímos valor $1$; se não são, atribuímos $0$. O resultado é uma tabela quadrada $(n \times n)$, onde $n$ é o número de municípios analisados.
 
-```{r echo=F, fig.align="center", out.width="55%"}
+```{r echo=F, fig.align="center", out.width="70%"}
 knitr::include_graphics('figuras/vizinhanca.png')
 ```
 
@@ -53,7 +53,7 @@ knitr::include_graphics('figuras/vizinhanca.png')
 
 |            | Rio | Niterói | S. Gonçalo | D. Caxias | N. Iguaçu |
   |:-----------|:---:|:-------:|:----------:|:---------:|:---------:|
-  | **Rio**        |  0  |    1    |     1      |     1     |     1     |
+  | **Rio**        |  0  |    1    |    0      |     1     |     1     |
   | **Niterói**    |  1  |    0    |     1      |     0     |     0     |
   | **S. Gonçalo** |  1  |    1    |     0      |     0     |     0     |
   | **D. Caxias**  |  1  |    0    |     0      |     0     |     1     |
@@ -128,13 +128,13 @@ $$I = \frac{ \sum_{i=1}^{n} \sum_{j=1}^{n} w_{ij} (y_i - \bar{y})(y_j - \bar{y})
   
 Sabendo que:
   
-- \( I \): valor do índice de Moran global.
-- \( n \): número total de unidades espaciais (regiões).
-- \( y_i \): valor da variável de interesse na região \( i \).
-- \( \bar{y} \): média dos valores de \( y \) em todas as regiões.
-- \( w_{ij} \): elemento da matriz de vizinhança que representa a relação espacial entre as regiões \( i \) e \( j \).
-- \( w_{ij} = 1 \) se \( i \) e \( j \) são vizinhos, 0 caso contrário (ou ponderado).
-- O numerador mede a covariância espacial ponderada, e o denominador é a variância total de \( y \).
+- $I$: valor do índice de Moran global.
+- $n$: número total de unidades espaciais (regiões).
+- $y_i$: valor da variável de interesse na região $i$.
+- $\bar{y}$: média dos valores de $y$ em todas as regiões.
+- $w_{ij}$: elemento da matriz de vizinhança que representa a relação espacial entre as regiões $i$ e $j$.
+- $w_{ij} = 1$ se $i$ e $j$ são vizinhos, 0 caso contrário (ou ponderado).
+- O numerador mede a covariância espacial ponderada, e o denominador é a variância total de $y$.
 
 
 ### **Moran Local (LISA)**
@@ -147,12 +147,12 @@ $$I^{(i)} = \frac{n}{\sum_{j=1}^{n} (z_j - \bar{z})^2} \sum_{j=1}^{n} w_{ij} (z_
   
 Sabendo que:
   
-- \( I^{(i)} \): índice de Moran local para a região \( i \).
-- \( n \): número total de regiões.
-- \( z_i \): valor padronizado (ou original, dependendo da convenção) da variável na região \( i \).
-- \( \bar{z} \): média da variável \( z \).
-- \( w_{ij} \): peso espacial entre as regiões \( i \) e \( j \).
-- A soma considera a influência dos vizinhos \( j \) sobre o ponto \( i \), ponderada pela matriz de vizinhança.
+- $I^{(i)}$: índice de Moran local para a região $i$.
+- $n$: número total de regiões.
+- $z_i$: valor padronizado (ou original, dependendo da convenção) da variável na região $i$.
+- $\bar{z}$: média da variável $z$.
+- $w_{ij}$: peso espacial entre as regiões $i$ e $j$.
+- A soma considera a influência dos vizinhos $j$ sobre o ponto $i$, ponderada pela matriz de vizinhança.
 
 
 ### **LISA Map**
@@ -197,7 +197,7 @@ knitr::include_graphics('figuras/moran_local3_covid.png')
 
 [COVRE, Eduardo Rocha et al. Correlação espacial da covid-19 com leitos de unidades de terapia intensiva no Paraná. Revista de Saúde Pública, v. 56, p. 14, 2022.](https://www.scielo.br/j/rsp/a/NDB7dYnVxgbtWPFskqxMgKR/?lang=pt)
 
-Na figura acima, observamos que o valor do Índice de Moran Global foi de $0,404$, com $p-valor < 0,001$, indicando uma autocorrelação espacial positiva moderada e estatisticamente significativa. Isso significa que a distribuição dos casos não ocorreu de forma aleatória no território paranaense – pelo contrário, municípios com taxas semelhantes de COVID-19 tenderam a se agrupar no espaço.
+Na figura acima, observamos que o valor do Índice de Moran Global foi de $0,404$, com $p-valor < 0,001$, indicando uma autocorrelação espacial positiva moderada e estatisticamente significativa. Isso significa que a distribuição dos casos não ocorreu de forma aleatória no território paranaense, pelo contrário, municípios com taxas semelhantes de COVID-19 tenderam a se agrupar no espaço.
 
 Observando o mapa LISA (Indicadores Locais de Associação Espacial), podemos identificar diferentes padrões regionais. As áreas em vermelho (Alto-Alto) representam municípios com altas taxas da doença cercados por vizinhos igualmente afetados, formando verdadeiros "clusters de transmissão" que exigiam intervenções coordenadas e prioritárias. Por outro lado, as áreas em azul escuro (Baixo-Baixo) mostram regiões onde tanto o município quanto seus vizinhos mantiveram baixas taxas, sugerindo que estratégias de controle podem ter sido mais eficazes nessas localidades.
 
@@ -298,7 +298,7 @@ ggplot(mapa_rj) +
   geom_sf()
 ```
 
-
+Agora precisamos conectar a tabela de casos de dengue com a malha municipal do RJ. Para isso, utilizamos a função `left_join()` do pacote `dplyr`, utilizando a variável `code_muni` como chave de ligacao.
 
 ```{r, echo=T, out.width='90%'}
 # ============================================================================
@@ -309,6 +309,8 @@ mapa_rj <- mapa_rj |>
   left_join(dengue, by = "code_muni") |> 
   select(code_muni, municipio, pop2022, casos, incidencia)  
 ```
+
+Agora sim vamos plotar o mapa temático de forma contínua com as incidências de dengue por município do RJ.
 
 ```{r, echo=T, out.width='90%'}
 # ============================================================================
@@ -336,6 +338,8 @@ ggplot() +
 # Sumário estatístico da incidência de dengue por município
 summary(mapa_rj$incidencia)
 ```
+
+Agora vamos plotar o mapa temático de forma categórica pelos quantis com as incidências de dengue por município do RJ.
 
 ```{r, echo=T, out.width='90%'}
 # ============================================================================
@@ -464,7 +468,9 @@ summary(vizinhos_torre)
   | Least connected regions         | Unidades territoriais com menor número de vizinhos. |
   | Most connected regions          | Unidades territoriais com maior número de vizinhos. |
   
-  
+
+Agora vamos converter para matriz de vizinhaça no formato tabela. 
+
 ```{r, echo=T, out.width='90%'}
 # ============================================================================
 # 2. CONVERTER PARA MATRIZ DE VIZINHANÇA (FORMATO TABELA)
@@ -484,7 +490,7 @@ dim(matriz_vizinhos_rainha)
 
 #### Verificando a malha de conectividade da vizinhança da cidade do Rio de Janeiro/RJ
 
-* Iremos precisar da coordenadas dos centróides para montar a malha de conectividade.
+Iremos precisar da coordenadas dos centróides para montar a malha de conectividade.
 
 ```{r, echo=T,  out.width="70%"}
 library(sp)
@@ -493,8 +499,13 @@ coord <- coordinates(mapa_rj.sp) # coordenadas dos centroides dos poligonos do R
 class(mapa_rj.sp)
 ```
 
+Convertendo em uma lista de vizinhos espaciais (vizinhos) em linhas e depois transforma em um objeto `sf` (geometria de linhas) e depois atribui ao objeto `viz.sf` o mesmo sistema de coordenadas (CRS) do mapa do Rio de Janeiro para garantir que ambos estejam no mesmo referencial espacial.
+
 ```{r, echo=T}
+# Converte uma lista de vizinhos espaciais (vizinhos) em linhas e depois transforma em um objeto sf (geometria de linhas).
 viz.sf <- as(nb2lines(vizinhos_rainha, coords = coord), 'sf')
+
+# Atribui ao objeto viz.sf o mesmo sistema de coordenadas (CRS) do mapa do Rio de Janeir
 viz.sf <- st_set_crs(viz.sf, st_crs(mapa_rj))
 ```
 
@@ -557,6 +568,9 @@ tm_shape(mapa) +
 
 #### Moran Local dos casos de dengue no Rio de Janeiro/RJ
 
+Aqui vamos calcular o $I$ de Moran local (para cada município) usando um teste estatístico robusto chamado SAD (Simulação sob Hipótese de Aleatoriedade). O resultado mostra quais municípios têm autocorrelação espacial significativa.
+
+
 ```{r, echo=T}
 resI <- localmoran.sad(lm(mapa$casos ~ 1), 1:length(vizinhos_torre), vizinhos_torre, style = "W")
 summary(resI)[1:10,]
@@ -572,7 +586,7 @@ summary(resI)[1:10,]
 
 - `viz`: é a estrutura de vizinhança (do tipo `nb`), que define quem é vizinho de quem.
 
-- `style = "W"`: define o estilo de normalização dos pesos espaciais (padronização row-standardized).
+- `style = "W"`: define o estilo de normalização dos pesos espaciais (padronização row-standardized). Na realidade e como transformasse os pesos para que cada município tenha peso total = 1, dando importância igual a todos independente do número de vizinhos.
 
 :::
 

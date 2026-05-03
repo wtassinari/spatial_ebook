@@ -579,7 +579,7 @@ Slides do Capítulo 4 - Dados de Área
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="figuras/vizinhanca.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:55.0%"></p>
+<p><img src="figuras/vizinhanca.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
 </figure>
 </div>
 </div>
@@ -606,7 +606,7 @@ Rio de Janeiro, Niterói, São Gonçalo, Duque de Caxias, Nova Iguaçu</p>
 <td style="text-align: left;"><strong>Rio</strong></td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">1</td>
-<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: center;">1</td>
 </tr>
@@ -707,13 +707,13 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 </div>
 <p>Sabendo que:</p>
 <ul>
-<li>( I ): valor do índice de Moran global.</li>
-<li>( n ): número total de unidades espaciais (regiões).</li>
-<li>( y_i ): valor da variável de interesse na região ( i ).</li>
-<li>( {y} ): média dos valores de ( y ) em todas as regiões.</li>
-<li>( w_{ij} ): elemento da matriz de vizinhança que representa a relação espacial entre as regiões ( i ) e ( j ).</li>
-<li>( w_{ij} = 1 ) se ( i ) e ( j ) são vizinhos, 0 caso contrário (ou ponderado).</li>
-<li>O numerador mede a covariância espacial ponderada, e o denominador é a variância total de ( y ).</li>
+<li><span class="math inline">\(I\)</span>: valor do índice de Moran global.</li>
+<li><span class="math inline">\(n\)</span>: número total de unidades espaciais (regiões).</li>
+<li><span class="math inline">\(y_i\)</span>: valor da variável de interesse na região <span class="math inline">\(i\)</span>.</li>
+<li><span class="math inline">\(\bar{y}\)</span>: média dos valores de <span class="math inline">\(y\)</span> em todas as regiões.</li>
+<li><span class="math inline">\(w_{ij}\)</span>: elemento da matriz de vizinhança que representa a relação espacial entre as regiões <span class="math inline">\(i\)</span> e <span class="math inline">\(j\)</span>.</li>
+<li><span class="math inline">\(w_{ij} = 1\)</span> se <span class="math inline">\(i\)</span> e <span class="math inline">\(j\)</span> são vizinhos, 0 caso contrário (ou ponderado).</li>
+<li>O numerador mede a covariância espacial ponderada, e o denominador é a variância total de <span class="math inline">\(y\)</span>.</li>
 </ul>
 </section>
 <section id="moran-local-lisa" class="level3" data-number="4.3.2">
@@ -723,12 +723,12 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <p><span class="math display">\[I^{(i)} = \frac{n}{\sum_{j=1}^{n} (z_j - \bar{z})^2} \sum_{j=1}^{n} w_{ij} (z_i - \bar{z})(z_j - \bar{z})\]</span></p>
 <p>Sabendo que:</p>
 <ul>
-<li>( I^{(i)} ): índice de Moran local para a região ( i ).</li>
-<li>( n ): número total de regiões.</li>
-<li>( z_i ): valor padronizado (ou original, dependendo da convenção) da variável na região ( i ).</li>
-<li>( {z} ): média da variável ( z ).</li>
-<li>( w_{ij} ): peso espacial entre as regiões ( i ) e ( j ).</li>
-<li>A soma considera a influência dos vizinhos ( j ) sobre o ponto ( i ), ponderada pela matriz de vizinhança.</li>
+<li><span class="math inline">\(I^{(i)}\)</span>: índice de Moran local para a região <span class="math inline">\(i\)</span>.</li>
+<li><span class="math inline">\(n\)</span>: número total de regiões.</li>
+<li><span class="math inline">\(z_i\)</span>: valor padronizado (ou original, dependendo da convenção) da variável na região <span class="math inline">\(i\)</span>.</li>
+<li><span class="math inline">\(\bar{z}\)</span>: média da variável <span class="math inline">\(z\)</span>.</li>
+<li><span class="math inline">\(w_{ij}\)</span>: peso espacial entre as regiões <span class="math inline">\(i\)</span> e <span class="math inline">\(j\)</span>.</li>
+<li>A soma considera a influência dos vizinhos <span class="math inline">\(j\)</span> sobre o ponto <span class="math inline">\(i\)</span>, ponderada pela matriz de vizinhança.</li>
 </ul>
 </section>
 <section id="lisa-map" class="level3" data-number="4.3.3">
@@ -806,7 +806,7 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 </div>
 </div>
 <p><a href="https://www.scielo.br/j/rsp/a/NDB7dYnVxgbtWPFskqxMgKR/?lang=pt">COVRE, Eduardo Rocha et al.&nbsp;Correlação espacial da covid-19 com leitos de unidades de terapia intensiva no Paraná. Revista de Saúde Pública, v. 56, p.&nbsp;14, 2022.</a></p>
-<p>Na figura acima, observamos que o valor do Índice de Moran Global foi de <span class="math inline">\(0,404\)</span>, com <span class="math inline">\(p-valor &lt; 0,001\)</span>, indicando uma autocorrelação espacial positiva moderada e estatisticamente significativa. Isso significa que a distribuição dos casos não ocorreu de forma aleatória no território paranaense – pelo contrário, municípios com taxas semelhantes de COVID-19 tenderam a se agrupar no espaço.</p>
+<p>Na figura acima, observamos que o valor do Índice de Moran Global foi de <span class="math inline">\(0,404\)</span>, com <span class="math inline">\(p-valor &lt; 0,001\)</span>, indicando uma autocorrelação espacial positiva moderada e estatisticamente significativa. Isso significa que a distribuição dos casos não ocorreu de forma aleatória no território paranaense, pelo contrário, municípios com taxas semelhantes de COVID-19 tenderam a se agrupar no espaço.</p>
 <p>Observando o mapa LISA (Indicadores Locais de Associação Espacial), podemos identificar diferentes padrões regionais. As áreas em vermelho (Alto-Alto) representam municípios com altas taxas da doença cercados por vizinhos igualmente afetados, formando verdadeiros “clusters de transmissão” que exigiam intervenções coordenadas e prioritárias. Por outro lado, as áreas em azul escuro (Baixo-Baixo) mostram regiões onde tanto o município quanto seus vizinhos mantiveram baixas taxas, sugerindo que estratégias de controle podem ter sido mais eficazes nessas localidades.</p>
 <p>As áreas em rosa (Alto-Baixo) e azul claro (Baixo-Alto) revelam situações de transição ou exceção, onde um município destoa do padrão de seus vizinhos. Estes são pontos de atenção para a vigilância em saúde, pois podem indicar locais onde a doença se comporta de forma diferente da região de entorno. Já as áreas em cinza (Não significante) não apresentaram padrão espacial definido, podendo refletir maior heterogeneidade local ou dinâmicas de transmissão mais complexas.</p>
 <div class="box-dica13">
@@ -906,6 +906,7 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 </div>
 </div>
 </div>
+<p>Agora precisamos conectar a tabela de casos de dengue com a malha municipal do RJ. Para isso, utilizamos a função <code>left_join()</code> do pacote <code>dplyr</code>, utilizando a variável <code>code_muni</code> como chave de ligacao.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================================</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Left Join mapa_rj + planilha casos dengue</span></span>
@@ -915,6 +916,7 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(dengue, <span class="at">by =</span> <span class="st">"code_muni"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(code_muni, municipio, pop2022, casos, incidencia)  </span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Agora sim vamos plotar o mapa temático de forma contínua com as incidências de dengue por município do RJ.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================================</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Mapa Temático com as incidências de dengue por município de forma contínua</span></span>
@@ -951,6 +953,7 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 #&gt;    51.7   723.5  1791.9  2375.7  3779.5  7458.7</code></pre>
 </div>
 </div>
+<p>Agora vamos plotar o mapa temático de forma categórica pelos quantis com as incidências de dengue por município do RJ.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================================</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Mapa Temático com as incidências de dengue por município de forma categórica</span></span>
@@ -1146,6 +1149,7 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 </tr>
 </tbody>
 </table>
+<p>Agora vamos converter para matriz de vizinhaça no formato tabela.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================================</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. CONVERTER PARA MATRIZ DE VIZINHANÇA (FORMATO TABELA)</span></span>
@@ -1179,9 +1183,7 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 </section>
 <section id="verificando-a-malha-de-conectividade-da-vizinhança-da-cidade-do-rio-de-janeirorj" class="level4">
 <h4 class="anchored" data-anchor-id="verificando-a-malha-de-conectividade-da-vizinhança-da-cidade-do-rio-de-janeirorj">Verificando a malha de conectividade da vizinhança da cidade do Rio de Janeiro/RJ</h4>
-<ul>
-<li>Iremos precisar da coordenadas dos centróides para montar a malha de conectividade.</li>
-</ul>
+<p>Iremos precisar da coordenadas dos centróides para montar a malha de conectividade.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sp)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>mapa_rj.sp <span class="ot">&lt;-</span> <span class="fu">as</span>(mapa_rj, <span class="st">'Spatial'</span>) <span class="co"># convertendo em formato sp</span></span>
@@ -1193,9 +1195,13 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 #&gt; [1] "sp"</code></pre>
 </div>
 </div>
+<p>Convertendo em uma lista de vizinhos espaciais (vizinhos) em linhas e depois transforma em um objeto <code>sf</code> (geometria de linhas) e depois atribui ao objeto <code>viz.sf</code> o mesmo sistema de coordenadas (CRS) do mapa do Rio de Janeiro para garantir que ambos estejam no mesmo referencial espacial.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>viz.sf <span class="ot">&lt;-</span> <span class="fu">as</span>(<span class="fu">nb2lines</span>(vizinhos_rainha, <span class="at">coords =</span> coord), <span class="st">'sf'</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>viz.sf <span class="ot">&lt;-</span> <span class="fu">st_set_crs</span>(viz.sf, <span class="fu">st_crs</span>(mapa_rj))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Converte uma lista de vizinhos espaciais (vizinhos) em linhas e depois transforma em um objeto sf (geometria de linhas).</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>viz.sf <span class="ot">&lt;-</span> <span class="fu">as</span>(<span class="fu">nb2lines</span>(vizinhos_rainha, <span class="at">coords =</span> coord), <span class="st">'sf'</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Atribui ao objeto viz.sf o mesmo sistema de coordenadas (CRS) do mapa do Rio de Janeir</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>viz.sf <span class="ot">&lt;-</span> <span class="fu">st_set_crs</span>(viz.sf, <span class="fu">st_crs</span>(mapa_rj))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="box-dica2">
 <ul>
