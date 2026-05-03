@@ -646,16 +646,173 @@ tm_shape(mapa_rj) +
 
 </div>
 
+<!-- ## Aplicação I: Autocorrelação espacial -->
+
+<!-- <div style="font-size: 80%;"> -->
+
+<!-- Aqui vamos calcular o $I$ de Moran local (para cada município) usando um teste estatístico robusto chamado SAD (Simulação sob Hipótese de Aleatoriedade). O resultado mostra quais municípios têm autocorrelação espacial significativa. -->
+
+<!-- ```{r, echo=T} -->
+<!-- resI <- localmoran.sad(lm(mapa_rj$casos ~ 1), 1:length(vizinhos), vizinhos, style = "W") -->
+<!-- summary(resI)[1:10,] -->
+<!-- ``` -->
+
+<!-- </div> -->
+
+
 ## Aplicação I: Autocorrelação espacial
 
 <div style="font-size: 80%;">
 
-Aqui vamos calcular o $I$ de Moran local (para cada município) usando um teste estatístico robusto chamado SAD (Simulação sob Hipótese de Aleatoriedade). O resultado mostra quais municípios têm autocorrelação espacial significativa.
+##### LISA Map dos casos de dengue na cidade do Rio de Janeiro/RJ
 
-```{r, echo=T}
-resI <- localmoran.sad(lm(mapa$casos ~ 1), 1:length(vizinhos_torre), vizinhos, style = "W")
-summary(resI)[1:10,]
+```{r}
+#| eval: false  # não executa o código
+#| echo: true   # mostra o código
+
+library(spdep)
+
+#  Convertendo uma estrutura de vizinhança (objeto nb) em uma matriz de pesos espaciais padronizada
+w <- nb2listw(vizinhos, style = "W")
+
+# Matriz de pesos espaciais padronizada (row-standardized)
+resI <- localmoran(mapa_rj$casos, nb2listw(vizinhos, style = "W"))
+
+# Armazena estatísticas no objeto espacial
+mapa_rj$Ii       <- resI[,1]   # valor de Moran Local
+mapa_rj$pvalue   <- resI[,5]   # p-valor
+
+# Valor padronizado da variável tx
+mapa_rj$z_casos <- scale(mapa_rj$casos)[, 1]
+
+# Média dos vizinhos (lagged value)
+lag_casos <- lag.listw(w, mapa_rj$z_casos)
+
+# Classificação dos tipos de associação local dos clusters
+mapa_rj$cluster_type <- "Não significativo"
+
+mapa_rj$cluster_type[mapa_rj$pvalue <= 0.05 & mapa_rj$z_casos > 0 & lag_casos > 0] <- "Alto-Alto"
+mapa_rj$cluster_type[mapa_rj$pvalue <= 0.05 & mapa_rj$z_casos < 0 & lag_casos < 0] <- "Baixo-Baixo"
+mapa_rj$cluster_type[mapa_rj$pvalue <= 0.05 & mapa_rj$z_casos > 0 & lag_casos < 0] <- "Alto-Baixo"
+mapa_rj$cluster_type[mapa_rj$pvalue <= 0.05 & mapa_rj$z_casos < 0 & lag_casos > 0] <- "Baixo-Alto"
 ```
+
+</div>
+
+## Aplicação I: Autocorrelação espacial
+
+<div style="font-size: 80%;">
+
+##### LISA Map dos casos de dengue na cidade do Rio de Janeiro/RJ
+
+```{r}
+#| eval: false  # não executa o código
+#| echo: true   # mostra o código
+
+library(tmap)
+
+# Modo estático (ideal para relatórios impressos ou PDF)
+tmap_mode("plot")
+
+# Mapas interativos são ótimos para exploração
+# tmap_mode("view")
+
+# Geração do mapa_rj LISA
+tm_shape(mapa_rj) +
+  tm_fill(
+    col = "cluster_type",
+    palette = c(
+      "Alto-Alto"         = "#E60000",  # vermelho forte
+      "Baixo-Baixo"       = "#0033CC",  # azul escuro
+      "Baixo-Alto"        = "#9999FF",  # azul claro
+      "Alto-Baixo"        = "#FF9999",  # rosa claro
+      "Não significativo" = "#FFFFFF"   # branco
+    ),
+    title = "Cluster Local (LISA)",
+    legend.is.portrait = TRUE
+  ) +
+  tm_borders(col = "gray40", lwd = 0.4) +
+  tm_layout(
+    main.title = "LISA map - Clusters Locais dos Casos",
+    main.title.size = 1.2,
+    legend.outside = TRUE,
+    frame = FALSE,
+    bg.color = "white"
+  )
+
+```
+
+</div>
+
+
+## Aplicação I: Autocorrelação espacial
+
+<div style="font-size: 80%;">
+
+```{r}
+#| fig-width: 11
+#| fig-height: 6
+#| out-width: 100%
+#| fig-align: center
+
+library(spdep)
+
+#  Convertendo uma estrutura de vizinhança (objeto nb) em uma matriz de pesos espaciais padronizada
+w <- nb2listw(vizinhos, style = "W")
+
+# Matriz de pesos espaciais padronizada (row-standardized)
+resI <- localmoran(mapa_rj$casos, nb2listw(vizinhos, style = "W"))
+
+# Armazena estatísticas no objeto espacial
+mapa_rj$Ii       <- resI[,1]   # valor de Moran Local
+mapa_rj$pvalue   <- resI[,5]   # p-valor
+
+# Valor padronizado da variável tx
+mapa_rj$z_casos <- scale(mapa_rj$casos)[, 1]
+
+# Média dos vizinhos (lagged value)
+lag_casos <- lag.listw(w, mapa_rj$z_casos)
+
+# Classificação dos tipos de associação local dos clusters
+mapa_rj$cluster_type <- "Não significativo"
+
+mapa_rj$cluster_type[mapa_rj$pvalue <= 0.05 & mapa_rj$z_casos > 0 & lag_casos > 0] <- "Alto-Alto"
+mapa_rj$cluster_type[mapa_rj$pvalue <= 0.05 & mapa_rj$z_casos < 0 & lag_casos < 0] <- "Baixo-Baixo"
+mapa_rj$cluster_type[mapa_rj$pvalue <= 0.05 & mapa_rj$z_casos > 0 & lag_casos < 0] <- "Alto-Baixo"
+mapa_rj$cluster_type[mapa_rj$pvalue <= 0.05 & mapa_rj$z_casos < 0 & lag_casos > 0] <- "Baixo-Alto"
+
+library(tmap)
+
+# Modo estático (ideal para relatórios impressos ou PDF)
+# tmap_mode("plot")
+
+# Mapas interativos são ótimos para exploração
+tmap_mode("view")
+
+# Geração do mapa_rj LISA
+tm_shape(mapa_rj) +
+  tm_fill(
+    col = "cluster_type",
+    palette = c(
+      "Alto-Alto"         = "#E60000",  # vermelho forte
+      "Baixo-Baixo"       = "#0033CC",  # azul escuro
+      "Baixo-Alto"        = "#9999FF",  # azul claro
+      "Alto-Baixo"        = "#FF9999",  # rosa claro
+      "Não significativo" = "#FFFFFF"   # branco
+    ),
+    title = "Cluster Local (LISA)",
+    legend.is.portrait = TRUE
+  ) +
+  tm_borders(col = "gray40", lwd = 0.4) +
+  tm_layout(
+    main.title = "LISA map - Clusters Locais dos Casos",
+    main.title.size = 1.2,
+    legend.outside = TRUE,
+    frame = FALSE,
+    bg.color = "white"
+  )
+```
+
 
 </div>
 
