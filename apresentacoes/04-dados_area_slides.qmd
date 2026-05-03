@@ -57,10 +57,10 @@ O mapa temático tem como principal objetivo visualizar e analisar a distribuiç
 #| 
 library(tmap)
 data(World)
-tmap_style("classic")
+tmap_style("white")  # reseta estilo
 
 # Desenhando um rápido mapa temático mundial para esperança de vida.
-qtm(World, fill = "life_exp")
+qtm(World, fill = "life_exp", fill.palette = "-Blues")
 ```
 
 ## Mapa Temático
@@ -583,8 +583,21 @@ Há autocorrelação espacial positiva significativa ($p-valor < 0,05$), ou seja
 
 ## Aplicação I: Autocorrelação espacial
 
-<div style="font-size: 80%;">
+<div style="font-size: 70%;">
 
+Aqui vamos calcular o **$I$ de Moran local** (para cada município) e também calcular o **$I$ de Moran local corrigido** usando um teste estatístico robusto chamado **SAD (Simulação sob Hipótese de Aleatoriedade)**. O resultado mostra quais municípios têm autocorrelação espacial significativa. 
+
+```{r, echo=T, out.width='90%'}
+resI <- localmoran.sad(lm(mapa_rj$casos ~ 1), 1:length(vizinhos), vizinhos, style = "W")
+summary(resI)[1:9,]
+```
+
+</div>
+
+
+## Aplicação I: Autocorrelação espacial
+
+<div style="font-size: 80%;">
 Mapeando os polígonos que tiveram os p-valores mais significativos no Moran Local para os casos.
 
 ```{r}
@@ -594,6 +607,7 @@ Mapeando os polígonos que tiveram os p-valores mais significativos no Moran Loc
 mapa_rj$pval <- localmoran(mapa_rj$casos, pesos.viz)[,5]
 
 library(tmap)
+tmap_style("white") # estilo branco padrão
 
 # tmap_mode("plot")  # modo estático
 tmap_mode("view")  # modo interativo
@@ -627,38 +641,23 @@ tm_shape(mapa_rj) +
 mapa_rj$pval <- localmoran(mapa_rj$casos, pesos.viz)[,5]
 
 library(tmap)
+tmap_style("white") # estilo branco padrão
 
 # tmap_mode("plot")  # modo estático
 tmap_mode("view")  # modo interativo
 
-tm_shape(mapa_rj) + 
+tm_shape(mapa_rj) +
   tm_polygons(
     col = "pval",
     title = "p-valores",
     breaks = c(0, 0.01, 0.05, 0.10, 1),
-    fill.legend = tm_legend(title = "Casos"),
+    palette = "-Blues",
     lwd = 0.5,
-    style = "fixed",
-    palette = "-Red"
+    style = "fixed"
   )
-
 ```
 
 </div>
-
-<!-- ## Aplicação I: Autocorrelação espacial -->
-
-<!-- <div style="font-size: 80%;"> -->
-
-<!-- Aqui vamos calcular o $I$ de Moran local (para cada município) usando um teste estatístico robusto chamado SAD (Simulação sob Hipótese de Aleatoriedade). O resultado mostra quais municípios têm autocorrelação espacial significativa. -->
-
-<!-- ```{r, echo=T} -->
-<!-- resI <- localmoran.sad(lm(mapa_rj$casos ~ 1), 1:length(vizinhos), vizinhos, style = "W") -->
-<!-- summary(resI)[1:10,] -->
-<!-- ``` -->
-
-<!-- </div> -->
-
 
 ## Aplicação I: Autocorrelação espacial
 
@@ -710,12 +709,13 @@ mapa_rj$cluster_type[mapa_rj$pvalue <= 0.05 & mapa_rj$z_casos < 0 & lag_casos > 
 #| echo: true   # mostra o código
 
 library(tmap)
+tmap_style("white")
 
 # Modo estático (ideal para relatórios impressos ou PDF)
-tmap_mode("plot")
+# tmap_mode("plot")
 
 # Mapas interativos são ótimos para exploração
-# tmap_mode("view")
+tmap_mode("view")
 
 # Geração do mapa_rj LISA
 tm_shape(mapa_rj) +
@@ -782,6 +782,7 @@ mapa_rj$cluster_type[mapa_rj$pvalue <= 0.05 & mapa_rj$z_casos > 0 & lag_casos < 
 mapa_rj$cluster_type[mapa_rj$pvalue <= 0.05 & mapa_rj$z_casos < 0 & lag_casos > 0] <- "Baixo-Alto"
 
 library(tmap)
+tmap_style("white")
 
 # Modo estático (ideal para relatórios impressos ou PDF)
 # tmap_mode("plot")
