@@ -755,12 +755,11 @@ $\rightarrow$ Podemos observar que os efeitos da autocorrelação espacial são 
 * Um exemplo clássico é o Modelo **Geograficamente Ponderado** (*Geographically Weighted Regression* - **GWR**), expresso por:
   
   
-\[
-    y_i = \beta_{0}(u_i, v_i) + \sum_{k=1}^{p} \beta_k(u_i, v_i) \cdot x_{ik} + \varepsilon_i,
+$$y_i = \beta_{0}(u_i, v_i) + \sum_{k=1}^{p} \beta_k(u_i, v_i) \cdot x_{ik} + \varepsilon_i,
     \\
     \quad \text{com } \beta_k(u_i, v_i) \text{ estimado via } 
     \sum_{j=1}^{n} K(d_{ij}) \cdot x_{jk}
-    \]
+    $$
 
 ::: box-dica4
 
@@ -1065,7 +1064,7 @@ mapa_rj$localR2 <- results$localR2
 mapa_rj$pred.gwr <- results$pred
 ```
 
-#### Mapa dos coeficientes de regressão para a variável lixo
+#### Mapa dos coeficientes de regressão para a variável dias sem chuva
 
 ```{r, echo=T,  out.width="80%"}
 map.dias_sem_chuvas <- ggplot(mapa_rj) +
@@ -1099,9 +1098,7 @@ O teste de Wald é utilizado para avaliar a significância estatística dos coef
 
 A fórmula geral do teste é:
 
-\[
-W = \frac{|\hat{\beta}|}{SE(\hat{\beta})}
-\]
+$$W = \frac{|\hat{\beta}|}{SE(\hat{\beta})}$$
 
 Valores altos da estatística de Wald indicam maior evidência de que o coeficiente é significativamente diferente de zero. Sob a hipótese nula (\(H_0: \beta = 0\)), a estatística de Wald segue uma distribuição normal padrão.
 
@@ -1109,13 +1106,13 @@ No contexto do modelo GWR, o teste de Wald foi aplicado ponto a ponto para o coe
 
 Para fins de mapeamento, a estatística foi dicotomizada da seguinte forma:
 
-\[
+$$
 \texttt{wald.teste} =
 \begin{cases}
 1 & \text{se } W \geq 2 \ (\text{coeficiente significativo}) \\
 0 & \text{se } W < 2 \ (\text{coeficiente não significativo})
 \end{cases}
-\]
+$$
 
 O limiar de $2$ foi escolhido por ser uma aproximação prática do ponto de corte para um nível de significância de 5\% (como \(z = 1.96\) na distribuição normal padrão).
 

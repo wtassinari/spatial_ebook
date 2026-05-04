@@ -15,6 +15,8 @@ format:
     code-copy: true
     title-slide-attributes:
       data-background-color: "#2c3e50"
+    # navigation-mode: grid
+    slide-level: 1
 ---
 
 ## Objetivos do Capítulo
@@ -29,7 +31,7 @@ Ao final deste capítulo, você será capaz de:
 5. Ajustar **modelos de regressão espacial** (SAR, CAR e GWR).
 :::
 
----
+----
 
 ## O que são Dados de Área?
 
@@ -63,6 +65,8 @@ tmap_style("white")  # reseta estilo
 qtm(World, fill = "life_exp", fill.palette = "-Blues")
 ```
 
+----
+
 ## Mapa Temático
 
 <div style="font-size: 70%;">
@@ -83,6 +87,8 @@ tmap_style("classic")
 qtm(World, fill = "life_exp")
 ```
 
+---
+
 ## Matriz de Vizinhança
 
 #### O que é?
@@ -93,6 +99,7 @@ A matriz de vizinhança (ou proximidade) é um instrumento fundamental que repre
 - Por exemplo, se dois municípios são vizinhos, valor **1**; se não, valor **0**.
 - A diagonal principal é zero (um município não é vizinho de si mesmo).
 
+----
 
 ## Matriz de Vizinhança: Exemplo 1
 
@@ -101,6 +108,8 @@ A matriz de vizinhança (ou proximidade) é um instrumento fundamental que repre
 <div style="text-align: center; font-size: 14px;">
 Exemplo de contiguidade do tipo Rainha (compartilham qualquer ponto de fronteira)
 </div>
+
+----
 
 ## Matriz de Vizinhança: Exemplo 2
 
@@ -122,6 +131,8 @@ Exemplo de contiguidade do tipo Rainha (compartilham qualquer ponto de fronteira
   
 </div>
 
+----
+
 ## Matriz de Vizinhança
 
 <div style="font-size: 80%;">
@@ -136,6 +147,8 @@ Essa matriz é essencial porque muitos fenômenos da gestão pública apresentam
 
 Sem a matriz de vizinhança, os métodos estatísticos utilizados tratariam cada município como independente. Com ela, conseguimos incorporar a ideia de que “o território importa”.
 </div>
+
+----
 
 ## Tipos de Matrizes de Vizinhança no R
 
@@ -154,6 +167,7 @@ O pacote `spdep` oferece vários tipos de matrizes:
    - **Delaunay** e **Voronoi**.
 </div>
 
+---
 
 ## Autocorrelação Espacial
 
@@ -173,6 +187,7 @@ Indica se o fenômeno possui organização territorial, sugerindo a necessidade 
 
 </div>
 
+----
 
 ## Autocorrelação Espacial Local
 
@@ -188,6 +203,8 @@ $$I^{(i)} = \frac{n}{\sum_{j=1}^{n} (z_j - \bar{z})^2} \sum_{j=1}^{n} w_{ij} (z_
 - Classifica cada município como parte de um cluster de valores altos, baixos ou como um ponto fora do padrão.
 
 </div>
+
+----
 
 ## Autocorrelação Espacial Local
 
@@ -205,6 +222,8 @@ O LISA Map é um mapa temático que representa graficamente os resultados do Ín
 
 </div>
 
+----
+
 ## Autocorrelação Espacial Local
 
 #### LISA Map: Tipos de Associação
@@ -221,6 +240,8 @@ O LISA Map é um mapa temático que representa graficamente os resultados do Ín
 
 </div>
 
+----
+
 ## Exemplo de LISA Map
 
 <div style="font-size: 70%;">
@@ -230,6 +251,8 @@ O artigo teve por objetivo analisar a autocorrelação espacial dos casos confir
 </div>
 
 ![](figuras/moran_local3_covid.png){fig-align="center" width="60%"}
+
+---
 
 ## Aplicação I: AEDE
 
@@ -251,6 +274,8 @@ head(dengue)
 ```
 </div>
 
+----
+
 ## Aplicação I: AEDE
 
 <div style="font-size: 80%;">
@@ -267,6 +292,8 @@ head(mapa_rj)
 ```
 </div>
 
+----
+
 ## Aplicação I: AEDE
 
 <div style="font-size: 80%;">
@@ -281,6 +308,8 @@ ggplot(mapa_rj) +
 ```
 
 </div>
+
+----
 
 ## Aplicação I: AEDE
 
@@ -298,6 +327,8 @@ mapa_rj <- mapa_rj |>
 head(mapa_rj)
 ```
 </div>
+
+----
 
 ## Aplicação I: AEDE
 
@@ -328,6 +359,8 @@ ggplot() +
 ```
 </div>
 
+----
+
 ## Aplicação I: AEDE
 
 <div style="font-size: 80%;">
@@ -357,6 +390,8 @@ ggplot() +
 
 </div>
 
+----
+
 ## Aplicação I: AEDE
 
 <div style="font-size: 80%;">
@@ -366,7 +401,10 @@ Sumário estatístico da incidência de dengue por município
 ```{r, echo=T, out.width='90%'}
 summary(mapa_rj$incidencia)
 ```
+
 </div>
+
+----
 
 ## Aplicação I: AEDE
 
@@ -414,6 +452,8 @@ ggplot() +
 
 </div>
 
+----
+
 ## Aplicação I: AEDE
 
 <div style="font-size: 80%;">
@@ -460,6 +500,8 @@ ggplot() +
 
 </div>
 
+---
+
 ## Aplicação I: Matrix de Vizinhança
 
 <div style="font-size: 80%;">
@@ -479,6 +521,7 @@ summary(vizinhos)
 
 </div>
 
+---
 
 ## Aplicação I: Matrix de Vizinhança
 
@@ -497,6 +540,8 @@ dim(matriz_vizinhos)
 ```
 
 </div>
+
+----
 
 ## Aplicação I: Matrix de Vizinhança
 
@@ -524,6 +569,8 @@ viz.sf <- st_set_crs(viz.sf, st_crs(mapa_rj))
 
 </div>
 
+----
+
 ## Aplicação I: Matrix de Vizinhança
 
 <div style="font-size: 80%;">
@@ -544,6 +591,8 @@ mapa.viz
 ```
 
 </div>
+
+----
 
 ## Aplicação I: Matrix de Vizinhança
 
@@ -567,6 +616,7 @@ mapa.viz
 
 </div>
 
+---
 
 ## Aplicação I: Autocorrelação espacial
 
@@ -581,6 +631,8 @@ Há autocorrelação espacial positiva significativa ($p-valor < 0,05$), ou seja
 
 </div>
 
+----
+
 ## Aplicação I: Autocorrelação espacial
 
 <div style="font-size: 70%;">
@@ -594,6 +646,7 @@ summary(resI)[1:9,]
 
 </div>
 
+----
 
 ## Aplicação I: Autocorrelação espacial
 
@@ -628,6 +681,8 @@ tm_shape(mapa_rj) +
 
 </div>
 
+----
+
 ## Aplicação I: Autocorrelação espacial
 
 <div style="font-size: 80%;">
@@ -658,6 +713,8 @@ tm_shape(mapa_rj) +
 ```
 
 </div>
+
+----
 
 ## Aplicação I: Autocorrelação espacial
 
@@ -697,6 +754,8 @@ mapa_rj$cluster_type[mapa_rj$pvalue <= 0.05 & mapa_rj$z_casos < 0 & lag_casos > 
 ```
 
 </div>
+
+----
 
 ## Aplicação I: Autocorrelação espacial
 
@@ -744,6 +803,7 @@ tm_shape(mapa_rj) +
 
 </div>
 
+----
 
 ## Aplicação I: Autocorrelação espacial
 
@@ -814,89 +874,913 @@ tm_shape(mapa_rj) +
   )
 ```
 
-
 </div>
+
+---
 
 ## Modelos de Regressão Espacial
 
+<div style="font-size: 80%;">
 A hipótese de independência das observações em geral é **falsa** para dados espaciais. Existe dependência espacial!
 
 Se existir dependência, devemos incluir no modelo os **Efeitos Espaciais**, caso contrário, as estimativas podem ficar enviesadas.
 
 ### Como verificar?
+
 Analisar os resíduos da regressão tradicional (OLS) com o índice de Moran.
 
----
+</div>
+
+----
 
 ## Modelos Globais vs. Locais
 
-### Modelos Globais (SAR, CAR)
+<div style="font-size: 80%;">
+
+### Modelos Globais (Ex: SAR e CAR)
+
 Assumem que a estrutura espacial é **constante** em todo o espaço geográfico. Utilizam um único parâmetro para captar a autocorrelação.
+
 - **SAR**: Dependência na variável dependente.
 - **CAR**: Dependência na estrutura do erro.
 
-### Modelos Locais (GWR)
+### Modelos Locais (ex: GWR)
+
 A Regressão Geograficamente Ponderada (GWR) permite que os coeficientes da regressão **variem ao longo do espaço**, ajustando uma equação específica para cada localidade.
 
----
+</div>
 
-## Exemplo Prático: GWR no R
+----
+
+## Modelo SAR 
+
+<div style="font-size: 65%;">
+
+O **Modelo de Erro Espacial** (*Spatial Error Model* - **CAR**), representado por:
+  
+  $$y_i = \beta_0 + \sum^{p}_{k} \beta_k x_{ik}  + \varepsilon_i \text{    , sendo  }  \varepsilon_i = \lambda  W + \xi$$
+  
+Sendo:
+  
+- $y_i$: valor observado da variável dependente na unidade $i$;
+- $\beta_0$: intercepto da regressão;
+- $\beta_k$: coeficiente da $k$-ésima variável explicativa;
+- $x_{ik}$: valor da $k$-ésima variável explicativa para a unidade $i$;
+- $\varepsilon_i$: erro com estrutura de autocorrelação espacial;
+- $\lambda$: coeficiente de autocorrelação espacial;
+- $W$: matriz de vizinhança espacial (define como cada unidade está conectada às outras);
+- $\xi$: erro aleatório normal (sem autocorrelação).
+
+</div>
+----
+
+## Modelo SAR 
 
 <div style="font-size: 70%;">
-O modelo GWR ajusta regressões locais, ponderando as observações pela distância.
+
+$\rightarrow$ Podemos observar que os efeitos da autocorrelação espacial são associados ao termo de erro.
+
+**Interpretação:**
+  
+  - Se $\lambda \ne 0$, há evidência de dependência espacial nos erros, ou seja, o erro em uma localidade está correlacionado com os erros em localidades vizinhas.
+
+- Se $\lambda = 0$, o modelo reduz-se a uma regressão tradicional, e não há autocorrelação espacial significativa.
+
 </div>
 
-```{r, eval=FALSE, echo=TRUE}
-library(spgwr)
+----
 
-# Definindo a largura de banda (bandwidth)
-bwG <- gwr.sel(media_frp ~ media_dias_sem_chuva, 
-               data = mapa_rj, 
-               coords = cbind(mapa_rj$lon, mapa_rj$lat), 
-               adapt = TRUE)
+## Modelo GWR 
 
-# Ajustando o modelo GWR
-queimadas.gwr <- gwr(media_frp ~ media_dias_sem_chuva, 
-                     data = mapa_rj, 
-                     coords = cbind(mapa_rj$lon, mapa_rj$lat), 
-                     adapt = bwG, 
-                     hatmatrix = TRUE, 
-                     se.fit = TRUE)
+<div style="font-size: 65%;">
+O Modelo **Geograficamente Ponderado** (*Geographically Weighted Regression* - **GWR**) pode ser expresso por:
+  
+  
+$$y_i = \beta_{0}(u_i, v_i) + \sum_{k=1}^{p} \beta_k(u_i, v_i) \cdot x_{ik} + \varepsilon_i,
+    \\
+    \quad \text{com } \beta_k(u_i, v_i) \text{ estimado via } 
+    \sum_{j=1}^{n} K(d_{ij}) \cdot x_{jk}
+    $$
+
+Sendo:
+  
+- $(u_i, v_i)$: coordenadas geográficas da observação $i$;
+
+- $\beta_k(u_i, v_i)$: coeficiente local da variável explicativa $x_k$, estimado para a posição $i$;
+
+- $K(d_{ij})$: função kernel que atribui um peso à observação $j$ com base na distância $d_{ij}$ entre as localizações $i$ e $j$;
+
+</div>
+
+---
+
+## Aplicação II: Modelo CAR
+
+<div style="font-size: 70%;">
+
+#### Lendo os dados de queimadas e o mapa no estado do Rio de Janeiro em 2025 
+
+```{r, echo=T,  out.width="70%"}
+# lendo a base de queimadas
+dados <- readxl::read_excel("dados/queimadas/queimadas_area.xlsx")
+head(dados)
 ```
 
----
+```{r, echo=TRUE, out.width="70%", warning=FALSE, message=FALSE}
+# lendo o mapa do Rio de Janeiro
+library(sf)
+# Ler o arquivo
+mapa_rj <- st_read("malhas/mapa_rj.shp")
+```
 
-## Comparação de Modelos
-
-| Modelo | Adesão à distribuição real | Interpretação |
-|--------|----------------------------|---------------|
-| **LM** | ❌ Fraca | Perda de variabilidade e deslocamento da média. |
-| **CAR** | ✅ Razoável | Aproxima-se da observada, mas apresenta suavização. |
-| **GWR** | ✅✅ Melhor | Preserva melhor a dispersão e a heterogeneidade espacial. |
-
-<div style="font-size: 70%; margin-top: 20px;">
-O modelo GWR é frequentemente superior por capturar a variabilidade local que os modelos globais ignoram.
 </div>
 
----
+---- 
 
-## Resumo do Capítulo
+## Aplicação II: Modelo CAR
 
-1. **Dados de Área** são fundamentais para analisar fenômenos agregados.
-2. A **Matriz de Vizinhança** é a base matemática para a estatística espacial de área.
-3. O **Moran Global** indica se há padrão espacial geral, enquanto o **Moran Local (LISA)** aponta onde estão os clusters.
-4. Modelos tradicionais de regressão falham ao ignorar a dependência espacial.
-5. Modelos espaciais como **CAR** e **GWR** corrigem vieses e revelam dinâmicas locais.
+<div style="font-size: 70%;">
 
----
+#### Juntando oos dados de queimadas com a malha 
 
-## Referências Sugeridas
+```{r, echo=T,  out.width="70%"}
+library(dplyr)
+# Padronizar os nomes dos municípios em ambos os dataframes
+mapa_rj <- mapa_rj %>%
+  mutate(name_mn = tolower(name_mn))
+
+dados <- dados %>%
+  mutate(name_mn = tolower(name_mn))
+
+# Fazer o left join usando as novas colunas padronizadas
+mapa_rj <- mapa_rj %>%
+  left_join(dados, by = "name_mn")
+
+head(mapa_rj)
+```
+</div>
+
+---- 
+
+## Aplicação II: Modelo CAR
+
+<div style="font-size: 70%;">
+
+#### Mapa Temático da FRP (Potência Radiativa do Fogo)
+
+```{r, echo=T,  out.width="70%"}
+mapa_seq <- ggplot(mapa_rj) +
+  geom_sf(aes(fill = media_frp), color = "black", size = 0.1) +
+  scale_fill_gradientn(
+    colors = c("#2c7bb6", "#abd9e9", "#ffffbf", "#fdae61", "#d7191c"),
+    name = "FRP Médio"
+  ) +
+  labs(title = "Média do FRP - Personalizado") +
+  theme_void()
+
+mapa_seq
+```
+</div>
+
+---- 
+
+## Aplicação II: Modelo CAR
+
+<div style="font-size: 80%;">
+
+#### Moran Global do FRP Médio
+
+```{r, echo=T,  out.width="70%"}
+moran.test(mapa_rj$media_frp, pesos.viz)
+```
+
+</div>
+
+----
+
+## Aplicação II: Modelo CAR
+
+<div style="font-size: 80%;">
+
+#### Ajustando o modelo de regressão linear simples vazio
+
+```{r, echo=T,  out.width="70%"}
+queimadas.lm <- lm(media_frp ~ 1, data = mapa_rj)
+summary(queimadas.lm)
+```
+
+</div>
+
+----
+
+## Aplicação II: Modelo CAR
+
+<div style="font-size: 80%;">
+
+#### Colocando a variável `media_dias_sem_chuva` no modelo
+
+```{r, echo=T,  out.width="70%"}
+# Ajustando o modelo de regressão linear simples
+queimadas.lm2 <- lm(media_frp ~ media_dias_sem_chuva, data = mapa_rj)
+summary(queimadas.lm2)
+```
+
+</div>
+
+----
+
+## Aplicação II: Modelo CAR
+
+<div style="font-size: 80%;">
+
+#### Checando os residuos para verificar a presença de autocorrelação.
+
+```{r, echo=T,  out.width="70%"}
+library(spdep)
+queimadas.lm$lmresid <- residuals(queimadas.lm)
+moran.test(queimadas.lm$lmresid, pesos.viz)
+```
+
+</div>
+
+----
+
+## Aplicação II: Modelo CAR
+
+<div style="font-size: 80%;">
+
+#### Ajustando o modelo CAR (Spatial Error Model) vazio
+
+```{r, echo=T,  out.width="70%"}
+library(spatialreg)
+queimadas.car <- errorsarlm(media_frp ~ 1, data = mapa_rj, listw = pesos.viz, Durbin = FALSE)
+summary(queimadas.car)
+```
+
+</div>
+
+----
+
+## Aplicação II: Modelo CAR
+
+<div style="font-size: 65%;">
+
+* O Intercepto: $3,982$ ($p < 0.001$), representa a média estimada de `media_frp` na ausência de preditores.
+
+* Lambda ($λ =  0,28059$) é o parâmetro de autocorrelação espacial dos erros. Quanto mais próximo de $0$ (zero) for o valor valor de lambda, pouca ou nenhuma autocorrelação espacial nos erros, ou seja, nesse caso podemos observar uma dependência espacial moderada.
+
+| Teste | Estatística | p-valor | Interpretação |
+|-------|------------|---------|---------------|
+| **LR test** | 4.5504 | 0.0329 | O modelo espacial é superior ao OLS |
+| **z-value** | 2.1836 | 0.0290 | Lambda significativamente diferente de 0 |
+| **Wald** | 4.7681 | 0.0290 | Confirma a significância do parâmetro espacial |
+
+* O modelo espacial tem AIC menor que o modelo clássico (lm):
+AIC spatial $=$  $393,28$ $<$ AIC lm $=$ $395,83$, o que indica que o modelo com erro espacial se ajusta melhor aos dados.
+
+</div>
+
+----
+
+## Aplicação II: Modelo CAR
+
+<div style="font-size: 80%;">
+
+#### Colocando a variável `media_dias_sem_chuva` no modelo
+
+```{r, echo=T,  out.width="70%"}
+queimadas.car2 <- errorsarlm(media_frp ~ media_dias_sem_chuva, data = mapa_rj, listw = pesos.viz, Durbin = FALSE)
+summary(queimadas.car2)
+```
+
+</div>
+
+----
+
+## Aplicação II: Modelo CAR
+
+<div style="font-size: 65%;">
+
+* Media de Dias Sem Chuva: $0,1585$ ($p < 0,001$), representa a cada aumento de 1 dia na média sem chuva, a intensidade das queimadas (FRP) aumenta **0.1585 unidades**
+
+* Lambda ($\lambda =  0,24717$), fazendo uma comparação com modelo nulo ($\lambda = 0.28059$), apresenta uma
+redução de $0,28059 \rightarrow 0,24717$ $(\downarrow 11.9\%)$. Podemos dizer que a variável `media_dias_sem_chuva` explicou parte da dependência espacial.
+
+| Teste | Estatística | p-valor | Interpretação |
+|-------|------------|---------|---------------|
+| **LR test** | 3.1804 | 0.0745 | Marginalmente não significativo |
+| **z-value** | 1.8851 | 0.0594 | Tendência à significância |
+| **Wald** | 3.5537 | 0.0594 | Confirma a tendência |
+
+* O modelo espacial com a variável `media_dias_sem_chuva` tem AIC menor que o modelo espacial vazio:
+AIC spatial $=$  $370,39$ $<$ AIC vazio $=$ $393,28$, o que indica que o modelo com erro espacial com a variável `media_dias_sem_chuva` se ajusta melhor aos dados.
+
+</div>
+
+----
+
+## Aplicação II: Modelo CAR
+
+<div style="font-size: 65%;">
+
+#### Checando os residuos para verificar a presença de autocorrelação
+
+```{r, echo=T,  out.width="70%"}
+queimadas.car2$carresid <- residuals(queimadas.car2)
+moran.test(queimadas.car2$carresid, pesos.viz)
+```
+
+Como o $p-valor = 0,467 > 0,05$, não rejeitamos a hipótese nula de ausência de autocorrelação espacial nos resíduos. Isso indica que o modelo `errorsarlm` com a variável `media_dias_sem_chuva` eliminou adequadamente a autocorrelação espacial presente nos dados. 
+
+Esse é exatamente o objetivo do modelo `errorsarlm`, capturar a estrutura espacial nos erros. E a ausência de autocorrelação nos resíduos valida a adequação desse modelo para os seus dados.
+
+</div>
+
+----
+
+## Exemplo Prático: Modelo GWR
+
+<div style="font-size: 70%;">
+
+Primeiro vamos extrair as coordenadas dos centróides dos municípios do estado do Rio de Janeiro
+
+```{r, echo=T,  out.width="70%"}
+
+# Método 1: Converter para Spatial explicitamente
+mapa_rj_sp <- as(mapa_rj, "Spatial")
+
+# Calcular centróides
+centroides <- coordinates(mapa_rj_sp)
+colnames(centroides) <- c("X", "Y")
+centroides <- as.data.frame(centroides)
+head(centroides)
+```
+
+</div>
+
+----
+
+## Exemplo Prático: Modelo GWR
 
 <div style="font-size: 60%;">
-- Waller, L. A., & Gotway, C. A. (2004). *Applied Spatial Statistics for Public Health Data*. Wiley-Interscience.
-- Bivand, R. S., Pebesma, E., & Gomez-Rubio, V. (2013). *Applied Spatial Data Analysis with R* (2nd ed.). Springer.
-- Cressie, N. (1993). *Statistics for Spatial Data* (Revised edition). Wiley.
-- Druck, S., et al. (eds). (2004). *Análise Espacial de Dados Geográficos*. EMBRAPA.
-- Fotheringham, A. S., Brunsdon, C., & Charlton, M. (2002). *Geographically Weighted Regression*. Wiley.
-- Lovelace, R., Nowosad, J., & Muenchow, J. (2021). *Geocomputation with R*.
+
+* `gwr.sel()` é uma função que  testa diferentes valores de largura de banda (*bandwidth*) e seleciona o valor "ideal", aquele que minimiza o erro de predição (geralmente usando validação cruzada - *cross-validation*).
+
+* A largura de banda controla o raio de influência espacial ao redor de cada ponto (quais vizinhos têm mais peso).
+
+```{r, echo=T,  out.width="65%"}
+# Biblioteca para ajustar o modelos GWR
+library(spgwr)
+
+# Estimando a largura de banda “ideal” para o kernel
+GWRbanda <- gwr.sel(media_frp ~ media_dias_sem_chuva, data = mapa_rj, coords = cbind(centroides$X, centroides$Y), adapt = T)
+```
+
+</div>
+
+----
+
+## Exemplo Prático: Modelo GWR
+
+<div style="font-size: 65%;">
+
+#### Ajustando o modelo GWR
+
+```{r, echo=T,  out.width="70%"}
+
+queimadas.gwr = gwr(media_frp ~ media_dias_sem_chuva, data = mapa_rj, coords = cbind(centroides$X, centroides$Y), adapt = GWRbanda, hatmatrix = TRUE, se.fit = TRUE)
+
+queimadas.gwr
+```
+
+
+</div>
+
+----
+
+## Exemplo Prático: Modelo GWR
+
+<div style="font-size: 60%;">
+* `Kernel function: gwr.Gauss` → O modelo usou um kernel gaussiano, que atribui mais peso a vizinhos próximos.
+
+* `Adaptive quantile: 0,07608438` → Como `adapt = TRUE`, a largura de banda representa uma proporção dos pontos vizinhos.
+
+* Quanto aos coeficientes do modelo, cada linha refere-se à distribuição dos coeficientes locais estimados em cada ponto do espaço (284 no total). 
+
+  - Por exemplo, o impacto da variável `media_dias_sem_chuva` sobre `media_frp` varia bastante no espaço, onde os municípios poder ter coeficientes de inclinação podem variar de $0,4216$ até $0.9927$.
+  
+  * A coluna `Global` mostra o coeficiente que seria obtido numa regressão tradicional (OLS).
+  
+- `Sigma (residual)`:	Desvio padrão dos resíduos do modelo GWR.
+
+- `AIC (GWR)`: 	Critério de informação de Akaike (quanto menor, melhor). Útil para comparar com OLS.
+
+- `AICc (corrigido)`: Versão do AIC corrigida para modelos com muitos parâmetros.
+
+- `Residual sum of squares`: Soma dos quadrados dos resíduos (menor = melhor ajuste).
+
+- `Quasi-global R²`: Explica $~48%$ da variabilidade de `media_frp`. Excelente ajuste para dados espaciais.
+</div>
+
+----
+
+## Exemplo Prático: Modelo GWR
+
+<div style="font-size: 70%;">
+
+#### Colocando a saída do modelo dentro de um objeto dataframe.
+
+```{r, echo=T,  out.width="70%"}
+
+results <- as.data.frame(queimadas.gwr$SDF)
+head(results)
+```
+</div>
+
+
+----
+
+## Exemplo Prático: Modelo GWR
+  
+<div style="font-size: 70%;">
+    
+#### Verificando a distribuição dos coeficientes de regressão para a variável `media_dias_sem_chuva`
+    
+```{r, echo=T,  out.width="80%"}
+hist(results$media_dias_sem_chuva)
+abline(v = median(results$media_dias_sem_chuva), col = "red")
+```
+</div>
+
+----
+    
+## Exemplo Prático: Modelo GWR
+    
+<div style="font-size: 70%;">
+    
+#### Verificando a distribuição dos *localR2*
+    
+```{r, echo=T,  out.width="80%"}
+hist(results$localR2)
+abline(v = median(results$localR2), col = "blue")
+```
+</div>
+
+----
+    
+## Exemplo Prático: Modelo GWR
+    
+<div style="font-size: 70%;">
+    
+#### Incorporando alguns parâmetros de saída do modelo na tabela *setor.sf*
+
+```{r, echo=T,  out.width="70%"}
+mapa_rj$coef_dias_sem_chuva <- results$media_dias_sem_chuva
+mapa_rj$localR2 <- results$localR2
+mapa_rj$pred.gwr <- results$pred
+```
+
+#### Mapa dos coeficientes de regressão para a variável lixo
+
+```{r}
+#| eval: false  # não executa o código
+#| echo: true   # mostra o código
+#| 
+map.dias_sem_chuvas <- ggplot(mapa_rj) +
+  geom_sf(aes(fill = coef_dias_sem_chuva), color = "black", size = 0.1) +
+  scale_fill_gradient2(
+    low = "blue",      # para coeficientes negativos
+    mid = "white",     # para valores próximos de zero
+    high = "darkred",      # para coeficientes positivos
+    midpoint = 0,      # centraliza a escala no zero
+    name = "Coef. dias sem chuva"
+  ) +
+  ggtitle("Coef locais da variável dias sem chuva") +
+  theme_void()
+
+map.dias_sem_chuvas
+```
+
+</div>
+
+----
+    
+## Exemplo Prático: Modelo GWR
+    
+<div style="font-size: 80%;">
+    
+```{r}
+#| fig-width: 11
+#| fig-height: 6
+#| out-width: 100%
+#| fig-align: center
+
+map.dias_sem_chuvas <- ggplot(mapa_rj) +
+  geom_sf(aes(fill = coef_dias_sem_chuva), color = "black", size = 0.1) +
+  scale_fill_gradient2(
+    low = "blue",      # para coeficientes negativos
+    mid = "white",     # para valores próximos de zero
+    high = "darkred",      # para coeficientes positivos
+    midpoint = 0,      # centraliza a escala no zero
+    name = "Coef. dias sem chuva"
+  ) +
+  ggtitle("Coef locais da variável dias sem chuva") +
+  theme_void()
+
+map.dias_sem_chuvas
+```
+
+</div>
+
+----
+    
+## Exemplo Prático: Modelo GWR
+    
+<div style="font-size: 80%;">
+
+#### Checando os residuos para verificar a presença de autocorrelação para o modelo GWR.
+
+```{r, echo=T,  out.width="70%"}
+# Calculando os resíduos para o modelo GWR
+results$residuos <- mapa_rj$media_frp - results$pred
+
+moran.test(results$residuos, pesos.viz)
+```
+
+</div>
+
+
+----
+    
+## Exemplo Prático: Modelo GWR
+    
+<div style="font-size: 70%;">
+
+#### Mapeando os coeficientes de regressão para a variável `media_dias_sem_chuva` por significancia através do teste de wald
+
+$$W = \frac{|\hat{\beta}|}{SE(\hat{\beta})}$$
+
+$$
+\texttt{wald.teste} =
+\begin{cases}
+1 & \text{se } W \geq 2 \ (\text{coeficiente significativo}) \\
+0 & \text{se } W < 2 \ (\text{coeficiente não significativo})
+\end{cases}
+$$
+
+Essa abordagem permite visualizar espacialmente onde a variável `media_dias_sem_chuva` exerce um efeito estatisticamente significativo sobre a variável dependente `media_frp`.
+
+</div>
+
+----
+    
+## Exemplo Prático: Modelo GWR
+    
+<div style="font-size: 80%;">
+
+```{r}
+#| eval: false  # não executa o código
+#| echo: true   # mostra o código
+#| 
+# Calculando a estatística de wald
+mapa_rj$wald.teste <- abs(results$media_dias_sem_chuva/results$media_dias_sem_chuva_se)
+
+# Dicotomizando a estatística de wald
+mapa_rj$wald.teste_cat <- factor(ifelse(mapa_rj$wald.teste < 2, 0, 1),
+                                  levels = c(0, 1))
+
+
+map.wald <- ggplot(mapa_rj) + 
+            geom_sf(aes(fill = wald.teste_cat), color = "black") + 
+            scale_fill_manual(values = c("white", "purple"), 
+                              labels = c("< 2", ">= 2"), 
+                              name = "Wald",
+                              drop = FALSE) +  # Não dropar níveis
+            ggtitle("Teste Wald") + 
+            theme_void()
+
+
+library(gridExtra)
+grid.arrange(map.dias_sem_chuvas, map.wald, ncol = 2)
+
+```
+
+</div>
+
+----
+    
+## Exemplo Prático: Modelo GWR
+    
+<div style="font-size: 80%;">
+
+```{r}
+#| fig-width: 11
+#| fig-height: 6
+#| out-width: 100%
+#| fig-align: center
+#| 
+# Calculando a estatística de wald
+mapa_rj$wald.teste <- abs(results$media_dias_sem_chuva/results$media_dias_sem_chuva_se)
+
+# Dicotomizando a estatística de wald
+mapa_rj$wald.teste_cat <- factor(ifelse(mapa_rj$wald.teste < 2, 0, 1),
+                                  levels = c(0, 1))
+
+
+map.wald <- ggplot(mapa_rj) + 
+            geom_sf(aes(fill = wald.teste_cat), color = "black") + 
+            scale_fill_manual(values = c("white", "purple"), 
+                              labels = c("< 2", ">= 2"), 
+                              name = "Wald",
+                              drop = FALSE) +  # Não dropar níveis
+            ggtitle("Teste Wald") + 
+            theme_void()
+
+
+library(gridExtra)
+grid.arrange(map.dias_sem_chuvas, map.wald, ncol = 2)
+
+```
+
+</div>
+
+----
+    
+## Exemplo Prático: Modelo GWR
+    
+<div style="font-size: 80%;">
+
+#### Mapa dos coeficientes de determinação regionalizados ($R^2$ local).
+
+```{r}
+#| eval: false  # não executa o código
+#| echo: true   # mostra o código
+#| 
+ggplot(mapa_rj) +
+  geom_sf(aes(fill = localR2), color = "black", size = 0.1) +
+  scale_fill_viridis_c(option = "viridis",, direction = -1, name = expression(R^2~local)) +
+  ggtitle("Mapa dos coeficientes de determinação regionalizados (R² local)") +
+  theme_void()
+
+```
+
+</div>
+
+----
+    
+## Exemplo Prático: Modelo GWR
+    
+<div style="font-size: 80%;">
+
+```{r}
+#| fig-width: 11
+#| fig-height: 6
+#| out-width: 100%
+#| fig-align: center
+#| 
+ggplot(mapa_rj) +
+  geom_sf(aes(fill = localR2), color = "black", size = 0.1) +
+  scale_fill_viridis_c(option = "viridis",, direction = -1, name = expression(R^2~local)) +
+  ggtitle("Mapa dos coeficientes de determinação regionalizados (R² local)") +
+  theme_void()
+
+```
+
+</div>
+
+----
+    
+## Exemplo Prático: Modelo GWR
+    
+<div style="font-size: 80%;">
+
+#### Mapeando os valores observados e preditos dos modelos ajustados
+
+```{r}
+#| eval: false  # não executa o código
+#| echo: true   # mostra o código
+#| 
+
+library(RColorBrewer)
+# Define faixas de classes abrangentes
+breaks_classes <- c(-Inf, 0, 2, 4, 10, Inf)
+labels_classes <- c("< 0", "0 - 2", "2 - 4", "4 - 10", "> 10")
+
+# Taxa Bruta Observada
+mapa_rj$brks <- cut(mapa_rj$media_frp,
+                     breaks = breaks_classes,
+                     include.lowest = TRUE,
+                     right = TRUE,
+                     labels = labels_classes)
+
+tx.bruta <- ggplot(mapa_rj) +
+  geom_sf(aes(fill = brks), color = "black", size = 0.1) +
+  scale_fill_brewer(palette = "YlOrRd", name = "Taxa") +
+  ggtitle("Taxa Bruta") +
+  theme_void()
+
+# Predito - LM
+mapa_rj$brks.lm <- cut(queimadas.lm2$fitted.values,
+                        breaks = breaks_classes,
+                        include.lowest = TRUE,
+                        right = TRUE,
+                        labels = labels_classes)
+
+pred.lm <- ggplot(mapa_rj) +
+  geom_sf(aes(fill = brks.lm), color = "black", size = 0.1) +
+  scale_fill_brewer(palette = "YlOrRd", name = "Taxa") +
+  ggtitle("Taxa Predita - LM") +
+  theme_void()
+
+# Predito - CAR
+mapa_rj$brks.car <- cut(queimadas.car2$fitted.values,
+                         breaks = breaks_classes,
+                         include.lowest = TRUE,
+                         right = TRUE,
+                         labels = labels_classes)
+
+pred.car <- ggplot(mapa_rj) +
+  geom_sf(aes(fill = brks.car), color = "black", size = 0.1) +
+  scale_fill_brewer(palette = "YlOrRd", name = "Taxa") +
+  ggtitle("Taxa Predita - CAR") +
+  theme_void()
+
+# Predito - GWR
+mapa_rj$brks.gwr <- cut(results$pred,
+                         breaks = breaks_classes,
+                         include.lowest = TRUE,
+                         right = TRUE,
+                         labels = labels_classes)
+
+pred.gwr <- ggplot(mapa_rj) +
+  geom_sf(aes(fill = brks.gwr), color = "black", size = 0.1) +
+  scale_fill_brewer(palette = "YlOrRd", name = "Taxa") +
+  ggtitle("Taxa Predita - GWR") +
+  theme_void()
+
+# Mostrar mapas lado a lado
+grid.arrange(tx.bruta, pred.lm, pred.car, pred.gwr, ncol = 2)
+```
+
+</div>
+
+----
+    
+## Exemplo Prático: Modelo GWR
+    
+<div style="font-size: 80%;">
+
+```{r}
+#| fig-width: 11
+#| fig-height: 6
+#| out-width: 100%
+#| fig-align: center
+#| 
+library(RColorBrewer)
+# Define faixas de classes abrangentes
+breaks_classes <- c(-Inf, 0, 2, 4, 10, Inf)
+labels_classes <- c("< 0", "0 - 2", "2 - 4", "4 - 10", "> 10")
+
+# Taxa Bruta Observada
+mapa_rj$brks <- cut(mapa_rj$media_frp,
+                     breaks = breaks_classes,
+                     include.lowest = TRUE,
+                     right = TRUE,
+                     labels = labels_classes)
+
+tx.bruta <- ggplot(mapa_rj) +
+  geom_sf(aes(fill = brks), color = "black", size = 0.1) +
+  scale_fill_brewer(palette = "YlOrRd", name = "Taxa") +
+  ggtitle("Taxa Bruta") +
+  theme_void()
+
+# Predito - LM
+mapa_rj$brks.lm <- cut(queimadas.lm2$fitted.values,
+                        breaks = breaks_classes,
+                        include.lowest = TRUE,
+                        right = TRUE,
+                        labels = labels_classes)
+
+pred.lm <- ggplot(mapa_rj) +
+  geom_sf(aes(fill = brks.lm), color = "black", size = 0.1) +
+  scale_fill_brewer(palette = "YlOrRd", name = "Taxa") +
+  ggtitle("Taxa Predita - LM") +
+  theme_void()
+
+# Predito - CAR
+mapa_rj$brks.car <- cut(queimadas.car2$fitted.values,
+                         breaks = breaks_classes,
+                         include.lowest = TRUE,
+                         right = TRUE,
+                         labels = labels_classes)
+
+pred.car <- ggplot(mapa_rj) +
+  geom_sf(aes(fill = brks.car), color = "black", size = 0.1) +
+  scale_fill_brewer(palette = "YlOrRd", name = "Taxa") +
+  ggtitle("Taxa Predita - CAR") +
+  theme_void()
+
+# Predito - GWR
+mapa_rj$brks.gwr <- cut(results$pred,
+                         breaks = breaks_classes,
+                         include.lowest = TRUE,
+                         right = TRUE,
+                         labels = labels_classes)
+
+pred.gwr <- ggplot(mapa_rj) +
+  geom_sf(aes(fill = brks.gwr), color = "black", size = 0.1) +
+  scale_fill_brewer(palette = "YlOrRd", name = "Taxa") +
+  ggtitle("Taxa Predita - GWR") +
+  theme_void()
+
+# Mostrar mapas lado a lado
+grid.arrange(tx.bruta, pred.lm, pred.car, pred.gwr, ncol = 2)
+
+```
+
+</div>
+
+----
+    
+## Exemplo Prático: Modelo GWR
+    
+<div style="font-size: 80%;">
+
+#### Comparando a distribuição dos resíduos dos modelos ajustados
+
+```{r}
+#| eval: false  # não executa o código
+#| echo: true   # mostra o código
+#| 
+
+library(vioplot)
+
+# Define os resíduos
+res_lm  <- queimadas.lm2$residuals
+res_car <- queimadas.car2$residuals
+res_gwr <- results$residuos
+
+# Paleta de cores agradável
+cores <- c("#66C2A5", "#FC8D62", "#8DA0CB")  # Paleta Set2 do RColorBrewer
+
+# Gráfico violin com visual melhorado
+vioplot(
+  res_lm, res_car, res_gwr,
+  names = c("LM", "CAR", "GWR"),
+  col = cores,
+  border = "black",
+  drawRect = TRUE     # mediana dos resíduos
+)
+
+# Título e rótulo do eixo Y
+title(main = "Distribuição dos Resíduos por Modelo", cex.main = 1.2)
+mtext("Resíduos", side = 2, line = 2.5, cex = 1.1)
+
+# Linha horizontal em y = 0 para referência
+abline(h = 0, lty = 2, col = "grey40")
+
+```
+
+</div>
+
+----
+    
+## Exemplo Prático: Modelo GWR
+    
+<div style="font-size: 80%;">
+
+```{r}
+#| fig-width: 11
+#| fig-height: 6
+#| out-width: 100%
+#| fig-align: center
+library(vioplot)
+
+# Define os resíduos
+res_lm  <- queimadas.lm2$residuals
+res_car <- queimadas.car2$residuals
+res_gwr <- results$residuos
+
+# Paleta de cores agradável
+cores <- c("#66C2A5", "#FC8D62", "#8DA0CB")  # Paleta Set2 do RColorBrewer
+
+# Gráfico violin com visual melhorado
+vioplot(
+  res_lm, res_car, res_gwr,
+  names = c("LM", "CAR", "GWR"),
+  col = cores,
+  border = "black",
+  drawRect = TRUE     # mediana dos resíduos
+)
+
+# Título e rótulo do eixo Y
+title(main = "Distribuição dos Resíduos por Modelo", cex.main = 1.2)
+mtext("Resíduos", side = 2, line = 2.5, cex = 1.1)
+
+# Linha horizontal em y = 0 para referência
+abline(h = 0, lty = 2, col = "grey40")
+
+
+```
+
 </div>
