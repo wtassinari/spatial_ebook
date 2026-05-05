@@ -6,17 +6,20 @@
 <script src="03-padroes_pontuais_slides_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="03-padroes_pontuais_slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="03-padroes_pontuais_slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="03-padroes_pontuais_slides_files/libs/quarto-html/quarto-syntax-highlighting-af5ec82acda093b5ee751184164e9432.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.31">
+<link href="03-padroes_pontuais_slides_files/libs/quarto-html/quarto-syntax-highlighting-9e5c7bf9fbb22184c3d5797f9fbacf74.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.36">
 
   <meta name="author" content="Prof.&nbsp;Wagner Tassinari">
-  <title>Dados de Padrões Pontuais</title>
+  <title>Padrões Pontuais</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
   <link rel="stylesheet" href="03-padroes_pontuais_slides_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="03-padroes_pontuais_slides_files/libs/revealjs/dist/reveal.css">
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -28,8 +31,72 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  background-color: #f8f8f8; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ef2929; } /* Alert */
+    code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #204a87; } /* Attribute */
+    code span.bn { color: #0000cf; } /* BaseN */
+    code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4e9a06; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #8f5902; font-style: italic; } /* Comment */
+    code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+    code span.dt { color: #204a87; } /* DataType */
+    code span.dv { color: #0000cf; } /* DecVal */
+    code span.er { color: #a40000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #0000cf; } /* Float */
+    code span.fu { color: #204a87; font-weight: bold; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+    code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+    code span.ot { color: #8f5902; } /* Other */
+    code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+    code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+    code span.ss { color: #4e9a06; } /* SpecialString */
+    code span.st { color: #4e9a06; } /* String */
+    code span.va { color: #000000; } /* Variable */
+    code span.vs { color: #4e9a06; } /* VerbatimString */
+    code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="03-padroes_pontuais_slides_files/libs/revealjs/dist/theme/quarto-67af64ce27563527bdbf278b6012b166.css">
+  <link rel="stylesheet" href="03-padroes_pontuais_slides_files/libs/revealjs/dist/theme/quarto-a3d64dc423ab6007c3735ac81248ed8e.css">
   <link href="03-padroes_pontuais_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="03-padroes_pontuais_slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="03-padroes_pontuais_slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -129,7 +196,7 @@
     <div class="slides">
 
 <section id="title-slide" data-background-color="#2c3e50" class="quarto-title-block center">
-  <h1 class="title">Dados de Padrões Pontuais</h1>
+  <h1 class="title">Padrões Pontuais</h1>
   <p class="subtitle">Estatística Espacial</p>
 
 <div class="quarto-title-authors">
@@ -141,82 +208,315 @@ Prof.&nbsp;Wagner Tassinari
 </div>
 
 </section>
-<section id="objetivos-da-aula" class="slide level2">
-<h2>Objetivos da Aula</h2>
-<ul>
-<li>Compreender os processos de pontos espaciais;</li>
-<li>Entender o conceito de Complete Spatial Randomness (CSR);</li>
-<li>Aplicar a Análise Kernel (Kernel Density Estimation);</li>
-<li>Utilizar as Funções K e L para análise de padrões;</li>
-<li>Detectar clusters espaciais.</li>
-</ul>
+<section id="objetivos-do-capítulo" class="slide level2">
+<h2>Objetivos do Capítulo</h2>
+<p>Ao final deste capítulo, você será capaz de:</p>
+<div class="large">
+<ol type="1">
+<li>Compreender a estrutura dos <strong>dados de padrões pontuais</strong>.</li>
+<li>Testar hipóteses sobre a <strong>aleatoriedade espacial completa (CSR)</strong>.</li>
+<li>Aplicar <strong>estimativas de densidade de Kernel</strong> (mapas de calor).</li>
+<li>Utilizar a <strong>Função K de Ripley</strong> para análise de padrões.</li>
+<li>Realizar <strong>análises de padrões pontuais com dados reais</strong>.</li>
+</ol>
+</div>
 </section>
 <section id="o-que-são-padrões-pontuais" class="slide level2">
 <h2>O que são Padrões Pontuais?</h2>
+<h3 id="definição">Definição</h3>
+<p>Eventos que ocorrem em localizações <strong>discretas e aleatórias</strong> no espaço, como casos de doenças, crimes, acidentes ou ocorrências ambientais.</p>
+<h3 id="características">Características</h3>
 <ul>
-<li>O principal interesse está no conjunto de coordenadas geográficas representando as localizações exatas de eventos.</li>
-<li>O evento aleatório de interesse é a <strong>posição espacial</strong> onde o fenômeno ocorre.</li>
-<li>A análise busca entender se os pontos seguem um padrão aleatório, agrupado (<em>clusters</em>) ou disperso no espaço.</li>
+<li>O interesse está nas <strong>coordenadas geográficas exatas</strong> (latitude, longitude).</li>
+<li>Objetivo: Investigar se os eventos seguem um padrão <strong>aleatório</strong>, <strong>regular</strong> ou <strong>agrupado</strong> (clustered).</li>
 </ul>
 </section>
 <section id="exemplos-de-aplicação" class="slide level2">
 <h2>Exemplos de Aplicação</h2>
 <ul>
-<li>🏥 Localização de casos de uma doença notificados em uma cidade.</li>
-<li>🌳 Distribuição espacial de árvores em um parque urbano.</li>
-<li>🐾 Registros de avistamentos de animais silvestres em uma reserva.</li>
-<li>🔥 Pontos de ocorrência de focos de incêndio florestal detectados por satélite.</li>
-<li>🔫 Registros de ocorrências de crimes em uma área urbana.</li>
+<li>🏥 Localização de casos de uma doença notificados em uma cidade</li>
+<li>🌳 Distribuição espacial de árvores em um parque urbano</li>
+<li>🐾 Registros de avistamentos de animais silvestres em uma reserva</li>
+<li>🔥 Focos de incêndio florestal detectados por satélite</li>
+<li>🔫 Registros de ocorrências de crimes em uma área urbana</li>
 </ul>
 </section>
-<section id="complete-spatial-randomness-csr" class="slide level2">
-<h2>Complete Spatial Randomness (CSR)</h2>
-<p><strong>Aleatoriedade Espacial Completa</strong></p>
-<ul>
-<li>É a hipótese nula padrão na análise de padrões pontuais.</li>
-<li>Pressupõe que os eventos ocorrem de forma independente e com a mesma probabilidade em qualquer lugar da área de estudo.</li>
-<li>Se a hipótese CSR for rejeitada, indica-se a presença de um padrão agrupado ou disperso.</li>
-</ul>
+<section id="possíveis-distribuições-dos-pontos" class="slide level2">
+<h2>Possíveis Distribuições dos Pontos</h2>
+
+<img data-src="figuras/Cluster2.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"><div style="text-align: center; font-size: 14px;">
+<p>Padrões clássicos: Aleatório, Regular e Agregado</p>
+</div>
+</section>
+<section id="processos-pontuais-primeira-e-segunda-ordem" class="slide level2">
+<h2>Processos Pontuais: Primeira e Segunda Ordem</h2>
+<h3 id="processo-de-primeira-ordem">Processo de Primeira Ordem</h3>
+<p>Variações no <strong>valor médio do processo</strong> no espaço (larga escala). Representado pela <strong>intensidade</strong> ou <strong>densidade</strong> dos pontos.</p>
+<p><strong>Exemplo:</strong> Estimativa de Kernel (mapas de calor)</p>
+<h3 id="processo-de-segunda-ordem">Processo de Segunda Ordem</h3>
+<p><strong>Interação entre pontos</strong> (pequena escala). Mede a <strong>dependência espacial</strong> baseada na distância entre os pontos.</p>
+<p><strong>Exemplo:</strong> Função K de Ripley, Vizinhos mais próximos</p>
 </section>
 <section id="estimativas-de-kernel-mapas-de-calor" class="slide level2">
 <h2>Estimativas de Kernel (Mapas de Calor)</h2>
-<ul>
-<li>Técnica para representar visualmente a concentração espacial de eventos pontuais.</li>
-<li>Transforma um conjunto de pontos em uma superfície contínua de intensidade.</li>
-<li>Evidencia áreas com maior ou menor densidade de eventos.</li>
-</ul>
+<h3 id="o-que-é">O que é?</h3>
+<p>Técnica para <strong>representar visualmente a concentração espacial</strong> de eventos pontuais, transformando um conjunto de pontos em uma <strong>superfície contínua de intensidade</strong>.</p>
+<p><span class="math display">\[\hat{\lambda}_{\tau}(u) = \frac{1}{\tau^2}\sum k\left(\frac{d(u_i , u)}{\tau}\right)\]</span></p>
 </section>
 <section id="como-funciona-o-kernel" class="slide level2">
 <h2>Como Funciona o Kernel?</h2>
+<p>Para cada ponto no espaço:</p>
+<ol type="1">
+<li>Aplica-se um <strong>“funil de suavização”</strong> (kernel)</li>
+<li>Distribui <strong>“peso”</strong> ao redor do ponto</li>
+<li>Maior peso às áreas próximas, menor conforme a distância</li>
+<li>Resultado: <strong>superfície contínua de densidade</strong></li>
+</ol>
+<div style="font-size: 70%; margin-top: 20px;">
+<p><strong>Analogia:</strong> O kernel atua como um limpador de para-brisa, pesando mais os eventos próximos e menos os eventos muito distantes.</p>
+</div>
+</section>
+<section id="largura-de-banda-bandwidth" class="slide level2">
+<h2>Largura de Banda (Bandwidth)</h2>
+<p>A escolha do parâmetro <span class="math inline">\(\tau\)</span> (largura de banda) influencia o grau de suavização:</p>
 <ul>
-<li>Para cada ponto no espaço, é aplicado um “funil de suavização” (kernel).</li>
-<li>Distribui “peso” ao redor do ponto, atribuindo maior peso às áreas próximas.</li>
-<li>O peso decresce com o aumento da distância, controlado por um parâmetro chamado <strong>largura de banda</strong> (<span class="math inline">\(h\)</span>).</li>
-<li>O resultado é uma superfície contínua de densidade (cores quentes = maior concentração).</li>
+<li><strong>Pequena</strong> (ex: 500m) → Mais detalhado, maior variação local</li>
+<li><strong>Média</strong> (ex: 1500m) → Padrões contínuos e estáveis</li>
+<li><strong>Grande</strong> (ex: 2500m) → Apenas grandes zonas de concentração</li>
+</ul>
+
+<img data-src="figuras/kernel3.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"></section>
+<section id="completa-aleatoriedade-espacial-csr" class="slide level2">
+<h2>Completa Aleatoriedade Espacial (CSR)</h2>
+<h3 id="definição-1">Definição</h3>
+<p>Assume que os pontos seguem um <strong>processo de Poisson homogêneo</strong> na área de estudo.</p>
+<h3 id="hipóteses-do-teste">Hipóteses do Teste</h3>
+<ul>
+<li><strong>H₀:</strong> Os pontos estão distribuídos aleatoriamente no espaço</li>
+<li><strong>H₁:</strong> Os pontos não seguem aleatoriedade (agregação ou dispersão)</li>
 </ul>
 </section>
-<section id="funções-k-e-l-de-ripley" class="slide level2">
-<h2>Funções K e L de Ripley</h2>
-<ul>
-<li>Ferramentas para analisar a estrutura espacial de padrões pontuais em diferentes escalas de distância.</li>
-<li><strong>Função K:</strong> Mede o número esperado de eventos dentro de uma distância <span class="math inline">\(r\)</span> de um evento típico.</li>
-<li><strong>Função L:</strong> Uma transformação da Função K para facilitar a interpretação visual (estabiliza a variância).</li>
-</ul>
+<section id="teste-de-quadrantes" class="slide level2">
+<h2>Teste de Quadrantes</h2>
+<p>Avalia as hipóteses comparando as <strong>contagens observadas</strong> de pontos em subáreas (quadrantes) com aquelas <strong>esperadas sob CSR</strong>:</p>
+<p><span class="math display">\[X^2 = \sum_{i=1}^{k}\frac{(O_i - E_i)^2}{E_i}\]</span></p>
+<p>Onde: - <span class="math inline">\(O_i\)</span> = número observado de pontos no quadrante <span class="math inline">\(i\)</span> - <span class="math inline">\(E_i\)</span> = número esperado sob aleatoriedade</p>
 </section>
-<section id="detecção-de-clusters" class="slide level2">
-<h2>Detecção de Clusters</h2>
-<ul>
-<li>Identificação de áreas onde a concentração de eventos é significativamente maior do que o esperado sob CSR.</li>
-<li>Métodos comuns incluem a estatística de varredura espacial (Spatial Scan Statistic) de Kulldorff.</li>
-<li>Fundamental para direcionar ações de saúde pública e controle vetorial.</li>
-</ul>
+<section id="simulando-padrões-pontuais" class="slide level2">
+<h2>Simulando Padrões Pontuais</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(splancs)</span>
+<span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spatstat)</span>
+<span id="cb1-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">9999</span>)</span>
+<span id="cb1-5"><a href="" aria-hidden="true" tabindex="-1"></a>caixa <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>))</span>
+<span id="cb1-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Padrão aleatório</span></span>
+<span id="cb1-8"><a href="" aria-hidden="true" tabindex="-1"></a>alea.spp <span class="ot">&lt;-</span> <span class="fu">csr</span>(caixa, <span class="dv">100</span>)</span>
+<span id="cb1-9"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Padrão clusterizado</span></span>
+<span id="cb1-11"><a href="" aria-hidden="true" tabindex="-1"></a>clu.spp <span class="ot">&lt;-</span> <span class="fu">pcp.sim</span>(<span class="at">rho=</span><span class="dv">20</span>, <span class="at">m=</span><span class="dv">10</span>, <span class="at">s2=</span><span class="fl">0.005</span>, <span class="at">region.poly=</span>caixa)</span>
+<span id="cb1-12"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Padrão regular</span></span>
+<span id="cb1-14"><a href="" aria-hidden="true" tabindex="-1"></a>uni.spp <span class="ot">&lt;-</span> <span class="fu">jitter</span>(<span class="fu">gridpts</span>(caixa, <span class="dv">100</span>), <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
-<section id="aplicações-práticas-no-curso" class="slide level2">
-<h2>Aplicações Práticas no Curso</h2>
+<section id="visualizando-os-padrões" class="slide level2">
+<h2>Visualizando os Padrões</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(alea.spp, <span class="at">main=</span><span class="st">"Aleatório"</span>)</span>
+<span id="cb2-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(uni.spp, <span class="at">main=</span><span class="st">"Regular"</span>)</span>
+<span id="cb2-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(clu.spp, <span class="at">main=</span><span class="st">"Agregado"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div style="font-size: 70%; margin-top: 20px;">
 <ul>
-<li><strong>Focos de queimadas no Rio de Janeiro:</strong> Análise Kernel de focos de fogo.</li>
-<li><strong>Estudo histórico:</strong> Recriação do estudo de Cólera em Londres (John Snow, 1854).</li>
+<li><strong>Aleatório:</strong> Pontos sem padrão aparente</li>
+<li><strong>Regular:</strong> Distribuição mais uniforme</li>
+<li><strong>Agregado:</strong> Presença de clusters e agrupamentos</li>
 </ul>
+</div>
+</section>
+<section id="contagem-por-quadrantes" class="slide level2">
+<h2>Contagem por Quadrantes</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spatstat)</span>
+<span id="cb3-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="" aria-hidden="true" tabindex="-1"></a>alea.ppp <span class="ot">&lt;-</span> <span class="fu">as.ppp</span>(alea.spp, <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>))</span>
+<span id="cb3-4"><a href="" aria-hidden="true" tabindex="-1"></a>uni.ppp <span class="ot">&lt;-</span> <span class="fu">as.ppp</span>(uni.spp, <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>))</span>
+<span id="cb3-5"><a href="" aria-hidden="true" tabindex="-1"></a>clu.ppp <span class="ot">&lt;-</span> <span class="fu">as.ppp</span>(clu.spp, <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>))</span>
+<span id="cb3-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Construindo quadrantes</span></span>
+<span id="cb3-8"><a href="" aria-hidden="true" tabindex="-1"></a>aleatorioQ <span class="ot">&lt;-</span> <span class="fu">quadratcount</span>(alea.ppp, <span class="at">nx=</span><span class="dv">4</span>, <span class="at">ny=</span><span class="dv">4</span>)</span>
+<span id="cb3-9"><a href="" aria-hidden="true" tabindex="-1"></a>regularQ <span class="ot">&lt;-</span> <span class="fu">quadratcount</span>(uni.ppp, <span class="at">nx=</span><span class="dv">4</span>, <span class="at">ny=</span><span class="dv">4</span>)</span>
+<span id="cb3-10"><a href="" aria-hidden="true" tabindex="-1"></a>agregadoQ <span class="ot">&lt;-</span> <span class="fu">quadratcount</span>(clu.ppp, <span class="at">nx=</span><span class="dv">4</span>, <span class="at">ny=</span><span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="interpretação-da-contagem-por-quadrantes" class="slide level2">
+<h2>Interpretação da Contagem por Quadrantes</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Padrão</th>
+<th>Contagens</th>
+<th>Interpretação</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Aleatório</strong></td>
+<td>Variam sem padrão</td>
+<td>Flutuações ao acaso</td>
+</tr>
+<tr class="even">
+<td><strong>Regular</strong></td>
+<td>Semelhantes</td>
+<td>Distribuição homogênea, repulsão</td>
+</tr>
+<tr class="odd">
+<td><strong>Agregado</strong></td>
+<td>Muito desiguais</td>
+<td>Clusterização, concentração</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="função-k-de-ripley" class="slide level2">
+<h2>Função K de Ripley</h2>
+<h3 id="o-que-é-1">O que é?</h3>
+<p>Mede o <strong>número médio de pontos</strong> dentro de uma distância <span class="math inline">\(h\)</span> de um ponto qualquer, ajustado pela intensidade do processo.</p>
+<p><span class="math display">\[K(h) = \frac{1}{\lambda} \, E[\text{número de pontos a distância } \leq h]\]</span></p>
+<h3 id="sob-aleatoriedade-csr">Sob Aleatoriedade (CSR)</h3>
+<p><span class="math display">\[K(h) = \pi h^2\]</span></p>
+</section>
+<section id="interpretação-da-função-k" class="slide level2">
+<h2>Interpretação da Função K</h2>
+<p>Comparando a função estimada com a teórica:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 57%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Resultado</th>
+<th>Interpretação</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\hat{K}(h) \approx \pi h^2\)</span></td>
+<td><strong>Aleatório</strong> - Padrão compatível com CSR</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\hat{K}(h) &lt; \pi h^2\)</span></td>
+<td><strong>Regular</strong> - Menos pontos próximos (repulsão)</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\hat{K}(h) &gt; \pi h^2\)</span></td>
+<td><strong>Agregado</strong> - Mais pontos próximos (clusters)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="função-k-de-ripley-raciocínio-prático" class="slide level2">
+<h2>Função K de Ripley: Raciocínio Prático</h2>
+<ol type="1">
+<li>Escolhe-se um ponto</li>
+<li>Desenha-se um círculo de raio <span class="math inline">\(h\)</span> ao redor dele</li>
+<li>Conta-se quantos outros pontos caem dentro desse círculo</li>
+<li>Repete-se para todos os pontos</li>
+<li>Calcula-se uma média</li>
+</ol>
+</section>
+<section id="exemplo-comparação-de-funções-k" class="slide level2">
+<h2>Exemplo: Comparação de Funções K</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimar a função K para cada padrão</span></span>
+<span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a>K.alea <span class="ot">&lt;-</span> <span class="fu">Kest</span>(alea.ppp, <span class="at">correction=</span><span class="st">"border"</span>)</span>
+<span id="cb4-3"><a href="" aria-hidden="true" tabindex="-1"></a>K.uni <span class="ot">&lt;-</span> <span class="fu">Kest</span>(uni.ppp, <span class="at">correction=</span><span class="st">"border"</span>)</span>
+<span id="cb4-4"><a href="" aria-hidden="true" tabindex="-1"></a>K.clu <span class="ot">&lt;-</span> <span class="fu">Kest</span>(clu.ppp, <span class="at">correction=</span><span class="st">"border"</span>)</span>
+<span id="cb4-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Função teórica para CSR</span></span>
+<span id="cb4-7"><a href="" aria-hidden="true" tabindex="-1"></a>K.teor <span class="ot">&lt;-</span> <span class="cf">function</span>(r) { pi <span class="sc">*</span> r<span class="sc">^</span><span class="dv">2</span> }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="por-que-usar-a-função-k" class="slide level2">
+<h2>Por que Usar a Função K?</h2>
+<p>✅ Analisa padrões em <strong>múltiplas escalas</strong> (vários valores de <span class="math inline">\(h\)</span>)</p>
+<p>✅ Não depende de dividir o espaço em quadrantes</p>
+<p>✅ Detecta tanto <strong>agregação quanto dispersão</strong></p>
+<p>✅ Oferece uma visão mais completa da estrutura espacial</p>
+</section>
+<section id="aplicação-prática-focos-de-queimadas-no-rj" class="slide level2">
+<h2>Aplicação Prática: Focos de Queimadas no RJ</h2>
+<h3 id="lendo-os-dados">Lendo os Dados</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb5-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar dados</span></span>
+<span id="cb5-5"><a href="" aria-hidden="true" tabindex="-1"></a>dados_pontos <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"dados/queimadas/queimadas_pontos.xlsx"</span>)</span>
+<span id="cb5-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Converter para objeto espacial</span></span>
+<span id="cb5-8"><a href="" aria-hidden="true" tabindex="-1"></a>pontos_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(dados_pontos, </span>
+<span id="cb5-9"><a href="" aria-hidden="true" tabindex="-1"></a>                      <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>),</span>
+<span id="cb5-10"><a href="" aria-hidden="true" tabindex="-1"></a>                      <span class="at">crs =</span> <span class="dv">4326</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="visualizando-os-focos" class="slide level2">
+<h2>Visualizando os Focos</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geobr)</span>
+<span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Baixar mapa do RJ</span></span>
+<span id="cb6-5"><a href="" aria-hidden="true" tabindex="-1"></a>rj <span class="ot">&lt;-</span> <span class="fu">read_state</span>(<span class="at">code_state =</span> <span class="dv">33</span>, <span class="at">year =</span> <span class="dv">2020</span>)</span>
+<span id="cb6-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotar</span></span>
+<span id="cb6-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb6-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> rj, <span class="at">fill =</span> <span class="st">"lightgreen"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb6-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> pontos_sf, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb6-11"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Focos de Queimadas - Rio de Janeiro"</span>) <span class="sc">+</span></span>
+<span id="cb6-12"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="estimativas-de-kernel-para-queimadas" class="slide level2">
+<h2>Estimativas de Kernel para Queimadas</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Função para calcular kernel</span></span>
+<span id="cb7-2"><a href="" aria-hidden="true" tabindex="-1"></a>calc_kernel <span class="ot">&lt;-</span> <span class="cf">function</span>(coords, bandwidth, <span class="at">n =</span> <span class="dv">150</span>) {</span>
+<span id="cb7-3"><a href="" aria-hidden="true" tabindex="-1"></a>  MASS<span class="sc">::</span><span class="fu">kde2d</span>(coords<span class="sc">$</span>x, coords<span class="sc">$</span>y, </span>
+<span id="cb7-4"><a href="" aria-hidden="true" tabindex="-1"></a>              <span class="at">h =</span> bandwidth, <span class="at">n =</span> n,</span>
+<span id="cb7-5"><a href="" aria-hidden="true" tabindex="-1"></a>              <span class="at">lims =</span> <span class="fu">c</span>(<span class="fu">range</span>(coords<span class="sc">$</span>x), <span class="fu">range</span>(coords<span class="sc">$</span>y)))</span>
+<span id="cb7-6"><a href="" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-7"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Diferentes larguras de banda</span></span>
+<span id="cb7-9"><a href="" aria-hidden="true" tabindex="-1"></a>kernel_10km  <span class="ot">&lt;-</span> <span class="fu">calc_kernel</span>(queimadas_coords, <span class="dv">10000</span>)</span>
+<span id="cb7-10"><a href="" aria-hidden="true" tabindex="-1"></a>kernel_50km  <span class="ot">&lt;-</span> <span class="fu">calc_kernel</span>(queimadas_coords, <span class="dv">50000</span>)</span>
+<span id="cb7-11"><a href="" aria-hidden="true" tabindex="-1"></a>kernel_100km <span class="ot">&lt;-</span> <span class="fu">calc_kernel</span>(queimadas_coords, <span class="dv">100000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="resumo-do-capítulo" class="slide level2">
+<h2>Resumo do Capítulo</h2>
+<ol type="1">
+<li><p><strong>Padrões Pontuais</strong> representam eventos em localizações discretas no espaço.</p></li>
+<li><p><strong>CSR</strong> é a hipótese nula: os pontos são distribuídos aleatoriamente.</p></li>
+<li><p><strong>Kernel</strong> transforma pontos em superfícies contínuas de densidade (mapas de calor).</p></li>
+<li><p><strong>Função K</strong> mede a estrutura espacial em diferentes escalas de distância.</p></li>
+<li><p>Padrões podem ser <strong>aleatórios</strong>, <strong>regulares</strong> ou <strong>agregados</strong>.</p></li>
+</ol>
+</section>
+<section id="referências-sugeridas" class="slide level2">
+<h2>Referências Sugeridas</h2>
+<div style="font-size: 60%;">
+<ul>
+<li>Druck, S., et al.&nbsp;(eds). (2004). <em>Análise Espacial de Dados Geográficos</em>. EMBRAPA.</li>
+<li>Bailey, T. C., &amp; Gatrell, A. C. (1995). <em>Interactive Spatial Data Analysis</em>. Routledge.</li>
+<li>Bivand, R. S., Pebesma, E., &amp; Gomez-Rubio, V. (2013). <em>Applied Spatial Data Analysis with R</em> (2nd ed.). Springer.</li>
+<li>Lovelace, R., Nowosad, J., &amp; Muenchow, J. (2021). <em>Geocomputation with R</em>.</li>
+</ul>
+</div>
 
 </section>
     </div>
@@ -410,7 +710,7 @@ Prof.&nbsp;Wagner Tassinari
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -436,6 +736,44 @@ Prof.&nbsp;Wagner Tassinari
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
@@ -484,13 +822,14 @@ Prof.&nbsp;Wagner Tassinari
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

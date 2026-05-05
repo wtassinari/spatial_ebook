@@ -1,5 +1,5 @@
 ---
-title: "Dados de Padrões Pontuais"
+title: "Padrões Pontuais"
 subtitle: "Estatística Espacial"
 author: "Prof. Wagner Tassinari"
 format:
@@ -10,69 +10,338 @@ format:
     transition: convex
     background-transition: fade
     highlight-style: tango
-    code-background: true      # <-- adiciona fundo nos códigos
-    code-line-numbers: false    # <-- números nas linhas (opcional)
-    code-copy: true            # <-- botão de copiar código
+    code-background: true
+    code-line-numbers: false
+    code-copy: true
     title-slide-attributes:
       data-background-color: "#2c3e50"
 ---
 
-## Objetivos da Aula
+## Objetivos do Capítulo
 
-- Compreender os processos de pontos espaciais;
-- Entender o conceito de Complete Spatial Randomness (CSR);
-- Aplicar a Análise Kernel (Kernel Density Estimation);
-- Utilizar as Funções K e L para análise de padrões;
-- Detectar clusters espaciais.
+Ao final deste capítulo, você será capaz de:
+
+::: {.large}
+1. Compreender a estrutura dos **dados de padrões pontuais**.
+2. Testar hipóteses sobre a **aleatoriedade espacial completa (CSR)**.
+3. Aplicar **estimativas de densidade de Kernel** (mapas de calor).
+4. Utilizar a **Função K de Ripley** para análise de padrões.
+5. Realizar **análises de padrões pontuais com dados reais**.
+:::
+
+---
 
 ## O que são Padrões Pontuais?
 
-- O principal interesse está no conjunto de coordenadas geográficas representando as localizações exatas de eventos.
-- O evento aleatório de interesse é a **posição espacial** onde o fenômeno ocorre.
-- A análise busca entender se os pontos seguem um padrão aleatório, agrupado (*clusters*) ou disperso no espaço.
+### Definição
+
+Eventos que ocorrem em localizações **discretas e aleatórias** no espaço, como casos de doenças, crimes, acidentes ou ocorrências ambientais.
+
+### Características
+
+- O interesse está nas **coordenadas geográficas exatas** (latitude, longitude).
+- Objetivo: Investigar se os eventos seguem um padrão **aleatório**, **regular** ou **agrupado** (clustered).
+
+---
 
 ## Exemplos de Aplicação
 
-- 🏥 Localização de casos de uma doença notificados em uma cidade.
-- 🌳 Distribuição espacial de árvores em um parque urbano.
-- 🐾 Registros de avistamentos de animais silvestres em uma reserva.
-- 🔥 Pontos de ocorrência de focos de incêndio florestal detectados por satélite.
-- 🔫 Registros de ocorrências de crimes em uma área urbana.
+- 🏥 Localização de casos de uma doença notificados em uma cidade
+- 🌳 Distribuição espacial de árvores em um parque urbano
+- 🐾 Registros de avistamentos de animais silvestres em uma reserva
+- 🔥 Focos de incêndio florestal detectados por satélite
+- 🔫 Registros de ocorrências de crimes em uma área urbana
 
-## Complete Spatial Randomness (CSR)
+---
 
-**Aleatoriedade Espacial Completa**
+## Possíveis Distribuições dos Pontos
 
-- É a hipótese nula padrão na análise de padrões pontuais.
-- Pressupõe que os eventos ocorrem de forma independente e com a mesma probabilidade em qualquer lugar da área de estudo.
-- Se a hipótese CSR for rejeitada, indica-se a presença de um padrão agrupado ou disperso.
+![](figuras/Cluster2.png){fig-align="center" width="70%"}
+
+<div style="text-align: center; font-size: 14px;">
+Padrões clássicos: Aleatório, Regular e Agregado
+</div>
+
+---
+
+## Processos Pontuais: Primeira e Segunda Ordem
+
+### Processo de Primeira Ordem
+Variações no **valor médio do processo** no espaço (larga escala). Representado pela **intensidade** ou **densidade** dos pontos.
+
+**Exemplo:** Estimativa de Kernel (mapas de calor)
+
+### Processo de Segunda Ordem
+**Interação entre pontos** (pequena escala). Mede a **dependência espacial** baseada na distância entre os pontos.
+
+**Exemplo:** Função K de Ripley, Vizinhos mais próximos
+
+---
 
 ## Estimativas de Kernel (Mapas de Calor)
 
-- Técnica para representar visualmente a concentração espacial de eventos pontuais.
-- Transforma um conjunto de pontos em uma superfície contínua de intensidade.
-- Evidencia áreas com maior ou menor densidade de eventos.
+### O que é?
+
+Técnica para **representar visualmente a concentração espacial** de eventos pontuais, transformando um conjunto de pontos em uma **superfície contínua de intensidade**.
+
+$$\hat{\lambda}_{\tau}(u) = \frac{1}{\tau^2}\sum k\left(\frac{d(u_i , u)}{\tau}\right)$$
+
+---
 
 ## Como Funciona o Kernel?
 
-- Para cada ponto no espaço, é aplicado um "funil de suavização" (kernel).
-- Distribui "peso" ao redor do ponto, atribuindo maior peso às áreas próximas.
-- O peso decresce com o aumento da distância, controlado por um parâmetro chamado **largura de banda** ($h$).
-- O resultado é uma superfície contínua de densidade (cores quentes = maior concentração).
+Para cada ponto no espaço:
 
-## Funções K e L de Ripley
+1. Aplica-se um **"funil de suavização"** (kernel)
+2. Distribui **"peso"** ao redor do ponto
+3. Maior peso às áreas próximas, menor conforme a distância
+4. Resultado: **superfície contínua de densidade**
 
-- Ferramentas para analisar a estrutura espacial de padrões pontuais em diferentes escalas de distância.
-- **Função K:** Mede o número esperado de eventos dentro de uma distância $r$ de um evento típico.
-- **Função L:** Uma transformação da Função K para facilitar a interpretação visual (estabiliza a variância).
+<div style="font-size: 70%; margin-top: 20px;">
+**Analogia:** O kernel atua como um limpador de para-brisa, pesando mais os eventos próximos e menos os eventos muito distantes.
+</div>
 
-## Detecção de Clusters
+---
 
-- Identificação de áreas onde a concentração de eventos é significativamente maior do que o esperado sob CSR.
-- Métodos comuns incluem a estatística de varredura espacial (Spatial Scan Statistic) de Kulldorff.
-- Fundamental para direcionar ações de saúde pública e controle vetorial.
+## Largura de Banda (Bandwidth)
 
-## Aplicações Práticas no Curso
+A escolha do parâmetro $\tau$ (largura de banda) influencia o grau de suavização:
 
-- **Focos de queimadas no Rio de Janeiro:** Análise Kernel de focos de fogo.
-- **Estudo histórico:** Recriação do estudo de Cólera em Londres (John Snow, 1854).
+- **Pequena** (ex: 500m) → Mais detalhado, maior variação local
+- **Média** (ex: 1500m) → Padrões contínuos e estáveis
+- **Grande** (ex: 2500m) → Apenas grandes zonas de concentração
+
+![](figuras/kernel3.png){fig-align="center" width="70%"}
+
+---
+
+## Completa Aleatoriedade Espacial (CSR)
+
+### Definição
+
+Assume que os pontos seguem um **processo de Poisson homogêneo** na área de estudo.
+
+### Hipóteses do Teste
+
+- **H₀:** Os pontos estão distribuídos aleatoriamente no espaço
+- **H₁:** Os pontos não seguem aleatoriedade (agregação ou dispersão)
+
+---
+
+## Teste de Quadrantes
+
+Avalia as hipóteses comparando as **contagens observadas** de pontos em subáreas (quadrantes) com aquelas **esperadas sob CSR**:
+
+$$X^2 = \sum_{i=1}^{k}\frac{(O_i - E_i)^2}{E_i}$$
+
+Onde:
+- $O_i$ = número observado de pontos no quadrante $i$
+- $E_i$ = número esperado sob aleatoriedade
+
+---
+
+## Simulando Padrões Pontuais
+
+```{r, eval=FALSE, echo=TRUE}
+library(splancs)
+library(spatstat)
+
+set.seed(9999)
+caixa <- rbind(c(0,0), c(0,1), c(1,1), c(1,0), c(0,0))
+
+# Padrão aleatório
+alea.spp <- csr(caixa, 100)
+
+# Padrão clusterizado
+clu.spp <- pcp.sim(rho=20, m=10, s2=0.005, region.poly=caixa)
+
+# Padrão regular
+uni.spp <- jitter(gridpts(caixa, 100), 2)
+```
+
+---
+
+## Visualizando os Padrões
+
+```{r, eval=FALSE, echo=TRUE}
+par(mfrow=c(1, 3))
+plot(alea.spp, main="Aleatório")
+plot(uni.spp, main="Regular")
+plot(clu.spp, main="Agregado")
+```
+
+<div style="font-size: 70%; margin-top: 20px;">
+- **Aleatório:** Pontos sem padrão aparente
+- **Regular:** Distribuição mais uniforme
+- **Agregado:** Presença de clusters e agrupamentos
+</div>
+
+---
+
+## Contagem por Quadrantes
+
+```{r, eval=FALSE, echo=TRUE}
+library(spatstat)
+
+alea.ppp <- as.ppp(alea.spp, c(0,1,0,1))
+uni.ppp <- as.ppp(uni.spp, c(0,1,0,1))
+clu.ppp <- as.ppp(clu.spp, c(0,1,0,1))
+
+# Construindo quadrantes
+aleatorioQ <- quadratcount(alea.ppp, nx=4, ny=4)
+regularQ <- quadratcount(uni.ppp, nx=4, ny=4)
+agregadoQ <- quadratcount(clu.ppp, nx=4, ny=4)
+```
+
+---
+
+## Interpretação da Contagem por Quadrantes
+
+| Padrão | Contagens | Interpretação |
+|--------|-----------|---------------|
+| **Aleatório** | Variam sem padrão | Flutuações ao acaso |
+| **Regular** | Semelhantes | Distribuição homogênea, repulsão |
+| **Agregado** | Muito desiguais | Clusterização, concentração |
+
+---
+
+## Função K de Ripley
+
+### O que é?
+
+Mede o **número médio de pontos** dentro de uma distância $h$ de um ponto qualquer, ajustado pela intensidade do processo.
+
+$$K(h) = \frac{1}{\lambda} \, E[\text{número de pontos a distância } \leq h]$$
+
+### Sob Aleatoriedade (CSR)
+
+$$K(h) = \pi h^2$$
+
+---
+
+## Interpretação da Função K
+
+Comparando a função estimada com a teórica:
+
+| Resultado | Interpretação |
+|-----------|---------------|
+| $\hat{K}(h) \approx \pi h^2$ | **Aleatório** - Padrão compatível com CSR |
+| $\hat{K}(h) < \pi h^2$ | **Regular** - Menos pontos próximos (repulsão) |
+| $\hat{K}(h) > \pi h^2$ | **Agregado** - Mais pontos próximos (clusters) |
+
+---
+
+## Função K de Ripley: Raciocínio Prático
+
+1. Escolhe-se um ponto
+2. Desenha-se um círculo de raio $h$ ao redor dele
+3. Conta-se quantos outros pontos caem dentro desse círculo
+4. Repete-se para todos os pontos
+5. Calcula-se uma média
+
+---
+
+## Exemplo: Comparação de Funções K
+
+```{r, eval=FALSE, echo=TRUE}
+# Estimar a função K para cada padrão
+K.alea <- Kest(alea.ppp, correction="border")
+K.uni <- Kest(uni.ppp, correction="border")
+K.clu <- Kest(clu.ppp, correction="border")
+
+# Função teórica para CSR
+K.teor <- function(r) { pi * r^2 }
+```
+
+---
+
+## Por que Usar a Função K?
+
+✅ Analisa padrões em **múltiplas escalas** (vários valores de $h$)
+
+✅ Não depende de dividir o espaço em quadrantes
+
+✅ Detecta tanto **agregação quanto dispersão**
+
+✅ Oferece uma visão mais completa da estrutura espacial
+
+---
+
+## Aplicação Prática: Focos de Queimadas no RJ
+
+### Lendo os Dados
+
+```{r, eval=FALSE, echo=TRUE}
+library(readxl)
+library(sf)
+
+# Carregar dados
+dados_pontos <- read_excel("dados/queimadas/queimadas_pontos.xlsx")
+
+# Converter para objeto espacial
+pontos_sf <- st_as_sf(dados_pontos, 
+                      coords = c("longitude", "latitude"),
+                      crs = 4326)
+```
+
+---
+
+## Visualizando os Focos
+
+```{r, eval=FALSE, echo=TRUE}
+library(ggplot2)
+library(geobr)
+
+# Baixar mapa do RJ
+rj <- read_state(code_state = 33, year = 2020)
+
+# Plotar
+ggplot() +
+  geom_sf(data = rj, fill = "lightgreen", color = "black") +
+  geom_sf(data = pontos_sf, color = "red", size = 1, alpha = 0.7) +
+  labs(title = "Focos de Queimadas - Rio de Janeiro") +
+  theme_minimal()
+```
+
+---
+
+## Estimativas de Kernel para Queimadas
+
+```{r, eval=FALSE, echo=TRUE}
+# Função para calcular kernel
+calc_kernel <- function(coords, bandwidth, n = 150) {
+  MASS::kde2d(coords$x, coords$y, 
+              h = bandwidth, n = n,
+              lims = c(range(coords$x), range(coords$y)))
+}
+
+# Diferentes larguras de banda
+kernel_10km  <- calc_kernel(queimadas_coords, 10000)
+kernel_50km  <- calc_kernel(queimadas_coords, 50000)
+kernel_100km <- calc_kernel(queimadas_coords, 100000)
+```
+
+---
+
+## Resumo do Capítulo
+
+1. **Padrões Pontuais** representam eventos em localizações discretas no espaço.
+
+2. **CSR** é a hipótese nula: os pontos são distribuídos aleatoriamente.
+
+3. **Kernel** transforma pontos em superfícies contínuas de densidade (mapas de calor).
+
+4. **Função K** mede a estrutura espacial em diferentes escalas de distância.
+
+5. Padrões podem ser **aleatórios**, **regulares** ou **agregados**.
+
+---
+
+## Referências Sugeridas
+
+<div style="font-size: 60%;">
+- Druck, S., et al. (eds). (2004). *Análise Espacial de Dados Geográficos*. EMBRAPA.
+- Bailey, T. C., & Gatrell, A. C. (1995). *Interactive Spatial Data Analysis*. Routledge.
+- Bivand, R. S., Pebesma, E., & Gomez-Rubio, V. (2013). *Applied Spatial Data Analysis with R* (2nd ed.). Springer.
+- Lovelace, R., Nowosad, J., & Muenchow, J. (2021). *Geocomputation with R*.
+</div>
