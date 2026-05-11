@@ -602,9 +602,16 @@ Quadrats: 4 by 4 grid of tiles</code></pre>
 <span id="cb10-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Converter para objeto espacial</span></span>
 <span id="cb10-8"><a href="" aria-hidden="true" tabindex="-1"></a>pontos_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(dados_pontos, </span>
 <span id="cb10-9"><a href="" aria-hidden="true" tabindex="-1"></a>                      <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>),</span>
-<span id="cb10-10"><a href="" aria-hidden="true" tabindex="-1"></a>                      <span class="at">crs =</span> <span class="dv">4326</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-10"><a href="" aria-hidden="true" tabindex="-1"></a>                      <span class="at">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb10-11"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pontos_sf)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
+<section id="aplicação-prática-focos-de-queimadas-no-rj-1" class="slide level2">
+<h2>Aplicação Prática: Focos de Queimadas no RJ</h2>
+<h3 id="lendo-os-dados-1">Lendo os Dados</h3>
+
+<img data-src="03-padroes_pontuais_slides_files/figure-revealjs/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:90.0%"></section>
 <section id="visualizando-os-focos" class="slide level2">
 <h2>Visualizando os Focos</h2>
 <div class="cell">
@@ -622,21 +629,47 @@ Quadrats: 4 by 4 grid of tiles</code></pre>
 <span id="cb11-12"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
+<section id="visualizando-os-focos-1" class="slide level2">
+<h2>Visualizando os Focos</h2>
+
+<img data-src="03-padroes_pontuais_slides_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:90.0%"></section>
 <section id="estimativas-de-kernel-para-queimadas" class="slide level2">
 <h2>Estimativas de Kernel para Queimadas</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Função para calcular kernel</span></span>
-<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a>calc_kernel <span class="ot">&lt;-</span> <span class="cf">function</span>(coords, bandwidth, <span class="at">n =</span> <span class="dv">150</span>) {</span>
-<span id="cb12-3"><a href="" aria-hidden="true" tabindex="-1"></a>  MASS<span class="sc">::</span><span class="fu">kde2d</span>(coords<span class="sc">$</span>x, coords<span class="sc">$</span>y, </span>
-<span id="cb12-4"><a href="" aria-hidden="true" tabindex="-1"></a>              <span class="at">h =</span> bandwidth, <span class="at">n =</span> n,</span>
-<span id="cb12-5"><a href="" aria-hidden="true" tabindex="-1"></a>              <span class="at">lims =</span> <span class="fu">c</span>(<span class="fu">range</span>(coords<span class="sc">$</span>x), <span class="fu">range</span>(coords<span class="sc">$</span>y)))</span>
-<span id="cb12-6"><a href="" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb12-7"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Diferentes larguras de banda</span></span>
-<span id="cb12-9"><a href="" aria-hidden="true" tabindex="-1"></a>kernel_10km  <span class="ot">&lt;-</span> <span class="fu">calc_kernel</span>(queimadas_coords, <span class="dv">10000</span>)</span>
-<span id="cb12-10"><a href="" aria-hidden="true" tabindex="-1"></a>kernel_50km  <span class="ot">&lt;-</span> <span class="fu">calc_kernel</span>(queimadas_coords, <span class="dv">50000</span>)</span>
-<span id="cb12-11"><a href="" aria-hidden="true" tabindex="-1"></a>kernel_100km <span class="ot">&lt;-</span> <span class="fu">calc_kernel</span>(queimadas_coords, <span class="dv">100000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Converter para UTM</span></span>
+<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a>rj_utm <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(rj, <span class="at">crs =</span> <span class="dv">32723</span>)</span>
+<span id="cb12-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Extrair coordenadas do contorno do RJ para usar com lines()</span></span>
+<span id="cb12-5"><a href="" aria-hidden="true" tabindex="-1"></a>rj_coords <span class="ot">&lt;-</span> <span class="fu">st_coordinates</span>(rj_utm)[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
+<span id="cb12-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. EXTRAIR COORDENADAS UTM DOS PONTOS ==================================</span></span>
+<span id="cb12-8"><a href="" aria-hidden="true" tabindex="-1"></a>coords_utm <span class="ot">&lt;-</span> <span class="fu">st_coordinates</span>(pontos_sf)</span>
+<span id="cb12-9"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="" aria-hidden="true" tabindex="-1"></a>queimadas_coords <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb12-11"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> coords_utm[, <span class="dv">1</span>],</span>
+<span id="cb12-12"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> coords_utm[, <span class="dv">2</span>]</span>
+<span id="cb12-13"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</section>
+<section id="estimativas-de-kernel-para-queimadas-1" class="slide level2">
+<h2>Estimativas de Kernel para Queimadas</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb13-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Função para calcular kernel</span></span>
+<span id="cb13-3"><a href="" aria-hidden="true" tabindex="-1"></a>calc_kernel <span class="ot">&lt;-</span> <span class="cf">function</span>(coords, bandwidth, <span class="at">n =</span> <span class="dv">150</span>) {</span>
+<span id="cb13-4"><a href="" aria-hidden="true" tabindex="-1"></a>  MASS<span class="sc">::</span><span class="fu">kde2d</span>(coords<span class="sc">$</span>x, coords<span class="sc">$</span>y, </span>
+<span id="cb13-5"><a href="" aria-hidden="true" tabindex="-1"></a>              <span class="at">h =</span> bandwidth, <span class="at">n =</span> n,</span>
+<span id="cb13-6"><a href="" aria-hidden="true" tabindex="-1"></a>              <span class="at">lims =</span> <span class="fu">c</span>(<span class="fu">range</span>(coords<span class="sc">$</span>x), <span class="fu">range</span>(coords<span class="sc">$</span>y)))</span>
+<span id="cb13-7"><a href="" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-8"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Diferentes larguras de banda</span></span>
+<span id="cb13-10"><a href="" aria-hidden="true" tabindex="-1"></a>kernel_10km  <span class="ot">&lt;-</span> <span class="fu">calc_kernel</span>(queimadas_coords, <span class="dv">10000</span>)</span>
+<span id="cb13-11"><a href="" aria-hidden="true" tabindex="-1"></a>kernel_50km  <span class="ot">&lt;-</span> <span class="fu">calc_kernel</span>(queimadas_coords, <span class="dv">50000</span>)</span>
+<span id="cb13-12"><a href="" aria-hidden="true" tabindex="-1"></a>kernel_100km <span class="ot">&lt;-</span> <span class="fu">calc_kernel</span>(queimadas_coords, <span class="dv">100000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="estimativas-de-kernel-para-queimadas-2" class="slide level2">
+<h2>Estimativas de Kernel para Queimadas</h2>
 </section>
 <section id="resumo-do-capítulo" class="slide level2">
 <h2>Resumo do Capítulo</h2>
@@ -647,17 +680,6 @@ Quadrats: 4 by 4 grid of tiles</code></pre>
 <li><p><strong>Função K</strong> mede a estrutura espacial em diferentes escalas de distância.</p></li>
 <li><p>Padrões podem ser <strong>aleatórios</strong>, <strong>regulares</strong> ou <strong>agregados</strong>.</p></li>
 </ol>
-</section>
-<section id="referências-sugeridas" class="slide level2">
-<h2>Referências Sugeridas</h2>
-<div style="font-size: 60%;">
-<ul>
-<li>Druck, S., et al.&nbsp;(eds). (2004). <em>Análise Espacial de Dados Geográficos</em>. EMBRAPA.</li>
-<li>Bailey, T. C., &amp; Gatrell, A. C. (1995). <em>Interactive Spatial Data Analysis</em>. Routledge.</li>
-<li>Bivand, R. S., Pebesma, E., &amp; Gomez-Rubio, V. (2013). <em>Applied Spatial Data Analysis with R</em> (2nd ed.). Springer.</li>
-<li>Lovelace, R., Nowosad, J., &amp; Muenchow, J. (2021). <em>Geocomputation with R</em>.</li>
-</ul>
-</div>
 
 </section>
     </div>

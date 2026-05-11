@@ -484,7 +484,36 @@ dados_pontos <- read_excel("dados/queimadas/queimadas_pontos.xlsx")
 pontos_sf <- st_as_sf(dados_pontos, 
                       coords = c("longitude", "latitude"),
                       crs = 4326)
+
+plot(pontos_sf)
 ```
+
+---
+
+## Aplicação Prática: Focos de Queimadas no RJ
+
+### Lendo os Dados
+
+```{r}
+#| fig-width: 12
+#| fig-height: 8
+#| out-width: 90%
+#| fig-align: center
+
+# Carregar dados
+library(readxl)
+library(sf)
+
+dados_pontos <- read_excel("dados/queimadas/queimadas_pontos.xlsx")
+
+# Converter para objeto espacial
+pontos_sf <- st_as_sf(dados_pontos, 
+                      coords = c("longitude", "latitude"),
+                      crs = 4326)
+
+plot(pontos_sf)
+```
+
 
 ---
 
@@ -507,9 +536,54 @@ ggplot() +
 
 ---
 
+## Visualizando os Focos
+
+```{r}
+#| fig-width: 12
+#| fig-height: 8
+#| out-width: 90%
+#| fig-align: center
+
+library(ggplot2)
+library(geobr)
+
+# Baixar mapa do RJ
+rj <- read_state(code_state = 33, year = 2020)
+
+# Plotar
+ggplot() +
+  geom_sf(data = rj, fill = "lightgreen", color = "black") +
+  geom_sf(data = pontos_sf, color = "red", size = 1, alpha = 0.7) +
+  labs(title = "Focos de Queimadas - Rio de Janeiro") +
+  theme_minimal()
+```
+
+---
+
+## Estimativas de Kernel para Queimadas
+
+```{r, eval=TRUE, echo=TRUE}
+# Converter para UTM
+rj_utm <- st_transform(rj, crs = 32723)
+
+# Extrair coordenadas do contorno do RJ para usar com lines()
+rj_coords <- st_coordinates(rj_utm)[, 1:2]
+
+# 3. EXTRAIR COORDENADAS UTM DOS PONTOS ==================================
+coords_utm <- st_coordinates(pontos_sf)
+
+queimadas_coords <- data.frame(
+  x = coords_utm[, 1],
+  y = coords_utm[, 2]
+)
+```
+
+---
+
 ## Estimativas de Kernel para Queimadas
 
 ```{r, eval=FALSE, echo=TRUE}
+library(MASS)
 # Função para calcular kernel
 calc_kernel <- function(coords, bandwidth, n = 150) {
   MASS::kde2d(coords$x, coords$y, 
@@ -525,6 +599,29 @@ kernel_100km <- calc_kernel(queimadas_coords, 100000)
 
 ---
 
+## Estimativas de Kernel para Queimadas
+
+```{r}
+#| fig-width: 12
+#| fig-height: 8
+#| out-width: 90%
+#| fig-align: center
+
+library(MASS)
+# Função para calcular kernel
+calc_kernel <- function(coords, bandwidth, n = 150) {
+  MASS::kde2d(coords$x, coords$y, 
+              h = bandwidth, n = n,
+              lims = c(range(coords$x), range(coords$y)))
+}
+
+# Diferentes larguras de banda
+kernel_10km  <- calc_kernel(queimadas_coords, 10000)
+kernel_50km  <- calc_kernel(queimadas_coords, 50000)
+kernel_100km <- calc_kernel(queimadas_coords, 100000)
+```
+---
+
 ## Resumo do Capítulo
 
 1. **Padrões Pontuais** representam eventos em localizações discretas no espaço.
@@ -537,13 +634,4 @@ kernel_100km <- calc_kernel(queimadas_coords, 100000)
 
 5. Padrões podem ser **aleatórios**, **regulares** ou **agregados**.
 
----
 
-## Referências Sugeridas
-
-<div style="font-size: 60%;">
-- Druck, S., et al. (eds). (2004). *Análise Espacial de Dados Geográficos*. EMBRAPA.
-- Bailey, T. C., & Gatrell, A. C. (1995). *Interactive Spatial Data Analysis*. Routledge.
-- Bivand, R. S., Pebesma, E., & Gomez-Rubio, V. (2013). *Applied Spatial Data Analysis with R* (2nd ed.). Springer.
-- Lovelace, R., Nowosad, J., & Muenchow, J. (2021). *Geocomputation with R*.
-</div>
