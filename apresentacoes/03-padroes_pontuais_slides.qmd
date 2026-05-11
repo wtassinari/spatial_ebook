@@ -56,40 +56,47 @@ Eventos que ocorrem em localizações **discretas e aleatórias** no espaço, co
 
 ## Possíveis Distribuições dos Pontos
 
-![](figuras/Cluster2.png){fig-align="center" width="70%"}
-
-<div style="text-align: center; font-size: 14px;">
-Padrões clássicos: Aleatório, Regular e Agregado
-</div>
+![](figuras/Cluster3.png){fig-align="center" width="90%"}
+<div style="text-align: center; font-size: 12px;">Fonte: Elaboração própria com auxílio do ChatGPT (OpenAI, 2026).</div>
 
 ---
 
-## Processos Pontuais: Primeira e Segunda Ordem
+## Processos Pontuais
 
-### Processo de Primeira Ordem
+<div style="font-size: 80%;">
+### I) Processo de Primeira Ordem
 Variações no **valor médio do processo** no espaço (larga escala). Representado pela **intensidade** ou **densidade** dos pontos.
 
 **Exemplo:** Estimativa de Kernel (mapas de calor)
 
-### Processo de Segunda Ordem
+
+### II) Processo de Segunda Ordem
 **Interação entre pontos** (pequena escala). Mede a **dependência espacial** baseada na distância entre os pontos.
 
 **Exemplo:** Função K de Ripley, Vizinhos mais próximos
+</div>
 
 ---
 
 ## Estimativas de Kernel (Mapas de Calor)
 
+<div style="font-size: 80%;">
+
 ### O que é?
 
 Técnica para **representar visualmente a concentração espacial** de eventos pontuais, transformando um conjunto de pontos em uma **superfície contínua de intensidade**.
 
+
 $$\hat{\lambda}_{\tau}(u) = \frac{1}{\tau^2}\sum k\left(\frac{d(u_i , u)}{\tau}\right)$$
+</div>
 
 ---
 
-## Como Funciona o Kernel?
+### Como Funciona o Kernel?
 
+![](figuras/kernel_2026.png){fig-align="center" width="50%"}
+
+<div style="font-size: 55%;">
 Para cada ponto no espaço:
 
 1. Aplica-se um **"funil de suavização"** (kernel)
@@ -97,26 +104,30 @@ Para cada ponto no espaço:
 3. Maior peso às áreas próximas, menor conforme a distância
 4. Resultado: **superfície contínua de densidade**
 
-<div style="font-size: 70%; margin-top: 20px;">
 **Analogia:** O kernel atua como um limpador de para-brisa, pesando mais os eventos próximos e menos os eventos muito distantes.
 </div>
 
 ---
 
-## Largura de Banda (Bandwidth)
+### Largura de Banda (Bandwidth)
+
+<div style="font-size: 60%;">
 
 A escolha do parâmetro $\tau$ (largura de banda) influencia o grau de suavização:
 
-- **Pequena** (ex: 500m) → Mais detalhado, maior variação local
-- **Média** (ex: 1500m) → Padrões contínuos e estáveis
-- **Grande** (ex: 2500m) → Apenas grandes zonas de concentração
+<!-- - **Pequena** (ex: 500m) → Mais detalhado, maior variação local -->
+<!-- - **Média** (ex: 1500m) → Padrões contínuos e estáveis -->
+<!-- - **Grande** (ex: 2500m) → Apenas grandes zonas de concentração -->
 
-![](figuras/kernel3.png){fig-align="center" width="70%"}
+![](figuras/kernel2_2026.png){fig-align="center" width="80%"}
+</div>
 
+<div style="text-align: center; font-size: 12px;">Fonte: Elaboração própria com auxílio do ChatGPT (OpenAI, 2026).</div>
 ---
 
 ## Completa Aleatoriedade Espacial (CSR)
 
+<div style="font-size: 80%;">
 ### Definição
 
 Assume que os pontos seguem um **processo de Poisson homogêneo** na área de estudo.
@@ -126,23 +137,35 @@ Assume que os pontos seguem um **processo de Poisson homogêneo** na área de es
 - **H₀:** Os pontos estão distribuídos aleatoriamente no espaço
 - **H₁:** Os pontos não seguem aleatoriedade (agregação ou dispersão)
 
+</div>
+
 ---
 
 ## Teste de Quadrantes
 
+<div style="font-size: 80%;">
 Avalia as hipóteses comparando as **contagens observadas** de pontos em subáreas (quadrantes) com aquelas **esperadas sob CSR**:
 
 $$X^2 = \sum_{i=1}^{k}\frac{(O_i - E_i)^2}{E_i}$$
 
 Onde:
+
 - $O_i$ = número observado de pontos no quadrante $i$
+
 - $E_i$ = número esperado sob aleatoriedade
+
+</div>
 
 ---
 
 ## Simulando Padrões Pontuais
 
-```{r, eval=FALSE, echo=TRUE}
+<div style="font-size: 80%;">
+
+```{r}
+#| eval: false  # não executa o código
+#| echo: true   # mostra o código
+
 library(splancs)
 library(spatstat)
 
@@ -157,13 +180,39 @@ clu.spp <- pcp.sim(rho=20, m=10, s2=0.005, region.poly=caixa)
 
 # Padrão regular
 uni.spp <- jitter(gridpts(caixa, 100), 2)
+
+# Plotando os pontos
+par(mfrow=c(1, 3))
+plot(alea.spp, main="Aleatório")
+plot(uni.spp, main="Regular")
+plot(clu.spp, main="Agregado")
 ```
 
----
+</div>
 
 ## Visualizando os Padrões
 
-```{r, eval=FALSE, echo=TRUE}
+```{r}
+#| fig-width: 12
+#| fig-height: 8
+#| out-width: 100%
+#| fig-align: center
+#| 
+library(splancs)
+library(spatstat)
+
+set.seed(9999)
+caixa <- rbind(c(0,0), c(0,1), c(1,1), c(1,0), c(0,0))
+
+# Padrão aleatório
+alea.spp <- csr(caixa, 100)
+
+# Padrão clusterizado
+clu.spp <- pcp.sim(rho=20, m=10, s2=0.005, region.poly=caixa)
+
+# Padrão regular
+uni.spp <- jitter(gridpts(caixa, 100), 2)
+
 par(mfrow=c(1, 3))
 plot(alea.spp, main="Aleatório")
 plot(uni.spp, main="Regular")
@@ -180,20 +229,83 @@ plot(clu.spp, main="Agregado")
 
 ## Contagem por Quadrantes
 
-```{r, eval=FALSE, echo=TRUE}
-library(spatstat)
+<div style="font-size: 80%;">
 
+```{r}
+#| eval: false  # não executa o código
+#| echo: true   # mostra o código
+# Convertendo para a class ppp
+library(spatstat)
 alea.ppp <- as.ppp(alea.spp, c(0,1,0,1))
 uni.ppp <- as.ppp(uni.spp, c(0,1,0,1))
 clu.ppp <- as.ppp(clu.spp, c(0,1,0,1))
 
-# Construindo quadrantes
-aleatorioQ <- quadratcount(alea.ppp, nx=4, ny=4)
-regularQ <- quadratcount(uni.ppp, nx=4, ny=4)
-agregadoQ <- quadratcount(clu.ppp, nx=4, ny=4)
+# Construindo os quadrantes com as respectivas contagens
+aleatorioQ <- quadratcount(alea.ppp, nx = 4, ny = 4)
+regularQ <- quadratcount(uni.ppp, nx = 4, ny = 4)
+agregadoQ <- quadratcount(clu.ppp, nx = 4, ny = 4)
+
+
+par(mfrow=c(1, 3))
+plot(aleatorioQ, main="Aleatório")
+plot(alea.ppp, add = TRUE)
+
+plot(regularQ, main="Regular")
+plot(uni.ppp, add = TRUE)
+
+plot(agregadoQ, main="Agregado")
+plot(clu.ppp, add = TRUE)
+```
+</div>
+
+## Contagem por Quadrantes
+
+<div style="font-size: 80%;">
+```{r}
+#| fig-width: 12
+#| fig-height: 8
+#| out-width: 100%
+#| fig-align: center
+#| 
+# Convertendo para a class ppp
+library(spatstat)
+alea.ppp <- as.ppp(alea.spp, c(0,1,0,1))
+uni.ppp <- as.ppp(uni.spp, c(0,1,0,1))
+clu.ppp <- as.ppp(clu.spp, c(0,1,0,1))
+
+# Construindo os quadrantes com as respectivas contagens
+aleatorioQ <- quadratcount(alea.ppp, nx = 4, ny = 4)
+regularQ <- quadratcount(uni.ppp, nx = 4, ny = 4)
+agregadoQ <- quadratcount(clu.ppp, nx = 4, ny = 4)
+
+
+par(mfrow=c(1, 3))
+plot(aleatorioQ, main="Aleatório")
+plot(alea.ppp, add = TRUE)
+
+plot(regularQ, main="Regular")
+plot(uni.ppp, add = TRUE)
+
+plot(agregadoQ, main="Agregado")
+plot(clu.ppp, add = TRUE)
 ```
 
+</div>
 ---
+
+## Testando a CSR
+
+<div style="font-size: 70%;">
+```{r}
+#| eval: true  # não executa o código
+#| echo: true   # mostra o código
+
+quadrat.test(aleatorioQ)
+quadrat.test(agregadoQ)
+quadrat.test(regularQ)
+```
+</div>
+
 
 ## Interpretação da Contagem por Quadrantes
 
@@ -207,19 +319,14 @@ agregadoQ <- quadratcount(clu.ppp, nx=4, ny=4)
 
 ## Função K de Ripley
 
+<div style="font-size: 65%;">
 ### O que é?
 
 Mede o **número médio de pontos** dentro de uma distância $h$ de um ponto qualquer, ajustado pela intensidade do processo.
 
 $$K(h) = \frac{1}{\lambda} \, E[\text{número de pontos a distância } \leq h]$$
 
-### Sob Aleatoriedade (CSR)
-
-$$K(h) = \pi h^2$$
-
----
-
-## Interpretação da Função K
+**Sob Aleatoriedade (CSR)** $\rightarrow K(h) = \pi h^2$
 
 Comparando a função estimada com a teórica:
 
@@ -228,22 +335,29 @@ Comparando a função estimada com a teórica:
 | $\hat{K}(h) \approx \pi h^2$ | **Aleatório** - Padrão compatível com CSR |
 | $\hat{K}(h) < \pi h^2$ | **Regular** - Menos pontos próximos (repulsão) |
 | $\hat{K}(h) > \pi h^2$ | **Agregado** - Mais pontos próximos (clusters) |
-
+</div>
 ---
 
 ## Função K de Ripley: Raciocínio Prático
 
+<div style="font-size: 70%;">
 1. Escolhe-se um ponto
 2. Desenha-se um círculo de raio $h$ ao redor dele
 3. Conta-se quantos outros pontos caem dentro desse círculo
 4. Repete-se para todos os pontos
 5. Calcula-se uma média
+</div>
 
 ---
 
 ## Exemplo: Comparação de Funções K
 
-```{r, eval=FALSE, echo=TRUE}
+<div style="font-size: 70%;">
+
+```{r}
+#| eval: false  # não executa o código
+#| echo: true   # mostra o código
+
 # Estimar a função K para cada padrão
 K.alea <- Kest(alea.ppp, correction="border")
 K.uni <- Kest(uni.ppp, correction="border")
@@ -251,12 +365,98 @@ K.clu <- Kest(clu.ppp, correction="border")
 
 # Função teórica para CSR
 K.teor <- function(r) { pi * r^2 }
+
+# Plotar as funções K
+
+par(mfrow=c(1, 3), mar=c(5, 5, 3, 1))
+
+# Gráfico 1: Processo Aleatório
+plot(K.alea, main="K(r) - Padrão Aleatório", 
+     xlim=c(0, 0.35), ylim=c(0, 0.08),
+     xlab="Distância (r)", ylab="K(r)")
+curve(K.teor, from=0, to=0.35, col="red", lty=2, lwd=2, add=TRUE)
+legend("topleft", c("K estimada", "K teórica (CSR)"), 
+       col=c("black", "red"), lty=c(1, 2), lwd=2)
+grid()
+
+# Gráfico 2: Processo Regular
+plot(K.uni, main="K(r) - Padrão Regular", 
+     xlim=c(0, 0.35), ylim=c(0, 0.08),
+     xlab="Distância (r)", ylab="K(r)")
+curve(K.teor, from=0, to=0.35, col="red", lty=2, lwd=2, add=TRUE)
+legend("topleft", c("K estimada", "K teórica (CSR)"), 
+       col=c("black", "red"), lty=c(1, 2), lwd=2)
+grid()
+
+# Gráfico 3: Processo Agregado
+plot(K.clu, main="K(r) - Padrão Agregado", 
+     xlim=c(0, 0.35), ylim=c(0, 0.08),
+     xlab="Distância (r)", ylab="K(r)")
+curve(K.teor, from=0, to=0.35, col="red", lty=2, lwd=2, add=TRUE)
+legend("topleft", c("K estimada", "K teórica (CSR)"), 
+       col=c("black", "red"), lty=c(1, 2), lwd=2)
+grid()
 ```
+</div>
+
+---
+
+## Exemplo: Comparação de Funções K
+
+<div style="font-size: 70%;">
+
+```{r}
+#| fig-width: 12
+#| fig-height: 8
+#| out-width: 90%
+#| fig-align: center
+#| 
+# Estimar a função K para cada padrão
+K.alea <- Kest(alea.ppp, correction="border")
+K.uni <- Kest(uni.ppp, correction="border")
+K.clu <- Kest(clu.ppp, correction="border")
+
+# Função teórica para CSR
+K.teor <- function(r) { pi * r^2 }
+
+# Plotar as funções K
+
+par(mfrow=c(1, 3), mar=c(5, 5, 3, 1))
+
+# Gráfico 1: Processo Aleatório
+plot(K.alea, main="K(r) - Padrão Aleatório", 
+     xlim=c(0, 0.35), ylim=c(0, 0.08),
+     xlab="Distância (r)", ylab="K(r)")
+curve(K.teor, from=0, to=0.35, col="red", lty=2, lwd=2, add=TRUE)
+legend("topleft", c("K estimada", "K teórica (CSR)"), 
+       col=c("black", "red"), lty=c(1, 2), lwd=2)
+grid()
+
+# Gráfico 2: Processo Regular
+plot(K.uni, main="K(r) - Padrão Regular", 
+     xlim=c(0, 0.35), ylim=c(0, 0.08),
+     xlab="Distância (r)", ylab="K(r)")
+curve(K.teor, from=0, to=0.35, col="red", lty=2, lwd=2, add=TRUE)
+legend("topleft", c("K estimada", "K teórica (CSR)"), 
+       col=c("black", "red"), lty=c(1, 2), lwd=2)
+grid()
+
+# Gráfico 3: Processo Agregado
+plot(K.clu, main="K(r) - Padrão Agregado", 
+     xlim=c(0, 0.35), ylim=c(0, 0.08),
+     xlab="Distância (r)", ylab="K(r)")
+curve(K.teor, from=0, to=0.35, col="red", lty=2, lwd=2, add=TRUE)
+legend("topleft", c("K estimada", "K teórica (CSR)"), 
+       col=c("black", "red"), lty=c(1, 2), lwd=2)
+grid()
+```
+</div>
 
 ---
 
 ## Por que Usar a Função K?
 
+<div style="font-size: 70%;">
 ✅ Analisa padrões em **múltiplas escalas** (vários valores de $h$)
 
 ✅ Não depende de dividir o espaço em quadrantes
@@ -264,6 +464,8 @@ K.teor <- function(r) { pi * r^2 }
 ✅ Detecta tanto **agregação quanto dispersão**
 
 ✅ Oferece uma visão mais completa da estrutura espacial
+
+</div>
 
 ---
 

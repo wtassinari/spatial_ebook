@@ -243,28 +243,39 @@ Prof.&nbsp;Wagner Tassinari
 </section>
 <section id="possíveis-distribuições-dos-pontos" class="slide level2">
 <h2>Possíveis Distribuições dos Pontos</h2>
-
-<img data-src="figuras/Cluster2.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"><div style="text-align: center; font-size: 14px;">
-<p>Padrões clássicos: Aleatório, Regular e Agregado</p>
+<img data-src="figuras/Cluster3.png" class="quarto-figure quarto-figure-center" style="width:90.0%">
+<div style="text-align: center; font-size: 12px;">
+Fonte: Elaboração própria com auxílio do ChatGPT (OpenAI, 2026).
 </div>
 </section>
-<section id="processos-pontuais-primeira-e-segunda-ordem" class="slide level2">
-<h2>Processos Pontuais: Primeira e Segunda Ordem</h2>
-<h3 id="processo-de-primeira-ordem">Processo de Primeira Ordem</h3>
+<section id="processos-pontuais" class="slide level2">
+<h2>Processos Pontuais</h2>
+<div style="font-size: 80%;">
+<h3 id="i-processo-de-primeira-ordem">I) Processo de Primeira Ordem</h3>
 <p>Variações no <strong>valor médio do processo</strong> no espaço (larga escala). Representado pela <strong>intensidade</strong> ou <strong>densidade</strong> dos pontos.</p>
 <p><strong>Exemplo:</strong> Estimativa de Kernel (mapas de calor)</p>
-<h3 id="processo-de-segunda-ordem">Processo de Segunda Ordem</h3>
+<h3 id="ii-processo-de-segunda-ordem">II) Processo de Segunda Ordem</h3>
 <p><strong>Interação entre pontos</strong> (pequena escala). Mede a <strong>dependência espacial</strong> baseada na distância entre os pontos.</p>
 <p><strong>Exemplo:</strong> Função K de Ripley, Vizinhos mais próximos</p>
+</div>
 </section>
 <section id="estimativas-de-kernel-mapas-de-calor" class="slide level2">
 <h2>Estimativas de Kernel (Mapas de Calor)</h2>
-<h3 id="o-que-é">O que é?</h3>
+<section id="o-que-é" style="font-size: 80%;">
+<h3>O que é?</h3>
 <p>Técnica para <strong>representar visualmente a concentração espacial</strong> de eventos pontuais, transformando um conjunto de pontos em uma <strong>superfície contínua de intensidade</strong>.</p>
 <p><span class="math display">\[\hat{\lambda}_{\tau}(u) = \frac{1}{\tau^2}\sum k\left(\frac{d(u_i , u)}{\tau}\right)\]</span></p>
 </section>
-<section id="como-funciona-o-kernel" class="slide level2">
-<h2>Como Funciona o Kernel?</h2>
+</section>
+<section class="slide level2">
+
+<h3 id="como-funciona-o-kernel">Como Funciona o Kernel?</h3>
+<div style="font-size: 60%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="figuras/kernel_2026.png" class="quarto-figure quarto-figure-center" style="width:50.0%"></p>
+</figure>
+</div>
 <p>Para cada ponto no espaço:</p>
 <ol type="1">
 <li>Aplica-se um <strong>“funil de suavização”</strong> (kernel)</li>
@@ -272,20 +283,27 @@ Prof.&nbsp;Wagner Tassinari
 <li>Maior peso às áreas próximas, menor conforme a distância</li>
 <li>Resultado: <strong>superfície contínua de densidade</strong></li>
 </ol>
-<div style="font-size: 70%; margin-top: 20px;">
 <p><strong>Analogia:</strong> O kernel atua como um limpador de para-brisa, pesando mais os eventos próximos e menos os eventos muito distantes.</p>
 </div>
 </section>
-<section id="largura-de-banda-bandwidth" class="slide level2">
-<h2>Largura de Banda (Bandwidth)</h2>
-<p>A escolha do parâmetro <span class="math inline">\(\tau\)</span> (largura de banda) influencia o grau de suavização:</p>
-<ul>
-<li><strong>Pequena</strong> (ex: 500m) → Mais detalhado, maior variação local</li>
-<li><strong>Média</strong> (ex: 1500m) → Padrões contínuos e estáveis</li>
-<li><strong>Grande</strong> (ex: 2500m) → Apenas grandes zonas de concentração</li>
-</ul>
+<section class="slide level2">
 
-<img data-src="figuras/kernel3.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"></section>
+<h3 id="largura-de-banda-bandwidth">Largura de Banda (Bandwidth)</h3>
+<div style="font-size: 60%;">
+<p>A escolha do parâmetro <span class="math inline">\(\tau\)</span> (largura de banda) influencia o grau de suavização:</p>
+<!-- - **Pequena** (ex: 500m) → Mais detalhado, maior variação local -->
+<!-- - **Média** (ex: 1500m) → Padrões contínuos e estáveis -->
+<!-- - **Grande** (ex: 2500m) → Apenas grandes zonas de concentração -->
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="figuras/kernel2_2026.png" class="quarto-figure quarto-figure-center" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+<div style="text-align: center; font-size: 12px;">
+Fonte: Elaboração própria com auxílio do ChatGPT (OpenAI, 2026).
+</div>
+</section>
 <section id="completa-aleatoriedade-espacial-csr" class="slide level2">
 <h2>Completa Aleatoriedade Espacial (CSR)</h2>
 <h3 id="definição-1">Definição</h3>

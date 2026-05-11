@@ -96,6 +96,39 @@ dados_pontos <- read_excel("dados/queimadas/queimadas_pontos.xlsx")
 head(dados_pontos)
 ```
 
+---
+
+## Padrões Pontuais no R
+
+
+```{r}
+#| eval: true  
+#| echo: true   # mostra o código
+
+plot(dados_pontos$latitude, dados_pontos$longitude, pch = 16, col = "red", main = "Focos de Queimadas")
+```
+
+<div style="font-size: 60%;">
+Tentativa de plotar os pontos via um plano cartesiano.
+</div>
+
+---
+
+## O que é CRS (Sistema de Referência de Coordenadas)
+
+<div style="font-size: 70%;">
+O CRS é como uma **"regra de tradução"** entre o que está em um mapa e o mundo real.
+
+- Define como as coordenadas se relacionam com locais reais na Terra.
+- Sem um CRS, uma coordenada não tem significado geográfico. Por exemplo:
+
+**WGS 84 (EPSG:4326)**: Usado por GPS e Google Maps (em graus)
+
+**UTM**: Usado para mapas locais (em metros)
+</div>
+
+---
+
 ## Padrões Pontuais no R
 
 ```{r}
@@ -112,6 +145,15 @@ pontos_sf <- st_as_sf(dados_pontos,
 plot(pontos_sf$geometry, pch = 16, col = "red",
      main = "Focos de Queimadas")
 ```
+
+
+<div style="font-size: 60%;">
+- `st_as_sf()`: Converte um data frame comum em um objeto espacial do tipo **sf** (Simple Features)
+- `coords = c("longitude", "latitude")`: Indica quais colunas representam as coordenadas geográficas
+- `crs = 4326`: Define o Sistema de Referência de Coordenadas (**WGS 84** - padrão do GPS)
+</div>
+
+---
 
 ## Padrões Pontuais no R
 
@@ -132,28 +174,7 @@ plot(pontos_sf$geometry, pch = 16, col = "red",
      main = "Focos de Queimadas")
 ```
 
-## Entendendo o Código R
 
-#### Funções principais
-
-<div style="font-size: 70%;">
-- `st_as_sf()`: Converte um data frame comum em um objeto espacial do tipo **sf** (Simple Features)
-- `coords = c("longitude", "latitude")`: Indica quais colunas representam as coordenadas geográficas
-- `crs = 4326`: Define o Sistema de Referência de Coordenadas (**WGS 84** - padrão do GPS)
-</div>
-
-## O que é CRS (Sistema de Referência de Coordenadas)
-
-<div style="font-size: 70%;">
-O CRS é como uma **"regra de tradução"** entre o que está em um mapa e o mundo real.
-
-- Define como as coordenadas se relacionam com locais reais na Terra.
-- Sem um CRS, uma coordenada não tem significado geográfico.
-
-**WGS 84 (EPSG:4326)**: Usado por GPS e Google Maps (em graus)
-
-**UTM**: Usado para mapas locais (em metros)
-</div>
 
 ## Baixando o mapa via biblioteca `geobr`
 
@@ -223,7 +244,90 @@ ggplot() +
   theme_minimal()
 ```
 
+##  Visualizar o mapa com os pontos
 
+<div style="font-size: 70%;">
+Acrescentando a escala e o norte
+</div>
+
+
+
+```{r}
+#| eval: false  # não executa o código
+#| echo: true   # mostra o código
+#| 
+library(tidyterra)
+
+ggplot() +
+  geom_sf(data = rj_contorno, fill = "lightgreen", color = "black") +
+  geom_sf(data = pontos_sf, color = "red", size = 1.0, alpha = 0.7) +
+  annotation_north_arrow(location = "br") +
+  annotation_scale(location = "bl") +
+  labs(title = "Focos de Queimadas - Rio de Janeiro") +
+  theme_minimal()
+```
+
+##  Visualizar o mapa com os pontos
+
+<div style="font-size: 70%;">
+Acrescentando a escala e o norte
+</div>
+
+
+```{r}
+#| fig-width: 12
+#| fig-height: 8
+#| out-width: 100%
+#| fig-align: center
+#| 
+# Carregar os pacotes necessários
+library(ggplot2)
+library(sf)
+library(ggspatial)  # Para a rosa dos ventos
+
+# Definir a projeção adequada para o Rio de Janeiro
+# UTM zona 23S (EPSG:31983) - recomendada para o RJ continental
+# Ou South America Albers Equal Area (EPSG:5880)
+projecao_rj <- st_crs(31983)  # UTM 23S - metros, boa para áreas e distâncias
+
+
+# Plotar com projeção e rosa dos ventos
+ggplot() +
+  geom_sf(data = rj_contorno, fill = "lightgreen", color = "black") +
+  geom_sf(data = pontos_sf, color = "red", size = 1.0, alpha = 0.7) +
+  
+  # Adicionar rosa dos ventos (north arrow)
+  annotation_north_arrow(
+    location = "tr",  # Posições: "tl" (topo esquerdo), "tr" (topo direito), 
+                      # "bl" (base esquerda), "br" (base direita)
+    which_north = "true",  # "true" = norte geográfico, "grid" = norte da grade
+    pad_x = unit(0.2, "cm"),
+    pad_y = unit(0.3, "cm"),
+    style = north_arrow_fancy_orienteering(
+      fill = c("grey40", "white"),
+      line_col = "black",
+      text_col = "black"
+    )
+  ) +
+  
+  # Adicionar barra de escala (opcional, mas recomendada)
+  annotation_scale(
+    location = "br",
+    width_hint = 0.25,
+    pad_x = unit(0.2, "cm"),
+    pad_y = unit(0.2, "cm")
+  ) +
+  
+  labs(
+    title = "Focos de Queimadas - Rio de Janeiro"
+  ) +
+  
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, size = 8, color = "gray50")
+  )
+```
 
 ## Geoestatística
 
@@ -406,7 +510,7 @@ Exemplo: Mapa temático com dados agregados por município
 ####  Lendo os dados:
 
 ```{r, echo=T,  out.width="70%"}
-# lendo a base de queimadas
+# lendo a base 
 dados_area <- readxl::read_excel("dados/dengue/dengue2025.xlsx")
 dados_area <- dados_area |>
               dplyr::mutate(tx_dengue = casos / pop2022 * 100000)
@@ -432,7 +536,7 @@ names(rj_municipios)
 library(geobr)
 
 # Baixar polígono do RJ (código IBGE = 33)
-rj_municipios <- read_municipality(year = 2020) %>%
+rj_municipios <- read_municipality(year = 2020) |>
                  dplyr::filter(code_state == 33)
 
 names(rj_municipios)
