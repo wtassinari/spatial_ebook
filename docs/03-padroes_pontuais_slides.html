@@ -830,7 +830,7 @@ Quadrats: 13 tiles (irregular windows)</code></pre>
 <section class="slide level2">
 
 <h3 id="função-k-de-ripley-1">Função K de Ripley</h3>
-<div style="font-size: 70%;">
+<div style="font-size: 80%;">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spatstat.explore)</span>
 <span id="cb15-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
@@ -844,22 +844,7 @@ Quadrats: 13 tiles (irregular windows)</code></pre>
 <span id="cb15-10"><a href="" aria-hidden="true" tabindex="-1"></a>  K,</span>
 <span id="cb15-11"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">"Função K de Ripley"</span>,</span>
 <span id="cb15-12"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend =</span> <span class="cn">FALSE</span></span>
-<span id="cb15-13"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-14"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-15"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Função K com os envelopes Monte Carlo</span></span>
-<span id="cb15-16"><a href="" aria-hidden="true" tabindex="-1"></a>env_K <span class="ot">&lt;-</span> <span class="fu">envelope</span>(</span>
-<span id="cb15-17"><a href="" aria-hidden="true" tabindex="-1"></a>  queimadas_ppp,</span>
-<span id="cb15-18"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">fun =</span> Kest,</span>
-<span id="cb15-19"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">nsim =</span> <span class="dv">9</span>, <span class="co"># numero de simulações</span></span>
-<span id="cb15-20"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">correction =</span> <span class="st">"border"</span></span>
-<span id="cb15-21"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-22"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-23"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-24"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
-<span id="cb15-25"><a href="" aria-hidden="true" tabindex="-1"></a>  env_K,</span>
-<span id="cb15-26"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">"Função K de Ripley com envelopes CSR"</span>,</span>
-<span id="cb15-27"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend =</span> <span class="cn">FALSE</span></span>
-<span id="cb15-28"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb15-13"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </section>
@@ -881,7 +866,7 @@ Quadrats: 13 tiles (irregular windows)</code></pre>
 <section class="slide level2">
 
 <h3 id="função-k-de-ripley-com-envelope">Função K de Ripley com Envelope</h3>
-<div style="font-size: 70%;">
+<div style="font-size: 80%;">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a>env_K <span class="ot">&lt;-</span> <span class="fu">envelope</span>(</span>
 <span id="cb16-2"><a href="" aria-hidden="true" tabindex="-1"></a>  queimadas_ppp,</span>

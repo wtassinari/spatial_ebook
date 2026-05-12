@@ -907,7 +907,7 @@ No teste de CSR (*Complete Spatial Randomness*) mostra evidências muito fortes 
 
 ### Função K de Ripley
 
-<div style="font-size: 70%;">
+<div style="font-size: 80%;">
 
 ```{r, eval=FALSE, echo=TRUE}
 library(spatstat.explore)
@@ -921,21 +921,6 @@ K <- Kest(
 plot(
   K,
   main = "Função K de Ripley",
-  legend = FALSE
-)
-
-# Função K com os envelopes Monte Carlo
-env_K <- envelope(
-  queimadas_ppp,
-  fun = Kest,
-  nsim = 9, # numero de simulações
-  correction = "border"
-)
-
-
-plot(
-  env_K,
-  main = "Função K de Ripley com envelopes CSR",
   legend = FALSE
 )
 
@@ -972,7 +957,7 @@ plot(
 
 ### Função K de Ripley com Envelope
 
-<div style="font-size: 70%;">
+<div style="font-size: 80%;">
 
 ```{r, eval=FALSE, echo=TRUE}
 env_K <- envelope(
