@@ -507,6 +507,7 @@ library(sf)
 dados_pontos <- read_excel("dados/queimadas/queimadas_pontos.xlsx")
 
 # Converter para objeto espacial
+# Informando o CRS original dos pontos
 pontos_sf <- st_as_sf(dados_pontos, 
                       coords = c("longitude", "latitude"),
                       crs = 4326)
@@ -526,6 +527,21 @@ library(geobr)
 # Baixar mapa do RJ
 rj <- read_state(code_state = 33, year = 2020)
 
+# Reprojetando para um sistema métrico em UTM (em metros)
+# UTM 23S (SIRGAS 2000) - adequado para o RJ
+utm_crs <- 31983
+
+rj_utm <- st_transform(rj, crs = utm_crs)
+pontos_utm <- st_transform(pontos_sf, crs = utm_crs)
+
+# Extrair coordenadas UTM dos pontos (em metros)
+coords_utm <- st_coordinates(pontos_utm)
+
+queimadas_coords <- data.frame(
+  x = coords_utm[, 1],
+  y = coords_utm[, 2]
+)
+
 # Plotar
 ggplot() +
   geom_sf(data = rj, fill = "lightgreen", color = "black") +
@@ -550,6 +566,21 @@ library(geobr)
 # Baixar mapa do RJ
 rj <- read_state(code_state = 33, year = 2020)
 
+# Reprojetando para um sistema métrico em UTM (em metros)
+# UTM 23S (SIRGAS 2000) - adequado para o RJ
+utm_crs <- 31983
+
+rj_utm <- st_transform(rj, crs = utm_crs)
+pontos_utm <- st_transform(pontos_sf, crs = utm_crs)
+
+# Extrair coordenadas UTM dos pontos (em metros)
+coords_utm <- st_coordinates(pontos_utm)
+
+queimadas_coords <- data.frame(
+  x = coords_utm[, 1],
+  y = coords_utm[, 2]
+)
+
 # Plotar
 ggplot() +
   geom_sf(data = rj, fill = "lightgreen", color = "black") +
@@ -558,44 +589,112 @@ ggplot() +
   theme_minimal()
 ```
 
----
-
-## Estimativas de Kernel para Queimadas
-
-```{r, eval=TRUE, echo=TRUE}
-# Converter para UTM
-rj_utm <- st_transform(rj, crs = 32723)
-
-# Extrair coordenadas do contorno do RJ para usar com lines()
-rj_coords <- st_coordinates(rj_utm)[, 1:2]
-
-# 3. EXTRAIR COORDENADAS UTM DOS PONTOS ==================================
-coords_utm <- st_coordinates(pontos_sf)
-
-queimadas_coords <- data.frame(
-  x = coords_utm[, 1],
-  y = coords_utm[, 2]
-)
-```
 
 ---
 
 ## Estimativas de Kernel para Queimadas
+
+<div style="font-size: 70%;">
 
 ```{r, eval=FALSE, echo=TRUE}
-library(MASS)
-# Função para calcular kernel
-calc_kernel <- function(coords, bandwidth, n = 150) {
-  MASS::kde2d(coords$x, coords$y, 
-              h = bandwidth, n = n,
-              lims = c(range(coords$x), range(coords$y)))
-}
+library(MASS)  # para kde2d
+library(terra) # para raster
+library(viridis) # para cores
 
-# Diferentes larguras de banda
-kernel_10km  <- calc_kernel(queimadas_coords, 10000)
-kernel_50km  <- calc_kernel(queimadas_coords, 50000)
-kernel_100km <- calc_kernel(queimadas_coords, 100000)
+# PASSO 1: Calcular o kernel com bandwidth de 10, 50 e 100km (metros)
+kernel_10km <- kde2d(
+  queimadas_coords$x,
+  queimadas_coords$y,
+  h = 10000,  # 10 km em metros
+  n = 150,
+  lims = c(range(queimadas_coords$x), range(queimadas_coords$y))
+)
+
+kernel_50km <- kde2d(
+  queimadas_coords$x,
+  queimadas_coords$y,
+  h = 50000,  # 50 km em metros
+  n = 150,
+  lims = c(range(queimadas_coords$x), range(queimadas_coords$y))
+)
+
+kernel_100km <- kde2d(
+  queimadas_coords$x,
+  queimadas_coords$y,
+  h = 100000,  # 100 km em metros
+  n = 150,
+  lims = c(range(queimadas_coords$x), range(queimadas_coords$y))
+)
+
+# PASSO 2: Converter para raster
+r_10km <- rast(
+  list(
+    x = kernel_10km$x,
+    y = kernel_10km$y,
+    z = kernel_10km$z
+  )
+)
+
+r_50km <- rast(list(
+  x = kernel_50km$x,
+  y = kernel_50km$y,
+  z = kernel_50km$z
+))
+
+r_100km <- rast(list(
+  x = kernel_100km$x,
+  y = kernel_100km$y,
+  z = kernel_100km$z
+))
+
+# CORREÇÃO: Atribuir o CRS correto aos rasters
+crs(r_10km) <- paste0("EPSG:", utm_crs)
+crs(r_50km) <- paste0("EPSG:", utm_crs)
+crs(r_100km) <- paste0("EPSG:", utm_crs)
+
+# PASSO 3: Recortar para área do RJ
+rj_vect <- vect(rj_utm)  # converte para spatvector
+
+r_10km_crop <- crop(r_10km, rj_vect)
+r_10km_mask <- mask(r_10km_crop, rj_vect)
+
+r_50km_crop <- crop(r_50km, rj_vect)
+r_50km_mask <- mask(r_50km_crop, rj_vect)
+
+r_100km_crop <- crop(r_100km, rj_vect)
+r_100km_mask <- mask(r_100km_crop, rj_vect)
+
+# PASSO 4: Plotar
+par(mfrow = c(1, 3))
+
+# Plot 10 km
+plot(r_10km_mask, 
+     main = "Kernel Density - 10 km", 
+     col = viridis(50), 
+     legend = FALSE)
+lines(rj_vect, lwd = 1.5)
+points(queimadas_coords$x, queimadas_coords$y, pch = ".", cex = 0.5)
+
+# Plot 50 km
+plot(r_50km_mask, 
+     main = "Kernel Density - 50 km", 
+     col = viridis(50), 
+     legend = FALSE)
+lines(rj_vect, lwd = 1.5)
+points(queimadas_coords$x, queimadas_coords$y, pch = ".", cex = 0.5)
+
+# Plot 100 km
+plot(r_100km_mask, 
+     main = "Kernel Density - 100 km", 
+     col = viridis(50),
+     legend = FALSE)
+lines(rj_vect, lwd = 1.5)
+points(queimadas_coords$x, queimadas_coords$y, pch = ".", cex = 0.5)
+
+par(mfrow = c(1, 1))
 ```
+
+</div>
 
 ---
 
@@ -604,34 +703,353 @@ kernel_100km <- calc_kernel(queimadas_coords, 100000)
 ```{r}
 #| fig-width: 12
 #| fig-height: 8
-#| out-width: 90%
+#| out-width: 120%
 #| fig-align: center
+#| 
+library(MASS)  # para kde2d
+library(terra) # para raster
+library(viridis) # para cores
 
-library(MASS)
-# Função para calcular kernel
-calc_kernel <- function(coords, bandwidth, n = 150) {
-  MASS::kde2d(coords$x, coords$y, 
-              h = bandwidth, n = n,
-              lims = c(range(coords$x), range(coords$y)))
-}
+# PASSO 1: Calcular o kernel com bandwidth de 10, 50 e 100km (metros)
+kernel_10km <- kde2d(
+  queimadas_coords$x,
+  queimadas_coords$y,
+  h = 10000,  # 10 km em metros
+  n = 150,
+  lims = c(range(queimadas_coords$x), range(queimadas_coords$y))
+)
 
-# Diferentes larguras de banda
-kernel_10km  <- calc_kernel(queimadas_coords, 10000)
-kernel_50km  <- calc_kernel(queimadas_coords, 50000)
-kernel_100km <- calc_kernel(queimadas_coords, 100000)
+kernel_50km <- kde2d(
+  queimadas_coords$x,
+  queimadas_coords$y,
+  h = 50000,  # 50 km em metros
+  n = 150,
+  lims = c(range(queimadas_coords$x), range(queimadas_coords$y))
+)
+
+kernel_100km <- kde2d(
+  queimadas_coords$x,
+  queimadas_coords$y,
+  h = 100000,  # 100 km em metros
+  n = 150,
+  lims = c(range(queimadas_coords$x), range(queimadas_coords$y))
+)
+
+# PASSO 2: Converter para raster
+r_10km <- rast(
+  list(
+    x = kernel_10km$x,
+    y = kernel_10km$y,
+    z = kernel_10km$z
+  )
+)
+
+r_50km <- rast(list(
+  x = kernel_50km$x,
+  y = kernel_50km$y,
+  z = kernel_50km$z
+))
+
+r_100km <- rast(list(
+  x = kernel_100km$x,
+  y = kernel_100km$y,
+  z = kernel_100km$z
+))
+
+# CORREÇÃO: Atribuir o CRS correto aos rasters
+crs(r_10km) <- paste0("EPSG:", utm_crs)
+crs(r_50km) <- paste0("EPSG:", utm_crs)
+crs(r_100km) <- paste0("EPSG:", utm_crs)
+
+# PASSO 3: Recortar para área do RJ
+rj_vect <- vect(rj_utm)  # converte para spatvector
+
+r_10km_crop <- crop(r_10km, rj_vect)
+r_10km_mask <- mask(r_10km_crop, rj_vect)
+
+r_50km_crop <- crop(r_50km, rj_vect)
+r_50km_mask <- mask(r_50km_crop, rj_vect)
+
+r_100km_crop <- crop(r_100km, rj_vect)
+r_100km_mask <- mask(r_100km_crop, rj_vect)
+
+# PASSO 4: Plotar
+par(mfrow = c(1, 3))
+
+# Plot 10 km
+plot(r_10km_mask, 
+     main = "Kernel Density - 10 km", 
+     col = viridis(50), 
+     legend = FALSE)
+lines(rj_vect, lwd = 1.5)
+points(queimadas_coords$x, queimadas_coords$y, pch = ".", cex = 0.5)
+
+# Plot 50 km
+plot(r_50km_mask, 
+     main = "Kernel Density - 50 km", 
+     col = viridis(50), 
+     legend = FALSE)
+lines(rj_vect, lwd = 1.5)
+points(queimadas_coords$x, queimadas_coords$y, pch = ".", cex = 0.5)
+
+# Plot 100 km
+plot(r_100km_mask, 
+     main = "Kernel Density - 100 km", 
+     col = viridis(50),
+     legend = FALSE)
+lines(rj_vect, lwd = 1.5)
+points(queimadas_coords$x, queimadas_coords$y, pch = ".", cex = 0.5)
+
+par(mfrow = c(1, 1))
 ```
+
 ---
+
+### Investigando os processos de segunda ordem
+
+<div style="font-size: 70%;">
+
+```{r, eval=FALSE, echo=TRUE}
+# Convertendo para o formato do spacestat (ppp)
+
+# Janela espacial
+rj_window <- as.owin(rj_utm)
+
+# Processo pontual
+queimadas_ppp <- ppp(
+  x = queimadas_coords$x,
+  y = queimadas_coords$y,
+  window = rj_window
+)
+
+# Visualizar os quadrantes
+
+quad_count <- quadratcount(queimadas_ppp, nx = 4, ny = 4)
+plot(quad_count, main = "Contagem por Quadrante")
+plot(queimadas_ppp, add = TRUE, pch = 16, cex = 0.5, col = "red")
+
+# Teste CSR (Complete Spatial Randomness)
+
+# Teste Qui-quadrado por quadrats
+chi_test <- quadrat.test(
+  queimadas_ppp,
+  nx = 4,
+  ny = 4
+)
+
+# Resultado
+print(chi_test)
+```
+
+</div>
+
+---
+
+### Investigando os processos de segunda ordem
+
+<div style="font-size: 100%;">
+
+```{r}
+#| fig-width: 12
+#| fig-height: 8
+#| out-width: 120%
+#| fig-align: center
+#| 
+# Convertendo para o formato do spacestat (ppp)
+
+# Janela espacial
+rj_window <- as.owin(rj_utm)
+
+# Processo pontual
+queimadas_ppp <- ppp(
+  x = queimadas_coords$x,
+  y = queimadas_coords$y,
+  window = rj_window
+)
+
+# Visualizar os quadrantes
+
+quad_count <- quadratcount(queimadas_ppp, nx = 4, ny = 4)
+plot(quad_count, main = "Contagem por Quadrante")
+plot(queimadas_ppp, add = TRUE, pch = 16, cex = 0.5, col = "red")
+```
+
+</div>
+
+---
+
+### Teste CSR (Complete Spatial Randomness)
+
+<div style="font-size: 100%;">
+
+```{r}
+# Teste CSR (Complete Spatial Randomness)
+
+# Teste Qui-quadrado por quadrats
+chi_test <- quadrat.test(
+  queimadas_ppp,
+  nx = 4,
+  ny = 4
+)
+
+# Resultado
+print(chi_test)
+```
+</div>
+
+<div style="font-size: 70%;">
+
+No teste de CSR (*Complete Spatial Randomness*) mostra evidências muito fortes de que os focos de queimadas **NÃO estão distribuídos aleatoriamente** no estado do Rio de Janeiro $(p-value < 0.05)$.
+
+</div>
+
+---
+
+### Função K de Ripley
+
+<div style="font-size: 70%;">
+
+```{r, eval=FALSE, echo=TRUE}
+library(spatstat.explore)
+
+# Calcular K observada
+K <- Kest(
+  queimadas_ppp,
+  correction = "border"
+)
+
+plot(
+  K,
+  main = "Função K de Ripley",
+  legend = FALSE
+)
+
+# Função K com os envelopes Monte Carlo
+env_K <- envelope(
+  queimadas_ppp,
+  fun = Kest,
+  nsim = 9, # numero de simulações
+  correction = "border"
+)
+
+
+plot(
+  env_K,
+  main = "Função K de Ripley com envelopes CSR",
+  legend = FALSE
+)
+
+```
+
+</div>
+
+---
+
+### Função K de Ripley
+
+<div style="font-size: 100%;">
+
+```{r}
+library(spatstat.explore)
+
+# Calcular K observada
+K <- Kest(
+  queimadas_ppp,
+  correction = "border"
+)
+
+plot(
+  K,
+  main = "Função K de Ripley",
+  legend = FALSE
+)
+
+```
+
+</div>
+
+---
+
+### Função K de Ripley com Envelope
+
+<div style="font-size: 70%;">
+
+```{r, eval=FALSE, echo=TRUE}
+env_K <- envelope(
+  queimadas_ppp,
+  fun = Kest,
+  nsim = 9, # numero de simulações
+  correction = "border"
+)
+
+
+plot(
+  env_K,
+  main = "Função K de Ripley com envelopes CSR",
+  legend = FALSE
+)
+
+```
+
+</div>
+
+---
+
+### Função K de Ripley com Envelope
+
+<div style="font-size: 100%;">
+
+```{r, message= F, warning = F} 
+env_K <- envelope(
+  queimadas_ppp,
+  fun = Kest,
+  nsim = 9, # numero de simulações
+  correction = "border",
+  verbose = FALSE  # adicional: silencia mensagens de progresso do envelope()
+)
+
+
+plot(
+  env_K,
+  main = "Função K de Ripley com envelopes CSR",
+  legend = FALSE
+)
+
+```
+
+</div>
+
+---
+
+
+### Função K de Ripley
+
+<div style="font-size: 75%;">
+
+- A análise da função K de Ripley evidenciou forte agrupamento espacial das queimadas em curtas e médias distâncias, indicando que os focos não estão distribuídos aleatoriamente no território. Esse padrão sugere a existência de regiões preferenciais de ocorrência e dependência espacial entre os eventos.
+
+- Em torno de 40 km, observou-se uma descontinuidade na curva da função K, possivelmente associada a efeitos de borda, à geometria irregular do estado do Rio de Janeiro e à redução do número de pares de pontos disponíveis em distâncias maiores.
+
+- Para distâncias superiores a aproximadamente 45–50 km, a interpretação dos resultados torna-se menos confiável devido à instabilidade do estimador, provavelmente relacionada ao baixo número de combinações entre pares de eventos e à maior influência das bordas da área de estudo.
+
+</div>
+
+
 
 ## Resumo do Capítulo
 
+<div style="font-size: 80%;">
+
 1. **Padrões Pontuais** representam eventos em localizações discretas no espaço.
 
-2. **CSR** é a hipótese nula: os pontos são distribuídos aleatoriamente.
+2. Padrões podem ser **aleatórios**, **regulares** ou **agregados**.
 
 3. **Kernel** transforma pontos em superfícies contínuas de densidade (mapas de calor).
 
-4. **Função K** mede a estrutura espacial em diferentes escalas de distância.
+4. **CSR** é a hipótese nula: os pontos são distribuídos aleatoriamente.
 
-5. Padrões podem ser **aleatórios**, **regulares** ou **agregados**.
+5. **Função K** mede a estrutura espacial em diferentes escalas de distância.
+
+</div>
 
 
