@@ -1038,7 +1038,7 @@ plot(
 
 ## Resumo do Capítulo
 
-<div style="font-size: 80%;">
+<div style="font-size: 81%;">
 
 1. **Padrões Pontuais** representam eventos em localizações discretas no espaço.
 
