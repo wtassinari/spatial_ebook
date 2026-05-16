@@ -81,3 +81,21 @@ Abaixo estão listadas as principais bibliotecas e pacotes R que serão utilizad
 | | `automap` | Krigagem automatizada com ajuste automático de variogramas. |
 
 :::
+---
+
+::: box-dica13
+
+# Divulgação 
+
+Gostaria de divulgar os cursos gratuitos do os cursos gratuitos do [Instituto Todos pela Saúde (ITpS)](https://www.itps.org.br/cursos-itps) voltados à Vigilância em Saúde. Os cursos são online, autoinstrucionais e possuem certificado de conclusão.
+
+📈 [Curso de Análises de Séries Temporais Aplicadas à Vigilância em Saúde](https://www.itps.org.br/curso-itps/analises-de-series-temporais-aplicadas-a-vigilancia-em-saude) 
+
+* O objetivo do curso é formar profissionais capazes de analisar séries temporais em dados de vigilância em saúde, identificar tendências e sazonalidades, utilizar ferramentas estatísticas para apoiar a tomada de decisão em saúde pública e elaborar relatórios técnicos baseados em evidências. 
+
+
+🗺️ [ Curso de Estatística Espacial Aplicada à Vigilância em Saúde](https://www.itps.org.br/curso-itps/estatistica-espacial-aplicada-a-vigilancia-em-saude) 
+
+* O objetivo do curso é formar profissionais capazes de aplicar conceitos de estatística espacial em análises voltadas à vigilância em saúde, reproduzir rotinas de análise de dados, interpretar resultados de forma crítica para apoiar a tomada de decisão em saúde pública e elaborar relatórios e fluxos analíticos com qualidade e reprodutibilidade.
+
+:::

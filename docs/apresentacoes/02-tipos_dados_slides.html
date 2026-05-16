@@ -6,8 +6,8 @@
 <script src="02-tipos_dados_slides_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="02-tipos_dados_slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="02-tipos_dados_slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="02-tipos_dados_slides_files/libs/quarto-html/quarto-syntax-highlighting-af5ec82acda093b5ee751184164e9432.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.31">
+<link href="02-tipos_dados_slides_files/libs/quarto-html/quarto-syntax-highlighting-9e5c7bf9fbb22184c3d5797f9fbacf74.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.36">
 
   <meta name="author" content="Prof.&nbsp;Wagner Tassinari">
   <title>Tipologia dos Dados Espaciais</title>
@@ -17,6 +17,9 @@
   <link rel="stylesheet" href="02-tipos_dados_slides_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="02-tipos_dados_slides_files/libs/revealjs/dist/reveal.css">
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -93,7 +96,7 @@
     code span.vs { color: #4e9a06; } /* VerbatimString */
     code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="02-tipos_dados_slides_files/libs/revealjs/dist/theme/quarto-67af64ce27563527bdbf278b6012b166.css">
+  <link rel="stylesheet" href="02-tipos_dados_slides_files/libs/revealjs/dist/theme/quarto-a3d64dc423ab6007c3735ac81248ed8e.css">
   <link href="02-tipos_dados_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="02-tipos_dados_slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="02-tipos_dados_slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -278,12 +281,12 @@ Prof.&nbsp;Wagner Tassinari
 <section id="padrões-pontuais-no-r" class="slide level2">
 <h2>Padrões Pontuais no R</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Lendo os dados</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Lendo os dados</span></span>
 <span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
 <span id="cb1-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="" aria-hidden="true" tabindex="-1"></a>dados_pontos <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"dados/queimadas/queimadas_pontos.xlsx"</span>)</span>
 <span id="cb1-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dados_pontos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dados_pontos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 2
   latitude longitude
@@ -300,30 +303,11 @@ Prof.&nbsp;Wagner Tassinari
 <section id="padrões-pontuais-no-r-1" class="slide level2">
 <h2>Padrões Pontuais no R</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformando em objeto espacial</span></span>
-<span id="cb3-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb3-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="" aria-hidden="true" tabindex="-1"></a>pontos_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(dados_pontos,</span>
-<span id="cb3-5"><a href="" aria-hidden="true" tabindex="-1"></a>                      <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>),</span>
-<span id="cb3-6"><a href="" aria-hidden="true" tabindex="-1"></a>                      <span class="at">crs =</span> <span class="dv">4326</span>)</span>
-<span id="cb3-7"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pontos_sf<span class="sc">$</span>geometry, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"red"</span>,</span>
-<span id="cb3-9"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Focos de Queimadas"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="padrões-pontuais-no-r-2" class="slide level2">
-<h2>Padrões Pontuais no R</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dados_pontos<span class="sc">$</span>latitude, dados_pontos<span class="sc">$</span>longitude, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">main =</span> <span class="st">"Focos de Queimadas"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
-<img data-src="02-tipos_dados_slides_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
-<section id="entendendo-o-código-r" class="slide level2">
-<h2>Entendendo o Código R</h2>
-<h4 id="funções-principais">Funções principais</h4>
-<div style="font-size: 70%;">
-<ul>
-<li><code>st_as_sf()</code>: Converte um data frame comum em um objeto espacial do tipo <strong>sf</strong> (Simple Features)</li>
-<li><code>coords = c("longitude", "latitude")</code>: Indica quais colunas representam as coordenadas geográficas</li>
-<li><code>crs = 4326</code>: Define o Sistema de Referência de Coordenadas (<strong>WGS 84</strong> - padrão do GPS)</li>
-</ul>
+</div>
+<img data-src="02-tipos_dados_slides_files/figure-revealjs/unnamed-chunk-2-1.png" width="960" class="r-stretch"><div style="font-size: 60%;">
+<p>Tentativa de plotar os pontos via um plano cartesiano.</p>
 </div>
 </section>
 <section id="o-que-é-crs-sistema-de-referência-de-coordenadas" class="slide level2">
@@ -332,45 +316,94 @@ Prof.&nbsp;Wagner Tassinari
 <p>O CRS é como uma <strong>“regra de tradução”</strong> entre o que está em um mapa e o mundo real.</p>
 <ul>
 <li>Define como as coordenadas se relacionam com locais reais na Terra.</li>
-<li>Sem um CRS, uma coordenada não tem significado geográfico.</li>
+<li>Sem um CRS, uma coordenada não tem significado geográfico. Por exemplo:</li>
 </ul>
 <p><strong>WGS 84 (EPSG:4326)</strong>: Usado por GPS e Google Maps (em graus)</p>
 <p><strong>UTM</strong>: Usado para mapas locais (em metros)</p>
 </div>
 </section>
+<section id="padrões-pontuais-no-r-2" class="slide level2">
+<h2>Padrões Pontuais no R</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformando em objeto espacial</span></span>
+<span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb4-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="" aria-hidden="true" tabindex="-1"></a>pontos_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(dados_pontos,</span>
+<span id="cb4-5"><a href="" aria-hidden="true" tabindex="-1"></a>                      <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>),</span>
+<span id="cb4-6"><a href="" aria-hidden="true" tabindex="-1"></a>                      <span class="at">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb4-7"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pontos_sf<span class="sc">$</span>geometry, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"red"</span>,</span>
+<span id="cb4-9"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Focos de Queimadas"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div style="font-size: 60%;">
+<ul>
+<li><code>st_as_sf()</code>: Converte um data frame comum em um objeto espacial do tipo <strong>sf</strong> (Simple Features)</li>
+<li><code>coords = c("longitude", "latitude")</code>: Indica quais colunas representam as coordenadas geográficas</li>
+<li><code>crs = 4326</code>: Define o Sistema de Referência de Coordenadas (<strong>WGS 84</strong> - padrão do GPS)</li>
+</ul>
+</div>
+</section>
+<section id="padrões-pontuais-no-r-3" class="slide level2">
+<h2>Padrões Pontuais no R</h2>
+
+<img data-src="02-tipos_dados_slides_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="baixando-o-mapa-via-biblioteca-geobr" class="slide level2">
 <h2>Baixando o mapa via biblioteca <code>geobr</code></h2>
 <div class="cell" data-comments="null">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geobr)</span>
-<span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Baixar polígono do RJ (código IBGE = 33)</span></span>
-<span id="cb4-4"><a href="" aria-hidden="true" tabindex="-1"></a>rj_contorno <span class="ot">&lt;-</span> <span class="fu">read_state</span>(<span class="at">code_state =</span> <span class="dv">33</span>, <span class="at">year =</span> <span class="dv">2020</span>)</span>
-<span id="cb4-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotando o mapa</span></span>
-<span id="cb4-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rj_contorno, <span class="at">title =</span> <span class="st">"Contorno no estato do Rio de Janeiro"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geobr)</span>
+<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Baixar polígono do RJ (código IBGE = 33)</span></span>
+<span id="cb5-4"><a href="" aria-hidden="true" tabindex="-1"></a>rj_contorno <span class="ot">&lt;-</span> <span class="fu">read_state</span>(<span class="at">code_state =</span> <span class="dv">33</span>, <span class="at">year =</span> <span class="dv">2020</span>)</span>
+<span id="cb5-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotando o mapa</span></span>
+<span id="cb5-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rj_contorno, <span class="at">title =</span> <span class="st">"Contorno no estato do Rio de Janeiro"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="baixando-o-mapa-via-biblioteca-geobr-1" class="slide level2">
 <h2>Baixando o mapa via biblioteca <code>geobr</code></h2>
 
-<img data-src="02-tipos_dados_slides_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<img data-src="02-tipos_dados_slides_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="visualizar-o-mapa-com-os-pontos" class="slide level2">
 <h2>Visualizar o mapa com os pontos</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotar</span></span>
-<span id="cb5-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb5-4"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_sf</span>(<span class="at">data =</span> rj_contorno, <span class="at">fill =</span> <span class="st">"lightgreen"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb5-5"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_sf</span>(<span class="at">data =</span> pontos_sf, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="fl">1.0</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb5-6"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Focos de Queimadas - Rio de Janeiro"</span>,</span>
-<span id="cb5-7"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Fonte: INPE"</span>) <span class="sc">+</span></span>
-<span id="cb5-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotar</span></span>
+<span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb6-4"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_sf</span>(<span class="at">data =</span> rj_contorno, <span class="at">fill =</span> <span class="st">"lightgreen"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_sf</span>(<span class="at">data =</span> pontos_sf, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="fl">1.0</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Focos de Queimadas - Rio de Janeiro"</span>,</span>
+<span id="cb6-7"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Fonte: INPE"</span>) <span class="sc">+</span></span>
+<span id="cb6-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="visualizar-o-mapa-com-os-pontos-1" class="slide level2">
 <h2>Visualizar o mapa com os pontos</h2>
 
-<img data-src="02-tipos_dados_slides_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<img data-src="02-tipos_dados_slides_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<section id="visualizar-o-mapa-com-os-pontos-2" class="slide level2">
+<h2>Visualizar o mapa com os pontos</h2>
+<div style="font-size: 70%;">
+<p>Acrescentando a escala e o norte</p>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyterra)</span>
+<span id="cb7-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb7-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> rj_contorno, <span class="at">fill =</span> <span class="st">"lightgreen"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> pontos_sf, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="fl">1.0</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_north_arrow</span>(<span class="at">location =</span> <span class="st">"br"</span>) <span class="sc">+</span></span>
+<span id="cb7-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_scale</span>(<span class="at">location =</span> <span class="st">"bl"</span>) <span class="sc">+</span></span>
+<span id="cb7-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Focos de Queimadas - Rio de Janeiro"</span>) <span class="sc">+</span></span>
+<span id="cb7-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="visualizar-o-mapa-com-os-pontos-3" class="slide level2">
+<h2>Visualizar o mapa com os pontos</h2>
+<div style="font-size: 70%;">
+<p>Acrescentando a escala e o norte</p>
+</div>
+
+<img data-src="02-tipos_dados_slides_files/figure-revealjs/unnamed-chunk-10-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="geoestatística" class="slide level2">
 <h2>Geoestatística</h2>
 <h3 id="definição-1">Definição</h3>
@@ -436,12 +469,12 @@ Prof.&nbsp;Wagner Tassinari
 <h2>Trabalhando com Dados Geoestatísticos em R</h2>
 <h3 id="lendo-os-dados">Lendo os dados</h3>
 <div class="cell" data-comments="null">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar o arquivo</span></span>
-<span id="cb6-4"><a href="" aria-hidden="true" tabindex="-1"></a>dados_geo <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"dados/queimadas/queimadas_geo.xlsx"</span>)</span>
-<span id="cb6-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dados_geo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar o arquivo</span></span>
+<span id="cb8-4"><a href="" aria-hidden="true" tabindex="-1"></a>dados_geo <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"dados/queimadas/queimadas_geo.xlsx"</span>)</span>
+<span id="cb8-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dados_geo)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
   latitude longitude   frp
@@ -458,8 +491,8 @@ Prof.&nbsp;Wagner Tassinari
 <section id="transformando-em-objeto-espacial" class="slide level2">
 <h2>Transformando em objeto espacial</h2>
 <div class="cell" data-comments="null">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a>dados_geo_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(dados_geo, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>), <span class="at">crs =</span> <span class="dv">4326</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a>dados_geo_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(dados_geo, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>), <span class="at">crs =</span> <span class="dv">4326</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div style="font-size: 70%;">
 <ul>
@@ -473,22 +506,22 @@ Prof.&nbsp;Wagner Tassinari
 <section id="visualização-com-gradiente-de-cores" class="slide level2">
 <h2>Visualização com Gradiente de Cores</h2>
 <div class="cell" data-comments="null">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb9-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb9-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotar com gradiente de cor</span></span>
-<span id="cb9-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb9-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> rj_contorno, <span class="at">fill =</span> <span class="st">"gray90"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb9-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> dados_geo_sf, <span class="fu">aes</span>(<span class="at">color =</span> frp), <span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb9-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">name =</span> <span class="st">"FRP"</span>, <span class="at">option =</span> <span class="st">"plasma"</span>) <span class="sc">+</span></span>
-<span id="cb9-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribuição Espacial do FRP"</span>) <span class="sc">+</span></span>
-<span id="cb9-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb11-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotar com gradiente de cor</span></span>
+<span id="cb11-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb11-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> rj_contorno, <span class="at">fill =</span> <span class="st">"gray90"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb11-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> dados_geo_sf, <span class="fu">aes</span>(<span class="at">color =</span> frp), <span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb11-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">name =</span> <span class="st">"FRP"</span>, <span class="at">option =</span> <span class="st">"plasma"</span>) <span class="sc">+</span></span>
+<span id="cb11-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribuição Espacial do FRP"</span>) <span class="sc">+</span></span>
+<span id="cb11-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="visualização-com-gradiente-de-cores-1" class="slide level2">
 <h2>Visualização com Gradiente de Cores</h2>
 
-<img data-src="02-tipos_dados_slides_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<img data-src="02-tipos_dados_slides_files/figure-revealjs/unnamed-chunk-14-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="dados-de-área" class="slide level2">
 <h2>Dados de Área</h2>
 <h3 id="definição-2">Definição:</h3>
@@ -557,11 +590,11 @@ Prof.&nbsp;Wagner Tassinari
 </div>
 <h4 id="lendo-os-dados-1">Lendo os dados:</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># lendo a base de queimadas</span></span>
-<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a>dados_area <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"dados/dengue/dengue2025.xlsx"</span>)</span>
-<span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a>dados_area <span class="ot">&lt;-</span> dados_area <span class="sc">|&gt;</span></span>
-<span id="cb10-4"><a href="" aria-hidden="true" tabindex="-1"></a>              dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">tx_dengue =</span> casos <span class="sc">/</span> pop2022 <span class="sc">*</span> <span class="dv">100000</span>)</span>
-<span id="cb10-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dados_area)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># lendo a base </span></span>
+<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a>dados_area <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"dados/dengue/dengue2025.xlsx"</span>)</span>
+<span id="cb12-3"><a href="" aria-hidden="true" tabindex="-1"></a>dados_area <span class="ot">&lt;-</span> dados_area <span class="sc">|&gt;</span></span>
+<span id="cb12-4"><a href="" aria-hidden="true" tabindex="-1"></a>              dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">tx_dengue =</span> casos <span class="sc">/</span> pop2022 <span class="sc">*</span> <span class="dv">100000</span>)</span>
+<span id="cb12-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dados_area)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 5
   code_muni municipio          pop2022 casos tx_dengue
@@ -579,10 +612,10 @@ Prof.&nbsp;Wagner Tassinari
 <h2>Lendo o Shapefile</h2>
 <h4 id="lendo-o-shapefile-via-diretório">Lendo o shapefile via diretório</h4>
 <div class="cell" data-comments="null">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Ler arquivo shapefile</span></span>
-<span id="cb12-4"><a href="" aria-hidden="true" tabindex="-1"></a>rj_municipios <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"malhas/mapa_rj.shp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb14-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Ler arquivo shapefile</span></span>
+<span id="cb14-4"><a href="" aria-hidden="true" tabindex="-1"></a>rj_municipios <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"malhas/mapa_rj.shp"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `mapa_rj' from data source 
   `/home/wagner/Google Drive/UFRRJ/spatial_ebook/apresentacoes/malhas/mapa_rj.shp' 
@@ -593,7 +626,7 @@ Dimension:     XY
 Bounding box:  xmin: -44.88932 ymin: -23.36893 xmax: -40.95794 ymax: -20.76321
 Geodetic CRS:  SIRGAS 2000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(rj_municipios)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(rj_municipios)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "code_mn"  "name_mn"  "cod_stt"  "abbrv_s"  "nam_stt"  "cod_rgn"  "nam_rgn" 
 [8] "geometry"</code></pre>
@@ -604,13 +637,13 @@ Geodetic CRS:  SIRGAS 2000</code></pre>
 <h2>Lendo o shapefile</h2>
 <h4 id="ou-baixando-via-geobr">Ou baixando via geobr</h4>
 <div class="cell" data-comments="null">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geobr)</span>
-<span id="cb16-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Baixar polígono do RJ (código IBGE = 33)</span></span>
-<span id="cb16-4"><a href="" aria-hidden="true" tabindex="-1"></a>rj_municipios <span class="ot">&lt;-</span> <span class="fu">read_municipality</span>(<span class="at">year =</span> <span class="dv">2020</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb16-5"><a href="" aria-hidden="true" tabindex="-1"></a>                 dplyr<span class="sc">::</span><span class="fu">filter</span>(code_state <span class="sc">==</span> <span class="dv">33</span>)</span>
-<span id="cb16-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(rj_municipios)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geobr)</span>
+<span id="cb18-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Baixar polígono do RJ (código IBGE = 33)</span></span>
+<span id="cb18-4"><a href="" aria-hidden="true" tabindex="-1"></a>rj_municipios <span class="ot">&lt;-</span> <span class="fu">read_municipality</span>(<span class="at">year =</span> <span class="dv">2020</span>) <span class="sc">|&gt;</span></span>
+<span id="cb18-5"><a href="" aria-hidden="true" tabindex="-1"></a>                 dplyr<span class="sc">::</span><span class="fu">filter</span>(code_state <span class="sc">==</span> <span class="dv">33</span>)</span>
+<span id="cb18-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(rj_municipios)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "code_muni"    "name_muni"    "code_state"   "abbrev_state" "name_state"  
 [6] "code_region"  "name_region"  "geom"        </code></pre>
@@ -620,18 +653,18 @@ Geodetic CRS:  SIRGAS 2000</code></pre>
 <section id="padronizando-as-variaveis-e-as-chaves-primárias" class="slide level2">
 <h2>Padronizando as variaveis e as chaves primárias</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Padronizar os nomes dos municípios em ambos os dataframes</span></span>
-<span id="cb18-2"><a href="" aria-hidden="true" tabindex="-1"></a>rj_municipios <span class="ot">&lt;-</span> rj_municipios <span class="sc">|&gt;</span></span>
-<span id="cb18-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">municipio =</span> <span class="fu">tolower</span>(name_muni))</span>
-<span id="cb18-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-5"><a href="" aria-hidden="true" tabindex="-1"></a>dados_area <span class="ot">&lt;-</span> dados_area <span class="sc">|&gt;</span></span>
-<span id="cb18-6"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">municipio =</span> <span class="fu">tolower</span>(municipio))</span>
-<span id="cb18-7"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Fazer o left join usando as novas colunas padronizadas</span></span>
-<span id="cb18-9"><a href="" aria-hidden="true" tabindex="-1"></a>rj_municipios <span class="ot">&lt;-</span> rj_municipios <span class="sc">|&gt;</span></span>
-<span id="cb18-10"><a href="" aria-hidden="true" tabindex="-1"></a>     dplyr<span class="sc">::</span><span class="fu">left_join</span>(dados_area, <span class="at">by =</span> <span class="st">"municipio"</span>)</span>
-<span id="cb18-11"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-12"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(rj_municipios)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Padronizar os nomes dos municípios em ambos os dataframes</span></span>
+<span id="cb20-2"><a href="" aria-hidden="true" tabindex="-1"></a>rj_municipios <span class="ot">&lt;-</span> rj_municipios <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">municipio =</span> <span class="fu">tolower</span>(name_muni))</span>
+<span id="cb20-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="" aria-hidden="true" tabindex="-1"></a>dados_area <span class="ot">&lt;-</span> dados_area <span class="sc">|&gt;</span></span>
+<span id="cb20-6"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">municipio =</span> <span class="fu">tolower</span>(municipio))</span>
+<span id="cb20-7"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Fazer o left join usando as novas colunas padronizadas</span></span>
+<span id="cb20-9"><a href="" aria-hidden="true" tabindex="-1"></a>rj_municipios <span class="ot">&lt;-</span> rj_municipios <span class="sc">|&gt;</span></span>
+<span id="cb20-10"><a href="" aria-hidden="true" tabindex="-1"></a>     dplyr<span class="sc">::</span><span class="fu">left_join</span>(dados_area, <span class="at">by =</span> <span class="st">"municipio"</span>)</span>
+<span id="cb20-11"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(rj_municipios)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "code_muni.x"  "name_muni"    "code_state"   "abbrev_state" "name_state"  
  [6] "code_region"  "name_region"  "municipio"    "code_muni.y"  "pop2022"     
@@ -642,21 +675,21 @@ Geodetic CRS:  SIRGAS 2000</code></pre>
 <section id="visualizando-dados-de-área" class="slide level2">
 <h2>Visualizando Dados de Área</h2>
 <div class="cell" data-comments="null">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb20-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotar mapa temático</span></span>
-<span id="cb20-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rj_municipios) <span class="sc">+</span></span>
-<span id="cb20-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> tx_dengue), <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb20-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"F"</span>,</span>
-<span id="cb20-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Taxa de incidência de dengue"</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb20-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Taxa de incidência de dengue por Município - RJ"</span>) <span class="sc">+</span></span>
-<span id="cb20-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb22-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotar mapa temático</span></span>
+<span id="cb22-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rj_municipios) <span class="sc">+</span></span>
+<span id="cb22-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> tx_dengue), <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb22-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"F"</span>,</span>
+<span id="cb22-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Taxa de incidência de dengue"</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb22-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Taxa de incidência de dengue por Município - RJ"</span>) <span class="sc">+</span></span>
+<span id="cb22-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="visualizando-dados-de-área-1" class="slide level2">
 <h2>Visualizando Dados de Área</h2>
 
-<img data-src="02-tipos_dados_slides_files/figure-revealjs/unnamed-chunk-17-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<img data-src="02-tipos_dados_slides_files/figure-revealjs/unnamed-chunk-20-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="resumo-da-tipologia" class="slide level2">
 <h2>Resumo da Tipologia</h2>
 <table class="caption-top">
@@ -892,7 +925,7 @@ Geodetic CRS:  SIRGAS 2000</code></pre>
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1004,13 +1037,14 @@ Geodetic CRS:  SIRGAS 2000</code></pre>
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

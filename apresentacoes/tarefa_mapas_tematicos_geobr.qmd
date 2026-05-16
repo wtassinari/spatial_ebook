@@ -1,0 +1,261 @@
+---
+title: "Tarefa Prática: Mapas Temáticos com o Pacote geobr no R"
+author: "Wagner Tassinari"
+date: today
+format: 
+  html:
+    toc: true
+    toc-title: "Índice"
+    number-sections: true
+    theme: cosmo
+    highlight-style: github
+    embed-resources: true
+    self-contained: true
+engine: knitr
+execute:
+  warning: false
+  message: false
+---
+
+# Introdução
+
+Bem-vindos à nossa tarefa prática sobre a criação de mapas temáticos no R! 
+
+Para quem trabalha com Epidemiologia, Saúde Pública ou qualquer área que envolva dados georreferenciados, ter o domínio de ferramentas de análise espacial é fundamental. O R, além de todo o seu potencial para análises estatísticas, oferece pacotes excelentes para a Geografia em Saúde.
+
+Nesta atividade, baseada no tutorial de Danielly Xavier [1], vamos aprender a criar um mapa temático de taxa de incidência de Covid-19 no Brasil (ano de 2020) utilizando o pacote `geobr`.
+
+O pacote `geobr` é uma ferramenta oficial para download de *datasets* espaciais do Brasil, desenvolvida pelo Ipea. Ele disponibiliza diversos arquivos geoespaciais em formato *geopackage* (análogo ao *shapefile*), permitindo análises espaciais completas e atualizadas [2].
+
+---
+
+# Objetivos da Tarefa
+
+Ao final desta tarefa, você deverá ser capaz de:
+
+1. Instalar e carregar pacotes espaciais no R.
+2. Importar dados geográficos do Brasil utilizando o pacote `geobr`.
+3. Manipular e unir bases de dados tabulares com dados espaciais.
+4. Calcular taxas de incidência.
+5. Plotar mapas temáticos (coropléticos) utilizando o pacote `ggplot2`.
+
+---
+
+# Passo a Passo e Explicação dos Comandos
+
+Siga as instruções abaixo no seu RStudio. Leia atentamente a explicação de cada comando antes de executá-lo.
+
+## Passo 1: Instalação dos Pacotes
+
+Inicialmente, precisamos instalar os pacotes necessários. Utilizaremos o pacote `pacman` para facilitar a instalação e o carregamento múltiplo de pacotes.
+
+```r
+# Instalando o pacote pacman (caso não tenha)
+if (!require("pacman")) install.packages("pacman")
+
+# O pacote geobr pode ser instalado diretamente do CRAN
+install.packages("geobr")
+```
+
+**Explicação:**
+A função `install.packages()` faz o download e a instalação dos pacotes a partir do repositório oficial do R (CRAN). O pacote `pacman` é um gerenciador de pacotes que otimiza o fluxo de trabalho.
+
+## Passo 2: Carregamento dos Pacotes
+
+Agora, vamos carregar todos os pacotes que utilizaremos na nossa análise.
+
+```r
+# Carregando os pacotes com a função p_load do pacman
+pacman::p_load(
+  geobr,        # Pacote com datasets geoespaciais do Brasil
+  ggplot2,      # Pacote principal para criação de gráficos e mapas
+  sf,           # Manipulação de dados espaciais (Simple Features)
+  dplyr,        # Manipulação e transformação de dados
+  rio           # Importação e exportação de arquivos variados
+)
+```
+
+**Explicação:**
+A função `p_load()` do pacote `pacman` verifica se os pacotes já estão instalados. Se não estiverem, ela os instala e, em seguida, carrega todos de uma única vez. 
+- O `geobr` traz as geometrias (mapas).
+- O `ggplot2` e o `sf` trabalham juntos para desenhar o mapa.
+- O `dplyr` (parte do *tidyverse*) é usado para filtrar, agrupar e unir os dados.
+
+## Passo 3: Importando os Dados Espaciais do Brasil
+
+Vamos baixar as geometrias (polígonos) dos estados brasileiros.
+
+```r
+# Importando dados dos estados brasileiros para o ano de 2018
+brasil <- read_state(code_state = "all", year = 2018, showProgress = FALSE)
+
+# Visualizando a estrutura básica do objeto espacial
+head(brasil)
+```
+
+**Explicação:**
+A função `read_state()` do pacote `geobr` faz o download das fronteiras estaduais. O argumento `code_state = "all"` indica que queremos todos os estados, e `year = 2018` define o ano da malha territorial. O objeto `brasil` criado é um objeto da classe `sf` (Simple Feature), que contém tanto os dados tabulares (nome do estado, sigla) quanto a geometria (o desenho do polígono) [2].
+
+## Passo 4: Importando e Preparando os Dados Epidemiológicos
+
+Para o nosso mapa temático, precisamos de dados de casos. No tutorial original, utilizou-se dados do Sivep-Gripe (Covid-19 em 2020). Como exercício, vamos simular a criação de um *data.frame* com casos fictícios ou carregar a sua base de dados.
+
+*Nota: Para esta tarefa, assumiremos que você possui um arquivo chamado `sivep_gripe_2020.csv` ou criaremos um resumo simplificado.*
+
+```r
+# Simulando um data.frame com dados de TODOS os 27 estados brasileiros
+# Dados populacionais baseados no IBGE (Censo 2010 com projeções)
+casos_uf <- data.frame(
+  sigla = c("AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", 
+            "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", 
+            "RO", "RR", "RS", "SC", "SE", "SP", "TO"),
+  
+  # Dados populacionais (IBGE 2010)
+  populacao = c(
+    733559,      # AC - Acre
+    3120494,     # AL - Alagoas
+    3483985,     # AM - Amazonas
+    669526,      # AP - Amapá
+    14016906,    # BA - Bahia
+    8452381,     # CE - Ceará
+    2570160,     # DF - Distrito Federal
+    3514952,     # ES - Espírito Santo
+    6003788,     # GO - Goiás
+    6574789,     # MA - Maranhão
+    19597330,    # MG - Minas Gerais
+    2619580,     # MS - Mato Grosso do Sul
+    3035122,     # MT - Mato Grosso
+    7581051,     # PA - Pará
+    3766834,     # PB - Paraíba
+    8796448,     # PE - Pernambuco
+    3118360,     # PI - Piauí
+    10444526,    # PR - Paraná
+    16369179,    # RJ - Rio de Janeiro
+    3168027,     # RN - Rio Grande do Norte
+    1562409,     # RO - Rondônia
+    488072,      # RR - Roraima
+    10695475,    # RS - Rio Grande do Sul
+    6248436,     # SC - Santa Catarina
+    2068017,     # SE - Sergipe
+    41262199,    # SP - São Paulo
+    1383445      # TO - Tocantins
+  ),
+  
+  # Casos simulados 
+  casos = c(
+    8200,        # AC
+    28500,       # AL
+    35000,       # AM
+    6500,        # AP
+    125000,      # BA
+    78000,       # CE
+    32000,       # DF
+    38000,       # ES
+    65000,       # GO
+    55000,       # MA
+    185000,      # MG
+    22000,       # MS
+    28000,       # MT
+    68000,       # PA
+    32000,       # PB
+    78000,       # PE
+    25000,       # PI
+    95000,       # PR
+    145000,      # RJ
+    28000,       # RN
+    14000,       # RO
+    5200,        # RR
+    98000,       # RS
+    58000,       # SC
+    18500,       # SE
+    380000,      # SP
+    12500        # TO
+  )
+)
+
+# Calculando a taxa de incidência (casos por 100.000 habitantes)
+casos_uf <- casos_uf %>%
+  mutate(taxa_incidencia = round((casos / populacao) * 100000, 2))
+
+# Visualizando o data.frame completo
+head(casos_uf, 10)  # Mostrando as primeiras 10 linhas
+
+# Estatísticas descritivas
+cat("\n=== ESTATÍSTICAS DESCRITIVAS ===")
+cat("\nTaxa de Incidência Média:", round(mean(casos_uf$taxa_incidencia), 2), "por 100 mil hab.")
+cat("\nTaxa de Incidência Mínima:", round(min(casos_uf$taxa_incidencia), 2), "por 100 mil hab.")
+cat("\nTaxa de Incidência Máxima:", round(max(casos_uf$taxa_incidencia), 2), "por 100 mil hab.")
+cat("\nTotal de Casos:", sum(casos_uf$casos))
+cat("\nPopulação Total:", sum(casos_uf$populacao))
+```
+
+**Explicação:**
+Utilizamos os verbos do `dplyr` (`filter`, `group_by`, `summarise`, `mutate`) para limpar e resumir os dados. A taxa de incidência é uma medida epidemiológica padrão calculada dividindo o número de casos pela população e multiplicando por 100.000.
+
+## Passo 5: Unindo os Dados Espaciais com os Dados Epidemiológicos
+
+Para que o mapa possa ser colorido de acordo com a taxa de incidência, precisamos unir a tabela de geometrias (`brasil`) com a tabela de dados (`casos_uf`).
+
+```r
+# Unindo os dados espaciais (brasil) com os dados de casos (casos_uf)
+# A chave de ligação será a sigla do estado
+brasil_covid <- brasil %>%
+  left_join(casos_uf, by = c("abbrev_state" = "sigla"))
+```
+
+**Explicação:**
+A função `left_join()` une as duas tabelas. O argumento `by` especifica quais colunas correspondem uma à outra. Na tabela `brasil` (do geobr), a sigla do estado está na coluna `abbrev_state`. Na nossa tabela `casos_uf`, está na coluna `sigla`. O resultado, `brasil_covid`, mantém a geometria espacial e agora inclui a coluna `taxa_incidencia`.
+
+## Passo 6: Plotando o Mapa Temático
+
+Finalmente, vamos criar o nosso mapa coroplético utilizando o `ggplot2`.
+
+```r
+# Criando o mapa temático
+ggplot(data = brasil_covid) +
+  geom_sf(aes(fill = taxa_incidencia), color = "white", size = 0.15) +
+  scale_fill_distiller(palette = "Reds", direction = 1, name = "Incidência\n(por 100 mil hab.)", na.value = "gray90") +
+  labs(
+    title = "Taxa de Incidência de Covid-19 por UF",
+    subtitle = "Dados simulados/exemplo",
+    caption = "Fonte: Elaboração própria com pacote geobr"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.title = element_blank(),
+    axis.text = element_blank(),
+    axis.ticks = element_blank(),
+    panel.grid = element_blank()
+  )
+```
+
+**Explicação:**
+- `ggplot(data = brasil_covid)`: Inicializa o gráfico com os nossos dados espaciais.
+- `geom_sf()`: É a função mágica que entende a geometria do objeto `sf` e desenha os polígonos. 
+- `aes(fill = taxa_incidencia)`: Mapeia a cor de preenchimento dos estados de acordo com o valor numérico da taxa de incidência.
+- `color = "white", size = 0.15`: Define a cor e a espessura das bordas dos estados.
+- `scale_fill_distiller()`: Aplica uma paleta de cores contínua (neste caso, tons de vermelho). O `na.value = "gray90"` pinta de cinza os estados que não possuem dados no nosso exemplo.
+- `theme_minimal()` e as configurações de `theme()`: Removem os eixos de latitude/longitude e o fundo quadriculado, deixando o mapa com um visual mais limpo e profissional.
+
+---
+
+# Exercício Prático para o Aluno
+
+Agora é a sua vez! 
+
+1. Modifique o código do **Passo 3** para baixar os dados dos **municípios** do seu estado (dica: use a função `read_municipality(code_muni = "SUA_SIGLA", year = 2020)`).
+2. Crie um *data.frame* fictício com 5 municípios do seu estado e valores de "casos".
+3. Faça o `left_join` e plote o mapa municipal, alterando a paleta de cores para "Blues" ou "Greens".
+
+Boa prática e bons estudos!
+
+---
+
+# Referências
+
+[1] Xavier, D. (2022). Mapas temáticos com o pacote geobr no R. Medium. Disponível em: [https://medium.com/@danielly.bx/tutorial-mapas-temáticos-com-o-pacote-geobr-no-r-7a9528bbd86d](https://medium.com/@danielly.bx/tutorial-mapas-tem%C3%A1ticos-com-o-pacote-geobr-no-r-7a9528bbd86d)
+
+[2] Pereira, R. H. M., et al. (2019). geobr: Download Official Spatial Data Sets of Brazil. CRAN. Disponível em: [https://cran.r-project.org/web/packages/geobr/vignettes/intro_to_geobr.html](https://cran.r-project.org/web/packages/geobr/vignettes/intro_to_geobr.html)
+
+---
+*Documento gerado para o Curso de Análise Espacial.*

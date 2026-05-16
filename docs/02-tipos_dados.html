@@ -2,14 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Material do curso de Estatística Espacial: Métodos e Aplicações em Epidemiologia. Abrange dados de área, padrões pontuais e geoestatística com aplicações em R.">
+<meta name="description" content="Material do curso de Estatística Espacial: Uma Introdução aos principais métodos estatísticos para dados espaciais. O material abrange dados de área, padrões pontuais e geoestatística com aplicações em R.">
 
 <title>2&nbsp; Tipologia dos Dados Espaciais – Estatística Espacial</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -75,14 +78,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ae0b5334a1ec0bf99af3d0c304a697d2.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-ae0b5334a1ec0bf99af3d0c304a697d2.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ae0b5334a1ec0bf99af3d0c304a697d2.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-176b38be48070efe3d434d0a95bef3fe.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-176b38be48070efe3d434d0a95bef3fe.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-176b38be48070efe3d434d0a95bef3fe.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-552630c70ddeaaddc1bbacee2be6e208.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-162e07ba2e9ae07821d089a2dd916e74.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-552630c70ddeaaddc1bbacee2be6e208.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-7df1780bf6e26e45528cdd2ca3e2047c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-5d0c41746ba85fbf34a345269a3ab44b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-7df1780bf6e26e45528cdd2ca3e2047c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -113,6 +116,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -471,7 +503,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Objetivos do Capítulo
+<span class="screen-reader-only">Dica</span>Objetivos do Capítulo
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -490,11 +522,24 @@ Objetivos do Capítulo
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Slides do Capítulo 2 - Tipologia dos Dados Espaciais
+<span class="screen-reader-only">Nota</span>Slides do Capítulo 2 - Tipologia dos Dados Espaciais
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p><a href="apresentacoes/02-tipos_dados_slides.html" target="_blank">Clique aqui para acessar a apresentação em Slides</a></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Prática a respeito da Tipologia dos Dados Espaciais
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="apresentacoes/tarefa_mapas_tematicos_geobr.html" target="_blank">Clique aqui para acessar o material</a></p>
 </div>
 </div>
 <section id="tipologia-dos-dados-espaciais" class="level1" data-number="3">
@@ -563,16 +608,16 @@ Slides do Capítulo 2 - Tipologia dos Dados Espaciais
 <section id="lendo-os-dados" class="level4">
 <h4 class="anchored" data-anchor-id="lendo-os-dados">Lendo os dados:</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar o arquivo</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>dados_pontos <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"dados/queimadas/queimadas_pontos.xlsx"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>dados_pontos <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"dados/queimadas/queimadas_pontos.xlsx"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="olhando-os-dados" class="level4">
 <h4 class="anchored" data-anchor-id="olhando-os-dados">Olhando os dados:</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dados_pontos)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dados_pontos)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -585,11 +630,11 @@ Slides do Capítulo 2 - Tipologia dos Dados Espaciais
 <section id="transformar-os-dados-na-classe-de-padrões-pontuais" class="level4">
 <h4 class="anchored" data-anchor-id="transformar-os-dados-na-classe-de-padrões-pontuais">Transformar os dados na classe de padrões pontuais:</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>pontos_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(dados_pontos, </span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>),</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">crs =</span> <span class="dv">4326</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">crs =</span> <span class="dv">4326</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="box-dica2">
 <ul>
@@ -602,9 +647,9 @@ Slides do Capítulo 2 - Tipologia dos Dados Espaciais
 </div>
 <div class="box-dica3">
 <p>📌 O que é CRS (Coordinate Reference System) ?</p>
-<p>O CRS é como uma “regra de tradução” entre o que está em um mapa e o mundo real. Ele define como as coordenadas (como 140, 12) se relacionam com locais verdadeiros na Terra, dizendo se os valores estão em metros, graus ou outra unidade, e onde fica o ponto de partida (a origem). Sem um CRS, uma coordenada não tem significado, pois não sabemos onde ela realmente está nem em que escala.</p>
+<p>O CRS é como uma “regra de tradução” entre o que está em um mapa e o mundo real. Ele define como as coordenadas (como o par de coordenadas <span class="math inline">\((x,y)\)</span> <span class="math inline">\(\rightarrow\)</span> <span class="math inline">\((140, 12)\)</span>) se relacionam com locais verdadeiros na Terra, dizendo se os valores estão em metros, graus ou outra unidade, e onde fica o ponto de partida (a origem). Sem um CRS, uma coordenada não tem significado, pois não sabemos onde ela realmente está nem em que escala.</p>
 <p>🗺️ Por que isso é importante ?</p>
-<p>Se dois mapas tiverem CRSs diferentes, os pontos não vão se alinhar corretamente — como tentar juntar peças de quebra-cabeça de caixas diferentes. Usar o CRS certo garante que todas as informações espaciais estejam bem posicionadas e coerentes. Por exemplo, o WGS 84 é usado por GPS e Google Maps (em graus), enquanto o UTM é usado para mapas locais mais precisos (em metros). Saber isso evita erros em análises espaciais e garante que os dados “conversem” entre si.</p>
+<p>Se dois mapas tiverem CRSs diferentes, os pontos não vão se alinhar corretamente, seria como tentar juntar peças de quebra-cabeça de caixas diferentes. Usar o CRS certo garante que todas as informações espaciais estejam bem posicionadas e coerentes. Por exemplo, o WGS 84 é usado por GPS e Google Maps (em graus), enquanto o UTM é usado para mapas locais mais precisos (em metros). Saber isso evita erros em análises espaciais e garante que os dados “conversem” entre si.</p>
 <p><strong>OBS:</strong> Se quiser saber um pouco mais a respeito do CRS, basta acessar (<a href="https://rspatial.org/raster/spatial/6-crs.html">link</a>)</p>
 </div>
 </section>
@@ -613,16 +658,16 @@ Slides do Capítulo 2 - Tipologia dos Dados Espaciais
 <section id="baixando-o-mapa-via-biblioteca-geobr" class="level5">
 <h5 class="anchored" data-anchor-id="baixando-o-mapa-via-biblioteca-geobr">Baixando o mapa via biblioteca <code>geobr</code></h5>
 <div class="cell" data-layout-align="center" data-comments="null">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geobr)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geobr)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Baixar polígono do RJ (código IBGE = 33)</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>rj_contorno <span class="ot">&lt;-</span> <span class="fu">read_state</span>(<span class="at">code_state =</span> <span class="dv">33</span>, <span class="at">year =</span> <span class="dv">2020</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>rj_contorno <span class="ot">&lt;-</span> <span class="fu">read_state</span>(<span class="at">code_state =</span> <span class="dv">33</span>, <span class="at">year =</span> <span class="dv">2020</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="lendo-o-arquivo.shp" class="level5">
 <h5 class="anchored" data-anchor-id="lendo-o-arquivo.shp">Lendo o <code>arquivo.shp</code></h5>
 <div class="cell" data-layout-align="center" data-comments="null">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>rj_contorno <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"malhas/rj_contorno.shp"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>rj_contorno <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"malhas/rj_contorno.shp"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Reading layer `rj_contorno' from data source 
 #&gt;   `/home/wagner/Downloads/spatial_ebook_quarto/spatial_ebook_project/malhas/rj_contorno.shp' 
@@ -639,7 +684,7 @@ Slides do Capítulo 2 - Tipologia dos Dados Espaciais
 <section id="plotando-o-mapa" class="level4">
 <h4 class="anchored" data-anchor-id="plotando-o-mapa">Plotando o mapa</h4>
 <div class="cell" data-layout-align="center" data-comments="null">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rj_contorno, <span class="at">title =</span> <span class="st">"Contorno no estato do Rio de Janeiro"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rj_contorno, <span class="at">title =</span> <span class="st">"Contorno no estato do Rio de Janeiro"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -652,14 +697,14 @@ Slides do Capítulo 2 - Tipologia dos Dados Espaciais
 <section id="visualizar-o-mapa-com-os-pontos" class="level4">
 <h4 class="anchored" data-anchor-id="visualizar-o-mapa-com-os-pontos">Visualizar o mapa com os pontos</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotar</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_sf</span>(<span class="at">data =</span> rj_contorno, <span class="at">fill =</span> <span class="st">"lightgreen"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_sf</span>(<span class="at">data =</span> pontos_sf, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="fl">1.0</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Focos de Queimadas - Rio de Janeiro"</span>,</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Fonte: INPE"</span>) <span class="sc">+</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -734,24 +779,24 @@ Slides do Capítulo 2 - Tipologia dos Dados Espaciais
 <ul>
 <li>Umas das aplicações mais importantes da geoestatística é a interpolação de dados, ou seja, estimação de valores em locais onde não há medição.</li>
 </ul>
-<div class="box-dica2">
-<p>Neste tipo de dado, o evento aleatório de interesse é a posição espacial onde o fenômeno ocorre, e não uma variável medida em si. A análise busca entender se os pontos seguem um padrão aleatório, agrupado (clusters) ou disperso no espaço.</p>
-</div>
+<!-- ::: box-dica2 -->
+<!-- Neste tipo de dado, o evento aleatório de interesse é a posição espacial onde o fenômeno ocorre, e não uma variável medida em si. A análise busca entender se os pontos seguem um padrão aleatório, agrupado (clusters) ou disperso no espaço. -->
+<!-- ::: -->
 <section id="exemplo-os-focos-com-os-frp-fire-radiative-power-ocorridos-no-estado-do-rio-de-janeirobrasil-no-mês-de-dezembro-de-2025." class="level3" data-number="3.2.1">
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="exemplo-os-focos-com-os-frp-fire-radiative-power-ocorridos-no-estado-do-rio-de-janeirobrasil-no-mês-de-dezembro-de-2025."><span class="header-section-number">3.2.1</span> <strong>Exemplo:</strong> Os focos com os FRP (<em>Fire Radiative Power</em>) ocorridos no estado do Rio de Janeiro/Brasil no mês de dezembro de 2025.</h3>
 <ul>
 <li>Primeiro vamos ler dos dados:</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar o arquivo</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>dados_geo <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"dados/queimadas/queimadas_geo.xlsx"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>dados_geo <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"dados/queimadas/queimadas_geo.xlsx"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="olhando-os-dados-1" class="level4">
 <h4 class="anchored" data-anchor-id="olhando-os-dados-1">Olhando os dados:</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dados_geo)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dados_geo)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -764,18 +809,18 @@ Slides do Capítulo 2 - Tipologia dos Dados Espaciais
 <section id="transformar-os-dados-em-um-objeto-espacial" class="level4">
 <h4 class="anchored" data-anchor-id="transformar-os-dados-em-um-objeto-espacial">Transformar os dados em um objeto espacial:</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sp)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sp)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>sp<span class="sc">::</span><span class="fu">coordinates</span>(dados_geo) <span class="ot">&lt;-</span> <span class="er">~</span>  longitude <span class="sc">+</span> latitude</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Definindo a projeção</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">proj4string</span>(dados_geo) <span class="ot">&lt;-</span> <span class="fu">CRS</span>(<span class="st">"+init=epsg:4326"</span>)  <span class="co"># WGS84</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">proj4string</span>(dados_geo) <span class="ot">&lt;-</span> <span class="fu">CRS</span>(<span class="st">"+init=epsg:4326"</span>)  <span class="co"># WGS84</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="plotar-os-pontos" class="level4">
 <h4 class="anchored" data-anchor-id="plotar-os-pontos">Plotar os pontos:</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">spplot</span>(dados_geo[<span class="st">'frp'</span>], <span class="at">scales=</span><span class="fu">list</span>(<span class="at">draw=</span>T), <span class="at">key.space=</span><span class="st">"right"</span>, <span class="at">colorkey=</span>T)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">spplot</span>(dados_geo[<span class="st">'frp'</span>], <span class="at">scales=</span><span class="fu">list</span>(<span class="at">draw=</span>T), <span class="at">key.space=</span><span class="st">"right"</span>, <span class="at">colorkey=</span>T)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -790,16 +835,16 @@ Slides do Capítulo 2 - Tipologia dos Dados Espaciais
 <section id="baixando-o-mapa-via-biblioteca-geobr-1" class="level5">
 <h5 class="anchored" data-anchor-id="baixando-o-mapa-via-biblioteca-geobr-1">Baixando o mapa via biblioteca <code>geobr</code></h5>
 <div class="cell" data-layout-align="center" data-comments="null">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geobr)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geobr)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Baixar polígono do RJ (código IBGE = 33)</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>rj_contorno <span class="ot">&lt;-</span> <span class="fu">read_state</span>(<span class="at">code_state =</span> <span class="dv">33</span>, <span class="at">year =</span> <span class="dv">2020</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>rj_contorno <span class="ot">&lt;-</span> <span class="fu">read_state</span>(<span class="at">code_state =</span> <span class="dv">33</span>, <span class="at">year =</span> <span class="dv">2020</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="lendo-o-arquivo.shp-1" class="level5">
 <h5 class="anchored" data-anchor-id="lendo-o-arquivo.shp-1">Lendo o <code>arquivo.shp</code></h5>
 <div class="cell" data-layout-align="center" data-comments="null">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>rj_contorno <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"malhas/rj_contorno.shp"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>rj_contorno <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"malhas/rj_contorno.shp"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Reading layer `rj_contorno' from data source 
 #&gt;   `/home/wagner/Downloads/spatial_ebook_quarto/spatial_ebook_project/malhas/rj_contorno.shp' 
@@ -816,7 +861,7 @@ Slides do Capítulo 2 - Tipologia dos Dados Espaciais
 <section id="plotando-o-bubble-plot-com-gradiente-de-cor-por-intensidade" class="level4">
 <h4 class="anchored" data-anchor-id="plotando-o-bubble-plot-com-gradiente-de-cor-por-intensidade">Plotando o Bubble plot com gradiente de cor por intensidade</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Converter objetos sp para sf</span></span>
@@ -829,7 +874,7 @@ Slides do Capítulo 2 - Tipologia dos Dados Espaciais
 <span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">name =</span> <span class="st">"FRP"</span>, <span class="at">option =</span> <span class="st">"plasma"</span>) <span class="sc">+</span></span>
 <span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribuição Espacial do FRP"</span>,</span>
 <span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Estado do Rio de Janeiro"</span>) <span class="sc">+</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -845,9 +890,9 @@ Slides do Capítulo 2 - Tipologia dos Dados Espaciais
 <h2 data-number="3.3" class="anchored" data-anchor-id="dados-de-área"><span class="header-section-number">3.3</span> Dados de Área</h2>
 <p>Na análise espacial por áreas, o atributo de interesse costuma ser uma medida agregada (como contagem de casos, taxa de mortalidade, média de renda, etc.) calculada dentro de uma unidade geográfica bem definidas (como bairros, municípios, setores censitários ou regiões administrativas.)</p>
 <p>Essas áreas são representadas por polígonos, que podem ter formas irregulares e manter relações espaciais com as áreas vizinhas, seja por fronteiras compartilhadas, conexões físicas (como estradas e rios), ou por semelhanças em características socioeconômicas (como nível de renda ou acesso a serviços).</p>
-<div class="box-dica2">
-<p>O objetivo da análise de dados de área é identificar, explicar e interpretar padrões espaciais e tendências que ocorrem entre essas unidades geográficas pré-definidas.</p>
-</div>
+<!-- ::: box-dica2 -->
+<!-- O objetivo da análise de dados de área é identificar, explicar e interpretar padrões espaciais e tendências que ocorrem entre essas unidades geográficas pré-definidas. -->
+<!-- ::: -->
 <ul>
 <li><p>Estrutura dos dados de área</p>
 <table class="caption-top table">
@@ -908,14 +953,14 @@ Slides do Capítulo 2 - Tipologia dos Dados Espaciais
 <section id="lendo-os-dados-1" class="level4">
 <h4 class="anchored" data-anchor-id="lendo-os-dados-1">Lendo os dados:</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lendo a base de queimadas</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>dados_area <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"dados/queimadas/queimadas_area.xlsx"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lendo a base de queimadas</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>dados_area <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"dados/queimadas/queimadas_area.xlsx"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="olhando-os-dados-2" class="level4">
 <h4 class="anchored" data-anchor-id="olhando-os-dados-2">Olhando os dados:</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dados_area)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dados_area)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -931,7 +976,7 @@ Slides do Capítulo 2 - Tipologia dos Dados Espaciais
 <h5 class="anchored" data-anchor-id="baixando-via-geobr">Baixando via <code>geobr</code></h5>
 <p>Para acessar os dados dos limites territoriais de todos os estados brasileiros é necessário utilizar a função <code>read_state</code>.</p>
 <div class="cell" data-layout-align="center" data-comments="null">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================================</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================================</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. BAIXAR MALHA MUNICIPAL DO RJ</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================================</span></span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geobr)</span>
@@ -941,19 +986,19 @@ Slides do Capítulo 2 - Tipologia dos Dados Espaciais
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co"># code_muni = 33 (código do estado do RJ)</span></span>
 <span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>mapa_rj <span class="ot">&lt;-</span> <span class="fu">read_municipality</span>(<span class="at">code_muni =</span> <span class="dv">33</span>, <span class="at">year =</span> <span class="dv">2024</span>) <span class="sc">|&gt;</span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>           <span class="fu">mutate</span>(<span class="at">code_muni =</span> <span class="fu">as.character</span>(code_muni))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>           <span class="fu">mutate</span>(<span class="at">code_muni =</span> <span class="fu">as.character</span>(code_muni))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="lendo-o-arquivo.shp-2" class="level5">
 <h5 class="anchored" data-anchor-id="lendo-o-arquivo.shp-2">Lendo o <code>arquivo.shp</code></h5>
 <p>Supondo o <code>shape file</code> já estar em algum diretório.</p>
 <div class="cell" data-layout-align="center" data-comments="null">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>mapa_rj <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"malhas/mapa_rj.shp"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>mapa_rj <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"malhas/mapa_rj.shp"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Renomeando as variáveis para ser semelhante ao objeto proveniente do <code>geobr</code>:</p>
 <div class="cell" data-layout-align="center" data-comments="null">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>mapa_rj <span class="ot">&lt;-</span> mapa_rj <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>mapa_rj <span class="ot">&lt;-</span> mapa_rj <span class="sc">%&gt;%</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">code_muni   =</span> code_mn,</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">name_muni =</span> name_mn,</span>
@@ -963,17 +1008,17 @@ Slides do Capítulo 2 - Tipologia dos Dados Espaciais
 <span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">code_region  =</span> cod_rgn,</span>
 <span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">name_region  =</span> nam_rgn,</span>
 <span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom         =</span> geometry</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
 <section id="plotando-o-mapa-apenas-com-as-geometrias" class="level4">
 <h4 class="anchored" data-anchor-id="plotando-o-mapa-apenas-com-as-geometrias">Plotando o mapa apenas com as geometrias</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar rapidamente o mapa</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span> </span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -986,7 +1031,7 @@ Slides do Capítulo 2 - Tipologia dos Dados Espaciais
 <section id="padronizando-as-chaves-primárias" class="level4">
 <h4 class="anchored" data-anchor-id="padronizando-as-chaves-primárias">Padronizando as chaves primárias</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Padronizar os nomes dos municípios em ambos os dataframes</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Padronizar os nomes dos municípios em ambos os dataframes</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>mapa_rj <span class="ot">&lt;-</span> mapa_rj <span class="sc">%&gt;%</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">name_mn =</span> <span class="fu">tolower</span>(name_muni))</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -995,13 +1040,13 @@ Slides do Capítulo 2 - Tipologia dos Dados Espaciais
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Fazer o left join usando as novas colunas padronizadas</span></span>
 <span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>mapa_rj <span class="ot">&lt;-</span> mapa_rj <span class="sc">%&gt;%</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(dados_area, <span class="at">by =</span> <span class="st">"name_mn"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(dados_area, <span class="at">by =</span> <span class="st">"name_mn"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="plotando-o-mapa-temático" class="level4">
 <h4 class="anchored" data-anchor-id="plotando-o-mapa-temático">Plotando o mapa temático</h4>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mapa_seq <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mapa_seq <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> media_frp), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradientn</span>(</span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"#2c7bb6"</span>, <span class="st">"#abd9e9"</span>, <span class="st">"#ffffbf"</span>, <span class="st">"#fdae61"</span>, <span class="st">"#d7191c"</span>),</span>
@@ -1010,7 +1055,7 @@ Slides do Capítulo 2 - Tipologia dos Dados Espaciais
 <span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"FRP médio no estado do Rio de Janeiro"</span>) <span class="sc">+</span></span>
 <span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
 <span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>mapa_seq</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>mapa_seq</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1091,13 +1136,14 @@ Slides do Capítulo 2 - Tipologia dos Dados Espaciais
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

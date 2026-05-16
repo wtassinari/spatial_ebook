@@ -6,8 +6,8 @@
 <script src="01-introducao_slides_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="01-introducao_slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="01-introducao_slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="01-introducao_slides_files/libs/quarto-html/quarto-syntax-highlighting-af5ec82acda093b5ee751184164e9432.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.31">
+<link href="01-introducao_slides_files/libs/quarto-html/quarto-syntax-highlighting-9e5c7bf9fbb22184c3d5797f9fbacf74.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.36">
 
   <meta name="author" content="Prof.&nbsp;Wagner Tassinari">
   <title>Introdução à Estatística Espacial</title>
@@ -17,6 +17,9 @@
   <link rel="stylesheet" href="01-introducao_slides_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="01-introducao_slides_files/libs/revealjs/dist/reveal.css">
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -29,7 +32,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="01-introducao_slides_files/libs/revealjs/dist/theme/quarto-67af64ce27563527bdbf278b6012b166.css">
+  <link rel="stylesheet" href="01-introducao_slides_files/libs/revealjs/dist/theme/quarto-a3d64dc423ab6007c3735ac81248ed8e.css">
   <link href="01-introducao_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="01-introducao_slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="01-introducao_slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -431,7 +434,7 @@ Fonte: Elaboração própria com auxílio do modelo de IA Gemini (GOOGLE, 2026).
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -505,13 +508,14 @@ Fonte: Elaboração própria com auxílio do modelo de IA Gemini (GOOGLE, 2026).
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

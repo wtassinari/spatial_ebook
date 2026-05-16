@@ -15,6 +15,11 @@ Ao final deste capítulo, o estudante deverá ser capaz de:
 [Clique aqui para acessar a apresentação em Slides](apresentacoes/02-tipos_dados_slides.html){target="_blank"}
 :::
 
+::: {.callout-important}
+## Prática a respeito da Tipologia dos Dados Espaciais
+[Clique aqui para acessar o material](apresentacoes/tarefa_mapas_tematicos_geobr.html){target="_blank"}
+:::
+
 # Tipologia dos Dados Espaciais
 
 Os dados espaciais podem ser classificados segundo diferentes categorias, com base na natureza estocástica de suas observações e na forma como a informação geográfica é representada. Essa tipologia orienta a escolha de métodos estatísticos apropriados para análise.
@@ -101,11 +106,11 @@ pontos_sf <- st_as_sf(dados_pontos,
 
 📌 O que é CRS (Coordinate Reference System) ?
 
-O CRS é como uma “regra de tradução” entre o que está em um mapa e o mundo real. Ele define como as coordenadas (como 140, 12) se relacionam com locais verdadeiros na Terra, dizendo se os valores estão em metros, graus ou outra unidade, e onde fica o ponto de partida (a origem). Sem um CRS, uma coordenada não tem significado, pois não sabemos onde ela realmente está nem em que escala.
+O CRS é como uma “regra de tradução” entre o que está em um mapa e o mundo real. Ele define como as coordenadas (como o par  de coordenadas $(x,y)$ $\rightarrow$  $(140, 12)$) se relacionam com locais verdadeiros na Terra, dizendo se os valores estão em metros, graus ou outra unidade, e onde fica o ponto de partida (a origem). Sem um CRS, uma coordenada não tem significado, pois não sabemos onde ela realmente está nem em que escala.
 
 🗺️ Por que isso é importante ?
 
-Se dois mapas tiverem CRSs diferentes, os pontos não vão se alinhar corretamente — como tentar juntar peças de quebra-cabeça de caixas diferentes. Usar o CRS certo garante que todas as informações espaciais estejam bem posicionadas e coerentes. Por exemplo, o WGS 84 é usado por GPS e Google Maps (em graus), enquanto o UTM é usado para mapas locais mais precisos (em metros). Saber isso evita erros em análises espaciais e garante que os dados “conversem” entre si.
+Se dois mapas tiverem CRSs diferentes, os pontos não vão se alinhar corretamente, seria como tentar juntar peças de quebra-cabeça de caixas diferentes. Usar o CRS certo garante que todas as informações espaciais estejam bem posicionadas e coerentes. Por exemplo, o WGS 84 é usado por GPS e Google Maps (em graus), enquanto o UTM é usado para mapas locais mais precisos (em metros). Saber isso evita erros em análises espaciais e garante que os dados “conversem” entre si.
 
 **OBS:** Se quiser saber um pouco mais a respeito do CRS, basta acessar ([link](https://rspatial.org/raster/spatial/6-crs.html))
 
@@ -182,10 +187,10 @@ knitr::include_graphics('figuras/dados_geoestatisticos.png')
 * Umas das aplicações mais importantes da geoestatística é a interpolação de dados, ou seja, estimação de valores em locais onde não há medição.
 
 
-::: box-dica2
-Neste tipo de dado, o evento aleatório de interesse é a posição espacial onde o fenômeno ocorre, e não uma variável medida em si. A análise busca entender se os pontos seguem um padrão aleatório, agrupado (clusters) ou disperso no espaço.
+<!-- ::: box-dica2 -->
+<!-- Neste tipo de dado, o evento aleatório de interesse é a posição espacial onde o fenômeno ocorre, e não uma variável medida em si. A análise busca entender se os pontos seguem um padrão aleatório, agrupado (clusters) ou disperso no espaço. -->
 
-:::
+<!-- ::: -->
 
 ### **Exemplo:** Os focos com os FRP (*Fire Radiative Power*) ocorridos no estado do Rio de Janeiro/Brasil no mês de dezembro de 2025.
 
@@ -266,10 +271,10 @@ Na análise espacial por áreas, o atributo de interesse costuma ser uma medida 
 
 Essas áreas são representadas por polígonos, que podem ter formas irregulares e manter relações espaciais com as áreas vizinhas, seja por fronteiras compartilhadas, conexões físicas (como estradas e rios), ou por semelhanças em características socioeconômicas (como nível de renda ou acesso a serviços).
 
-::: box-dica2
-O objetivo da análise de dados de área é identificar, explicar e interpretar padrões espaciais e tendências que ocorrem entre essas unidades geográficas pré-definidas.
+<!-- ::: box-dica2 -->
+<!-- O objetivo da análise de dados de área é identificar, explicar e interpretar padrões espaciais e tendências que ocorrem entre essas unidades geográficas pré-definidas. -->
 
-:::
+<!-- ::: -->
 
 * Estrutura dos dados de área
 
