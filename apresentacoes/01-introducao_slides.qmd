@@ -19,22 +19,32 @@ format:
 
 ## O que é Análise Estatística Espacial?
 
+<div style="font-size: 80%;">
+
 - São métodos estatísticos que levam em consideração a localização espacial do fenômeno estudado.
 - Segundo Bailey & Gatrell (1995): 
   > *"A análise estatística espacial é aplicada quando os dados possuem localização geográfica e quando o arranjo espacial desses dados é considerado relevante para a análise e interpretação dos resultados."*
+  
+</div>
 
 ## Padrões Espaciais
 
+<div style="font-size: 80%;">
+
 A primeira questão a ser considerada é: os dados seguem um padrão aleatório ou indicam a presença de agregações bem definidas (*clusters*)?
+</div>
 
 ![](figuras/padrao_espacial.png){fig-align="center" width="80%"}
 <div style="text-align: center; font-size: 12px;">Fonte: Elaboração própria com auxílio do ChatGPT (OpenAI, 2026).</div>
 
 ## Origem da Estatística Espacial
 
+<div style="font-size: 80%;">
 <p> O uso de dados espaciais na saúde teve um marco histórico com **John Snow**, que em 1854 mapeou um surto de cólera em Londres.</p>
+</div>
 
-![](figuras/snow_2026.png){fig-align="center" width="60%"}
+![](figuras/snow_2026.png){fig-align="center" width="80%"}
+
 <div style="text-align: center; font-size: 14px;">Mapeamento dos casos de cólera ($\bullet$) e as bombas de água (X) em Londres, 1854.</div>
 
 
@@ -48,6 +58,7 @@ Retrato na fachada de um pub, réplica da bomba de água da Broad Street e placa
 
 ## Objetivos da Estatística Espacial
 
+<div style="font-size: 80%;">
 1. **Investigar padrões espaciais e espaço-temporais:**
    - Utilizar Análise Exploratória de Dados Espaciais (AEDE) e medidas de correlação espacial.
    - Identificar estruturas, agrupamentos e dependências nos dados geográficos.
@@ -55,14 +66,18 @@ Retrato na fachada de um pub, réplica da bomba de água da Broad Street e placa
 2. **Modelar fenômenos espaciais:**
    - Controlar efeitos de vizinhança (dependência espacial) e heterogeneidade geográfica.
    - Utilizar modelos estatísticos apropriados (ex: SAR, CAR, GWR).
+</div>
 
 ## Dependência ou Autocorrelação Espacial
 
+<div style="font-size: 80%;">
 - Valores próximos no espaço tendem a ser mais semelhantes entre si do que valores distantes.
 - A dependência ocorre em múltiplas direções e diminui conforme aumenta a distância.
 - Modelos que incorporam *dependência estatística* costumam ser mais realistas em contextos espaciais (Cressie, 1991).
 
 > *"Todas as coisas se parecem, porém coisas mais próximas tendem a ser mais semelhantes do que aquelas mais distantes."* (Tobler, 1979). 
+
+</div>
 
 <div style="color:red; font-weight:bold; text-align:center; margin-top: 20px;">Também conhecida como 1ª Lei da Geografia</div>
 
@@ -102,8 +117,10 @@ Retrato na fachada de um pub, réplica da bomba de água da Broad Street e placa
 
 ## Bibliografia Básica Sugerida
 
-- Waller, L.A.; Gotway, C.A. (2004). *Applied Spatial Statistics for Public Health Data*.
+<div style="font-size: 80%;">
+
 - Bivand, R.S. et al. (2013). *Applied Spatial Data Analysis with R*.
 - Cressie, N. (1993). *Statistics for Spatial Data*.
 - Druck, S. et al. (2004). *Análise Espacial de Dados Geográficos*.
 - Lovelace, R. et al. (2021). *Geocomputation with R*.
+- Waller, L.A.; Gotway, C.A. (2004). *Applied Spatial Statistics for Public Health Data*.
