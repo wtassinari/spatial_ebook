@@ -1679,3 +1679,96 @@ Não existe uma regra simples para escolher entre elas. Abaixo está um resumo d
 * **Bayes Empírico Espacial**: Suaviza as taxas locais em direção à referência local. É recomendado quando há pelo menos alguma autocorrelação espacial nas taxas, de modo que as regiões próximas servem como uma priori mais informativa do que a média global. É especialmente útil quando a doença não é rara, mas a população em risco é pequena.
 
 Como em muitas coisas na análise epidemiológica, há um papel importante para a ciência, mas também uma necessidade de especialistas que possam se envolver na "arte" da análise.
+
+## Bõnus: Adicionando a conexão Rio-Niterói
+
+### Aqui iremos adicionar manualmente a conexão Rio-Niterói
+
+Aqui está o detalhe importante: Rio de Janeiro e Niterói não compartilham uma fronteira terrestre porque estão separados pela água (Baía de Guanabara). Mas em muitas análises, você pode querer tratá-los como vizinhos mesmo assim, porque:
+
+- Estão muito próximos geograficamente
+- Há grande fluxo de pessoas entre eles (trabalho, comércio)
+- Compartilham características socioeconômicas similares
+- Podem ter políticas integradas
+
+O script vai adicionar essa conexão artificialmente, criando um "link" entre eles na matriz.
+
+```{r}
+#| message: false
+#| warning: false
+
+# ============================================================================
+# BAIXAR MALHA MUNICIPAL DO RJ
+# ============================================================================
+library(dplyr)
+library(geobr)
+
+# ============================================================================
+# BAIXANDO A MALHA MUNICIPAL DO ESTADO DO RIO DE JANEIRO
+# ============================================================================
+# code_muni = 33 (código do estado do RJ)
+
+mapa_rj <- read_municipality(code_muni = 33, year = 2024) |>
+  mutate(code_muni = as.character(code_muni))
+
+# ============================================================================
+# MATRIZ DE VIZINHANÇA DOS MUNICÍPIOS DO RIO DE JANEIRO
+# ============================================================================
+
+library(spdep)
+library(sf)
+library(ggplot2)
+
+# ============================================================================
+# 1. CRIAR A MATRIZ DE VIZINHANÇA
+# ============================================================================
+
+# Criar lista de vizinhos baseada em contiguidade (critério "rainha" - queen)
+# queen = TRUE considera vizinhos que compartilham qualquer ponto da fronteira
+vizinhos_rainha <- poly2nb(mapa_rj, queen = TRUE)
+
+# ============================================================================
+# 2. ADICIONAR CONEXÃO MANUAL ENTRE RIO DE JANEIRO E NITERÓI
+# ============================================================================
+
+# Primeiro, precisamos identificar os índices (posições) dos municípios de 
+# Rio de Janeiro e Niterói no objeto mapa_rj.
+# Assumindo que a coluna com os nomes dos municípios se chama "name_muni" 
+# (ajuste o nome da coluna se for diferente no seu shapefile).
+idx_rj <- which(mapa_rj$name_muni == "Rio de Janeiro")
+idx_niteroi <- which(mapa_rj$name_muni == "Niterói")
+
+# Adicionar conexão 
+vizinhos_rainha[[idx_rj]] <- c(vizinhos_rainha[[idx_rj]], idx_niteroi)
+vizinhos_rainha[[idx_niteroi]] <- c(vizinhos_rainha[[idx_niteroi]], idx_rj)
+
+# ============================================================================
+# 3. PREPARAR DADOS PARA PLOTAGEM
+# ============================================================================
+
+# Coordenadas dos centroides dos poligonos do RJ
+coord <- st_coordinates(st_centroid(st_geometry(mapa_rj)))
+
+# Converte a lista de vizinhos espaciais em linhas e depois transforma em um objeto sf
+viz.sf <- as(nb2lines(vizinhos_rainha, coords = coord), 'sf')
+
+# Atribui ao objeto viz.sf o mesmo sistema de coordenadas (CRS) do mapa do Rio de Janeiro
+viz.sf <- st_set_crs(viz.sf, st_crs(mapa_rj))
+
+# ============================================================================
+# 4. PLOTAR O GRAFO DE CONECTIVIDADE
+# ============================================================================
+
+# Figure 1: Mapa de vizinhança por conectividade com a ligação Rio-Niterói
+mapa.viz <- ggplot(mapa_rj) + 
+  geom_sf(fill = "pink", color = "#4A4A4A", linewidth = 0.3) +
+  geom_sf(data = viz.sf, aes(color = "darkblue"), linewidth = 0.5, show.legend = FALSE) +
+  scale_color_identity() +  # força a cor exata
+  theme_minimal() +
+  ggtitle("Vizinhança por conectividade (vizinhos_rainha)") +
+  ylab("Latitude") +
+  xlab("Longitude")
+
+# Exibir o mapa
+mapa.viz
+```

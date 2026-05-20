@@ -493,6 +493,10 @@ window.Quarto = {
   <li><a href="#exemplo-prático-em-r-bayes-empírico-local" id="toc-exemplo-prático-em-r-bayes-empírico-local" class="nav-link" data-scroll-target="#exemplo-prático-em-r-bayes-empírico-local"><span class="header-section-number">4.10.5</span> Exemplo Prático em R: Bayes Empírico Local</a></li>
   <li><a href="#considerações-finais-fazendo-escolhas" id="toc-considerações-finais-fazendo-escolhas" class="nav-link" data-scroll-target="#considerações-finais-fazendo-escolhas"><span class="header-section-number">4.10.6</span> Considerações Finais: Fazendo Escolhas</a></li>
   </ul></li>
+  <li><a href="#bõnus-adicionando-a-conexão-rio-niterói" id="toc-bõnus-adicionando-a-conexão-rio-niterói" class="nav-link" data-scroll-target="#bõnus-adicionando-a-conexão-rio-niterói"><span class="header-section-number">4.11</span> Bõnus: Adicionando a conexão Rio-Niterói</a>
+  <ul class="collapse">
+  <li><a href="#aqui-iremos-adicionar-manualmente-a-conexão-rio-niterói" id="toc-aqui-iremos-adicionar-manualmente-a-conexão-rio-niterói" class="nav-link" data-scroll-target="#aqui-iremos-adicionar-manualmente-a-conexão-rio-niterói"><span class="header-section-number">4.11.1</span> Aqui iremos adicionar manualmente a conexão Rio-Niterói</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -2886,6 +2890,103 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <li><p><strong>Bayes Empírico Espacial</strong>: Suaviza as taxas locais em direção à referência local. É recomendado quando há pelo menos alguma autocorrelação espacial nas taxas, de modo que as regiões próximas servem como uma priori mais informativa do que a média global. É especialmente útil quando a doença não é rara, mas a população em risco é pequena.</p></li>
 </ul>
 <p>Como em muitas coisas na análise epidemiológica, há um papel importante para a ciência, mas também uma necessidade de especialistas que possam se envolver na “arte” da análise.</p>
+</section>
+</section>
+<section id="bõnus-adicionando-a-conexão-rio-niterói" class="level2" data-number="4.11">
+<h2 data-number="4.11" class="anchored" data-anchor-id="bõnus-adicionando-a-conexão-rio-niterói"><span class="header-section-number">4.11</span> Bõnus: Adicionando a conexão Rio-Niterói</h2>
+<section id="aqui-iremos-adicionar-manualmente-a-conexão-rio-niterói" class="level3" data-number="4.11.1">
+<h3 data-number="4.11.1" class="anchored" data-anchor-id="aqui-iremos-adicionar-manualmente-a-conexão-rio-niterói"><span class="header-section-number">4.11.1</span> Aqui iremos adicionar manualmente a conexão Rio-Niterói</h3>
+<p>Aqui está o detalhe importante: Rio de Janeiro e Niterói não compartilham uma fronteira terrestre porque estão separados pela água (Baía de Guanabara). Mas em muitas análises, você pode querer tratá-los como vizinhos mesmo assim, porque:</p>
+<ul>
+<li>Estão muito próximos geograficamente</li>
+<li>Há grande fluxo de pessoas entre eles (trabalho, comércio)</li>
+<li>Compartilham características socioeconômicas similares</li>
+<li>Podem ter políticas integradas</li>
+</ul>
+<p>O script vai adicionar essa conexão artificialmente, criando um “link” entre eles na matriz.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================================</span></span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="co"># BAIXAR MALHA MUNICIPAL DO RJ</span></span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================================</span></span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geobr)</span>
+<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-7"><a href="#cb78-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================================</span></span>
+<span id="cb78-8"><a href="#cb78-8" aria-hidden="true" tabindex="-1"></a><span class="co"># BAIXANDO A MALHA MUNICIPAL DO ESTADO DO RIO DE JANEIRO</span></span>
+<span id="cb78-9"><a href="#cb78-9" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================================</span></span>
+<span id="cb78-10"><a href="#cb78-10" aria-hidden="true" tabindex="-1"></a><span class="co"># code_muni = 33 (código do estado do RJ)</span></span>
+<span id="cb78-11"><a href="#cb78-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-12"><a href="#cb78-12" aria-hidden="true" tabindex="-1"></a>mapa_rj <span class="ot">&lt;-</span> <span class="fu">read_municipality</span>(<span class="at">code_muni =</span> <span class="dv">33</span>, <span class="at">year =</span> <span class="dv">2024</span>) <span class="sc">|&gt;</span></span>
+<span id="cb78-13"><a href="#cb78-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">code_muni =</span> <span class="fu">as.character</span>(code_muni))</span>
+<span id="cb78-14"><a href="#cb78-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-15"><a href="#cb78-15" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================================</span></span>
+<span id="cb78-16"><a href="#cb78-16" aria-hidden="true" tabindex="-1"></a><span class="co"># MATRIZ DE VIZINHANÇA DOS MUNICÍPIOS DO RIO DE JANEIRO</span></span>
+<span id="cb78-17"><a href="#cb78-17" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================================</span></span>
+<span id="cb78-18"><a href="#cb78-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-19"><a href="#cb78-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spdep)</span>
+<span id="cb78-20"><a href="#cb78-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb78-21"><a href="#cb78-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb78-22"><a href="#cb78-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-23"><a href="#cb78-23" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================================</span></span>
+<span id="cb78-24"><a href="#cb78-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. CRIAR A MATRIZ DE VIZINHANÇA</span></span>
+<span id="cb78-25"><a href="#cb78-25" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================================</span></span>
+<span id="cb78-26"><a href="#cb78-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-27"><a href="#cb78-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar lista de vizinhos baseada em contiguidade (critério "rainha" - queen)</span></span>
+<span id="cb78-28"><a href="#cb78-28" aria-hidden="true" tabindex="-1"></a><span class="co"># queen = TRUE considera vizinhos que compartilham qualquer ponto da fronteira</span></span>
+<span id="cb78-29"><a href="#cb78-29" aria-hidden="true" tabindex="-1"></a>vizinhos_rainha <span class="ot">&lt;-</span> <span class="fu">poly2nb</span>(mapa_rj, <span class="at">queen =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb78-30"><a href="#cb78-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-31"><a href="#cb78-31" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================================</span></span>
+<span id="cb78-32"><a href="#cb78-32" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. ADICIONAR CONEXÃO MANUAL ENTRE RIO DE JANEIRO E NITERÓI</span></span>
+<span id="cb78-33"><a href="#cb78-33" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================================</span></span>
+<span id="cb78-34"><a href="#cb78-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-35"><a href="#cb78-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Primeiro, precisamos identificar os índices (posições) dos municípios de </span></span>
+<span id="cb78-36"><a href="#cb78-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Rio de Janeiro e Niterói no objeto mapa_rj.</span></span>
+<span id="cb78-37"><a href="#cb78-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Assumindo que a coluna com os nomes dos municípios se chama "name_muni" </span></span>
+<span id="cb78-38"><a href="#cb78-38" aria-hidden="true" tabindex="-1"></a><span class="co"># (ajuste o nome da coluna se for diferente no seu shapefile).</span></span>
+<span id="cb78-39"><a href="#cb78-39" aria-hidden="true" tabindex="-1"></a>idx_rj <span class="ot">&lt;-</span> <span class="fu">which</span>(mapa_rj<span class="sc">$</span>name_muni <span class="sc">==</span> <span class="st">"Rio de Janeiro"</span>)</span>
+<span id="cb78-40"><a href="#cb78-40" aria-hidden="true" tabindex="-1"></a>idx_niteroi <span class="ot">&lt;-</span> <span class="fu">which</span>(mapa_rj<span class="sc">$</span>name_muni <span class="sc">==</span> <span class="st">"Niterói"</span>)</span>
+<span id="cb78-41"><a href="#cb78-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-42"><a href="#cb78-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Adicionar conexão </span></span>
+<span id="cb78-43"><a href="#cb78-43" aria-hidden="true" tabindex="-1"></a>vizinhos_rainha[[idx_rj]] <span class="ot">&lt;-</span> <span class="fu">c</span>(vizinhos_rainha[[idx_rj]], idx_niteroi)</span>
+<span id="cb78-44"><a href="#cb78-44" aria-hidden="true" tabindex="-1"></a>vizinhos_rainha[[idx_niteroi]] <span class="ot">&lt;-</span> <span class="fu">c</span>(vizinhos_rainha[[idx_niteroi]], idx_rj)</span>
+<span id="cb78-45"><a href="#cb78-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-46"><a href="#cb78-46" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================================</span></span>
+<span id="cb78-47"><a href="#cb78-47" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. PREPARAR DADOS PARA PLOTAGEM</span></span>
+<span id="cb78-48"><a href="#cb78-48" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================================</span></span>
+<span id="cb78-49"><a href="#cb78-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-50"><a href="#cb78-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Coordenadas dos centroides dos poligonos do RJ</span></span>
+<span id="cb78-51"><a href="#cb78-51" aria-hidden="true" tabindex="-1"></a>coord <span class="ot">&lt;-</span> <span class="fu">st_coordinates</span>(<span class="fu">st_centroid</span>(<span class="fu">st_geometry</span>(mapa_rj)))</span>
+<span id="cb78-52"><a href="#cb78-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-53"><a href="#cb78-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Converte a lista de vizinhos espaciais em linhas e depois transforma em um objeto sf</span></span>
+<span id="cb78-54"><a href="#cb78-54" aria-hidden="true" tabindex="-1"></a>viz.sf <span class="ot">&lt;-</span> <span class="fu">as</span>(<span class="fu">nb2lines</span>(vizinhos_rainha, <span class="at">coords =</span> coord), <span class="st">'sf'</span>)</span>
+<span id="cb78-55"><a href="#cb78-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-56"><a href="#cb78-56" aria-hidden="true" tabindex="-1"></a><span class="co"># Atribui ao objeto viz.sf o mesmo sistema de coordenadas (CRS) do mapa do Rio de Janeiro</span></span>
+<span id="cb78-57"><a href="#cb78-57" aria-hidden="true" tabindex="-1"></a>viz.sf <span class="ot">&lt;-</span> <span class="fu">st_set_crs</span>(viz.sf, <span class="fu">st_crs</span>(mapa_rj))</span>
+<span id="cb78-58"><a href="#cb78-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-59"><a href="#cb78-59" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================================</span></span>
+<span id="cb78-60"><a href="#cb78-60" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. PLOTAR O GRAFO DE CONECTIVIDADE</span></span>
+<span id="cb78-61"><a href="#cb78-61" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================================</span></span>
+<span id="cb78-62"><a href="#cb78-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-63"><a href="#cb78-63" aria-hidden="true" tabindex="-1"></a><span class="co"># Figure 1: Mapa de vizinhança por conectividade com a ligação Rio-Niterói</span></span>
+<span id="cb78-64"><a href="#cb78-64" aria-hidden="true" tabindex="-1"></a>mapa.viz <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mapa_rj) <span class="sc">+</span> </span>
+<span id="cb78-65"><a href="#cb78-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="st">"pink"</span>, <span class="at">color =</span> <span class="st">"#4A4A4A"</span>, <span class="at">linewidth =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb78-66"><a href="#cb78-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> viz.sf, <span class="fu">aes</span>(<span class="at">color =</span> <span class="st">"darkblue"</span>), <span class="at">linewidth =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb78-67"><a href="#cb78-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_identity</span>() <span class="sc">+</span>  <span class="co"># força a cor exata</span></span>
+<span id="cb78-68"><a href="#cb78-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb78-69"><a href="#cb78-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Vizinhança por conectividade (vizinhos_rainha)"</span>) <span class="sc">+</span></span>
+<span id="cb78-70"><a href="#cb78-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Latitude"</span>) <span class="sc">+</span></span>
+<span id="cb78-71"><a href="#cb78-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Longitude"</span>)</span>
+<span id="cb78-72"><a href="#cb78-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-73"><a href="#cb78-73" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibir o mapa</span></span>
+<span id="cb78-74"><a href="#cb78-74" aria-hidden="true" tabindex="-1"></a>mapa.viz</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="04-dados_area_files/figure-html/unnamed-chunk-54-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 </section>
