@@ -101,7 +101,7 @@ O trabalho deverá conter as seguintes etapas:
 ## 📎 Entrega
 
 - **Formato:** `.qmd` ou `.Rmd` com código reprodutível;
-- **Prazo final:** **21/06/2026 até 00:00**;
+- **Prazo final:** **22/06/2026 até 00:00**;
 - **Trabalho:** Individual;
 - **Organização:** Utilize títulos e seções claras com boa organização visual do documento.
 
