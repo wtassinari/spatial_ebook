@@ -2,9 +2,9 @@
 
 ::: {.callout-important}
 ## Informações Importantes
-- **Formato de entrega:** `.qmd` ou `.Rmd` com código reprodutível
+- **Formato de entrega:** `.qmd` ou `.Rmd` com código reprodutível ou em `.pdf` com código e *outputs*
 - **Prazo:** 22/06/2025 até 00:00
-- **Envio:** [tassinari@ufrrj.br](mailto:tassinari@ufrrj.br)
+- **Envio:** Via tarefa cadastrada pelo SIGAA
 - **Modalidade:** Individual
 :::
 
@@ -13,7 +13,7 @@
 
 Este trabalho tem por objetivo aplicar os conhecimentos adquiridos ao longo do curso de **Estatística Espacial** utilizando dados geográficos de **área** (Análise Espacial em Dados de Área).
 
-Os alunos deverão trabalhar **individualmente** e a entrega será feita em formato **Quarto (.qmd)** ou **RMarkdown (.Rmd)** ou **Word (.docx)** até o dia **21/06 às 00:00**.
+Os alunos deverão trabalhar **individualmente** e a entrega será feita em formato **Quarto (.qmd)** ou **RMarkdown (.Rmd)** ou **PDF (.pdf)** até o dia **22/06 às 00:00**.
 
 ---
 
@@ -51,8 +51,8 @@ O trabalho deverá conter as seguintes etapas:
 
 - Carregamento e integração dos dados com a malha espacial;
 - Estatísticas descritivas da variável resposta (média, mediana, desvio padrão, quartis);
-- **Mapas coropléticos** mostrando a distribuição espacial da variável resposta;
-- Mapas das variáveis explicativas mais importantes;
+- **Mapas temáticos** mostrando a distribuição espacial da variável resposta;
+- **Mapas temáticos** das variáveis explicativas;
 - Histogramas, boxplots e tabelas resumo.
 
 #### 📍 **Medidas de Autocorrelação Espacial**
@@ -98,15 +98,6 @@ O trabalho deverá conter as seguintes etapas:
 
 ---
 
-## 📎 Entrega
-
-- **Formato:** `.qmd` ou `.Rmd` com código reprodutível;
-- **Prazo final:** **22/06/2026 até 00:00**;
-- **Trabalho:** Individual;
-- **Organização:** Utilize títulos e seções claras com boa organização visual do documento.
-
----
-
 ## ✅ Critérios de Avaliação
 
 - **Coerência técnica** na aplicação dos métodos espaciais;
@@ -144,7 +135,7 @@ library(gridExtra)       # Combinação de gráficos
 
 ## 💡 Dicas Importantes
 
-1. **Reprodutibilidade:** Certifique-se de que todo o código está comentado e que alguém consegue reproduzir sua análise executando o arquivo `.qmd` ou `.rmd`
+1. **Reprodutibilidade:** Certifique-se de que todo o código está comentado e que alguém consegue reproduzir sua análise executando o arquivo `.qmd` ou `.rmd`. Se fizer em `.pdf`, é necessário que todo código utilizado esteja presente + os *outputs* .
 
 2. **Visualizações:** Mapas e gráficos são fundamentais. Use cores apropriadas e legendas claras.
 

@@ -406,7 +406,7 @@
     "href": "06-trabalho_final.html",
     "title": "6  Trabalho Final",
     "section": "",
-    "text": "6.1 📌 Enunciado\nEste trabalho tem por objetivo aplicar os conhecimentos adquiridos ao longo do curso de Estatística Espacial utilizando dados geográficos de área (Análise Espacial em Dados de Área).\nOs alunos deverão trabalhar individualmente e a entrega será feita em formato Quarto (.qmd) ou RMarkdown (.Rmd) ou Word (.docx) até o dia 21/06 às 00:00.",
+    "text": "6.1 📌 Enunciado\nEste trabalho tem por objetivo aplicar os conhecimentos adquiridos ao longo do curso de Estatística Espacial utilizando dados geográficos de área (Análise Espacial em Dados de Área).\nOs alunos deverão trabalhar individualmente e a entrega será feita em formato Quarto (.qmd) ou RMarkdown (.Rmd) ou PDF (.pdf) até o dia 22/06 às 00:00.",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Trabalho Final</span>"
     ]
@@ -416,7 +416,7 @@
     "href": "06-trabalho_final.html#estrutura-do-trabalho",
     "title": "6  Trabalho Final",
     "section": "6.2 🗂️ Estrutura do Trabalho",
-    "text": "6.2 🗂️ Estrutura do Trabalho\n\n6.2.1 1. Seleção dos Dados\nO aluno deverá:\n\nUtilizar a função geobr::read_municipality() para baixar a malha do estatdo de Tocantins dividida por municípios;\nAs variáveis doa tabela que será utilizada para o trabalho é dados_tocantins_aeda.csv e dados_tocantins_aeda.xlsx são:\n\n\n\n\nColuna\nDescrição\n\n\n\n\ncodigo\nCódigo IBGE do município\n\n\nmunicipio\nNome oficial do município\n\n\ntmi\nTaxa de Mortalidade Infantil\n\n\nidhm\nIDH Municipal\n\n\nrenda\nRenda per capita\n\n\ndensidade\nDensidade demográfica\n\n\npopulacao\nPopulação\n\n\nescolaridade\nEscolaridade média\n\n\ntemperatura\nTemperatura média\n\n\nesperanca_vida\nEsperança de vida\n\n\n\n\nA variável principal (Resposta/Dependente) será a tmi.\n\n\n\n6.2.2 2. Análises Estatísticas e Espaciais\nO trabalho deverá conter as seguintes etapas:\n\n📊 Análise Descritiva Espacial (AEDE)\n\nCarregamento e integração dos dados com a malha espacial;\nEstatísticas descritivas da variável resposta (média, mediana, desvio padrão, quartis);\nMapas coropléticos mostrando a distribuição espacial da variável resposta;\nMapas das variáveis explicativas mais importantes;\nHistogramas, boxplots e tabelas resumo.\n\n\n\n📍 Medidas de Autocorrelação Espacial\n\nConstrução da matriz de vizinhança (contiguidade Rainha ou Torre);\nCálculo de pesos espaciais (nb2listw() com normalização row-standardized);\nTeste de Moran I Global para avaliar autocorrelação espacial global;\nÍndice de Moran I Local (LISA) para identificar clusters espaciais locais;\nClassificação de clusters: Alto-Alto (hotspots), Baixo-Baixo (coldspots), Alto-Baixo, Baixo-Alto;\nMapa LISA mostrando a distribuição espacial dos clusters;\nDiscussão dos padrões espaciais encontrados.\n\n\n\n📈 Modelagem Espacial\n\nModelo 1: Regressão Linear Ordinária (OLS)\n\nAjuste do modelo com variáveis explicativas;\nTeste de Moran nos resíduos para verificar adequação do modelo.\n\nModelo 2: Regressão Espacial SAR (Spatial Autoregressive)\n\nIncorporação da dependência espacial na variável resposta;\nInterpretação do coeficiente de autocorrelação espacial (ρ).\n\nModelo 3: Regressão Espacial CAR (Conditional Autoregressive)\n\nIncorporação da dependência espacial no termo de erro;\nInterpretação do coeficiente de autocorrelação espacial (λ).\n\nComparação de Modelos:\n\nCálculo do AIC (Akaike Information Criterion) para cada modelo;\nIdentificação do modelo com melhor ajuste;\nDiscussão das diferenças entre os modelos.\n\nAnálise de Resíduos:\n\nVisualização da distribuição dos resíduos (histogramas, Q-Q plots);\nTeste de normalidade (Shapiro-Wilk);\nVerificação de autocorrelação espacial nos resíduos.\n\n\n\n\n\n6.2.3 3. Conclusões e Discussões\n\nResumo das descobertas: Principais padrões espaciais identificados;\nInterpretação dos resultados: O que os testes e modelos revelam sobre a variável de interesse;\nDiscussão das limitações: Limitações dos dados, do modelo escolhido e das análises realizadas;\nSugestões para estudos futuros: Como o trabalho poderia ser expandido ou melhorado.",
+    "text": "6.2 🗂️ Estrutura do Trabalho\n\n6.2.1 1. Seleção dos Dados\nO aluno deverá:\n\nUtilizar a função geobr::read_municipality() para baixar a malha do estatdo de Tocantins dividida por municípios;\nAs variáveis doa tabela que será utilizada para o trabalho é dados_tocantins_aeda.csv e dados_tocantins_aeda.xlsx são:\n\n\n\n\nColuna\nDescrição\n\n\n\n\ncodigo\nCódigo IBGE do município\n\n\nmunicipio\nNome oficial do município\n\n\ntmi\nTaxa de Mortalidade Infantil\n\n\nidhm\nIDH Municipal\n\n\nrenda\nRenda per capita\n\n\ndensidade\nDensidade demográfica\n\n\npopulacao\nPopulação\n\n\nescolaridade\nEscolaridade média\n\n\ntemperatura\nTemperatura média\n\n\nesperanca_vida\nEsperança de vida\n\n\n\n\nA variável principal (Resposta/Dependente) será a tmi.\n\n\n\n6.2.2 2. Análises Estatísticas e Espaciais\nO trabalho deverá conter as seguintes etapas:\n\n📊 Análise Descritiva Espacial (AEDE)\n\nCarregamento e integração dos dados com a malha espacial;\nEstatísticas descritivas da variável resposta (média, mediana, desvio padrão, quartis);\nMapas temáticos mostrando a distribuição espacial da variável resposta;\nMapas temáticos das variáveis explicativas;\nHistogramas, boxplots e tabelas resumo.\n\n\n\n📍 Medidas de Autocorrelação Espacial\n\nConstrução da matriz de vizinhança (contiguidade Rainha ou Torre);\nCálculo de pesos espaciais (nb2listw() com normalização row-standardized);\nTeste de Moran I Global para avaliar autocorrelação espacial global;\nÍndice de Moran I Local (LISA) para identificar clusters espaciais locais;\nClassificação de clusters: Alto-Alto (hotspots), Baixo-Baixo (coldspots), Alto-Baixo, Baixo-Alto;\nMapa LISA mostrando a distribuição espacial dos clusters;\nDiscussão dos padrões espaciais encontrados.\n\n\n\n📈 Modelagem Espacial\n\nModelo 1: Regressão Linear Ordinária (OLS)\n\nAjuste do modelo com variáveis explicativas;\nTeste de Moran nos resíduos para verificar adequação do modelo.\n\nModelo 2: Regressão Espacial SAR (Spatial Autoregressive)\n\nIncorporação da dependência espacial na variável resposta;\nInterpretação do coeficiente de autocorrelação espacial (ρ).\n\nModelo 3: Regressão Espacial CAR (Conditional Autoregressive)\n\nIncorporação da dependência espacial no termo de erro;\nInterpretação do coeficiente de autocorrelação espacial (λ).\n\nComparação de Modelos:\n\nCálculo do AIC (Akaike Information Criterion) para cada modelo;\nIdentificação do modelo com melhor ajuste;\nDiscussão das diferenças entre os modelos.\n\nAnálise de Resíduos:\n\nVisualização da distribuição dos resíduos (histogramas, Q-Q plots);\nTeste de normalidade (Shapiro-Wilk);\nVerificação de autocorrelação espacial nos resíduos.\n\n\n\n\n\n6.2.3 3. Conclusões e Discussões\n\nResumo das descobertas: Principais padrões espaciais identificados;\nInterpretação dos resultados: O que os testes e modelos revelam sobre a variável de interesse;\nDiscussão das limitações: Limitações dos dados, do modelo escolhido e das análises realizadas;\nSugestões para estudos futuros: Como o trabalho poderia ser expandido ou melhorado.",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Trabalho Final</span>"
     ]
@@ -435,8 +435,8 @@
     "objectID": "06-trabalho_final.html#critérios-de-avaliação",
     "href": "06-trabalho_final.html#critérios-de-avaliação",
     "title": "6  Trabalho Final",
-    "section": "6.4 ✅ Critérios de Avaliação",
-    "text": "6.4 ✅ Critérios de Avaliação\n\nCoerência técnica na aplicação dos métodos espaciais;\nClareza na apresentação dos mapas, tabelas e modelos;\nInterpretação correta dos resultados;\nReprodutibilidade do código;\nQualidade da redação e organização do documento.",
+    "section": "6.3 ✅ Critérios de Avaliação",
+    "text": "6.3 ✅ Critérios de Avaliação\n\nCoerência técnica na aplicação dos métodos espaciais;\nClareza na apresentação dos mapas, tabelas e modelos;\nInterpretação correta dos resultados;\nReprodutibilidade do código;\nQualidade da redação e organização do documento.",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Trabalho Final</span>"
     ]
@@ -445,8 +445,8 @@
     "objectID": "06-trabalho_final.html#referências-recomendadas",
     "href": "06-trabalho_final.html#referências-recomendadas",
     "title": "6  Trabalho Final",
-    "section": "6.5 📚 Referências Recomendadas",
-    "text": "6.5 📚 Referências Recomendadas\n\nBailey, T. C., & Gatrell, A. C. (1995). Interactive Spatial Data Analysis. Routledge.\nCressie, N. (1993). Statistics for Spatial Data (Revised edition). Wiley.\nWaller, L. A., & Gotway, C. A. (2004). Applied Spatial Statistics for Public Health Data. Wiley-Interscience.\nBivand, R. S., Pebesma, E., & Gómez-Rubio, V. (2013). Applied Spatial Data Analysis with R. Springer.\nFotheringham, A. S., Brunsdon, C., & Charlton, M. (2002). Geographically Weighted Regression. Wiley.",
+    "section": "6.4 📚 Referências Recomendadas",
+    "text": "6.4 📚 Referências Recomendadas\n\nBailey, T. C., & Gatrell, A. C. (1995). Interactive Spatial Data Analysis. Routledge.\nCressie, N. (1993). Statistics for Spatial Data (Revised edition). Wiley.\nWaller, L. A., & Gotway, C. A. (2004). Applied Spatial Statistics for Public Health Data. Wiley-Interscience.\nBivand, R. S., Pebesma, E., & Gómez-Rubio, V. (2013). Applied Spatial Data Analysis with R. Springer.\nFotheringham, A. S., Brunsdon, C., & Charlton, M. (2002). Geographically Weighted Regression. Wiley.",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Trabalho Final</span>"
     ]
@@ -455,8 +455,8 @@
     "objectID": "06-trabalho_final.html#pacotes-r-necessários",
     "href": "06-trabalho_final.html#pacotes-r-necessários",
     "title": "6  Trabalho Final",
-    "section": "6.6 🔧 Pacotes R Necessários",
-    "text": "6.6 🔧 Pacotes R Necessários\n# Pacotes principais\nlibrary(sf)              # Manipulação de dados espaciais\nlibrary(tidyverse)       # Manipulação e visualização de dados\nlibrary(geobr)           # Download de mapas do Brasil\nlibrary(spdep)           # Análise de dependência espacial\nlibrary(spatialreg)      # Modelos de regressão espacial\nlibrary(ggplot2)         # Visualização gráfica\nlibrary(gridExtra)       # Combinação de gráficos",
+    "section": "6.5 🔧 Pacotes R Necessários",
+    "text": "6.5 🔧 Pacotes R Necessários\n# Pacotes principais\nlibrary(sf)              # Manipulação de dados espaciais\nlibrary(tidyverse)       # Manipulação e visualização de dados\nlibrary(geobr)           # Download de mapas do Brasil\nlibrary(spdep)           # Análise de dependência espacial\nlibrary(spatialreg)      # Modelos de regressão espacial\nlibrary(ggplot2)         # Visualização gráfica\nlibrary(gridExtra)       # Combinação de gráficos",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Trabalho Final</span>"
     ]
@@ -465,8 +465,8 @@
     "objectID": "06-trabalho_final.html#dicas-importantes",
     "href": "06-trabalho_final.html#dicas-importantes",
     "title": "6  Trabalho Final",
-    "section": "6.7 💡 Dicas Importantes",
-    "text": "6.7 💡 Dicas Importantes\n\nReprodutibilidade: Certifique-se de que todo o código está comentado e que alguém consegue reproduzir sua análise executando o arquivo .qmd ou .rmd\nVisualizações: Mapas e gráficos são fundamentais. Use cores apropriadas e legendas claras.\nInterpretações: Não apenas apresente os resultados, mas interprete-os.\nLimitações: Seja honesto sobre as limitações do seu trabalho. Nenhuma análise é perfeita.",
+    "section": "6.6 💡 Dicas Importantes",
+    "text": "6.6 💡 Dicas Importantes\n\nReprodutibilidade: Certifique-se de que todo o código está comentado e que alguém consegue reproduzir sua análise executando o arquivo .qmd ou .rmd. Se fizer em .pdf, é necessário que todo código utilizado esteja presente + os outputs .\nVisualizações: Mapas e gráficos são fundamentais. Use cores apropriadas e legendas claras.\nInterpretações: Não apenas apresente os resultados, mas interprete-os.\nLimitações: Seja honesto sobre as limitações do seu trabalho. Nenhuma análise é perfeita.",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Trabalho Final</span>"
     ]
@@ -475,8 +475,8 @@
     "objectID": "06-trabalho_final.html#dúvidas-e-suporte",
     "href": "06-trabalho_final.html#dúvidas-e-suporte",
     "title": "6  Trabalho Final",
-    "section": "6.8 📬 Dúvidas e Suporte",
-    "text": "6.8 📬 Dúvidas e Suporte\nEm caso de dúvidas ou dificuldade, entre em contato por e-mail: tassinari@ufrrj.br\n\nBoa sorte e mãos à obra! 🚀",
+    "section": "6.7 📬 Dúvidas e Suporte",
+    "text": "6.7 📬 Dúvidas e Suporte\nEm caso de dúvidas ou dificuldade, entre em contato por e-mail: tassinari@ufrrj.br\n\nBoa sorte e mãos à obra! 🚀",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Trabalho Final</span>"
     ]
