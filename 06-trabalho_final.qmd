@@ -145,6 +145,16 @@ library(gridExtra)       # Combinação de gráficos
 
 ---
 
+::: box-dica3
+## Conceito final
+
+O conceito final será baseado nos questionario respndidos pelo SIGAA + esse trabalho final
+
+$$Conceito = \frac{(1 \times Q1) + (1 \times Q2) + (1 \times Q3) + (3 \times Trabalho)}{6}$$
+::: 
+
+---
+
 ## 📬 Dúvidas e Suporte
 
 Em caso de dúvidas ou dificuldade, entre em contato por e-mail: **tassinari@ufrrj.br**

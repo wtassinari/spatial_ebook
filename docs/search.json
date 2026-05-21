@@ -475,8 +475,8 @@
     "objectID": "06-trabalho_final.html#dúvidas-e-suporte",
     "href": "06-trabalho_final.html#dúvidas-e-suporte",
     "title": "6  Trabalho Final",
-    "section": "6.7 📬 Dúvidas e Suporte",
-    "text": "6.7 📬 Dúvidas e Suporte\nEm caso de dúvidas ou dificuldade, entre em contato por e-mail: tassinari@ufrrj.br\n\nBoa sorte e mãos à obra! 🚀",
+    "section": "6.8 📬 Dúvidas e Suporte",
+    "text": "6.8 📬 Dúvidas e Suporte\nEm caso de dúvidas ou dificuldade, entre em contato por e-mail: tassinari@ufrrj.br\n\nBoa sorte e mãos à obra! 🚀",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Trabalho Final</span>"
     ]
@@ -500,6 +500,16 @@
     "crumbs": [
       "Análise por Tipo de Dado",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Dados de Área</span>"
+    ]
+  },
+  {
+    "objectID": "06-trabalho_final.html#conceito-final",
+    "href": "06-trabalho_final.html#conceito-final",
+    "title": "6  Trabalho Final",
+    "section": "6.7 Conceito final",
+    "text": "6.7 Conceito final\nO conceito final será baseado nos questionario respndidos pelo SIGAA + esse trabalho final\n\\[Conceito = \\frac{(1 \\times Q1) + (1 \\times Q2) + (1 \\times Q3) + (3 \\times Trabalho)}{6}\\]",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Trabalho Final</span>"
     ]
   }
 ]

@@ -83,9 +83,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-176b38be48070efe3d434d0a95bef3fe.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-7df1780bf6e26e45528cdd2ca3e2047c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-5d0c41746ba85fbf34a345269a3ab44b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-7df1780bf6e26e45528cdd2ca3e2047c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-99bb072836d217595205f2204b75d756.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-1d09072d3c0940af93715d670d034dc5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-99bb072836d217595205f2204b75d756.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -114,6 +114,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -436,7 +465,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#referências-recomendadas" id="toc-referências-recomendadas" class="nav-link" data-scroll-target="#referências-recomendadas"><span class="header-section-number">6.4</span> 📚 Referências Recomendadas</a></li>
   <li><a href="#pacotes-r-necessários" id="toc-pacotes-r-necessários" class="nav-link" data-scroll-target="#pacotes-r-necessários"><span class="header-section-number">6.5</span> 🔧 Pacotes R Necessários</a></li>
   <li><a href="#dicas-importantes" id="toc-dicas-importantes" class="nav-link" data-scroll-target="#dicas-importantes"><span class="header-section-number">6.6</span> 💡 Dicas Importantes</a></li>
-  <li><a href="#dúvidas-e-suporte" id="toc-dúvidas-e-suporte" class="nav-link" data-scroll-target="#dúvidas-e-suporte"><span class="header-section-number">6.7</span> 📬 Dúvidas e Suporte</a></li>
+  <li><a href="#conceito-final" id="toc-conceito-final" class="nav-link" data-scroll-target="#conceito-final"><span class="header-section-number">6.7</span> Conceito final</a></li>
+  <li><a href="#dúvidas-e-suporte" id="toc-dúvidas-e-suporte" class="nav-link" data-scroll-target="#dúvidas-e-suporte"><span class="header-section-number">6.8</span> 📬 Dúvidas e Suporte</a></li>
   </ul>
 </nav>
     </div>
@@ -663,8 +693,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <hr>
 </section>
-<section id="dúvidas-e-suporte" class="level2" data-number="6.7">
-<h2 data-number="6.7" class="anchored" data-anchor-id="dúvidas-e-suporte"><span class="header-section-number">6.7</span> 📬 Dúvidas e Suporte</h2>
+<section id="conceito-final" class="level2 box-dica3" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="conceito-final"><span class="header-section-number">6.7</span> Conceito final</h2>
+<p>O conceito final será baseado nos questionario respndidos pelo SIGAA + esse trabalho final</p>
+<p><span class="math display">\[Conceito = \frac{(1 \times Q1) + (1 \times Q2) + (1 \times Q3) + (3 \times Trabalho)}{6}\]</span></p>
+</section>
+<hr>
+<section id="dúvidas-e-suporte" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="dúvidas-e-suporte"><span class="header-section-number">6.8</span> 📬 Dúvidas e Suporte</h2>
 <p>Em caso de dúvidas ou dificuldade, entre em contato por e-mail: <strong>tassinari@ufrrj.br</strong></p>
 <hr>
 <p><strong>Boa sorte e mãos à obra! 🚀</strong></p>
