@@ -83,9 +83,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-176b38be48070efe3d434d0a95bef3fe.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-7df1780bf6e26e45528cdd2ca3e2047c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-5d0c41746ba85fbf34a345269a3ab44b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-7df1780bf6e26e45528cdd2ca3e2047c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-99bb072836d217595205f2204b75d756.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-1d09072d3c0940af93715d670d034dc5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-99bb072836d217595205f2204b75d756.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -727,13 +727,13 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <h3 data-number="4.3.2" class="anchored" data-anchor-id="moran-local-lisa"><span class="header-section-number">4.3.2</span> <strong>Moran Local (LISA)</strong></h3>
 <p>O Moran Local, também conhecido como LISA (<em>Local Indicators of Spatial Association</em>), aprofunda a análise ao avaliar a autocorrelação espacial em cada unidade territorial individualmente. Diferentemente do Moran Global, que fornece um único valor para todo o estado ou país, o Moran Local identifica onde exatamente estão os agrupamentos espaciais e possíveis áreas atípicas. Ele permite classificar cada município como parte de um cluster de valores altos, um cluster de valores baixos ou como um ponto fora do padrão em relação aos seus vizinhos. Essa análise é fundamental para identificar territórios prioritários e direcionar recursos de forma mais estratégica.</p>
 <p>Avalia a autocorrelação espacial <strong>local</strong>, permitindo identificar regiões com agrupamentos (clusters) ou comportamentos atípicos.</p>
-<p><span class="math display">\[I^{(i)} = \frac{n}{\sum_{j=1}^{n} (z_j - \bar{z})^2} \sum_{j=1}^{n} w_{ij} (z_i - \bar{z})(z_j - \bar{z})\]</span></p>
+<p><span class="math display">\[I^{(i)} = \frac{n}{\sum_{j=1}^{n} (y_j - \bar{y})^2} \sum_{j=1}^{n} w_{ij} (y_i - \bar{y})(y_j - \bar{y})\]</span></p>
 <p>Sabendo que:</p>
 <ul>
 <li><span class="math inline">\(I^{(i)}\)</span>: índice de Moran local para a região <span class="math inline">\(i\)</span>.</li>
 <li><span class="math inline">\(n\)</span>: número total de regiões.</li>
-<li><span class="math inline">\(z_i\)</span>: valor padronizado (ou original, dependendo da convenção) da variável na região <span class="math inline">\(i\)</span>.</li>
-<li><span class="math inline">\(\bar{z}\)</span>: média da variável <span class="math inline">\(z\)</span>.</li>
+<li><span class="math inline">\(y_i\)</span>: valor padronizado (ou original, dependendo da convenção) da variável na região <span class="math inline">\(i\)</span>.</li>
+<li><span class="math inline">\(\bar{y}\)</span>: média da variável <span class="math inline">\(z\)</span>.</li>
 <li><span class="math inline">\(w_{ij}\)</span>: peso espacial entre as regiões <span class="math inline">\(i\)</span> e <span class="math inline">\(j\)</span>.</li>
 <li>A soma considera a influência dos vizinhos <span class="math inline">\(j\)</span> sobre o ponto <span class="math inline">\(i\)</span>, ponderada pela matriz de vizinhança.</li>
 </ul>

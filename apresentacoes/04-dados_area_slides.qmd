@@ -27,8 +27,7 @@ Ao final deste capítulo, você será capaz de:
 1. Construir e interpretar **mapas temáticos** (coropléticos).
 2. Calcular e interpretar medidas de **autocorrelação espacial global** (I de Moran).
 3. Aplicar a análise de **autocorrelação espacial local** (LISA).
-4. Utilizar o estimador de **Bayes Empírico** para suavização de taxas.
-5. Ajustar **modelos de regressão espacial** (SAR, CAR e GWR).
+4. Ajustar **modelos de regressão espacial** (SAR, CAR e GWR).
 :::
 
 ----
@@ -37,7 +36,7 @@ Ao final deste capítulo, você será capaz de:
 
 #### Definição
 
-Fenômenos **agregados por unidades geográficas** discretas, como municípios, estados e ou setores censitários.
+Fenômenos **agregados por unidades geográficas**, como municípios, estados e ou setores censitários.
 
 #### Características
 
@@ -59,7 +58,7 @@ O mapa temático tem como principal objetivo visualizar e analisar a distribuiç
 #| 
 library(tmap)
 data(World)
-tmap_style("white")  # reseta estilo
+tmap_style("white")  # mostra opcoes de estilo
 
 # Desenhando um rápido mapa temático mundial para esperança de vida.
 qtm(World, fill = "life_exp", fill.palette = "-Blues")
@@ -81,10 +80,10 @@ O mapa temático tem como principal objetivo visualizar e analisar a distribuiç
 #| 
 library(tmap)
 data(World)
-tmap_style("classic")
+tmap_style("white")  # mostra opcoes de estilo
 
 # Desenhando um rápido mapa temático mundial para esperança de vida.
-qtm(World, fill = "life_exp")
+qtm(World, fill = "life_exp", fill.palette = "-Blues")
 ```
 
 ---
@@ -101,7 +100,7 @@ A matriz de vizinhança (ou proximidade) é um instrumento fundamental que repre
 
 ----
 
-## Matriz de Vizinhança: Exemplo 1
+## Matriz de Vizinhança
 
 ![](figuras/vizinhanca.png){fig-align="center" width="40%"}
 
@@ -111,7 +110,7 @@ Exemplo de contiguidade do tipo Rainha (compartilham qualquer ponto de fronteira
 
 ----
 
-## Matriz de Vizinhança: Exemplo 2
+## Matriz de Vizinhança
 
 <div style="font-size: 80%;">
 **Municípios analisados:**  
@@ -137,9 +136,9 @@ Exemplo de contiguidade do tipo Rainha (compartilham qualquer ponto de fronteira
 
 <div style="font-size: 80%;">
 
-Essa matriz é essencial porque muitos fenômenos da gestão pública apresentam dependência espacial. Ou seja, o que acontece em um município pode influenciar municípios vizinhos. Exemplos incluem:
+Essa matriz é essencial porque muitos fenômenos apresentam dependência espacial. Ou seja, o que acontece em um município pode influenciar municípios vizinhos. Exemplos incluem:
   
-- Propagação de doenças (como dengue);
+- Propagação de doenças;
 - Dinâmica do desemprego;
 - Criminalidade;
 - Poluição ambiental;
@@ -163,7 +162,7 @@ O pacote `spdep` oferece vários tipos de matrizes:
    - **Raio Fixo**: Dentro de uma distância mínima e máxima.
    - **k-Vizinhos Mais Próximos**: Os *k* mais próximos, independente da distância.
 
-3. **Vizinhança por Gráficos Geométricos**
+3. **Vizinhança por geração de polígonos em torno de pontos de referência espacial**
    - **Delaunay** e **Voronoi**.
 </div>
 
@@ -171,7 +170,7 @@ O pacote `spdep` oferece vários tipos de matrizes:
 
 ## Autocorrelação Espacial
 
-#### Moran Global
+#### Moran Global (*I*)
 
 <div style="font-size: 80%;">
 
@@ -183,7 +182,6 @@ $$I = \frac{ \sum_{i=1}^{n} \sum_{j=1}^{n} w_{ij} (y_i - \bar{y})(y_j - \bar{y})
 - **I < 0**: Valores diferentes estão próximos (dispersão).
 - **I ≈ 0**: Padrão aleatório.
 
-Indica se o fenômeno possui organização territorial, sugerindo a necessidade de políticas regionais integradas.
 
 </div>
 
@@ -197,10 +195,9 @@ Indica se o fenômeno possui organização territorial, sugerindo a necessidade 
 
 O Moran Local, também conhecido como LISA (*Local Indicators of Spatial Association*), avalia a autocorrelação espacial em **cada unidade territorial** individualmente.
 
-$$I^{(i)} = \frac{n}{\sum_{j=1}^{n} (z_j - \bar{z})^2} \sum_{j=1}^{n} w_{ij} (z_i - \bar{z})(z_j - \bar{z})$$
+$$I^{(i)} = \frac{n}{\sum_{j=1}^{n} (y_j - \bar{y})^2} \sum_{j=1}^{n} w_{ij} (y_i - \bar{y})(y_j - \bar{y})$$
 
-- Identifica onde exatamente estão os agrupamentos espaciais e possíveis áreas atípicas.
-- Classifica cada município como parte de um cluster de valores altos, baixos ou como um ponto fora do padrão.
+- Classifica cada polígono como parte de um cluster de valores altos, cluster de valores baixos ou como um ponto fora do padrão.
 
 </div>
 
@@ -244,13 +241,13 @@ O LISA Map é um mapa temático que representa graficamente os resultados do Ín
 
 ## Exemplo de LISA Map
 
-<div style="font-size: 70%;">
+<div style="font-size: 60%;">
 Esse mapa abaixo pertence ao artigo [COVRE, Eduardo Rocha et al. Correlação espacial da covid-19 com leitos de unidades de terapia intensiva no Paraná. Revista de Saúde Pública, v. 56, p. 14, 2022.](https://www.scielo.br/j/rsp/a/NDB7dYnVxgbtWPFskqxMgKR/?lang=pt)
 
 O artigo teve por objetivo analisar a autocorrelação espacial dos casos confirmados de covid-19 em municípios sede de regionais de saúde e vizinhos, segundo a análise do Índice Local de Moran (LISA) Univariado. Paraná, Brasil, março de 2020 a janeiro de 2021.
 </div>
 
-![](figuras/moran_local3_covid.png){fig-align="center" width="60%"}
+![](figuras/moran_local3_covid.png){fig-align="center" width="70%"}
 
 ---
 
@@ -315,7 +312,7 @@ ggplot(mapa_rj) +
 
 <div style="font-size: 70%;">
 
-Agora precisamos conectar a tabela de casos de dengue com a malha municipal do RJ. Para isso, utilizamos a função `left_join()` do pacote `dplyr`, utilizando a variável `code_muni` como chave de ligacao.
+Agora precisamos vincular a tabela de casos de dengue com a malha municipal do RJ. Para isso, utilizamos a função `left_join()` do pacote `dplyr`, utilizando a variável `code_muni` como chave de ligacao.
 
 
 ```{r, echo=T, out.width='90%'}

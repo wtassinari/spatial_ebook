@@ -143,14 +143,14 @@ O Moran Local, também conhecido como LISA (*Local Indicators of Spatial Associa
 
 Avalia a autocorrelação espacial **local**, permitindo identificar regiões com agrupamentos (clusters) ou comportamentos atípicos.
 
-$$I^{(i)} = \frac{n}{\sum_{j=1}^{n} (z_j - \bar{z})^2} \sum_{j=1}^{n} w_{ij} (z_i - \bar{z})(z_j - \bar{z})$$
+$$I^{(i)} = \frac{n}{\sum_{j=1}^{n} (y_j - \bar{y})^2} \sum_{j=1}^{n} w_{ij} (y_i - \bar{y})(y_j - \bar{y})$$
   
 Sabendo que:
   
 - $I^{(i)}$: índice de Moran local para a região $i$.
 - $n$: número total de regiões.
-- $z_i$: valor padronizado (ou original, dependendo da convenção) da variável na região $i$.
-- $\bar{z}$: média da variável $z$.
+- $y_i$: valor padronizado (ou original, dependendo da convenção) da variável na região $i$.
+- $\bar{y}$: média da variável $z$.
 - $w_{ij}$: peso espacial entre as regiões $i$ e $j$.
 - A soma considera a influência dos vizinhos $j$ sobre o ponto $i$, ponderada pela matriz de vizinhança.
 
