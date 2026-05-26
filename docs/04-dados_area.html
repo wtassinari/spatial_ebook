@@ -538,8 +538,7 @@ window.Quarto = {
 <li>Construir e interpretar mapas temáticos (coropléticos);</li>
 <li>Calcular e interpretar medidas de autocorrelação espacial global (I de Moran);</li>
 <li>Aplicar a análise de autocorrelação espacial local (LISA);</li>
-<li>Utilizar o estimador de Bayes Empírico para suavização de taxas;</li>
-<li>Ajustar modelos de regressão espacial (SAR, CAR e GWR).</li>
+<li>Ajustar modelos de regressão espacial (SEM e GWR).</li>
 </ul>
 </div>
 </div>
@@ -1434,44 +1433,75 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 </section>
 <section id="modelos-de-regressão-espacial" class="level2" data-number="4.5">
 <h2 data-number="4.5" class="anchored" data-anchor-id="modelos-de-regressão-espacial"><span class="header-section-number">4.5</span> Modelos de Regressão Espacial</h2>
-<p>Além das análises exploratórias para os dados espaciais de área, é possível avançar na modelagem estatística dos dados por meio de modelos espaciais que consideram a dependência espacial dos dados. Entre os mais utilizados estão os modelos de autocorrelação espacial global, como o <strong>SAR (Simultaneous Autoregressive Model)</strong> e o <strong>CAR (Conditional Autoregressive Model)</strong> (CRESSIE, 1993). O modelo SAR incorpora a dependência espacial diretamente no valor da variável dependente, assumindo que o valor observado em uma região é influenciado pelos valores das regiões vizinhas. Já o modelo CAR considera essa dependência na estrutura do erro, sendo muito utilizado em abordagens bayesianas para modelagem de risco em áreas geográficas.</p>
+<p>Além das análises exploratórias para dados espaciais de área, é possível avançar na modelagem estatística por meio de modelos que consideram explicitamente a dependência espacial presente nos dados. Entre os mais utilizados estão os modelos globais de autocorrelação espacial, que se dividem principalmente em três abordagens: <strong>SAR</strong> (<em>Spatial Autoregressive Model</em>), <strong>SEM</strong> (<em>Spatial Error Model</em>) e <strong>CAR</strong> (<em>Conditional Autoregressive Model</em>) (CRESSIE, 1993).</p>
 <p>Outra abordagem é a dos modelos com efeitos espaciais locais, como a <strong>Regressão Geograficamente Ponderada (GWR)</strong> (FOTHERINGHAM et al., 2002). Diferente dos modelos SAR e CAR, que assumem relações espaciais globais, o GWR permite que os coeficientes da regressão variem ao longo do espaço, ajustando uma equação específica para cada localidade. Isso possibilita identificar como os efeitos de uma variável explicativa sobre a resposta mudam de acordo com a localização, sendo especialmente útil em contextos onde há forte heterogeneidade espacial.</p>
-<section id="na-prática" class="level4">
-<h4 class="anchored" data-anchor-id="na-prática">Na prática</h4>
-<ul>
-<li><p><span style="color:orange; font-weight:bold;"> Hipótese de independência das observações em geral é Falsa </span> <span class="math inline">\(\rightarrow\)</span> Existe dependência espacial, ou seja, o valor observado em uma localização tende a se parecer com os valores observados em locais vizinhos.</p></li>
-<li><p>Efeitos Espaciais <span class="math inline">\(\rightarrow\)</span> Se existir dependência ou correlação espacial significativa, devemos incluir no modelo os <span style="color:darkpurple; font-weight:bold;"> Efeitos Espaciais </span>, caso contrário, as estimativas geradas pelo modelo de regressão podem ficar enviesadas, criando associações espúrias (isto é, sugerindo relações estatísticas onde elas não existem de fato, ou mascarando relações reais);</p></li>
-<li><p><span style="color:darkred; font-weight:bold;"><strong>Como verificar ?</strong> </span> <span class="math inline">\(\rightarrow\)</span> Para detectar a dependência espacial, podemos analisar os resíduos da regressão tradicional (OLS), utilizando indicadores como o índice de Moran dos resíduos. Se os resíduos mostrarem autocorrelação espacial significativa, isso indica que há estrutura espacial não modelada.</p></li>
-<li><p><span style="color:darkblue; font-weight:bold;"><strong>Detectada a autocorrelação espacial: e agora ?</strong> </span> <span class="math inline">\(\rightarrow\)</span> É necessário adotar modelos de regressão que incorporem explicitamente os efeitos espaciais, evitando vieses nas estimativas dos coeficientes.</p></li>
-</ul>
-</section>
 <section id="modelos-globais" class="level3" data-number="4.5.1">
 <h3 data-number="4.5.1" class="anchored" data-anchor-id="modelos-globais"><span class="header-section-number">4.5.1</span> Modelos Globais:</h3>
 <ul>
 <li><p>Esses modelos assumem que a estrutura espacial é constante em todo o espaço geográfico. Utilizam um único parâmetro para captar a autocorrelação.</p></li>
-<li><p>Um exemplo é o <strong>Modelo de Erro Espacial</strong> (<em>Spatial Error Model</em> - <strong>CAR</strong>), representado por:</p>
-<p><span class="math display">\[y_i = \beta_0 + \sum^{p}_{k} \beta_k x_{ik}  + \varepsilon_i \text{    , sendo  }  \varepsilon_i = \lambda  W + \xi\]</span></p></li>
+<li><p>O <strong>modelo SAR</strong> incorpora a dependência espacial diretamente na <strong>variável dependente</strong>, assumindo que o valor observado em uma região <span class="math inline">\(y_i\)</span> é influenciado pelos valores das regiões vizinhas <span class="math inline">\(y_j\)</span>, gerando efeitos de transbordamento (<em>spillovers</em>).</p></li>
 </ul>
+<p>Esses efeitos de transbordamento podem ocorrer quando uma mudança em uma variável independente <span class="math inline">\(X\)</span> em uma localidade <span class="math inline">\(i\)</span> afeta a variável dependente <span class="math inline">\(y\)</span> não apenas na própria localidade <span class="math inline">\(i\)</span>, mas também em <strong>localidades vizinhas</strong> <span class="math inline">\(j \neq i\)</span>. Em outras palavras, o impacto de uma variável “extrapola” os limites da unidade geográfica original, transbordando para as unidades ao redor.</p>
+<p>Sua especificação é:</p>
+<p><span class="math display">\[y_i = \rho \sum_{j=1}^{n} w_{ij} y_j + \beta_0 + \sum_{k=1}^{p} \beta_k x_{ik} + \varepsilon_i\]</span></p>
 <div class="box-dica4">
 <p>Sendo:</p>
 <ul>
-<li><p><span class="math inline">\(y_i\)</span>: valor observado da variável dependente na unidade <span class="math inline">\(i\)</span>;</p></li>
-<li><p><span class="math inline">\(\beta_0\)</span>: intercepto da regressão;</p></li>
-<li><p><span class="math inline">\(\beta_k\)</span>: coeficiente da <span class="math inline">\(k\)</span>-ésima variável explicativa;</p></li>
-<li><p><span class="math inline">\(x_{ik}\)</span>: valor da <span class="math inline">\(k\)</span>-ésima variável explicativa para a unidade <span class="math inline">\(i\)</span>;</p></li>
-<li><p><span class="math inline">\(\varepsilon_i\)</span>: erro com estrutura de autocorrelação espacial;</p></li>
-<li><p><span class="math inline">\(\lambda\)</span>: coeficiente de autocorrelação espacial;</p></li>
-<li><p><span class="math inline">\(W\)</span>: matriz de vizinhança espacial (define como cada unidade está conectada às outras);</p></li>
-<li><p><span class="math inline">\(\xi\)</span>: erro aleatório normal (sem autocorrelação).</p></li>
+<li><span class="math inline">\(y_i\)</span>: valor observado da variável dependente na unidade <span class="math inline">\(i\)</span>;</li>
+<li><span class="math inline">\(\beta_0\)</span>: intercepto da regressão (constante);</li>
+<li><span class="math inline">\(\beta_k\)</span>: coeficiente da <span class="math inline">\(k\)</span>-ésima variável explicativa;</li>
+<li><span class="math inline">\(x_{ik}\)</span>: valor da <span class="math inline">\(k\)</span>-ésima variável explicativa para a unidade <span class="math inline">\(i\)</span>;</li>
+<li><span class="math inline">\(\varepsilon_i\)</span>: erro aleatório independente e identicamente distribuído (i.i.d.), com <span class="math inline">\(\varepsilon_i \sim N(0, \sigma^2)\)</span>;</li>
+<li><span class="math inline">\(\rho\)</span> (rho): coeficiente de autocorrelação espacial da variável dependente (parâmetro a ser estimado). Se <span class="math inline">\(|\rho| \leq 1\)</span>, temos a condição de estabilidade do processo espacial, garantindo que <span class="math inline">\((I - \rho W)\)</span> seja inversível. O valor de <span class="math inline">\(\rho\)</span> indica a intensidade da influência dos valores vizinhos sobre o valor local;</li>
+<li><span class="math inline">\(w_{ij}\)</span>: elemento da matriz de pesos espaciais <span class="math inline">\(W\)</span>, que define o grau de conexão entre as unidades <span class="math inline">\(i\)</span> e <span class="math inline">\(j\)</span>. Por convenção, <span class="math inline">\(w_{ii} = 0\)</span> (nenhuma unidade é vizinha de si mesma).</li>
 </ul>
 </div>
-<p><span class="math inline">\(\rightarrow\)</span> Podemos observar que os efeitos da autocorrelação espacial são associados ao termo de erro.</p>
+<ul>
+<li>O <strong>modelo SEM</strong> considera a dependência espacial na <strong>estrutura dos erros</strong>, sendo indicado quando a autocorrelação espacial residual provém de variáveis omitidas que são espacialmente correlacionadas. Sua especificação é:</li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+y_i &amp;= \beta_0 + \sum_{k=1}^{p} \beta_k x_{ik} + \varepsilon_i \\
+\varepsilon_i &amp;= \lambda \sum_{j=1}^{n} w_{ij} \varepsilon_j + \xi_i
+\end{aligned}
+\]</span></p>
+<div class="box-dica4">
+<p>Sendo:</p>
+<ul>
+<li><span class="math inline">\(y_i\)</span>: valor observado da variável dependente na unidade <span class="math inline">\(i\)</span>;</li>
+<li><span class="math inline">\(\beta_0\)</span>: intercepto;</li>
+<li><span class="math inline">\(\beta_k\)</span>: coeficiente da <span class="math inline">\(k\)</span>-ésima variável explicativa;</li>
+<li><span class="math inline">\(x_{ik}\)</span>: valor da <span class="math inline">\(k\)</span>-ésima variável explicativa para a unidade <span class="math inline">\(i\)</span>;</li>
+<li><span class="math inline">\(\varepsilon_i\)</span>: erro com estrutura de autocorrelação espacial na unidade <span class="math inline">\(i\)</span>;</li>
+<li><span class="math inline">\(\lambda\)</span>: coeficiente de autocorrelação espacial dos erros (parâmetro a ser estimado);</li>
+<li><span class="math inline">\(w_{ij}\)</span>: matriz de pesos espaciais (grau de conexão entre as unidades <span class="math inline">\(i\)</span> e <span class="math inline">\(j\)</span>).</li>
+</ul>
+</div>
 <div class="box-dica2">
 <p>🧠 Interpretação:</p>
 <ul>
 <li><p>Se <span class="math inline">\(\lambda \ne 0\)</span>, há evidência de dependência espacial nos erros, ou seja, o erro em uma localidade está correlacionado com os erros em localidades vizinhas.</p></li>
 <li><p>Se <span class="math inline">\(\lambda = 0\)</span>, o modelo reduz-se a uma regressão tradicional, e não há autocorrelação espacial significativa.</p></li>
 </ul>
+<p>Resumindo, podemos dizer então que se <span class="math inline">\(|\lambda| \leq 1\)</span>, temos condição de estabilidade do processo espacial.</p>
+</div>
+<ul>
+<li>O <strong>modelo CAR</strong> também modela a dependência nos erros, mas por meio de uma especificação <strong>condicional</strong>: o valor do erro em uma região <span class="math inline">\(i\)</span> dado os valores dos vizinhos segue uma distribuição normal com média proporcional à média dos erros vizinhos. É muito utilizado em abordagens <strong>bayesianas</strong> para modelagem de risco em áreas geográficas (como epidemiologia e saúde pública). Sua especificação condicional é:<br>
+<span class="math display">\[y_i = X_i \beta + \varepsilon_i\]</span></li>
+</ul>
+<p><span class="math display">\[\varepsilon_i \mid \varepsilon_j \sim N\left(\phi \sum_{j=1}^{n} w_{ij} \varepsilon_j,\ \tau_i^2\right)\]</span> ::: box-dica4 Sendo:</p>
+<ul>
+<li><span class="math inline">\(y_i\)</span>: valor observado da variável dependente na unidade <span class="math inline">\(i\)</span>;</li>
+<li><span class="math inline">\(X_i\)</span>: vetor linha de variáveis explicativas para a unidade <span class="math inline">\(i\)</span> (incluindo o intercepto);</li>
+<li><span class="math inline">\(\beta\)</span>: vetor de coeficientes de regressão (incluindo <span class="math inline">\(\beta_0\)</span> como intercepto);</li>
+<li><span class="math inline">\(\varepsilon_i\)</span>: erro da regressão (resíduo) na unidade <span class="math inline">\(i\)</span>;</li>
+<li><span class="math inline">\(\varepsilon_i \mid \varepsilon_j\)</span>: distribuição condicional do erro na unidade <span class="math inline">\(i\)</span> <strong>dados</strong> os erros em todas as demais unidades <span class="math inline">\(j \neq i\)</span>;</li>
+<li><span class="math inline">\(\sim\)</span>: “segue a distribuição” (lê-se: “é distribuído como”);</li>
+<li><span class="math inline">\(N(\cdot, \cdot)\)</span>: distribuição Normal (Gaussiana), com primeiro argumento sendo a média e o segundo a variância;</li>
+<li><span class="math inline">\(\phi\)</span> (<em>phi</em>): coeficiente de autocorrelação espacial condicional (parâmetro a ser estimado). Se <span class="math inline">\(|\phi| \leq 1\)</span>, temos a condição de estabilidade do processo espacial, garantindo que a matriz de covariância <span class="math inline">\((I - \phi W)^{-1}\)</span> seja positiva definida. <span class="math inline">\(\phi\)</span> mede a força da dependência entre o erro de uma unidade e a média dos erros de suas vizinhas; :::</li>
+</ul>
+<div class="box-dica13">
+<p>Enquanto os modelos SAR e SEM tratam a dependência de forma <strong>simultânea</strong> (o valor em cada local depende dos vizinhos e vice-versa), o modelo CAR adota uma perspectiva <strong>condicional</strong> (a distribuição de cada local é modelada a partir dos vizinhos). Essa distinção tem implicações importantes tanto na estimação quanto na interpretação dos parâmetros espaciais.</p>
 </div>
 </section>
 <section id="modelos-locais" class="level3" data-number="4.5.2">
@@ -1505,6 +1535,15 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 </div>
 <p><span class="math inline">\(\rightarrow\)</span> Quanto menor <span class="math inline">\(d_{ij}\)</span>, maior é o peso de <span class="math inline">\(j\)</span> na estimação de <span class="math inline">\(\beta_k(u_i, v_i)\)</span>.</p>
 <p><a href="https://ec.europa.eu/eurostat/documents/3859598/9462709/INSEE-ESTAT-SPATIAL-ANA-18-EN.pdf">Fonte: ARDILLY, Pascal et al.&nbsp;Manuel d’analyse spatiale. 2018.</a></p>
+<section id="na-prática" class="level4">
+<h4 class="anchored" data-anchor-id="na-prática">Na prática</h4>
+<ul>
+<li><p><span style="color:orange; font-weight:bold;"> Hipótese de independência das observações em geral é Falsa </span> <span class="math inline">\(\rightarrow\)</span> Existe dependência espacial, ou seja, o valor observado em uma localização tende a se parecer com os valores observados em locais vizinhos.</p></li>
+<li><p>Efeitos Espaciais <span class="math inline">\(\rightarrow\)</span> Se existir dependência ou correlação espacial significativa, devemos incluir no modelo os <span style="color:darkpurple; font-weight:bold;"> Efeitos Espaciais </span>, caso contrário, as estimativas geradas pelo modelo de regressão podem ficar enviesadas, criando associações espúrias (isto é, sugerindo relações estatísticas onde elas não existem de fato, ou mascarando relações reais);</p></li>
+<li><p><span style="color:darkred; font-weight:bold;"><strong>Como verificar ?</strong> </span> <span class="math inline">\(\rightarrow\)</span> Para detectar a dependência espacial, podemos analisar os resíduos da regressão tradicional (OLS), utilizando indicadores como o índice de Moran dos resíduos. Se os resíduos mostrarem autocorrelação espacial significativa, isso indica que há estrutura espacial não modelada.</p></li>
+<li><p><span style="color:darkblue; font-weight:bold;"><strong>Detectada a autocorrelação espacial: e agora ?</strong> </span> <span class="math inline">\(\rightarrow\)</span> É necessário adotar modelos de regressão que incorporem explicitamente os efeitos espaciais, evitando vieses nas estimativas dos coeficientes.</p></li>
+</ul>
+</section>
 </section>
 </section>
 <section id="aplicação-ii-utilizando-dos-modelos-de-regressão-espaciais-nos-dados-de-queimadas-no-estado-do-rio-de-janeiro." class="level2" data-number="4.6">
@@ -1664,14 +1703,19 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 </div>
 </div>
 </section>
-<section id="ajustando-o-modelo-car-spatial-error-model-vazio" class="level4">
-<h4 class="anchored" data-anchor-id="ajustando-o-modelo-car-spatial-error-model-vazio">Ajustando o modelo CAR (Spatial Error Model) vazio</h4>
-<p>O <strong>Modelo de Erro Espacial</strong> (<em>Spatial Error Model</em> - <strong>CAR</strong>), representado por:</p>
-<p><span class="math display">\[y_i = \beta_0 + \sum^{p}_{k} \beta_k x_{ik}  + \varepsilon_i\]</span> <span class="math display">\[\varepsilon_i = \lambda  W + \xi\]</span></p>
+<section id="ajustando-o-modelo-sem-vazio" class="level4">
+<h4 class="anchored" data-anchor-id="ajustando-o-modelo-sem-vazio">Ajustando o modelo SEM vazio</h4>
+<p>O <strong>Modelo de Erro Espacial</strong> (<em>Spatial Error Model</em> - <strong>SEM</strong>), representado por:</p>
+<p><span class="math display">\[
+\begin{aligned}
+y_i &amp;= \beta_0 + \sum_{k=1}^{p} \beta_k x_{ik} + \varepsilon_i \\
+\varepsilon_i &amp;= \lambda \sum_{j=1}^{n} w_{ij} \varepsilon_j + \xi_i
+\end{aligned}
+\]</span></p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spatialreg)</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>queimadas.car <span class="ot">&lt;-</span> <span class="fu">errorsarlm</span>(media_frp <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> mapa_rj, <span class="at">listw =</span> pesos.viz, <span class="at">Durbin =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(queimadas.car)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>queimadas.sem <span class="ot">&lt;-</span> <span class="fu">errorsarlm</span>(media_frp <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> mapa_rj, <span class="at">listw =</span> pesos.viz, <span class="at">Durbin =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(queimadas.sem)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt; Call:errorsarlm(formula = media_frp ~ 1, data = mapa_rj, listw = pesos.viz, 
@@ -1749,8 +1793,8 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <section id="colocando-a-variável-media_dias_sem_chuva-no-modelo-1" class="level4">
 <h4 class="anchored" data-anchor-id="colocando-a-variável-media_dias_sem_chuva-no-modelo-1">Colocando a variável <code>media_dias_sem_chuva</code> no modelo</h4>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>queimadas.car2 <span class="ot">&lt;-</span> <span class="fu">errorsarlm</span>(media_frp <span class="sc">~</span> media_dias_sem_chuva, <span class="at">data =</span> mapa_rj, <span class="at">listw =</span> pesos.viz, <span class="at">Durbin =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(queimadas.car2)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>queimadas.sem2 <span class="ot">&lt;-</span> <span class="fu">errorsarlm</span>(media_frp <span class="sc">~</span> media_dias_sem_chuva, <span class="at">data =</span> mapa_rj, <span class="at">listw =</span> pesos.viz, <span class="at">Durbin =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(queimadas.sem2)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt; Call:errorsarlm(formula = media_frp ~ media_dias_sem_chuva, data = mapa_rj, 
@@ -1823,13 +1867,13 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <section id="checando-os-residuos-para-verificar-a-presença-de-autocorrelação" class="level4">
 <h4 class="anchored" data-anchor-id="checando-os-residuos-para-verificar-a-presença-de-autocorrelação">Checando os residuos para verificar a presença de autocorrelação</h4>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>queimadas.car2<span class="sc">$</span>carresid <span class="ot">&lt;-</span> <span class="fu">residuals</span>(queimadas.car2)</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.test</span>(queimadas.car2<span class="sc">$</span>carresid, pesos.viz)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>queimadas.sem2<span class="sc">$</span>carresid <span class="ot">&lt;-</span> <span class="fu">residuals</span>(queimadas.sem2)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.test</span>(queimadas.sem2<span class="sc">$</span>carresid, pesos.viz)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt;  Moran I test under randomisation
 #&gt; 
-#&gt; data:  queimadas.car2$carresid  
+#&gt; data:  queimadas.sem2$carresid  
 #&gt; weights: pesos.viz    
 #&gt; 
 #&gt; Moran I statistic standard deviate = 0.082822, p-value = 0.467
@@ -2135,7 +2179,7 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <span id="cb67-11"><a href="#cb67-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb67-12"><a href="#cb67-12" aria-hidden="true" tabindex="-1"></a>hist.frp <span class="ot">&lt;-</span> <span class="fu">histdens</span>(mapa_rj<span class="sc">$</span>media_frp, <span class="st">"FRP médio"</span>)</span>
 <span id="cb67-13"><a href="#cb67-13" aria-hidden="true" tabindex="-1"></a>hist.lm <span class="ot">&lt;-</span> <span class="fu">histdens</span>(queimadas.lm2<span class="sc">$</span>fitted.values, <span class="st">"Pred LM"</span>)</span>
-<span id="cb67-14"><a href="#cb67-14" aria-hidden="true" tabindex="-1"></a>hist.car <span class="ot">&lt;-</span> <span class="fu">histdens</span>(queimadas.car2<span class="sc">$</span>fitted.values, <span class="st">"Pred CAR"</span>)</span>
+<span id="cb67-14"><a href="#cb67-14" aria-hidden="true" tabindex="-1"></a>hist.car <span class="ot">&lt;-</span> <span class="fu">histdens</span>(queimadas.sem2<span class="sc">$</span>fitted.values, <span class="st">"Pred CAR"</span>)</span>
 <span id="cb67-15"><a href="#cb67-15" aria-hidden="true" tabindex="-1"></a>hist.gwr <span class="ot">&lt;-</span> <span class="fu">histdens</span>(results<span class="sc">$</span>pred, <span class="st">"Pred GWR"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -2222,7 +2266,7 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <span id="cb68-34"><a href="#cb68-34" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb68-35"><a href="#cb68-35" aria-hidden="true" tabindex="-1"></a><span class="co"># -----------------------------------------</span></span>
 <span id="cb68-36"><a href="#cb68-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Predito - CAR</span></span>
-<span id="cb68-37"><a href="#cb68-37" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>brks.car <span class="ot">&lt;-</span> <span class="fu">cut</span>(queimadas.car2<span class="sc">$</span>fitted.values,</span>
+<span id="cb68-37"><a href="#cb68-37" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>brks.car <span class="ot">&lt;-</span> <span class="fu">cut</span>(queimadas.sem2<span class="sc">$</span>fitted.values,</span>
 <span id="cb68-38"><a href="#cb68-38" aria-hidden="true" tabindex="-1"></a>                         <span class="at">breaks =</span> breaks_classes,</span>
 <span id="cb68-39"><a href="#cb68-39" aria-hidden="true" tabindex="-1"></a>                         <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb68-40"><a href="#cb68-40" aria-hidden="true" tabindex="-1"></a>                         <span class="at">right =</span> <span class="cn">TRUE</span>,</span>
@@ -2267,7 +2311,7 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define os resíduos</span></span>
 <span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>res_lm  <span class="ot">&lt;-</span> queimadas.lm2<span class="sc">$</span>residuals</span>
-<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>res_car <span class="ot">&lt;-</span> queimadas.car2<span class="sc">$</span>residuals</span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>res_car <span class="ot">&lt;-</span> queimadas.sem2<span class="sc">$</span>residuals</span>
 <span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a>res_gwr <span class="ot">&lt;-</span> results<span class="sc">$</span>residuos</span>
 <span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Paleta de cores agradável</span></span>
@@ -2371,7 +2415,7 @@ A <strong>diagonal principal é zero</strong>, pois um município não é vizinh
 <span id="cb70-28"><a href="#cb70-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb70-29"><a href="#cb70-29" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------</span></span>
 <span id="cb70-30"><a href="#cb70-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Resíduos - CAR</span></span>
-<span id="cb70-31"><a href="#cb70-31" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>brks.res.car <span class="ot">&lt;-</span> <span class="fu">cut</span>(queimadas.car2<span class="sc">$</span>residuals,</span>
+<span id="cb70-31"><a href="#cb70-31" aria-hidden="true" tabindex="-1"></a>mapa_rj<span class="sc">$</span>brks.res.car <span class="ot">&lt;-</span> <span class="fu">cut</span>(queimadas.sem2<span class="sc">$</span>residuals,</span>
 <span id="cb70-32"><a href="#cb70-32" aria-hidden="true" tabindex="-1"></a>                             <span class="at">breaks =</span> breaks_res,</span>
 <span id="cb70-33"><a href="#cb70-33" aria-hidden="true" tabindex="-1"></a>                             <span class="at">labels =</span> labels_res,</span>
 <span id="cb70-34"><a href="#cb70-34" aria-hidden="true" tabindex="-1"></a>                             <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>

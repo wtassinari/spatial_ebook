@@ -27,7 +27,7 @@ Ao final deste capítulo, você será capaz de:
 1. Construir e interpretar **mapas temáticos** (coropléticos).
 2. Calcular e interpretar medidas de **autocorrelação espacial global** (I de Moran).
 3. Aplicar a análise de **autocorrelação espacial local** (LISA).
-4. Ajustar **modelos de regressão espacial** (SAR, CAR e GWR).
+4. Ajustar **modelos de regressão espacial** (SEM e GWR).
 :::
 
 ----
@@ -416,23 +416,21 @@ Agora vamos plotar o mapa temático de forma categórica pelos quantis com as in
 # Criar categorias usando 5 classes com método quantil
 library(viridis)
 
-map_data <- mapa_rj %>%
+mapa_rj <- mapa_rj %>%
   mutate(
     incidencia_cat = cut(incidencia,
-                         breaks = c(0, 51.7, 723.5, 1791.9, 2375.7, 3779.5, 7458.7, Inf),
-                         labels = c("Mín - 51.7", 
-                                   "51.7 - 723.5", 
-                                   "723.5 - 1791.9", 
-                                   "1791.9 - 2375.7", 
-                                   "2375.7 - 3779.5", 
-                                   "3779.5 - 7458.7",
-                                   "> 7458.7"),
+                         breaks = c(0, 723.5, 1791.9, 2375.7, 3779.5, Inf),
+                         labels = c("< 723.5", 
+                                    "723.5 - 1791.9", 
+                                    "1791.9 - 2375.7", 
+                                    "2375.7 - 3779.5", 
+                                    "> 3779.5"),
                          include.lowest = TRUE,
                          right = FALSE)
   )
 
 ggplot() +
-  geom_sf(data = map_data, aes(fill = incidencia_cat), color = "white", size = 0.2) +
+  geom_sf(data = mapa_rj, aes(fill = incidencia_cat), color = "white", size = 0.2) +
   scale_fill_manual(values = viridis(7, option = "plasma", direction = -1),
                     name = "Incidência\n(por 100.000 hab)",
                     na.translate = FALSE) +
@@ -464,23 +462,21 @@ library(ggplot2)
 
 library(viridis)
 
-map_data <- mapa_rj %>%
+mapa_rj <- mapa_rj %>%
   mutate(
     incidencia_cat = cut(incidencia,
-                         breaks = c(0, 51.7, 723.5, 1791.9, 2375.7, 3779.5, 7458.7, Inf),
-                         labels = c("Mín - 51.7", 
-                                   "51.7 - 723.5", 
-                                   "723.5 - 1791.9", 
-                                   "1791.9 - 2375.7", 
-                                   "2375.7 - 3779.5", 
-                                   "3779.5 - 7458.7",
-                                   "> 7458.7"),
+                         breaks = c(0, 723.5, 1791.9, 2375.7, 3779.5, Inf),
+                         labels = c("< 723.5", 
+                                    "723.5 - 1791.9", 
+                                    "1791.9 - 2375.7", 
+                                    "2375.7 - 3779.5", 
+                                    "> 3779.5"),
                          include.lowest = TRUE,
                          right = FALSE)
   )
 
 ggplot() +
-  geom_sf(data = map_data, aes(fill = incidencia_cat), color = "white", size = 0.2) +
+  geom_sf(data = mapa_rj, aes(fill = incidencia_cat), color = "white", size = 0.2) +
   scale_fill_manual(values = viridis(7, option = "plasma", direction = -1),
                     name = "Incidência\n(por 100.000 hab)",
                     na.translate = FALSE) +
@@ -505,9 +501,6 @@ ggplot() +
 
 ```{r, echo=T, out.width='90%'}
 library(spdep)
-
-# Converter para objeto sp (formato exigido por alguns pacotes)
-rj_sp <- as(mapa_rj, "Spatial")
 
 # Criar lista de vizinhos baseada em contiguidade (critério "rainha" - queen)
 vizinhos <- poly2nb(mapa_rj, queen = TRUE)
@@ -892,16 +885,19 @@ Analisar os resíduos da regressão tradicional (OLS) com o índice de Moran.
 
 ## Modelos Globais vs. Locais
 
-<div style="font-size: 80%;">
+<div style="font-size: 65%;">
 
-### Modelos Globais (Ex: SAR e CAR)
+### Modelos Globais 
 
 Assumem que a estrutura espacial é **constante** em todo o espaço geográfico. Utilizam um único parâmetro para captar a autocorrelação.
 
-- **SAR**: Dependência na variável dependente.
-- **CAR**: Dependência na estrutura do erro.
+1. **SAR** - *Spatial Autoregressive Model* (Defasagem Espacial): A dependência espacial está na variável dependente.
+      
+2. **SEM** - *Spatial Error Model* (Modelo de Erro Espacial): A dependência espacial está na estrutura do erro.
+          
+3. **CAR** - *Conditional Autoregressive Model* (Autoregressivo Condicional): A dependência espacial é definida por distribuições condicionais locais, e o modelo é normalmente especificado em termos da estrutura do erro (mas de forma diferente do SEM). Na maioria das vezes utiliza-se a inferência bayesiana.
 
-### Modelos Locais (ex: GWR)
+### Modelos Locais
 
 A Regressão Geograficamente Ponderada (GWR) permite que os coeficientes da regressão **variem ao longo do espaço**, ajustando uma equação específica para cada localidade.
 
@@ -909,29 +905,34 @@ A Regressão Geograficamente Ponderada (GWR) permite que os coeficientes da regr
 
 ----
 
-## Modelo SAR 
+## Modelo SEM 
 
-<div style="font-size: 65%;">
+<div style="font-size: 60%;">
 
-O **Modelo de Erro Espacial** (*Spatial Error Model* - **CAR**), representado por:
+O **Modelo de Erro Espacial** (*Spatial Error Model* - **SEM**), representado por:
   
-  $$y_i = \beta_0 + \sum^{p}_{k} \beta_k x_{ik}  + \varepsilon_i \text{    , sendo  }  \varepsilon_i = \lambda  W + \xi$$
+$$
+\begin{aligned}
+y_i &= \beta_0 + \sum_{k=1}^{p} \beta_k x_{ik} + \varepsilon_i \\
+\varepsilon_i &= \lambda \sum_{j=1}^{n} w_{ij} \varepsilon_j + \xi_i
+\end{aligned}
+$$
   
 Sendo:
   
 - $y_i$: valor observado da variável dependente na unidade $i$;
-- $\beta_0$: intercepto da regressão;
+- $\beta_0$: intercepto;
 - $\beta_k$: coeficiente da $k$-ésima variável explicativa;
 - $x_{ik}$: valor da $k$-ésima variável explicativa para a unidade $i$;
-- $\varepsilon_i$: erro com estrutura de autocorrelação espacial;
-- $\lambda$: coeficiente de autocorrelação espacial;
-- $W$: matriz de vizinhança espacial (define como cada unidade está conectada às outras);
-- $\xi$: erro aleatório normal (sem autocorrelação).
+- $\varepsilon_i$: erro com estrutura de autocorrelação espacial na unidade $i$;
+- $\lambda$: coeficiente de autocorrelação espacial dos erros (parâmetro a ser estimado), se $|\lambda| \leq 1$, temos condição de estabilidade do processo espacial;
+- $w_{ij}$: matriz de pesos espaciais (grau de conexão entre as unidades $i$ e $j$).
+
 
 </div>
 ----
 
-## Modelo SAR 
+## Modelo SEM 
 
 <div style="font-size: 70%;">
 
@@ -971,7 +972,7 @@ Sendo:
 
 ---
 
-## Aplicação II: Modelo CAR
+## Aplicação II: Modelo SEM
 
 <div style="font-size: 70%;">
 
@@ -994,7 +995,7 @@ mapa_rj <- st_read("malhas/mapa_rj.shp")
 
 ---- 
 
-## Aplicação II: Modelo CAR
+## Aplicação II: Modelo SEM
 
 <div style="font-size: 70%;">
 
@@ -1019,7 +1020,7 @@ head(mapa_rj)
 
 ---- 
 
-## Aplicação II: Modelo CAR
+## Aplicação II: Modelo SEM
 
 <div style="font-size: 70%;">
 
@@ -1041,7 +1042,7 @@ mapa_seq
 
 ---- 
 
-## Aplicação II: Modelo CAR
+## Aplicação II: Modelo SEM
 
 <div style="font-size: 80%;">
 
@@ -1055,7 +1056,7 @@ moran.test(mapa_rj$media_frp, pesos.viz)
 
 ----
 
-## Aplicação II: Modelo CAR
+## Aplicação II: Modelo SEM
 
 <div style="font-size: 80%;">
 
@@ -1070,7 +1071,7 @@ summary(queimadas.lm)
 
 ----
 
-## Aplicação II: Modelo CAR
+## Aplicação II: Modelo SEM
 
 <div style="font-size: 80%;">
 
@@ -1086,7 +1087,7 @@ summary(queimadas.lm2)
 
 ----
 
-## Aplicação II: Modelo CAR
+## Aplicação II: Modelo SEM
 
 <div style="font-size: 80%;">
 
@@ -1102,94 +1103,96 @@ moran.test(queimadas.lm$lmresid, pesos.viz)
 
 ----
 
-## Aplicação II: Modelo CAR
+## Aplicação II: Modelo SEM
 
 <div style="font-size: 80%;">
 
-#### Ajustando o modelo CAR (Spatial Error Model) vazio
+#### Ajustando o modelo SEM vazio
 
 ```{r, echo=T,  out.width="70%"}
 library(spatialreg)
-queimadas.car <- errorsarlm(media_frp ~ 1, data = mapa_rj, listw = pesos.viz, Durbin = FALSE)
-summary(queimadas.car)
+queimadas.sem <- errorsarlm(media_frp ~ 1, data = mapa_rj, listw = pesos.viz, Durbin = FALSE)
+summary(queimadas.sem)
 ```
 
 </div>
 
 ----
 
-## Aplicação II: Modelo CAR
+## Aplicação II: Modelo SEM
 
 <div style="font-size: 65%;">
 
 * O Intercepto: $3,982$ ($p < 0.001$), representa a média estimada de `media_frp` na ausência de preditores.
 
-* Lambda ($λ =  0,28059$) é o parâmetro de autocorrelação espacial dos erros. Quanto mais próximo de $0$ (zero) for o valor valor de lambda, pouca ou nenhuma autocorrelação espacial nos erros, ou seja, nesse caso podemos observar uma dependência espacial moderada.
+* Lambda ($λ =  0,3059$) é o parâmetro de autocorrelação espacial dos erros. Quanto mais próximo de $0$ (zero) for o valor valor de lambda, pouca ou nenhuma autocorrelação espacial nos erros, ou seja, nesse caso podemos observar uma dependência espacial moderada.
 
 | Teste | Estatística | p-valor | Interpretação |
 |-------|------------|---------|---------------|
-| **LR test** | 4.5504 | 0.0329 | O modelo espacial é superior ao OLS |
-| **z-value** | 2.1836 | 0.0290 | Lambda significativamente diferente de 0 |
-| **Wald** | 4.7681 | 0.0290 | Confirma a significância do parâmetro espacial |
+| **LR test** | 4,5504 | 0,0329 | O modelo espacial é superior ao OLS |
+| **z-value** | 2,3486 | 0,01846 | Lambda significativamente diferente de 0 |
+| **Wald** | 5,5158 | 0,01846 | Confirma a significância do parâmetro espacial |
 
 * O modelo espacial tem AIC menor que o modelo clássico (lm):
-AIC spatial $=$  $393,28$ $<$ AIC lm $=$ $395,83$, o que indica que o modelo com erro espacial se ajusta melhor aos dados.
+AIC spatial $=$  $392,67$ $<$ AIC lm $=$ $395,83$, o que indica que o modelo com erro espacial se ajusta melhor aos dados.
 
 </div>
 
 ----
 
-## Aplicação II: Modelo CAR
+## Aplicação II: Modelo SEM
 
 <div style="font-size: 80%;">
 
 #### Colocando a variável `media_dias_sem_chuva` no modelo
 
 ```{r, echo=T,  out.width="70%"}
-queimadas.car2 <- errorsarlm(media_frp ~ media_dias_sem_chuva, data = mapa_rj, listw = pesos.viz, Durbin = FALSE)
-summary(queimadas.car2)
+queimadas.sem2 <- errorsarlm(media_frp ~ media_dias_sem_chuva, data = mapa_rj, listw = pesos.viz, Durbin = FALSE)
+summary(queimadas.sem2)
 ```
 
 </div>
 
 ----
 
-## Aplicação II: Modelo CAR
+## Aplicação II: Modelo SEM
 
 <div style="font-size: 65%;">
 
-* Media de Dias Sem Chuva: $0,1585$ ($p < 0,001$), representa a cada aumento de 1 dia na média sem chuva, a intensidade das queimadas (FRP) aumenta **0.1585 unidades**
+* Media de Dias Sem Chuva: $0,1576$ ($p < 0,001$), representa a cada aumento de 1 dia na média sem chuva, a intensidade das queimadas (FRP) aumenta **0.1576 unidades**
 
-* Lambda ($\lambda =  0,24717$), fazendo uma comparação com modelo nulo ($\lambda = 0.28059$), apresenta uma
-redução de $0,28059 \rightarrow 0,24717$ $(\downarrow 11.9\%)$. Podemos dizer que a variável `media_dias_sem_chuva` explicou parte da dependência espacial.
+* Lambda ($\lambda =  0,281$), fazendo uma comparação com modelo nulo ($\lambda = 0,306$), apresenta uma
+redução de $0,306 \rightarrow 0,281$ $(\downarrow 8\%)$. Podemos dizer que a variável `media_dias_sem_chuva` explicou parte da dependência espacial.
 
 | Teste | Estatística | p-valor | Interpretação |
 |-------|------------|---------|---------------|
-| **LR test** | 3.1804 | 0.0745 | Marginalmente não significativo |
-| **z-value** | 1.8851 | 0.0594 | Tendência à significância |
-| **Wald** | 3.5537 | 0.0594 | Confirma a tendência |
+| **LR test** | 3,926 | 0,047 |  O modelo espacial é superior ao OLS |
+| **z-value** | 2,121 | 0,033 | Lambda significativamente diferente de 0 |
+| **Wald** | 4,50 | 0.033 | Confirma a significância do parâmetro espacial |
 
 * O modelo espacial com a variável `media_dias_sem_chuva` tem AIC menor que o modelo espacial vazio:
-AIC spatial $=$  $370,39$ $<$ AIC vazio $=$ $393,28$, o que indica que o modelo com erro espacial com a variável `media_dias_sem_chuva` se ajusta melhor aos dados.
+AIC spatial com variável $=$  $369,65$ $<$ AIC spacial vazio $=$ $392,67$, o que indica que o modelo com erro espacial com a variável `media_dias_sem_chuva` se ajusta melhor aos dados.
 
 </div>
 
 ----
 
-## Aplicação II: Modelo CAR
+## Aplicação II: Modelo SEM
 
-<div style="font-size: 65%;">
+<div style="font-size: 60%;">
 
 #### Checando os residuos para verificar a presença de autocorrelação
 
 ```{r, echo=T,  out.width="70%"}
-queimadas.car2$carresid <- residuals(queimadas.car2)
-moran.test(queimadas.car2$carresid, pesos.viz)
+queimadas.sem2$carresid <- residuals(queimadas.sem2)
+moran.test(queimadas.sem2$carresid, pesos.viz)
 ```
 
-Como o $p-valor = 0,467 > 0,05$, não rejeitamos a hipótese nula de ausência de autocorrelação espacial nos resíduos. Isso indica que o modelo `errorsarlm` com a variável `media_dias_sem_chuva` eliminou adequadamente a autocorrelação espacial presente nos dados. 
+- Como o $p-valor = 0,467 > 0,05$, não rejeitamos a hipótese nula de ausência de autocorrelação espacial nos resíduos. Isso indica que o modelo `errorsarlm` com a variável `media_dias_sem_chuva` já dá conta da componente espacial presente nos dados. 
 
-Esse é exatamente o objetivo do modelo `errorsarlm`, capturar a estrutura espacial nos erros. E a ausência de autocorrelação nos resíduos valida a adequação desse modelo para os seus dados.
+- Esse é exatamente o objetivo do modelo `errorsarlm`, capturar a estrutura espacial nos erros. 
+
+- Com esse ultimo ajuste, foi possível observar que a ausência de autocorrelação nos resíduos valida a adequação desse modelo para os seus dados.
 
 </div>
 
@@ -1262,17 +1265,17 @@ queimadas.gwr
 
 * `Adaptive quantile: 0,07608438` → Como `adapt = TRUE`, a largura de banda representa uma proporção dos pontos vizinhos.
 
-* Quanto aos coeficientes do modelo, cada linha refere-se à distribuição dos coeficientes locais estimados em cada ponto do espaço (284 no total). 
+* Quanto aos coeficientes do modelo, cada linha refere-se à distribuição dos coeficientes locais estimados em cada ponto do espaço (92 no total). 
 
-  - Por exemplo, o impacto da variável `media_dias_sem_chuva` sobre `media_frp` varia bastante no espaço, onde os municípios poder ter coeficientes de inclinação podem variar de $0,4216$ até $0.9927$.
+  - Por exemplo, o impacto da variável `media_dias_sem_chuva` sobre `media_frp` varia bastante no espaço, onde os municípios poder ter coeficientes de inclinação podem variar de $0,4216$ até $0,9927$.
   
-  * A coluna `Global` mostra o coeficiente que seria obtido numa regressão tradicional (OLS).
+  * A coluna `Global` mostra o coeficiente que seria obtido numa regressão tradicional (Modelo de Regressão Linear Clássico - LM).
   
 - `Sigma (residual)`:	Desvio padrão dos resíduos do modelo GWR.
 
-- `AIC (GWR)`: 	Critério de informação de Akaike (quanto menor, melhor). Útil para comparar com OLS.
+- `AIC (GWR)`: 	Critério de informação de Akaike (quanto menor, melhor). Útil para comparar com LMs.
 
-- `AICc (corrigido)`: Versão do AIC corrigida para modelos com muitos parâmetros.
+- `AICc (corrigido)`: Versão do AIC corrigida para modelos com muitos parâmetros (ex: GWR).
 
 - `Residual sum of squares`: Soma dos quadrados dos resíduos (menor = melhor ajuste).
 
@@ -1590,7 +1593,7 @@ pred.lm <- ggplot(mapa_rj) +
   theme_void()
 
 # Predito - CAR
-mapa_rj$brks.car <- cut(queimadas.car2$fitted.values,
+mapa_rj$brks.car <- cut(queimadas.sem2$fitted.values,
                          breaks = breaks_classes,
                          include.lowest = TRUE,
                          right = TRUE,
@@ -1665,7 +1668,7 @@ pred.lm <- ggplot(mapa_rj) +
   theme_void()
 
 # Predito - CAR
-mapa_rj$brks.car <- cut(queimadas.car2$fitted.values,
+mapa_rj$brks.car <- cut(queimadas.sem2$fitted.values,
                          breaks = breaks_classes,
                          include.lowest = TRUE,
                          right = TRUE,
@@ -1714,7 +1717,7 @@ library(vioplot)
 
 # Define os resíduos
 res_lm  <- queimadas.lm2$residuals
-res_car <- queimadas.car2$residuals
+res_car <- queimadas.sem2$residuals
 res_gwr <- results$residuos
 
 # Paleta de cores agradável
@@ -1755,7 +1758,7 @@ library(vioplot)
 
 # Define os resíduos
 res_lm  <- queimadas.lm2$residuals
-res_car <- queimadas.car2$residuals
+res_car <- queimadas.sem2$residuals
 res_gwr <- results$residuos
 
 # Paleta de cores agradável

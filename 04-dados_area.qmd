@@ -7,8 +7,7 @@ Ao final deste capítulo, o estudante deverá ser capaz de:
 - Construir e interpretar mapas temáticos (coropléticos);
 - Calcular e interpretar medidas de autocorrelação espacial global (I de Moran);
 - Aplicar a análise de autocorrelação espacial local (LISA);
-- Utilizar o estimador de Bayes Empírico para suavização de taxas;
-- Ajustar modelos de regressão espacial (SAR, CAR e GWR).
+- Ajustar modelos de regressão espacial (SEM e GWR).
 :::
 
 ::: {.callout-note}
@@ -690,52 +689,54 @@ tm_shape(mapa) +
 
 ## Modelos de Regressão Espacial
 
-Além das análises exploratórias para os dados espaciais de área, é possível avançar na modelagem estatística dos dados por meio de modelos espaciais que consideram a dependência espacial dos dados. Entre os mais utilizados estão os modelos de autocorrelação espacial global, como o **SAR (Simultaneous Autoregressive Model)** e o **CAR (Conditional Autoregressive Model)** (CRESSIE, 1993). O modelo SAR incorpora a dependência espacial diretamente no valor da variável dependente, assumindo que o valor observado em uma região é influenciado pelos valores das regiões vizinhas. Já o modelo CAR considera essa dependência na estrutura do erro, sendo muito utilizado em abordagens bayesianas para modelagem de risco em áreas geográficas.
+Além das análises exploratórias para dados espaciais de área, é possível avançar na modelagem estatística por meio de modelos que consideram explicitamente a dependência espacial presente nos dados. Entre os mais utilizados estão os modelos globais de autocorrelação espacial, que se dividem principalmente em três abordagens: **SAR** (*Spatial Autoregressive Model*), **SEM** (*Spatial Error Model*) e **CAR** (*Conditional Autoregressive Model*) (CRESSIE, 1993).
 
 Outra abordagem é a dos modelos com efeitos espaciais locais, como a **Regressão Geograficamente Ponderada (GWR)** (FOTHERINGHAM et al., 2002). Diferente dos modelos SAR e CAR, que assumem relações espaciais globais, o GWR permite que os coeficientes da regressão variem ao longo do espaço, ajustando uma equação específica para cada localidade. Isso possibilita identificar como os efeitos de uma variável explicativa sobre a resposta mudam de acordo com a localização, sendo especialmente útil em contextos onde há forte heterogeneidade espacial. 
-
-#### Na prática
-
-* <span style="color:orange; font-weight:bold;"> Hipótese de independência das observações em geral é Falsa </span> $\rightarrow$  Existe dependência espacial, ou seja, o valor observado em uma localização tende a se parecer com os valores observados em locais vizinhos.
-
-* Efeitos Espaciais $\rightarrow$ Se existir dependência ou correlação espacial significativa, devemos incluir no modelo os <span style="color:darkpurple; font-weight:bold;"> Efeitos Espaciais </span>, caso contrário, as estimativas geradas pelo modelo de regressão podem ficar enviesadas, criando associações espúrias (isto é, sugerindo relações estatísticas onde elas não existem de fato, ou mascarando relações reais);
-
-* <span style="color:darkred; font-weight:bold;">**Como verificar ?** </span> $\rightarrow$ Para detectar a dependência espacial, podemos analisar os resíduos da regressão tradicional (OLS), utilizando indicadores como o índice de Moran dos resíduos. Se os resíduos mostrarem autocorrelação espacial significativa, isso indica que há estrutura espacial não modelada.
-
-* <span style="color:darkblue; font-weight:bold;">**Detectada a autocorrelação espacial: e agora ?** </span> $\rightarrow$  É necessário adotar modelos de regressão que incorporem explicitamente os efeitos espaciais, evitando vieses nas estimativas dos coeficientes.
-
 
 ### Modelos Globais: 
 
 * Esses modelos assumem que a estrutura espacial é constante em todo o espaço geográfico. Utilizam um único parâmetro para captar a autocorrelação.
 
-* Um exemplo é o **Modelo de Erro Espacial** (*Spatial Error Model* - **CAR**), representado por:
-  
-  $$y_i = \beta_0 + \sum^{p}_{k} \beta_k x_{ik}  + \varepsilon_i \text{    , sendo  }  \varepsilon_i = \lambda  W + \xi$$
-  
-::: box-dica4
+- O **modelo SAR** incorpora a dependência espacial diretamente na **variável dependente**, assumindo que o valor observado em uma região $y_i$ é influenciado pelos valores das regiões vizinhas $y_j$, gerando efeitos de transbordamento (*spillovers*). 
 
+Esses efeitos de transbordamento podem ocorrer quando uma mudança em uma variável independente $X$ em uma localidade $i$ afeta a variável dependente $y$ não apenas na própria localidade $i$, mas também em **localidades vizinhas** $j \neq i$. Em outras palavras, o impacto de uma variável "extrapola" os limites da unidade geográfica original, transbordando para as unidades ao redor.
+
+Sua especificação é:  
+
+$$y_i = \rho \sum_{j=1}^{n} w_{ij} y_j + \beta_0 + \sum_{k=1}^{p} \beta_k x_{ik} + \varepsilon_i$$
+
+::: box-dica4
+Sendo:
+
+- $y_i$: valor observado da variável dependente na unidade $i$;
+- $\beta_0$: intercepto da regressão (constante);
+- $\beta_k$: coeficiente da $k$-ésima variável explicativa;
+- $x_{ik}$: valor da $k$-ésima variável explicativa para a unidade $i$;
+- $\varepsilon_i$: erro aleatório independente e identicamente distribuído (i.i.d.), com $\varepsilon_i \sim N(0, \sigma^2)$;
+- $\rho$ (rho): coeficiente de autocorrelação espacial da variável dependente (parâmetro a ser estimado). Se $|\rho| \leq 1$, temos a condição de estabilidade do processo espacial, garantindo que $(I - \rho W)$ seja inversível. O valor de $\rho$ indica a intensidade da influência dos valores vizinhos sobre o valor local;
+- $w_{ij}$: elemento da matriz de pesos espaciais $W$, que define o grau de conexão entre as unidades $i$ e $j$. Por convenção, $w_{ii} = 0$ (nenhuma unidade é vizinha de si mesma).
+:::
+
+- O **modelo SEM** considera a dependência espacial na **estrutura dos erros**, sendo indicado quando a autocorrelação espacial residual provém de variáveis omitidas que são espacialmente correlacionadas. Sua especificação é:  
+  
+$$
+\begin{aligned}
+y_i &= \beta_0 + \sum_{k=1}^{p} \beta_k x_{ik} + \varepsilon_i \\
+\varepsilon_i &= \lambda \sum_{j=1}^{n} w_{ij} \varepsilon_j + \xi_i
+\end{aligned}
+$$
+
+::: box-dica4
 Sendo:
   
 - $y_i$: valor observado da variável dependente na unidade $i$;
-
-- $\beta_0$: intercepto da regressão;
-
+- $\beta_0$: intercepto;
 - $\beta_k$: coeficiente da $k$-ésima variável explicativa;
-
 - $x_{ik}$: valor da $k$-ésima variável explicativa para a unidade $i$;
-
-- $\varepsilon_i$: erro com estrutura de autocorrelação espacial;
-
-
-- $\lambda$: coeficiente de autocorrelação espacial;
-
-- $W$: matriz de vizinhança espacial (define como cada unidade está conectada às outras);
-
-- $\xi$: erro aleatório normal (sem autocorrelação).
+- $\varepsilon_i$: erro com estrutura de autocorrelação espacial na unidade $i$;
+- $\lambda$: coeficiente de autocorrelação espacial dos erros (parâmetro a ser estimado);
+- $w_{ij}$: matriz de pesos espaciais (grau de conexão entre as unidades $i$ e $j$).
 :::
-  
-$\rightarrow$ Podemos observar que os efeitos da autocorrelação espacial são associados ao termo de erro.
 
 ::: box-dica2
 
@@ -744,12 +745,34 @@ $\rightarrow$ Podemos observar que os efeitos da autocorrelação espacial são 
   - Se $\lambda \ne 0$, há evidência de dependência espacial nos erros, ou seja, o erro em uma localidade está correlacionado com os erros em localidades vizinhas.
 
 - Se $\lambda = 0$, o modelo reduz-se a uma regressão tradicional, e não há autocorrelação espacial significativa.
+
+Resumindo, podemos dizer então que se $|\lambda| \leq 1$, temos condição de estabilidade do processo espacial.
 :::
-  
-  
-  
-### Modelos Locais: 
-  
+
+- O **modelo CAR** também modela a dependência nos erros, mas por meio de uma especificação **condicional**: o valor do erro em uma região $i$ dado os valores dos vizinhos segue uma distribuição normal com média proporcional à média dos erros vizinhos. É muito utilizado em abordagens **bayesianas** para modelagem de risco em áreas geográficas (como epidemiologia e saúde pública). Sua especificação condicional é:  
+$$y_i = X_i \beta + \varepsilon_i$$
+
+$$\varepsilon_i \mid \varepsilon_j \sim N\left(\phi \sum_{j=1}^{n} w_{ij} \varepsilon_j,\ \tau_i^2\right)$$
+::: box-dica4
+Sendo:
+
+- $y_i$: valor observado da variável dependente na unidade $i$;
+- $X_i$: vetor linha de variáveis explicativas para a unidade $i$ (incluindo o intercepto);
+- $\beta$: vetor de coeficientes de regressão (incluindo $\beta_0$ como intercepto);
+- $\varepsilon_i$: erro da regressão (resíduo) na unidade $i$;
+- $\varepsilon_i \mid \varepsilon_j$: distribuição condicional do erro na unidade $i$ **dados** os erros em todas as demais unidades $j \neq i$;
+- $\sim$: "segue a distribuição" (lê-se: "é distribuído como");
+- $N(\cdot, \cdot)$: distribuição Normal (Gaussiana), com primeiro argumento sendo a média e o segundo a variância;
+- $\phi$ (*phi*): coeficiente de autocorrelação espacial condicional (parâmetro a ser estimado). Se $|\phi| \leq 1$, temos a condição de estabilidade do processo espacial, garantindo que a matriz de covariância $(I - \phi W)^{-1}$ seja positiva definida. $\phi$ mede a força da dependência entre o erro de uma unidade e a média dos erros de suas vizinhas;
+:::
+
+::: box-dica13
+Enquanto os modelos SAR e SEM tratam a dependência de forma **simultânea** (o valor em cada local depende dos vizinhos e vice-versa), o modelo CAR adota uma perspectiva **condicional** (a distribuição de cada local é modelada a partir dos vizinhos). Essa distinção tem implicações importantes tanto na estimação quanto na interpretação dos parâmetros espaciais.
+:::
+
+
+### Modelos Locais:
+
 * Enquanto os modelos globais assumem uma relação espacial uniforme, os modelos locais admitem que os parâmetros da regressão variam ao longo do espaço geográfico.
 
 * Um exemplo clássico é o Modelo **Geograficamente Ponderado** (*Geographically Weighted Regression* - **GWR**), expresso por:
@@ -782,6 +805,18 @@ knitr::include_graphics('figuras/largura_banda_gwr.png')
 $\rightarrow$ Quanto menor $d_{ij}$, maior é o peso de $j$ na estimação de $\beta_k(u_i, v_i)$.
 
 [Fonte: ARDILLY, Pascal et al. Manuel d’analyse spatiale. 2018.](https://ec.europa.eu/eurostat/documents/3859598/9462709/INSEE-ESTAT-SPATIAL-ANA-18-EN.pdf)
+
+
+#### Na prática
+
+* <span style="color:orange; font-weight:bold;"> Hipótese de independência das observações em geral é Falsa </span> $\rightarrow$  Existe dependência espacial, ou seja, o valor observado em uma localização tende a se parecer com os valores observados em locais vizinhos.
+
+* Efeitos Espaciais $\rightarrow$ Se existir dependência ou correlação espacial significativa, devemos incluir no modelo os <span style="color:darkpurple; font-weight:bold;"> Efeitos Espaciais </span>, caso contrário, as estimativas geradas pelo modelo de regressão podem ficar enviesadas, criando associações espúrias (isto é, sugerindo relações estatísticas onde elas não existem de fato, ou mascarando relações reais);
+
+* <span style="color:darkred; font-weight:bold;">**Como verificar ?** </span> $\rightarrow$ Para detectar a dependência espacial, podemos analisar os resíduos da regressão tradicional (OLS), utilizando indicadores como o índice de Moran dos resíduos. Se os resíduos mostrarem autocorrelação espacial significativa, isso indica que há estrutura espacial não modelada.
+
+* <span style="color:darkblue; font-weight:bold;">**Detectada a autocorrelação espacial: e agora ?** </span> $\rightarrow$  É necessário adotar modelos de regressão que incorporem explicitamente os efeitos espaciais, evitando vieses nas estimativas dos coeficientes.
+
 
 
 ## Aplicação II: Utilizando dos modelos de regressão espaciais nos dados de queimadas no estado do Rio de Janeiro.
@@ -866,17 +901,21 @@ moran.test(queimadas.lm$lmresid, pesos.viz)
 
 ```
 
-#### Ajustando o modelo CAR (Spatial Error Model) vazio
+#### Ajustando o modelo SEM vazio
 
-O **Modelo de Erro Espacial** (*Spatial Error Model* - **CAR**), representado por:
+O **Modelo de Erro Espacial** (*Spatial Error Model* - **SEM**), representado por:
     
-$$y_i = \beta_0 + \sum^{p}_{k} \beta_k x_{ik}  + \varepsilon_i$$
-$$\varepsilon_i = \lambda  W + \xi$$
+$$
+\begin{aligned}
+y_i &= \beta_0 + \sum_{k=1}^{p} \beta_k x_{ik} + \varepsilon_i \\
+\varepsilon_i &= \lambda \sum_{j=1}^{n} w_{ij} \varepsilon_j + \xi_i
+\end{aligned}
+$$
 
 ```{r, echo=T,  out.width="70%"}
 library(spatialreg)
-queimadas.car <- errorsarlm(media_frp ~ 1, data = mapa_rj, listw = pesos.viz, Durbin = FALSE)
-summary(queimadas.car)
+queimadas.sem <- errorsarlm(media_frp ~ 1, data = mapa_rj, listw = pesos.viz, Durbin = FALSE)
+summary(queimadas.sem)
 ```
 
 ::: box-dica1
@@ -904,8 +943,8 @@ AIC spatial $=$  $393,28$ $<$ AIC lm $=$ $395,83$, o que indica que o modelo com
 #### Colocando a variável `media_dias_sem_chuva` no modelo
 
 ```{r, echo=T,  out.width="70%"}
-queimadas.car2 <- errorsarlm(media_frp ~ media_dias_sem_chuva, data = mapa_rj, listw = pesos.viz, Durbin = FALSE)
-summary(queimadas.car2)
+queimadas.sem2 <- errorsarlm(media_frp ~ media_dias_sem_chuva, data = mapa_rj, listw = pesos.viz, Durbin = FALSE)
+summary(queimadas.sem2)
 ```
 
 ::: box-dica1
@@ -933,8 +972,8 @@ AIC spatial $=$  $370,39$ $<$ AIC vazio $=$ $393,28$, o que indica que o modelo 
 #### Checando os residuos para verificar a presença de autocorrelação
 
 ```{r, echo=T,  out.width="70%"}
-queimadas.car2$carresid <- residuals(queimadas.car2)
-moran.test(queimadas.car2$carresid, pesos.viz)
+queimadas.sem2$carresid <- residuals(queimadas.sem2)
+moran.test(queimadas.sem2$carresid, pesos.viz)
 ```
 
 Como o $p-valor = 0,467 > 0,05$, não rejeitamos a hipótese nula de ausência de autocorrelação espacial nos resíduos. Isso indica que o modelo `errorsarlm` com a variável `media_dias_sem_chuva` eliminou adequadamente a autocorrelação espacial presente nos dados. 
@@ -1169,7 +1208,7 @@ par(mfrow = c(2, 2))
 
 hist.frp <- histdens(mapa_rj$media_frp, "FRP médio")
 hist.lm <- histdens(queimadas.lm2$fitted.values, "Pred LM")
-hist.car <- histdens(queimadas.car2$fitted.values, "Pred CAR")
+hist.car <- histdens(queimadas.sem2$fitted.values, "Pred CAR")
 hist.gwr <- histdens(results$pred, "Pred GWR")
 ```
 
@@ -1223,7 +1262,7 @@ pred.lm <- ggplot(mapa_rj) +
 
 # -----------------------------------------
 # Predito - CAR
-mapa_rj$brks.car <- cut(queimadas.car2$fitted.values,
+mapa_rj$brks.car <- cut(queimadas.sem2$fitted.values,
                          breaks = breaks_classes,
                          include.lowest = TRUE,
                          right = TRUE,
@@ -1263,7 +1302,7 @@ library(vioplot)
 
 # Define os resíduos
 res_lm  <- queimadas.lm2$residuals
-res_car <- queimadas.car2$residuals
+res_car <- queimadas.sem2$residuals
 res_gwr <- results$residuos
 
 # Paleta de cores agradável
@@ -1327,7 +1366,7 @@ res.lm <- ggplot(mapa_rj) +
 
 # ------------------------------
 # Resíduos - CAR
-mapa_rj$brks.res.car <- cut(queimadas.car2$residuals,
+mapa_rj$brks.res.car <- cut(queimadas.sem2$residuals,
                              breaks = breaks_res,
                              labels = labels_res,
                              include.lowest = TRUE,
