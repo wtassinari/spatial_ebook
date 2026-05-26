@@ -380,6 +380,17 @@
     ]
   },
   {
+    "objectID": "04-dados_area.html#bõnus-adicionando-a-conexão-rio-niterói",
+    "href": "04-dados_area.html#bõnus-adicionando-a-conexão-rio-niterói",
+    "title": "4  Dados de Área",
+    "section": "4.11 Bõnus: Adicionando a conexão Rio-Niterói",
+    "text": "4.11 Bõnus: Adicionando a conexão Rio-Niterói\n\n4.11.1 Aqui iremos adicionar manualmente a conexão Rio-Niterói\nAqui está o detalhe importante: Rio de Janeiro e Niterói não compartilham uma fronteira terrestre porque estão separados pela água (Baía de Guanabara). Mas em muitas análises, você pode querer tratá-los como vizinhos mesmo assim, porque:\n\nEstão muito próximos geograficamente\nHá grande fluxo de pessoas entre eles (trabalho, comércio)\nCompartilham características socioeconômicas similares\nPodem ter políticas integradas\n\nO script vai adicionar essa conexão artificialmente, criando um “link” entre eles na matriz.\n\n# ============================================================================\n# BAIXAR MALHA MUNICIPAL DO RJ\n# ============================================================================\nlibrary(dplyr)\nlibrary(geobr)\n\n# ============================================================================\n# BAIXANDO A MALHA MUNICIPAL DO ESTADO DO RIO DE JANEIRO\n# ============================================================================\n# code_muni = 33 (código do estado do RJ)\n\nmapa_rj &lt;- read_municipality(code_muni = 33, year = 2024) |&gt;\n  mutate(code_muni = as.character(code_muni))\n\n# ============================================================================\n# MATRIZ DE VIZINHANÇA DOS MUNICÍPIOS DO RIO DE JANEIRO\n# ============================================================================\n\nlibrary(spdep)\nlibrary(sf)\nlibrary(ggplot2)\n\n# ============================================================================\n# 1. CRIAR A MATRIZ DE VIZINHANÇA\n# ============================================================================\n\n# Criar lista de vizinhos baseada em contiguidade (critério \"rainha\" - queen)\n# queen = TRUE considera vizinhos que compartilham qualquer ponto da fronteira\nvizinhos_rainha &lt;- poly2nb(mapa_rj, queen = TRUE)\n\n# ============================================================================\n# 2. ADICIONAR CONEXÃO MANUAL ENTRE RIO DE JANEIRO E NITERÓI\n# ============================================================================\n\n# Primeiro, precisamos identificar os índices (posições) dos municípios de \n# Rio de Janeiro e Niterói no objeto mapa_rj.\n# Assumindo que a coluna com os nomes dos municípios se chama \"name_muni\" \n# (ajuste o nome da coluna se for diferente no seu shapefile).\nidx_rj &lt;- which(mapa_rj$name_muni == \"Rio de Janeiro\")\nidx_niteroi &lt;- which(mapa_rj$name_muni == \"Niterói\")\n\n# Adicionar conexão \nvizinhos_rainha[[idx_rj]] &lt;- c(vizinhos_rainha[[idx_rj]], idx_niteroi)\nvizinhos_rainha[[idx_niteroi]] &lt;- c(vizinhos_rainha[[idx_niteroi]], idx_rj)\n\n# ============================================================================\n# 3. PREPARAR DADOS PARA PLOTAGEM\n# ============================================================================\n\n# Coordenadas dos centroides dos poligonos do RJ\ncoord &lt;- st_coordinates(st_centroid(st_geometry(mapa_rj)))\n\n# Converte a lista de vizinhos espaciais em linhas e depois transforma em um objeto sf\nviz.sf &lt;- as(nb2lines(vizinhos_rainha, coords = coord), 'sf')\n\n# Atribui ao objeto viz.sf o mesmo sistema de coordenadas (CRS) do mapa do Rio de Janeiro\nviz.sf &lt;- st_set_crs(viz.sf, st_crs(mapa_rj))\n\n# ============================================================================\n# 4. PLOTAR O GRAFO DE CONECTIVIDADE\n# ============================================================================\n\n# Figure 1: Mapa de vizinhança por conectividade com a ligação Rio-Niterói\nmapa.viz &lt;- ggplot(mapa_rj) + \n  geom_sf(fill = \"pink\", color = \"#4A4A4A\", linewidth = 0.3) +\n  geom_sf(data = viz.sf, aes(color = \"darkblue\"), linewidth = 0.5, show.legend = FALSE) +\n  scale_color_identity() +  # força a cor exata\n  theme_minimal() +\n  ggtitle(\"Vizinhança por conectividade (vizinhos_rainha)\") +\n  ylab(\"Latitude\") +\n  xlab(\"Longitude\")\n\n# Exibir o mapa\nmapa.viz",
+    "crumbs": [
+      "Análise por Tipo de Dado",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Dados de Área</span>"
+    ]
+  },
+  {
     "objectID": "05-geoestatistica.html",
     "href": "05-geoestatistica.html",
     "title": "5  Dados Geoestatísticos",
@@ -417,16 +428,6 @@
     "title": "6  Trabalho Final",
     "section": "6.2 🗂️ Estrutura do Trabalho",
     "text": "6.2 🗂️ Estrutura do Trabalho\n\n6.2.1 1. Seleção dos Dados\nO aluno deverá:\n\nUtilizar a função geobr::read_municipality() para baixar a malha do estatdo de Tocantins dividida por municípios;\nAs variáveis doa tabela que será utilizada para o trabalho é dados_tocantins_aeda.csv e dados_tocantins_aeda.xlsx são:\n\n\n\n\nColuna\nDescrição\n\n\n\n\ncodigo\nCódigo IBGE do município\n\n\nmunicipio\nNome oficial do município\n\n\ntmi\nTaxa de Mortalidade Infantil\n\n\nidhm\nIDH Municipal\n\n\nrenda\nRenda per capita\n\n\ndensidade\nDensidade demográfica\n\n\npopulacao\nPopulação\n\n\nescolaridade\nEscolaridade média\n\n\ntemperatura\nTemperatura média\n\n\nesperanca_vida\nEsperança de vida\n\n\n\n\nA variável principal (Resposta/Dependente) será a tmi.\n\n\n\n6.2.2 2. Análises Estatísticas e Espaciais\nO trabalho deverá conter as seguintes etapas:\n\n📊 Análise Descritiva Espacial (AEDE)\n\nCarregamento e integração dos dados com a malha espacial;\nEstatísticas descritivas da variável resposta (média, mediana, desvio padrão, quartis);\nMapas temáticos mostrando a distribuição espacial da variável resposta;\nMapas temáticos das variáveis explicativas;\nHistogramas, boxplots e tabelas resumo.\n\n\n\n📍 Medidas de Autocorrelação Espacial\n\nConstrução da matriz de vizinhança (contiguidade Rainha ou Torre);\nCálculo de pesos espaciais (nb2listw() com normalização row-standardized);\nTeste de Moran I Global para avaliar autocorrelação espacial global;\nÍndice de Moran I Local (LISA) para identificar clusters espaciais locais;\nClassificação de clusters: Alto-Alto (hotspots), Baixo-Baixo (coldspots), Alto-Baixo, Baixo-Alto;\nMapa LISA mostrando a distribuição espacial dos clusters;\nDiscussão dos padrões espaciais encontrados.\n\n\n\n📈 Modelagem Espacial\n\nModelo 1: Regressão Linear Ordinária (OLS)\n\nAjuste do modelo com variáveis explicativas;\nTeste de Moran nos resíduos para verificar adequação do modelo.\n\nModelo 2: Regressão Espacial SAR (Spatial Autoregressive)\n\nIncorporação da dependência espacial na variável resposta;\nInterpretação do coeficiente de autocorrelação espacial (ρ).\n\nModelo 3: Regressão Espacial CAR (Conditional Autoregressive)\n\nIncorporação da dependência espacial no termo de erro;\nInterpretação do coeficiente de autocorrelação espacial (λ).\n\nComparação de Modelos:\n\nCálculo do AIC (Akaike Information Criterion) para cada modelo;\nIdentificação do modelo com melhor ajuste;\nDiscussão das diferenças entre os modelos.\n\nAnálise de Resíduos:\n\nVisualização da distribuição dos resíduos (histogramas, Q-Q plots);\nTeste de normalidade (Shapiro-Wilk);\nVerificação de autocorrelação espacial nos resíduos.\n\n\n\n\n\n6.2.3 3. Conclusões e Discussões\n\nResumo das descobertas: Principais padrões espaciais identificados;\nInterpretação dos resultados: O que os testes e modelos revelam sobre a variável de interesse;\nDiscussão das limitações: Limitações dos dados, do modelo escolhido e das análises realizadas;\nSugestões para estudos futuros: Como o trabalho poderia ser expandido ou melhorado.",
-    "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Trabalho Final</span>"
-    ]
-  },
-  {
-    "objectID": "06-trabalho_final.html#entrega",
-    "href": "06-trabalho_final.html#entrega",
-    "title": "6  Trabalho Final",
-    "section": "6.3 📎 Entrega",
-    "text": "6.3 📎 Entrega\n\nFormato: .qmd ou .Rmd com código reprodutível;\nPrazo final: 22/06/2026 até 00:00;\nTrabalho: Individual;\nOrganização: Utilize títulos e seções claras com boa organização visual do documento.",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Trabalho Final</span>"
     ]
@@ -472,6 +473,16 @@
     ]
   },
   {
+    "objectID": "06-trabalho_final.html#conceito-final",
+    "href": "06-trabalho_final.html#conceito-final",
+    "title": "6  Trabalho Final",
+    "section": "6.7 Conceito final",
+    "text": "6.7 Conceito final\nO conceito final será baseado nos questionario respndidos pelo SIGAA + esse trabalho final\n\\[Conceito = \\frac{(1 \\times Q1) + (1 \\times Q2) + (1 \\times Q3) + (3 \\times Trabalho)}{6}\\]",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Trabalho Final</span>"
+    ]
+  },
+  {
     "objectID": "06-trabalho_final.html#dúvidas-e-suporte",
     "href": "06-trabalho_final.html#dúvidas-e-suporte",
     "title": "6  Trabalho Final",
@@ -489,27 +500,6 @@
     "text": "A seguir, apresentamos uma seleção de referências fundamentais para o aprofundamento nos temas abordados neste curso.\n\nBailey, T.C.; Gatrell, A.C. Interactive Spatial Data Analysis. Routledge, 1995.\nBivand, R.S.; Pebesma, E.; Gomez-Rubio, V. Applied Spatial Data Analysis with R. Springer, 2ª ed., 2013.\nCressie, N. Statistics for Spatial Data, 1993.\nComber, L. GeoComputation and Spatial Analysis practicals.\nDruck, S.; Carvalho, M.S.; Câmara, G.; Monteiro, A.V.M. (eds). Análise Espacial de Dados Geográficos. Brasília: EMBRAPA, 2004.\nFotheringham, A. S.; Brunsdon, C.; Charlton, M. E. Geographically Weighted Regression: The Analysis of Spatially Varying Relationships, 2002.\nHijmans, R.J. Spatial Data Science with R.\nLovelace, R.; Nowosad, J.; Muenchow, J. Geocomputation with R, 2021.\nPeterson, E. Spatial Epidemiology Workshop, 2010.\nSolymosi, R.; Medina, J. Crime Mapping in R. University of Manchester.\nWaller, L.A.; Gotway, C.A. Applied Spatial Statistics for Public Health Data. Wiley-Interscience, 2004.",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Referências Bibliográficas</span>"
-    ]
-  },
-  {
-    "objectID": "04-dados_area.html#bõnus-adicionando-a-conexão-rio-niterói",
-    "href": "04-dados_area.html#bõnus-adicionando-a-conexão-rio-niterói",
-    "title": "4  Dados de Área",
-    "section": "4.11 Bõnus: Adicionando a conexão Rio-Niterói",
-    "text": "4.11 Bõnus: Adicionando a conexão Rio-Niterói\n\n4.11.1 Aqui iremos adicionar manualmente a conexão Rio-Niterói\nAqui está o detalhe importante: Rio de Janeiro e Niterói não compartilham uma fronteira terrestre porque estão separados pela água (Baía de Guanabara). Mas em muitas análises, você pode querer tratá-los como vizinhos mesmo assim, porque:\n\nEstão muito próximos geograficamente\nHá grande fluxo de pessoas entre eles (trabalho, comércio)\nCompartilham características socioeconômicas similares\nPodem ter políticas integradas\n\nO script vai adicionar essa conexão artificialmente, criando um “link” entre eles na matriz.\n\n# ============================================================================\n# BAIXAR MALHA MUNICIPAL DO RJ\n# ============================================================================\nlibrary(dplyr)\nlibrary(geobr)\n\n# ============================================================================\n# BAIXANDO A MALHA MUNICIPAL DO ESTADO DO RIO DE JANEIRO\n# ============================================================================\n# code_muni = 33 (código do estado do RJ)\n\nmapa_rj &lt;- read_municipality(code_muni = 33, year = 2024) |&gt;\n  mutate(code_muni = as.character(code_muni))\n\n# ============================================================================\n# MATRIZ DE VIZINHANÇA DOS MUNICÍPIOS DO RIO DE JANEIRO\n# ============================================================================\n\nlibrary(spdep)\nlibrary(sf)\nlibrary(ggplot2)\n\n# ============================================================================\n# 1. CRIAR A MATRIZ DE VIZINHANÇA\n# ============================================================================\n\n# Criar lista de vizinhos baseada em contiguidade (critério \"rainha\" - queen)\n# queen = TRUE considera vizinhos que compartilham qualquer ponto da fronteira\nvizinhos_rainha &lt;- poly2nb(mapa_rj, queen = TRUE)\n\n# ============================================================================\n# 2. ADICIONAR CONEXÃO MANUAL ENTRE RIO DE JANEIRO E NITERÓI\n# ============================================================================\n\n# Primeiro, precisamos identificar os índices (posições) dos municípios de \n# Rio de Janeiro e Niterói no objeto mapa_rj.\n# Assumindo que a coluna com os nomes dos municípios se chama \"name_muni\" \n# (ajuste o nome da coluna se for diferente no seu shapefile).\nidx_rj &lt;- which(mapa_rj$name_muni == \"Rio de Janeiro\")\nidx_niteroi &lt;- which(mapa_rj$name_muni == \"Niterói\")\n\n# Adicionar conexão \nvizinhos_rainha[[idx_rj]] &lt;- c(vizinhos_rainha[[idx_rj]], idx_niteroi)\nvizinhos_rainha[[idx_niteroi]] &lt;- c(vizinhos_rainha[[idx_niteroi]], idx_rj)\n\n# ============================================================================\n# 3. PREPARAR DADOS PARA PLOTAGEM\n# ============================================================================\n\n# Coordenadas dos centroides dos poligonos do RJ\ncoord &lt;- st_coordinates(st_centroid(st_geometry(mapa_rj)))\n\n# Converte a lista de vizinhos espaciais em linhas e depois transforma em um objeto sf\nviz.sf &lt;- as(nb2lines(vizinhos_rainha, coords = coord), 'sf')\n\n# Atribui ao objeto viz.sf o mesmo sistema de coordenadas (CRS) do mapa do Rio de Janeiro\nviz.sf &lt;- st_set_crs(viz.sf, st_crs(mapa_rj))\n\n# ============================================================================\n# 4. PLOTAR O GRAFO DE CONECTIVIDADE\n# ============================================================================\n\n# Figure 1: Mapa de vizinhança por conectividade com a ligação Rio-Niterói\nmapa.viz &lt;- ggplot(mapa_rj) + \n  geom_sf(fill = \"pink\", color = \"#4A4A4A\", linewidth = 0.3) +\n  geom_sf(data = viz.sf, aes(color = \"darkblue\"), linewidth = 0.5, show.legend = FALSE) +\n  scale_color_identity() +  # força a cor exata\n  theme_minimal() +\n  ggtitle(\"Vizinhança por conectividade (vizinhos_rainha)\") +\n  ylab(\"Latitude\") +\n  xlab(\"Longitude\")\n\n# Exibir o mapa\nmapa.viz",
-    "crumbs": [
-      "Análise por Tipo de Dado",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Dados de Área</span>"
-    ]
-  },
-  {
-    "objectID": "06-trabalho_final.html#conceito-final",
-    "href": "06-trabalho_final.html#conceito-final",
-    "title": "6  Trabalho Final",
-    "section": "6.7 Conceito final",
-    "text": "6.7 Conceito final\nO conceito final será baseado nos questionario respndidos pelo SIGAA + esse trabalho final\n\\[Conceito = \\frac{(1 \\times Q1) + (1 \\times Q2) + (1 \\times Q3) + (3 \\times Trabalho)}{6}\\]",
-    "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Trabalho Final</span>"
     ]
   }
 ]
