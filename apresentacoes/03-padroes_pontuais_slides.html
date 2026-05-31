@@ -208,18 +208,18 @@ Prof.&nbsp;Wagner Tassinari
 </div>
 
 </section>
-<section id="objetivos-do-capítulo" class="slide level2">
-<h2>Objetivos do Capítulo</h2>
-<p>Ao final deste capítulo, você será capaz de:</p>
-<div class="large">
-<ol type="1">
-<li>Compreender a estrutura dos <strong>dados de padrões pontuais</strong>.</li>
-<li>Testar hipóteses sobre a <strong>aleatoriedade espacial completa (CSR)</strong>.</li>
-<li>Aplicar <strong>estimativas de densidade de Kernel</strong> (mapas de calor).</li>
-<li>Utilizar a <strong>Função K de Ripley</strong> para análise de padrões.</li>
-<li>Realizar <strong>análises de padrões pontuais com dados reais</strong>.</li>
-</ol>
-</div>
+<section class="slide level2">
+
+<!-- ## Objetivos do Capítulo -->
+<!-- Ao final deste capítulo, você será capaz de: -->
+<!-- ::: {.large} -->
+<!-- 1. Compreender a estrutura dos **dados de padrões pontuais**. -->
+<!-- 2. Testar hipóteses sobre a **aleatoriedade espacial completa (CSR)**. -->
+<!-- 3. Aplicar **estimativas de densidade de Kernel** (mapas de calor). -->
+<!-- 4. Utilizar a **Função K de Ripley** para análise de padrões. -->
+<!-- 5. Realizar **análises de padrões pontuais com dados reais**. -->
+<!-- ::: -->
+<!-- --- -->
 </section>
 <section id="o-que-são-padrões-pontuais" class="slide level2">
 <h2>O que são Padrões Pontuais?</h2>
@@ -276,10 +276,10 @@ Fonte: Elaboração própria com auxílio do ChatGPT (OpenAI, 2026).
 <ol type="1">
 <li>Aplica-se um <strong>“funil de suavização”</strong> (kernel)</li>
 <li>Distribui <strong>“peso”</strong> ao redor do ponto</li>
-<li>Maior peso às áreas próximas, menor conforme a distância</li>
+<li>Maior peso ao pontos mais próximos.</li>
 <li>Resultado: <strong>superfície contínua de densidade</strong></li>
 </ol>
-<p><strong>Analogia:</strong> O kernel atua como um limpador de para-brisa, pesando mais os eventos próximos e menos os eventos muito distantes.</p>
+<p><strong>Analogia:</strong> O kernel atua como um limpador de para-brisa, pesando mais os eventos próximos e menos os eventos mais distantes.</p>
 </div>
 </section>
 <section class="slide level2">
@@ -308,7 +308,7 @@ Fonte: Elaboração própria com auxílio do ChatGPT (OpenAI, 2026).
 <h3 id="hipóteses-do-teste">Hipóteses do Teste</h3>
 <ul>
 <li><strong>H₀:</strong> Os pontos estão distribuídos aleatoriamente no espaço</li>
-<li><strong>H₁:</strong> Os pontos não seguem aleatoriedade (agregação ou dispersão)</li>
+<li><strong>H₁:</strong> Os pontos não seguem um padrão aleatório</li>
 </ul>
 </div>
 </section>
@@ -337,11 +337,11 @@ Fonte: Elaboração própria com auxílio do ChatGPT (OpenAI, 2026).
 <span id="cb1-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Padrão aleatório</span></span>
 <span id="cb1-8"><a href="" aria-hidden="true" tabindex="-1"></a>alea.spp <span class="ot">&lt;-</span> <span class="fu">csr</span>(caixa, <span class="dv">100</span>)</span>
 <span id="cb1-9"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Padrão clusterizado</span></span>
-<span id="cb1-11"><a href="" aria-hidden="true" tabindex="-1"></a>clu.spp <span class="ot">&lt;-</span> <span class="fu">pcp.sim</span>(<span class="at">rho=</span><span class="dv">20</span>, <span class="at">m=</span><span class="dv">10</span>, <span class="at">s2=</span><span class="fl">0.005</span>, <span class="at">region.poly=</span>caixa)</span>
+<span id="cb1-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Padrão regular</span></span>
+<span id="cb1-11"><a href="" aria-hidden="true" tabindex="-1"></a>uni.spp <span class="ot">&lt;-</span> <span class="fu">jitter</span>(<span class="fu">gridpts</span>(caixa, <span class="dv">100</span>), <span class="dv">2</span>)</span>
 <span id="cb1-12"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Padrão regular</span></span>
-<span id="cb1-14"><a href="" aria-hidden="true" tabindex="-1"></a>uni.spp <span class="ot">&lt;-</span> <span class="fu">jitter</span>(<span class="fu">gridpts</span>(caixa, <span class="dv">100</span>), <span class="dv">2</span>)</span>
+<span id="cb1-13"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Padrão clusterizado</span></span>
+<span id="cb1-14"><a href="" aria-hidden="true" tabindex="-1"></a>clu.spp <span class="ot">&lt;-</span> <span class="fu">pcp.sim</span>(<span class="at">rho=</span><span class="dv">20</span>, <span class="at">m=</span><span class="dv">10</span>, <span class="at">s2=</span><span class="fl">0.005</span>, <span class="at">region.poly=</span>caixa)</span>
 <span id="cb1-15"><a href="" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-16"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotando os pontos</span></span>
 <span id="cb1-17"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
@@ -463,12 +463,12 @@ Quadrats: 4 by 4 grid of tiles</code></pre>
 <tr class="even">
 <td><strong>Regular</strong></td>
 <td>Semelhantes</td>
-<td>Distribuição homogênea, repulsão</td>
+<td>Distribuição homogênea</td>
 </tr>
 <tr class="odd">
 <td><strong>Agregado</strong></td>
 <td>Muito desiguais</td>
-<td>Clusterização, concentração</td>
+<td>Clusterização</td>
 </tr>
 </tbody>
 </table>
@@ -534,35 +534,54 @@ Quadrats: 4 by 4 grid of tiles</code></pre>
 <span id="cb9-7"><a href="" aria-hidden="true" tabindex="-1"></a>K.teor <span class="ot">&lt;-</span> <span class="cf">function</span>(r) { pi <span class="sc">*</span> r<span class="sc">^</span><span class="dv">2</span> }</span>
 <span id="cb9-8"><a href="" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotar as funções K</span></span>
-<span id="cb9-10"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">1</span>))</span>
-<span id="cb9-12"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-13"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico 1: Processo Aleatório</span></span>
-<span id="cb9-14"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(K.alea, <span class="at">main=</span><span class="st">"K(r) - Padrão Aleatório"</span>, </span>
-<span id="cb9-15"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.35</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.08</span>),</span>
-<span id="cb9-16"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"Distância (r)"</span>, <span class="at">ylab=</span><span class="st">"K(r)"</span>)</span>
-<span id="cb9-17"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(K.teor, <span class="at">from=</span><span class="dv">0</span>, <span class="at">to=</span><span class="fl">0.35</span>, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lty=</span><span class="dv">2</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">add=</span><span class="cn">TRUE</span>)</span>
-<span id="cb9-18"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="fu">c</span>(<span class="st">"K estimada"</span>, <span class="st">"K teórica (CSR)"</span>), </span>
-<span id="cb9-19"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>), <span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">lwd=</span><span class="dv">2</span>)</span>
-<span id="cb9-20"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
-<span id="cb9-21"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-22"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico 2: Processo Regular</span></span>
-<span id="cb9-23"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(K.uni, <span class="at">main=</span><span class="st">"K(r) - Padrão Regular"</span>, </span>
-<span id="cb9-24"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.35</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.08</span>),</span>
-<span id="cb9-25"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"Distância (r)"</span>, <span class="at">ylab=</span><span class="st">"K(r)"</span>)</span>
-<span id="cb9-26"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(K.teor, <span class="at">from=</span><span class="dv">0</span>, <span class="at">to=</span><span class="fl">0.35</span>, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lty=</span><span class="dv">2</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">add=</span><span class="cn">TRUE</span>)</span>
-<span id="cb9-27"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="fu">c</span>(<span class="st">"K estimada"</span>, <span class="st">"K teórica (CSR)"</span>), </span>
-<span id="cb9-28"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>), <span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">lwd=</span><span class="dv">2</span>)</span>
-<span id="cb9-29"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
-<span id="cb9-30"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-31"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico 3: Processo Agregado</span></span>
-<span id="cb9-32"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(K.clu, <span class="at">main=</span><span class="st">"K(r) - Padrão Agregado"</span>, </span>
-<span id="cb9-33"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.35</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.08</span>),</span>
-<span id="cb9-34"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"Distância (r)"</span>, <span class="at">ylab=</span><span class="st">"K(r)"</span>)</span>
-<span id="cb9-35"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(K.teor, <span class="at">from=</span><span class="dv">0</span>, <span class="at">to=</span><span class="fl">0.35</span>, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lty=</span><span class="dv">2</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">add=</span><span class="cn">TRUE</span>)</span>
-<span id="cb9-36"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="fu">c</span>(<span class="st">"K estimada"</span>, <span class="st">"K teórica (CSR)"</span>), </span>
-<span id="cb9-37"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>), <span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">lwd=</span><span class="dv">2</span>)</span>
-<span id="cb9-38"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">1</span>))</span>
+<span id="cb9-11"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Layout: 3 gráficos na primeira linha e legenda na segunda</span></span>
+<span id="cb9-13"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">layout</span>(<span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">4</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb9-14"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">heights =</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">1</span>))</span>
+<span id="cb9-15"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Margens dos gráficos</span></span>
+<span id="cb9-17"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">1</span>))</span>
+<span id="cb9-18"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico 1: Processo Aleatório</span></span>
+<span id="cb9-20"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(K.alea<span class="sc">$</span>r, K.alea<span class="sc">$</span>border,</span>
+<span id="cb9-21"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">type=</span><span class="st">"l"</span>, <span class="at">lwd=</span><span class="dv">2</span>,</span>
+<span id="cb9-22"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.35</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.08</span>),</span>
+<span id="cb9-23"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"Distância (r)"</span>, <span class="at">ylab=</span><span class="st">"K(r)"</span>,</span>
+<span id="cb9-24"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">"Padrão Aleatório"</span>)</span>
+<span id="cb9-25"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(K.teor, <span class="at">add=</span><span class="cn">TRUE</span>, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lty=</span><span class="dv">2</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb9-26"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb9-27"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-28"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico 2: Processo Regular</span></span>
+<span id="cb9-29"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(K.uni<span class="sc">$</span>r, K.uni<span class="sc">$</span>border,</span>
+<span id="cb9-30"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">type=</span><span class="st">"l"</span>, <span class="at">lwd=</span><span class="dv">2</span>,</span>
+<span id="cb9-31"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.35</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.08</span>),</span>
+<span id="cb9-32"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"Distância (r)"</span>, <span class="at">ylab=</span><span class="st">"K(r)"</span>,</span>
+<span id="cb9-33"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">"Padrão Regular"</span>)</span>
+<span id="cb9-34"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(K.teor, <span class="at">add=</span><span class="cn">TRUE</span>, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lty=</span><span class="dv">2</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb9-35"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb9-36"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-37"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico 3: Processo Agregado</span></span>
+<span id="cb9-38"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(K.clu<span class="sc">$</span>r, K.clu<span class="sc">$</span>border,</span>
+<span id="cb9-39"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">type=</span><span class="st">"l"</span>, <span class="at">lwd=</span><span class="dv">2</span>,</span>
+<span id="cb9-40"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.35</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.08</span>),</span>
+<span id="cb9-41"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"Distância (r)"</span>, <span class="at">ylab=</span><span class="st">"K(r)"</span>,</span>
+<span id="cb9-42"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">"Padrão Agregado"</span>)</span>
+<span id="cb9-43"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(K.teor, <span class="at">add=</span><span class="cn">TRUE</span>, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lty=</span><span class="dv">2</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb9-44"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>()</span>
+<span id="cb9-45"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-46"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Painel da legenda</span></span>
+<span id="cb9-47"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))</span>
+<span id="cb9-48"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.new</span>()</span>
+<span id="cb9-49"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-50"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"center"</span>,</span>
+<span id="cb9-51"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"K estimada"</span>, <span class="st">"K teórica (CSR)"</span>),</span>
+<span id="cb9-52"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>),</span>
+<span id="cb9-53"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),</span>
+<span id="cb9-54"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb9-55"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">horiz =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb9-56"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">bty =</span> <span class="st">"n"</span>,</span>
+<span id="cb9-57"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">cex =</span> <span class="fl">1.2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </section>
@@ -708,45 +727,47 @@ Quadrats: 4 by 4 grid of tiles</code></pre>
 <span id="cb12-54"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(r_100km) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"EPSG:"</span>, utm_crs)</span>
 <span id="cb12-55"><a href="" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-56"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># PASSO 3: Recortar para área do RJ</span></span>
-<span id="cb12-57"><a href="" aria-hidden="true" tabindex="-1"></a>rj_vect <span class="ot">&lt;-</span> <span class="fu">vect</span>(rj_utm)  <span class="co"># converte para spatvector</span></span>
-<span id="cb12-58"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-59"><a href="" aria-hidden="true" tabindex="-1"></a>r_10km_crop <span class="ot">&lt;-</span> <span class="fu">crop</span>(r_10km, rj_vect)</span>
-<span id="cb12-60"><a href="" aria-hidden="true" tabindex="-1"></a>r_10km_mask <span class="ot">&lt;-</span> <span class="fu">mask</span>(r_10km_crop, rj_vect)</span>
-<span id="cb12-61"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-62"><a href="" aria-hidden="true" tabindex="-1"></a>r_50km_crop <span class="ot">&lt;-</span> <span class="fu">crop</span>(r_50km, rj_vect)</span>
-<span id="cb12-63"><a href="" aria-hidden="true" tabindex="-1"></a>r_50km_mask <span class="ot">&lt;-</span> <span class="fu">mask</span>(r_50km_crop, rj_vect)</span>
-<span id="cb12-64"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-65"><a href="" aria-hidden="true" tabindex="-1"></a>r_100km_crop <span class="ot">&lt;-</span> <span class="fu">crop</span>(r_100km, rj_vect)</span>
-<span id="cb12-66"><a href="" aria-hidden="true" tabindex="-1"></a>r_100km_mask <span class="ot">&lt;-</span> <span class="fu">mask</span>(r_100km_crop, rj_vect)</span>
-<span id="cb12-67"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-68"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># PASSO 4: Plotar</span></span>
-<span id="cb12-69"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
-<span id="cb12-70"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-71"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot 10 km</span></span>
-<span id="cb12-72"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(r_10km_mask, </span>
-<span id="cb12-73"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Kernel Density - 10 km"</span>, </span>
-<span id="cb12-74"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="fu">viridis</span>(<span class="dv">50</span>), </span>
-<span id="cb12-75"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">legend =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb12-76"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(rj_vect, <span class="at">lwd =</span> <span class="fl">1.5</span>)</span>
-<span id="cb12-77"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(queimadas_coords<span class="sc">$</span>x, queimadas_coords<span class="sc">$</span>y, <span class="at">pch =</span> <span class="st">"."</span>, <span class="at">cex =</span> <span class="fl">0.5</span>)</span>
-<span id="cb12-78"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-79"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot 50 km</span></span>
-<span id="cb12-80"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(r_50km_mask, </span>
-<span id="cb12-81"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Kernel Density - 50 km"</span>, </span>
-<span id="cb12-82"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="fu">viridis</span>(<span class="dv">50</span>), </span>
-<span id="cb12-83"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">legend =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb12-84"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(rj_vect, <span class="at">lwd =</span> <span class="fl">1.5</span>)</span>
-<span id="cb12-85"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(queimadas_coords<span class="sc">$</span>x, queimadas_coords<span class="sc">$</span>y, <span class="at">pch =</span> <span class="st">"."</span>, <span class="at">cex =</span> <span class="fl">0.5</span>)</span>
-<span id="cb12-86"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-87"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot 100 km</span></span>
-<span id="cb12-88"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(r_100km_mask, </span>
-<span id="cb12-89"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Kernel Density - 100 km"</span>, </span>
-<span id="cb12-90"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="fu">viridis</span>(<span class="dv">50</span>),</span>
-<span id="cb12-91"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">legend =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb12-92"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(rj_vect, <span class="at">lwd =</span> <span class="fl">1.5</span>)</span>
-<span id="cb12-93"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(queimadas_coords<span class="sc">$</span>x, queimadas_coords<span class="sc">$</span>y, <span class="at">pch =</span> <span class="st">"."</span>, <span class="at">cex =</span> <span class="fl">0.5</span>)</span>
-<span id="cb12-94"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-95"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb12-57"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># crop(): recorta pelo retângulo envolvente (bounding box)</span></span>
+<span id="cb12-58"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># mask(): remove pixels fora do polígono</span></span>
+<span id="cb12-59"><a href="" aria-hidden="true" tabindex="-1"></a>rj_vect <span class="ot">&lt;-</span> <span class="fu">vect</span>(rj_utm)  <span class="co"># converte para spatvector</span></span>
+<span id="cb12-60"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-61"><a href="" aria-hidden="true" tabindex="-1"></a>r_10km_crop <span class="ot">&lt;-</span> <span class="fu">crop</span>(r_10km, rj_vect)</span>
+<span id="cb12-62"><a href="" aria-hidden="true" tabindex="-1"></a>r_10km_mask <span class="ot">&lt;-</span> <span class="fu">mask</span>(r_10km_crop, rj_vect)</span>
+<span id="cb12-63"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-64"><a href="" aria-hidden="true" tabindex="-1"></a>r_50km_crop <span class="ot">&lt;-</span> <span class="fu">crop</span>(r_50km, rj_vect)</span>
+<span id="cb12-65"><a href="" aria-hidden="true" tabindex="-1"></a>r_50km_mask <span class="ot">&lt;-</span> <span class="fu">mask</span>(r_50km_crop, rj_vect)</span>
+<span id="cb12-66"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-67"><a href="" aria-hidden="true" tabindex="-1"></a>r_100km_crop <span class="ot">&lt;-</span> <span class="fu">crop</span>(r_100km, rj_vect)</span>
+<span id="cb12-68"><a href="" aria-hidden="true" tabindex="-1"></a>r_100km_mask <span class="ot">&lt;-</span> <span class="fu">mask</span>(r_100km_crop, rj_vect)</span>
+<span id="cb12-69"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-70"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># PASSO 4: Plotar</span></span>
+<span id="cb12-71"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb12-72"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-73"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot 10 km</span></span>
+<span id="cb12-74"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(r_10km_mask, </span>
+<span id="cb12-75"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Kernel Density - 10 km"</span>, </span>
+<span id="cb12-76"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="fu">viridis</span>(<span class="dv">50</span>), </span>
+<span id="cb12-77"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">legend =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-78"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(rj_vect, <span class="at">lwd =</span> <span class="fl">1.5</span>)</span>
+<span id="cb12-79"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(queimadas_coords<span class="sc">$</span>x, queimadas_coords<span class="sc">$</span>y, <span class="at">pch =</span> <span class="st">"."</span>, <span class="at">cex =</span> <span class="fl">0.5</span>)</span>
+<span id="cb12-80"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-81"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot 50 km</span></span>
+<span id="cb12-82"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(r_50km_mask, </span>
+<span id="cb12-83"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Kernel Density - 50 km"</span>, </span>
+<span id="cb12-84"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="fu">viridis</span>(<span class="dv">50</span>), </span>
+<span id="cb12-85"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">legend =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-86"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(rj_vect, <span class="at">lwd =</span> <span class="fl">1.5</span>)</span>
+<span id="cb12-87"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(queimadas_coords<span class="sc">$</span>x, queimadas_coords<span class="sc">$</span>y, <span class="at">pch =</span> <span class="st">"."</span>, <span class="at">cex =</span> <span class="fl">0.5</span>)</span>
+<span id="cb12-88"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-89"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot 100 km</span></span>
+<span id="cb12-90"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(r_100km_mask, </span>
+<span id="cb12-91"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Kernel Density - 100 km"</span>, </span>
+<span id="cb12-92"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="fu">viridis</span>(<span class="dv">50</span>),</span>
+<span id="cb12-93"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">legend =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-94"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(rj_vect, <span class="at">lwd =</span> <span class="fl">1.5</span>)</span>
+<span id="cb12-95"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(queimadas_coords<span class="sc">$</span>x, queimadas_coords<span class="sc">$</span>y, <span class="at">pch =</span> <span class="st">"."</span>, <span class="at">cex =</span> <span class="fl">0.5</span>)</span>
+<span id="cb12-96"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-97"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </section>
@@ -904,9 +925,9 @@ Quadrats: 13 tiles (irregular windows)</code></pre>
 <h3 id="função-k-de-ripley-3">Função K de Ripley</h3>
 <div style="font-size: 75%;">
 <ul>
-<li><p>A análise da função K de Ripley evidenciou forte agrupamento espacial das queimadas em curtas e médias distâncias, indicando que os focos não estão distribuídos aleatoriamente no território. Esse padrão sugere a existência de regiões preferenciais de ocorrência e dependência espacial entre os eventos.</p></li>
+<li><p>A análise da função K de Ripley evidenciou forte agrupamento espacial das queimadas em curtas e médias distâncias, indicando que os focos não estão distribuídos aleatoriamente no território. Esse padrão sugere a existência de regiões com dependência espacial entre os eventos.</p></li>
 <li><p>Em torno de 40 km, observou-se uma descontinuidade na curva da função K, possivelmente associada a efeitos de borda, à geometria irregular do estado do Rio de Janeiro e à redução do número de pares de pontos disponíveis em distâncias maiores.</p></li>
-<li><p>Para distâncias superiores a aproximadamente 45–50 km, a interpretação dos resultados torna-se menos confiável devido à instabilidade do estimador, provavelmente relacionada ao baixo número de combinações entre pares de eventos e à maior influência das bordas da área de estudo.</p></li>
+<li><p>Para distâncias superiores a aproximadamente 45-50 km, a interpretação dos resultados torna-se menos confiável devido à instabilidade do estimador, provavelmente relacionada ao baixo número de combinações entre pares de eventos e à maior influência das bordas da área de estudo.</p></li>
 </ul>
 </div>
 </section>
