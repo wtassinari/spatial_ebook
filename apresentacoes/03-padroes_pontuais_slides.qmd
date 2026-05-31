@@ -17,20 +17,6 @@ format:
       data-background-color: "#2c3e50"
 ---
 
-<!-- ## Objetivos do Capítulo -->
-
-<!-- Ao final deste capítulo, você será capaz de: -->
-
-<!-- ::: {.large} -->
-<!-- 1. Compreender a estrutura dos **dados de padrões pontuais**. -->
-<!-- 2. Testar hipóteses sobre a **aleatoriedade espacial completa (CSR)**. -->
-<!-- 3. Aplicar **estimativas de densidade de Kernel** (mapas de calor). -->
-<!-- 4. Utilizar a **Função K de Ripley** para análise de padrões. -->
-<!-- 5. Realizar **análises de padrões pontuais com dados reais**. -->
-<!-- ::: -->
-
-<!-- --- -->
-
 ## O que são Padrões Pontuais?
 
 ### Definição
