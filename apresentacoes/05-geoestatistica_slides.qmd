@@ -1,6 +1,6 @@
 ---
 title: "Geoestatística"
-subtitle: "Estatística Espacial"
+subtitle: "Análise Espacial de Dados Contínuos"
 author: "Prof. Wagner Tassinari"
 format:
   revealjs:
@@ -10,74 +10,490 @@ format:
     transition: convex
     background-transition: fade
     highlight-style: tango
-    code-background: true      # <-- adiciona fundo nos códigos
-    code-line-numbers: false    # <-- números nas linhas (opcional)
-    code-copy: true            # <-- botão de copiar código
+    code-background: true
+    code-line-numbers: false
+    code-copy: true
     title-slide-attributes:
       data-background-color: "#2c3e50"
 ---
 
-## Objetivos da Aula
-
-- Compreender os fundamentos da geoestatística.
-- Analisar a estrutura espacial através de variogramas.
-- Ajustar modelos teóricos de variograma (esférico, exponencial, gaussiano).
-- Aplicar métodos de interpolação espacial (Krigagem Ordinária).
-- Incorporar covariáveis na krigagem.
-- Avaliar a qualidade das estimativas por validação cruzada.
-
 ## O que é Geoestatística?
 
-A geoestatística lida com dados amostrados em localizações contínuas ou irregulares, onde o atributo de interesse é uma variável contínua (ex: temperatura, poluição, altitude).
+### Definição
 
-O objetivo principal é modelar a dependência espacial entre as observações e utilizar essa informação para prever (interpolar) valores em locais não amostrados.
+A geoestatística lida com variáveis que são medidas em localizações **contínuas ou irregulares** no espaço, como temperatura, precipitação, concentração de poluentes ou altitude.
 
-## O Semivariograma
+### Premissa Fundamental
 
-O **semivariograma** (ou simplesmente variograma) é a ferramenta central da geoestatística. Ele quantifica a dependência espacial medindo a variância da diferença entre valores em pares de pontos separados por uma distância $h$.
+**Autocorrelação Espacial (Dependência Espacial)**: Observações próximas no espaço tendem a ser mais similares do que observações distantes.
 
-A premissa básica é que pontos mais próximos tendem a ter valores mais semelhantes (menor semivariância) do que pontos mais distantes.
+> "Todas as coisas se parecem, porém coisas mais próximas tendem a ser mais semelhantes do que aquelas mais distantes." — Waldo Tobler (1979) - **1ª Lei da Geografia**
 
-## Componentes do Variograma
+---
 
-Um variograma típico apresenta três parâmetros principais:
+## Exemplos de Aplicação
 
-- **Efeito Pepita (Nugget):** A variância em distância zero, representando erro de medição ou variação em microescala.
-- **Patamar (Sill):** O valor máximo de semivariância, onde a dependência espacial cessa.
-- **Alcance (Range):** A distância na qual o variograma atinge o patamar; além dessa distância, as amostras são espacialmente independentes.
+- 🌧️ **Meteorologia**: Medição da quantidade de chuva em diferentes locais de uma cidade
+- 🌡️ **Climatologia**: Distribuição de temperatura em uma região
+- 🏭 **Meio Ambiente**: Concentração de poluentes no ar em pontos georreferenciados
+- 🌽 **Agricultura de Precisão**: Análise da produtividade agrícola em diferentes talhões
+- 🧪 **Pedologia**: Teor de elementos químicos (ex: argila, fósforo) no solo
+- 🏥 **Epidemiologia**: Incidência de doenças em diferentes áreas
 
-## Modelos Teóricos de Variograma
+---
 
-Para realizar a krigagem, é necessário ajustar um modelo matemático contínuo ao variograma experimental (calculado a partir dos dados).
+## Diferenças entre Tipos de Dados Espaciais
 
-Os modelos mais comuns incluem:
+<div style="font-size: 80%;">
 
-- **Esférico:** Crescimento linear inicial, atingindo o patamar de forma abrupta.
-- **Exponencial:** Crescimento rápido inicial, aproximando-se assintoticamente do patamar.
-- **Gaussiano:** Comportamento parabólico na origem, indicando alta continuidade espacial.
+| Tipo | Característica | O que analisamos? | Exemplo |
+|------|----------------|-------------------|---------|
+| **Padrões Pontuais** | Localização exata de eventos | A própria localização dos pontos | Casos de doença, crimes |
+| **Geoestatística** | Variável contínua medida em pontos | O valor do atributo no espaço | Temperatura, precipitação |
+| **Dados de Área** | Agregado por unidades geográficas | O valor agregado na região | Casos por município |
 
-## Krigagem Ordinária
+</div>
 
-A **Krigagem Ordinária** é o método de interpolação geoestatística mais utilizado. Ela estima o valor em um local não amostrado como uma combinação linear ponderada dos valores observados na vizinhança.
+---
 
-Os pesos são determinados de forma a minimizar a variância do erro de predição, garantindo que o estimador seja não enviesado e ótimo (BLUE - Best Linear Unbiased Estimator).
+## O Semivariograma: A Base da Análise
 
-## Krigagem com Covariáveis
+### O que é?
 
-Quando existem variáveis auxiliares (covariáveis) correlacionadas com a variável principal e disponíveis em toda a área de estudo, elas podem ser incorporadas para melhorar a precisão da interpolação.
+Uma das principais ferramentas da geoestatística. Ele mede o quanto dois pontos próximos no espaço se parecem (ou se diferem) com relação ao valor de uma variável.
 
-Métodos como a **Krigagem Universal** ou a **Krigagem com Deriva Externa (KED)** permitem modelar a tendência espacial em função dessas covariáveis, combinando regressão linear com a modelagem do resíduo espacial.
+### A Ideia Central
 
-## Validação Cruzada
+Se dois pontos estão **muito próximos**, é esperado que seus valores sejam **parecidos**. Já se estiverem **distantes**, a diferença entre os valores tende a **aumentar**.
 
-A **validação cruzada** é uma técnica essencial para avaliar o desempenho do modelo geoestatístico ajustado.
+---
 
-O método *Leave-One-Out* remove temporariamente uma observação por vez, estima seu valor usando as restantes e compara a estimativa com o valor real. Métricas como o Erro Médio (ME) e a Raiz do Erro Quadrático Médio (RMSE) são utilizadas para quantificar a acurácia.
+## O Semivariograma Experimental
 
-## Aplicação Prática no Curso
+<div style="font-size: 80%;">
 
-- **Interpolação de pluviosidade na Região Metropolitana do Rio de Janeiro:**
-  - Análise exploratória dos dados pluviométricos.
-  - Construção e ajuste do variograma experimental.
-  - Aplicação da Krigagem Ordinária para gerar um mapa contínuo de precipitação.
-  - Avaliação do modelo por validação cruzada.
+Calculado para diferentes distâncias entre os pontos, usando a fórmula:
+
+$$\hat{\gamma}(h) = \frac{1}{2N(h)}\sum_{i=1}^{N(h)}[z(x_i) - z(x_i + h)]^2$$
+
+Onde:
+- $\hat{\gamma}(h)$: valor estimado da semivariância para a distância $h$
+- $N(h)$: número de pares de pontos separados por uma distância $h$
+- $z(x_i)$: valor observado da variável na localização $x_i$
+- $z(x_i + h)$: valor observado em um ponto a uma distância $h$ de $x_i$
+
+**Em resumo:** Representa a *diferença média ao quadrado* entre os valores da variável em pares de pontos separados pela distância $h$.
+
+</div>
+
+---
+
+## Componentes do Semivariograma
+
+![](figuras/variograma1.png){fig-align="center" width="60%"}
+
+<div style="font-size: 70%;">
+
+📌 **Efeito Pepita ($C_0$)**: É a variação observada mesmo quando a distância entre os pontos é muito pequena ou zero. Pode indicar erro de medição ou variação em microescala.
+
+📌 **Patamar ($C$)**: É o valor em que o variograma se estabiliza, indicando que a partir de certa distância, a variabilidade não aumenta mais.
+
+📌 **Alcance ($a$)**: É a distância a partir da qual dois pontos deixam de estar correlacionados. Após essa distância, tornam-se independentes.
+
+</div>
+
+---
+
+## Modelos Teóricos de Semivariograma
+
+<div style="font-size: 80%;">
+
+O semivariograma experimental é apenas um conjunto de pontos (uma estimativa). Para realizar interpolações (como a krigagem), precisamos ajustar uma função matemática contínua, chamada de **modelo teórico**.
+
+### Modelos Mais Comuns:
+
+1. **Modelo Exponencial**: Cresce rapidamente no início e se aproxima do patamar de forma assintótica.
+2. **Modelo Esférico**: Cresce de forma linear no início e atinge o patamar exatamente no alcance.
+3. **Modelo Gaussiano**: Apresenta comportamento parabólico na origem (muito suave a curtas distâncias).
+
+A escolha do modelo depende do comportamento da variável estudada.
+
+</div>
+
+---
+
+## Comparação Visual dos Modelos
+
+![](figuras/variograma2.png){fig-align="center" width="70%"}
+
+<div style="font-size: 70%; text-align: center;">
+Diferentes modelos teóricos (Esférico, Exponencial, Gaussiano) ajustados aos mesmos dados experimentais. A escolha do modelo afeta diretamente os resultados da interpolação espacial.
+</div>
+
+---
+
+## Interpolação Espacial: Krigagem (Kriging)
+
+### O que é?
+
+Método geoestatístico de interpolação que utiliza a estrutura de dependência espacial dos dados (via semivariograma) para estimar valores em locais não amostrados.
+
+### Vantagens sobre outros métodos (ex: IDW)
+
+- É o **melhor estimador linear não viciado** (BLUE).
+- Produz um mapa suavizado e estatisticamente robusto.
+- Fornece não apenas a estimativa, mas também a **variância do erro de predição** (uma medida de incerteza).
+
+---
+
+## Exemplo: Teor de Argila no Solo
+
+![](figuras/geoestatistica7.png){fig-align="center" width="70%"}
+
+<div style="font-size: 60%;">
+Comparação de métodos de interpolação:
+- **Krigagem**: Suavizado e robusto, considera a dependência espacial.
+- **Inverso da Distância (IDW)**: Maior detalhamento local, mas pode gerar "olhos de boi" ao redor das amostras.
+- **Média Simples**: Suaviza demais, perde a variabilidade local.
+- **Vizinho Mais Próximo**: Gera polígonos abruptos (Polígonos de Thiessen/Voronoi).
+</div>
+
+---
+
+## Bibliotecas do R para Geoestatística
+
+<div style="font-size: 90%;">
+
+```{r}
+#| eval: false
+#| echo: true
+
+# Manipulação de dados espaciais
+library(sf)           # Simple Features (moderno)
+library(sp)           # Classes espaciais (clássico)
+
+# Geoestatística e Interpolação
+library(gstat)        # Funções principais de krigagem
+library(automap)      # Ajuste automático de variogramas
+
+# Dados matriciais (Rasters)
+library(raster)       # Trabalhar com rasters
+library(terra)        # Sucessor mais rápido do raster
+
+# Visualização
+library(ggplot2)      # Gráficos elegantes
+library(lattice)      # Gráficos treliçados (usado pelo sp)
+library(leaflet)      # Mapas interativos
+```
+
+</div>
+
+---
+
+## Aplicação Prática: Pluviosidade no RJ
+
+### O Problema
+
+Temos dados de chuva acumulada (em 24h) de estações pluviométricas do sistema Alerta Rio espalhadas pela cidade do Rio de Janeiro. 
+
+**Objetivo:** Interpolar esses valores para estimar a precipitação em toda a cidade, criando um mapa contínuo de chuva.
+
+---
+
+## 1. Importando e Explorando os Dados
+
+<div style="font-size: 80%;">
+
+```{r}
+#| eval: false
+#| echo: true
+
+# Ler os dados
+pluvio <- read.csv("dados/chuva/pluviosidade.csv", sep=";")
+
+# Analisar a distribuição da chuva em 24h
+quantil <- quantile(pluvio$acumulado_24h, seq(0, 1, 0.2))
+print(quantil)
+
+# Resumo estatístico
+summary(pluvio$acumulado_24h)
+```
+
+</div>
+
+---
+
+## 2. Transformando em Objeto Espacial
+
+<div style="font-size: 80%;">
+
+```{r}
+#| eval: false
+#| echo: true
+
+# Informar ao R quais colunas são as coordenadas
+sp::coordinates(pluvio) <- ~ x + y
+
+# Definir o Sistema de Referência de Coordenadas (CRS)
+# EPSG:31983 = SIRGAS 2000 / UTM zone 23S (adequado para o RJ)
+sp::proj4string(pluvio) <- sp::CRS("+init=epsg:31983")
+
+# Verificar a classe do objeto
+class(pluvio)
+# [1] "SpatialPointsDataFrame"
+```
+
+</div>
+
+---
+
+## 3. Visualização Espacial Exploratória
+
+<div style="font-size: 80%;">
+
+```{r}
+#| eval: false
+#| echo: true
+
+# Bubble plot: tamanho do círculo proporcional à chuva
+bubble(pluvio, "acumulado_24h", 
+       key.entries = quantil, 
+       pch = 19, 
+       col = "blue",
+       main = "Precipitação Acumulada (24h) nas Estações")
+```
+
+```{r}
+#| eval: false
+#| echo: true
+
+# Mapa de pontos com escala de cores
+spplot(pluvio['acumulado_24h'], 
+       scales = list(draw = TRUE), 
+       key.space = "right", 
+       colorkey = TRUE,
+       main = "Distribuição Espacial da Chuva")
+```
+
+</div>
+
+---
+
+## 4. O Semivariograma Experimental
+
+<div style="font-size: 80%;">
+
+```{r}
+#| eval: false
+#| echo: true
+
+library(gstat)
+
+# Calcular o variograma experimental
+# A fórmula 'acumulado_24h ~ 1' indica que estamos assumindo
+# uma média constante em toda a área (Krigagem Ordinária)
+var_exp <- variogram(acumulado_24h ~ 1, 
+                     data = pluvio,
+                     cutoff = 40000,  # Distância máxima de 40km
+                     width = 3000)    # Intervalos (lags) de 3km
+
+# Visualizar
+plot(var_exp, 
+     main = "Semivariograma Experimental - Chuva RJ",
+     xlab = "Distância (m)",
+     ylab = "Semivariância")
+```
+
+</div>
+
+---
+
+## 5. Ajustando o Modelo Teórico
+
+<div style="font-size: 80%;">
+
+Podemos fazer isso de forma manual ou automática. A biblioteca `automap` facilita muito esse processo testando vários modelos.
+
+```{r}
+#| eval: false
+#| echo: true
+
+library(automap)
+
+# O autofitVariogram testa modelos (Esférico, Exponencial, Gaussiano)
+# e escolhe o de melhor ajuste baseado no erro residual
+var_auto <- autofitVariogram(acumulado_24h ~ 1,
+                             input_data = pluvio,
+                             model = c("Sph", "Exp", "Gau"))
+
+# Visualizar o ajuste
+plot(var_auto)
+
+# Ver os parâmetros estimados (Efeito Pepita, Patamar, Alcance)
+print(var_auto$var_model)
+```
+
+</div>
+
+---
+
+## 6. Preparando a Grade para Interpolação
+
+<div style="font-size: 75%;">
+
+Para criar um mapa contínuo, precisamos definir uma grade (grid) de pontos onde a krigagem fará as estimativas.
+
+```{r}
+#| eval: false
+#| echo: true
+
+# 1. Obter os limites da área (bounding box)
+bbox <- bbox(pluvio)
+
+# 2. Criar uma sequência de coordenadas a cada 500 metros
+x_grid <- seq(bbox[1,1], bbox[1,2], by = 500)
+y_grid <- seq(bbox[2,1], bbox[2,2], by = 500)
+
+# 3. Criar a grade completa combinando X e Y
+grade <- expand.grid(x = x_grid, y = y_grid)
+
+# 4. Converter a grade para objeto espacial
+coordinates(grade) <- ~ x + y
+proj4string(grade) <- proj4string(pluvio)
+gridded(grade) <- TRUE
+```
+
+</div>
+
+---
+
+## 7. Executando a Krigagem Ordinária
+
+<div style="font-size: 80%;">
+
+```{r}
+#| eval: false
+#| echo: true
+
+# Executar a krigagem
+# Usa o modelo de variograma ajustado pelo automap
+krigagem <- krige(acumulado_24h ~ 1, 
+                  locations = pluvio, 
+                  newdata = grade, 
+                  model = var_auto$var_model)
+
+# O resultado contém duas informações principais:
+# var1.pred: O valor estimado (predição)
+# var1.var: A variância do erro (incerteza)
+```
+
+</div>
+
+---
+
+## 8. Visualizando o Mapa de Chuva (Predição)
+
+<div style="font-size: 80%;">
+
+```{r}
+#| eval: false
+#| echo: true
+
+# Plotar o mapa de predição
+spplot(krigagem, "var1.pred", 
+       main = "Mapa de Precipitação Estimada (Krigagem Ordinária)",
+       col.regions = terrain.colors(50),
+       sp.layout = list("sp.points", pluvio, pch = 19, col = "black", cex = 0.5))
+```
+
+**Interpretação:**
+O mapa mostra a superfície contínua de chuva. As áreas mais escuras representam maior volume de chuva. Os pontos pretos são as estações originais.
+
+</div>
+
+---
+
+## 9. Visualizando a Incerteza (Variância)
+
+<div style="font-size: 80%;">
+
+Uma das grandes vantagens da krigagem é saber onde a estimativa é menos confiável.
+
+```{r}
+#| eval: false
+#| echo: true
+
+# Plotar o mapa de variância
+spplot(krigagem, "var1.var", 
+       main = "Variância do Erro de Predição (Incerteza)",
+       col.regions = heat.colors(50),
+       sp.layout = list("sp.points", pluvio, pch = 19, col = "black", cex = 0.5))
+```
+
+**Interpretação:**
+A variância é **menor** perto das estações (onde temos dados reais) e **maior** nas áreas sem estações pluviométricas. Isso indica onde precisaríamos instalar novas estações!
+
+</div>
+
+---
+
+## 10. Validação Cruzada (Cross-Validation)
+
+<div style="font-size: 75%;">
+
+Como saber se nosso modelo ficou bom? Usamos a validação cruzada *Leave-One-Out*.
+O R remove uma estação, estima o valor para ela usando as outras, e compara com o valor real.
+
+```{r}
+#| eval: false
+#| echo: true
+
+# Executar validação cruzada
+cv <- krige.cv(acumulado_24h ~ 1, 
+               locations = pluvio, 
+               model = var_auto$var_model)
+
+# Calcular o Erro Quadrático Médio (RMSE)
+rmse <- sqrt(mean(cv$residual^2))
+cat("RMSE:", rmse, "mm\n")
+
+# Gráfico de Observado vs Predito
+plot(cv$observed, cv$var1.pred, 
+     xlab = "Chuva Observada (mm)", 
+     ylab = "Chuva Estimada (mm)",
+     main = "Validação Cruzada: Observado vs Estimado",
+     pch = 19, col = "blue")
+abline(0, 1, col = "red", lwd = 2) # Linha de referência perfeita
+```
+
+</div>
+
+---
+
+## Resumo do Fluxo Geoestatístico
+
+<div style="font-size: 80%;">
+
+1. **Exploração**: Mapear os pontos e entender a distribuição da variável.
+2. **Semivariograma Experimental**: Calcular a dependência espacial real dos dados.
+3. **Modelo Teórico**: Ajustar uma função matemática ao semivariograma.
+4. **Interpolação (Krigagem)**: Estimar valores para toda a área de estudo.
+5. **Incerteza**: Avaliar o mapa de variância para entender a confiabilidade.
+6. **Validação**: Usar validação cruzada para medir o erro do modelo.
+
+</div>
+
+---
+
+## Referências Bibliográficas
+
+<div style="font-size: 65%;">
+
+1. **Bivand, R. S., Pebesma, E., & Gomez-Rubio, V.** (2013). Applied Spatial Data Analysis with R (2nd ed.). Springer.
+2. **Cressie, N.** (1993). Statistics for Spatial Data (Revised edition). New York: Wiley.
+3. **Druck, S., Carvalho, M.S., Câmara, G., & Monteiro, A.V.M.** (eds). (2004). Análise Espacial de Dados Geográficos. Brasília: EMBRAPA.
+4. **Lovelace, R., Nowosad, J., & Muenchow, J.** (2021). Geocomputation with R.
+5. **Waller, L. A., & Gotway, C. A.** (2004). Applied Spatial Statistics for Public Health Data. Wiley-Interscience.
+6. **Moraga, P.** Spatial Data Science with R. Disponível em: https://www.paulamoraga.com/book-spatial/index.html
+
+</div>

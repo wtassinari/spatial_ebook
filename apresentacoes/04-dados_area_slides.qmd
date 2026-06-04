@@ -1340,7 +1340,7 @@ mapa_rj$localR2 <- results$localR2
 mapa_rj$pred.gwr <- results$pred
 ```
 
-#### Mapa dos coeficientes de regressão para a variável lixo
+#### Mapa dos coeficientes de regressão para a variável `dias sem chuva`
 
 ```{r}
 #| eval: false  # não executa o código
