@@ -210,6 +210,7 @@ Prof.&nbsp;Wagner Tassinari
 </section>
 <section id="o-que-é-geoestatística" class="slide level2">
 <h2>O que é Geoestatística?</h2>
+<div style="font-size: 80%;">
 <h3 id="definição">Definição</h3>
 <p>A geoestatística lida com variáveis que são medidas em localizações <strong>contínuas ou irregulares</strong> no espaço, como temperatura, precipitação, concentração de poluentes ou altitude.</p>
 <h3 id="premissa-fundamental">Premissa Fundamental</h3>
@@ -217,21 +218,24 @@ Prof.&nbsp;Wagner Tassinari
 <blockquote>
 <p>“Todas as coisas se parecem, porém coisas mais próximas tendem a ser mais semelhantes do que aquelas mais distantes.” — Waldo Tobler (1979) - <strong>1ª Lei da Geografia</strong></p>
 </blockquote>
+</div>
 </section>
 <section id="exemplos-de-aplicação" class="slide level2">
 <h2>Exemplos de Aplicação</h2>
+<div style="font-size: 80%;">
 <ul>
 <li>🌧️ <strong>Meteorologia</strong>: Medição da quantidade de chuva em diferentes locais de uma cidade</li>
 <li>🌡️ <strong>Climatologia</strong>: Distribuição de temperatura em uma região</li>
 <li>🏭 <strong>Meio Ambiente</strong>: Concentração de poluentes no ar em pontos georreferenciados</li>
-<li>🌽 <strong>Agricultura de Precisão</strong>: Análise da produtividade agrícola em diferentes talhões</li>
+<li>🌽 <strong>Agricultura de Precisão</strong>: Análise da produtividade agrícola em diferentes áreas de cultivo</li>
 <li>🧪 <strong>Pedologia</strong>: Teor de elementos químicos (ex: argila, fósforo) no solo</li>
 <li>🏥 <strong>Epidemiologia</strong>: Incidência de doenças em diferentes áreas</li>
 </ul>
+</div>
 </section>
 <section id="diferenças-entre-tipos-de-dados-espaciais" class="slide level2">
 <h2>Diferenças entre Tipos de Dados Espaciais</h2>
-<div style="font-size: 80%;">
+<div style="font-size: 70%;">
 <table class="caption-top">
 <colgroup>
 <col style="width: 12%">
@@ -272,32 +276,42 @@ Prof.&nbsp;Wagner Tassinari
 </section>
 <section id="o-semivariograma-a-base-da-análise" class="slide level2">
 <h2>O Semivariograma: A Base da Análise</h2>
+<div style="font-size: 80%;">
 <h3 id="o-que-é">O que é?</h3>
 <p>Uma das principais ferramentas da geoestatística. Ele mede o quanto dois pontos próximos no espaço se parecem (ou se diferem) com relação ao valor de uma variável.</p>
 <h3 id="a-ideia-central">A Ideia Central</h3>
 <p>Se dois pontos estão <strong>muito próximos</strong>, é esperado que seus valores sejam <strong>parecidos</strong>. Já se estiverem <strong>distantes</strong>, a diferença entre os valores tende a <strong>aumentar</strong>.</p>
+</div>
 </section>
 <section id="o-semivariograma-experimental" class="slide level2">
 <h2>O Semivariograma Experimental</h2>
-<div style="font-size: 80%;">
+<div style="font-size: 70%;">
 <p>Calculado para diferentes distâncias entre os pontos, usando a fórmula:</p>
 <p><span class="math display">\[\hat{\gamma}(h) = \frac{1}{2N(h)}\sum_{i=1}^{N(h)}[z(x_i) - z(x_i + h)]^2\]</span></p>
-<p>Onde: - <span class="math inline">\(\hat{\gamma}(h)\)</span>: valor estimado da semivariância para a distância <span class="math inline">\(h\)</span> - <span class="math inline">\(N(h)\)</span>: número de pares de pontos separados por uma distância <span class="math inline">\(h\)</span> - <span class="math inline">\(z(x_i)\)</span>: valor observado da variável na localização <span class="math inline">\(x_i\)</span> - <span class="math inline">\(z(x_i + h)\)</span>: valor observado em um ponto a uma distância <span class="math inline">\(h\)</span> de <span class="math inline">\(x_i\)</span></p>
+<p>Onde:</p>
+<ul>
+<li><p><span class="math inline">\(\hat{\gamma}(h)\)</span>: valor estimado da semivariância para a distância <span class="math inline">\(h\)</span></p></li>
+<li><p><span class="math inline">\(N(h)\)</span>: número de pares de pontos separados por uma distância <span class="math inline">\(h\)</span></p></li>
+<li><p><span class="math inline">\(z(x_i)\)</span>: valor observado da variável na localização <span class="math inline">\(x_i\)</span></p></li>
+<li><p><span class="math inline">\(z(x_i + h)\)</span>: valor observado em um ponto a uma distância <span class="math inline">\(h\)</span> de <span class="math inline">\(x_i\)</span></p></li>
+</ul>
+<blockquote>
 <p><strong>Em resumo:</strong> Representa a <em>diferença média ao quadrado</em> entre os valores da variável em pares de pontos separados pela distância <span class="math inline">\(h\)</span>.</p>
+</blockquote>
 </div>
 </section>
 <section id="componentes-do-semivariograma" class="slide level2">
 <h2>Componentes do Semivariograma</h2>
 
-<img data-src="figuras/variograma1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:60.0%"><div style="font-size: 70%;">
+<img data-src="figuras/variograma1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:60.0%"><div style="font-size: 65%;">
 <p>📌 <strong>Efeito Pepita (<span class="math inline">\(C_0\)</span>)</strong>: É a variação observada mesmo quando a distância entre os pontos é muito pequena ou zero. Pode indicar erro de medição ou variação em microescala.</p>
-<p>📌 <strong>Patamar (<span class="math inline">\(C\)</span>)</strong>: É o valor em que o variograma se estabiliza, indicando que a partir de certa distância, a variabilidade não aumenta mais.</p>
-<p>📌 <strong>Alcance (<span class="math inline">\(a\)</span>)</strong>: É a distância a partir da qual dois pontos deixam de estar correlacionados. Após essa distância, tornam-se independentes.</p>
+<p>📌 <strong>Patamar (<span class="math inline">\(C\)</span>)</strong>: Corresponde ao valor em que o semivariograma atinge a estabilização, indicando que, a partir dessa distância, não há mais dependência espacial entre as observações. Nesse ponto podemos dizer que a semivariância atinge seu valor máximo.</p>
+<p>📌 <strong>Alcance (<span class="math inline">\(a\)</span>)</strong>: É a distância até a qual existe dependência espacial entre as observações. Após essa distância, as observações tornam-se independentes.</p>
 </div>
 </section>
 <section id="modelos-teóricos-de-semivariograma" class="slide level2">
 <h2>Modelos Teóricos de Semivariograma</h2>
-<div style="font-size: 80%;">
+<div style="font-size: 70%;">
 <p>O semivariograma experimental é apenas um conjunto de pontos (uma estimativa). Para realizar interpolações (como a krigagem), precisamos ajustar uma função matemática contínua, chamada de <strong>modelo teórico</strong>.</p>
 <h3 id="modelos-mais-comuns">Modelos Mais Comuns:</h3>
 <ol type="1">
@@ -310,32 +324,63 @@ Prof.&nbsp;Wagner Tassinari
 </section>
 <section id="comparação-visual-dos-modelos" class="slide level2">
 <h2>Comparação Visual dos Modelos</h2>
-
-<img data-src="figuras/variograma2.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"><div style="font-size: 70%; text-align: center;">
+<div style="font-size: 70%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="figuras/variograma2.png" class="quarto-figure quarto-figure-center" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+<div style="font-size: 60%; text-align: center;">
 <p>Diferentes modelos teóricos (Esférico, Exponencial, Gaussiano) ajustados aos mesmos dados experimentais. A escolha do modelo afeta diretamente os resultados da interpolação espacial.</p>
 </div>
 </section>
-<section id="interpolação-espacial-krigagem-kriging" class="slide level2">
-<h2>Interpolação Espacial: Krigagem (Kriging)</h2>
-<h3 id="o-que-é-1">O que é?</h3>
+<section class="slide level2">
+
+<h3 id="interpolação-espacial-krigagem-kriging">Interpolação Espacial: Krigagem (Kriging)</h3>
+<div style="font-size: 50%;">
+<p><strong>O que é ?</strong></p>
 <p>Método geoestatístico de interpolação que utiliza a estrutura de dependência espacial dos dados (via semivariograma) para estimar valores em locais não amostrados.</p>
-<h3 id="vantagens-sobre-outros-métodos-ex-idw">Vantagens sobre outros métodos (ex: IDW)</h3>
+</div>
+
+<img data-src="figuras/geoestatistica2026.png" class="quarto-figure quarto-figure-center r-stretch" style="width:120.0%"><div style="font-size: 40%; text-align: center;">
+<blockquote>
+<p>Fonte: Elaboração própria com auxílio de IA (ChatGPT), baseada em Isaaks e Srivastava (1989) e Webster e Oliver (2007).</p>
+</blockquote>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="interpolação-espacial-krigagem-kriging-1">Interpolação Espacial: Krigagem (Kriging)</h3>
+<div style="font-size: 70%;">
+<h4 id="vantagens-sobre-outros-métodos">Vantagens sobre outros métodos:</h4>
 <ul>
-<li>É o <strong>melhor estimador linear não viciado</strong> (BLUE).</li>
+<li>É o <strong>melhor estimador linear não viciado</strong>.</li>
 <li>Produz um mapa suavizado e estatisticamente robusto.</li>
 <li>Fornece não apenas a estimativa, mas também a <strong>variância do erro de predição</strong> (uma medida de incerteza).</li>
 </ul>
+<h4 id="comparação-de-alguns-métodos-de-interpolação">Comparação de alguns métodos de interpolação:</h4>
+<ul>
+<li><p><strong>Krigagem (geoestatística)</strong>: Suavizado e robusto, considera a dependência espacial.</p></li>
+<li><p><strong>Inverso da Distância (IDW)</strong>: Maior detalhamento local, mas pode gerar “olhos de boi” ao redor das amostras.</p></li>
+<li><p><strong>Média Simples</strong>: Suaviza demais, perde a variabilidade local.</p></li>
+<li><p><strong>Vizinho Mais Próximo</strong>: Gera polígonos abruptos (Polígonos de Thiessen/Voronoi).</p></li>
+</ul>
+</div>
 </section>
-<section id="exemplo-teor-de-argila-no-solo" class="slide level2">
-<h2>Exemplo: Teor de Argila no Solo</h2>
+<section class="slide level2">
 
-<img data-src="figuras/geoestatistica7.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"><div style="font-size: 60%;">
-<p>Comparação de métodos de interpolação: - <strong>Krigagem</strong>: Suavizado e robusto, considera a dependência espacial. - <strong>Inverso da Distância (IDW)</strong>: Maior detalhamento local, mas pode gerar “olhos de boi” ao redor das amostras. - <strong>Média Simples</strong>: Suaviza demais, perde a variabilidade local. - <strong>Vizinho Mais Próximo</strong>: Gera polígonos abruptos (Polígonos de Thiessen/Voronoi).</p>
+<h3 id="interpolação-espacial-krigagem-kriging-2">Interpolação Espacial: Krigagem (Kriging)</h3>
+<img data-src="figuras/geoestatistica2026_2.png" class="quarto-figure quarto-figure-center" style="width:90.0%">
+<div style="font-size: 40%; text-align: center;">
+<blockquote>
+<p>Fonte: Elaboração própria com auxílio do ChatGPT, adaptada de Lima (2007, Laboratório 5 – Geoestatística Linear, INPE).</p>
+</blockquote>
 </div>
 </section>
 <section id="bibliotecas-do-r-para-geoestatística" class="slide level2">
 <h2>Bibliotecas do R para Geoestatística</h2>
-<div style="font-size: 90%;">
+<div style="font-size: 70%;">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Manipulação de dados espaciais</span></span>
 <span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)           <span class="co"># Simple Features (moderno)</span></span>
@@ -358,9 +403,11 @@ Prof.&nbsp;Wagner Tassinari
 </section>
 <section id="aplicação-prática-pluviosidade-no-rj" class="slide level2">
 <h2>Aplicação Prática: Pluviosidade no RJ</h2>
-<h3 id="o-problema">O Problema</h3>
+<section id="o-problema" style="font-size: 80%;">
+<h3>O Problema</h3>
 <p>Temos dados de chuva acumulada (em 24h) de estações pluviométricas do sistema Alerta Rio espalhadas pela cidade do Rio de Janeiro.</p>
 <p><strong>Objetivo:</strong> Interpolar esses valores para estimar a precipitação em toda a cidade, criando um mapa contínuo de chuva.</p>
+</section>
 </section>
 <section id="importando-e-explorando-os-dados" class="slide level2">
 <h2>1. Importando e Explorando os Dados</h2>
@@ -368,13 +415,29 @@ Prof.&nbsp;Wagner Tassinari
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Ler os dados</span></span>
 <span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a>pluvio <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"dados/chuva/pluviosidade.csv"</span>, <span class="at">sep=</span><span class="st">";"</span>)</span>
-<span id="cb2-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Analisar a distribuição da chuva em 24h</span></span>
-<span id="cb2-5"><a href="" aria-hidden="true" tabindex="-1"></a>quantil <span class="ot">&lt;-</span> <span class="fu">quantile</span>(pluvio<span class="sc">$</span>acumulado_24h, <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.2</span>))</span>
-<span id="cb2-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(quantil)</span>
-<span id="cb2-7"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Resumo estatístico</span></span>
-<span id="cb2-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pluvio<span class="sc">$</span>acumulado_24h)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pluvio)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  estacao_id         nome acumulado_24h acumulado_96h        x       y cota
+1          1      Vidigal           7.8          12.4 681108.8 7456219   85
+2          2         Urca           2.0           3.0 687966.0 7460197   90
+3          3      Rocinha          16.8          30.6 679893.5 7456973  160
+4          4       Tijuca           3.6           5.8 682357.7 7462912  340
+5          5 Santa Teresa           0.8           1.2 684951.0 7462910  170
+6          6   Copacabana           4.8           7.6 685589.2 7456841   90</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Analisar a distribuição da chuva em 24h</span></span>
+<span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pluvio<span class="sc">$</span>acumulado_24h)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    2.20    5.00    7.34   10.30   36.00 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Pelos quantis</span></span>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a>quantil <span class="ot">&lt;-</span> <span class="fu">quantile</span>(pluvio<span class="sc">$</span>acumulado_24h, <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.2</span>))</span>
+<span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a>quantil</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   0%   20%   40%   60%   80%  100% 
+ 0.00  1.92  4.24  7.36 11.84 36.00 </code></pre>
+</div>
 </div>
 </div>
 </section>
@@ -382,80 +445,138 @@ Prof.&nbsp;Wagner Tassinari
 <h2>2. Transformando em Objeto Espacial</h2>
 <div style="font-size: 80%;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Informar ao R quais colunas são as coordenadas</span></span>
-<span id="cb3-2"><a href="" aria-hidden="true" tabindex="-1"></a>sp<span class="sc">::</span><span class="fu">coordinates</span>(pluvio) <span class="ot">&lt;-</span> <span class="er">~</span> x <span class="sc">+</span> y</span>
-<span id="cb3-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Definir o Sistema de Referência de Coordenadas (CRS)</span></span>
-<span id="cb3-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># EPSG:31983 = SIRGAS 2000 / UTM zone 23S (adequado para o RJ)</span></span>
-<span id="cb3-6"><a href="" aria-hidden="true" tabindex="-1"></a>sp<span class="sc">::</span><span class="fu">proj4string</span>(pluvio) <span class="ot">&lt;-</span> sp<span class="sc">::</span><span class="fu">CRS</span>(<span class="st">"+init=epsg:31983"</span>)</span>
-<span id="cb3-7"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar a classe do objeto</span></span>
-<span id="cb3-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(pluvio)</span>
-<span id="cb3-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] "SpatialPointsDataFrame"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Informar ao R quais colunas são as coordenadas</span></span>
+<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a>sp<span class="sc">::</span><span class="fu">coordinates</span>(pluvio) <span class="ot">&lt;-</span> <span class="er">~</span> x <span class="sc">+</span> y</span>
+<span id="cb8-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Definir o Sistema de Referência de Coordenadas (CRS)</span></span>
+<span id="cb8-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># EPSG:31983 = SIRGAS 2000 / UTM zone 23S (adequado para o RJ)</span></span>
+<span id="cb8-6"><a href="" aria-hidden="true" tabindex="-1"></a>sp<span class="sc">::</span><span class="fu">proj4string</span>(pluvio) <span class="ot">&lt;-</span> sp<span class="sc">::</span><span class="fu">CRS</span>(<span class="st">"+init=epsg:31983"</span>)</span>
+<span id="cb8-7"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar a classe do objeto</span></span>
+<span id="cb8-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(pluvio)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "SpatialPointsDataFrame"
+attr(,"package")
+[1] "sp"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] "SpatialPointsDataFrame"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </section>
 <section id="visualização-espacial-exploratória" class="slide level2">
 <h2>3. Visualização Espacial Exploratória</h2>
-<div style="font-size: 80%;">
+<div style="font-size: 70%;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Bubble plot: tamanho do círculo proporcional à chuva</span></span>
-<span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">bubble</span>(pluvio, <span class="st">"acumulado_24h"</span>, </span>
-<span id="cb4-3"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">key.entries =</span> quantil, </span>
-<span id="cb4-4"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="dv">19</span>, </span>
-<span id="cb4-5"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"blue"</span>,</span>
-<span id="cb4-6"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="st">"Precipitação Acumulada (24h) nas Estações"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Bubble plot: tamanho do círculo proporcional à chuva</span></span>
+<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a>sp<span class="sc">::</span><span class="fu">bubble</span>(pluvio, <span class="st">"acumulado_24h"</span>, </span>
+<span id="cb11-3"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">key.entries =</span> quantil, </span>
+<span id="cb11-4"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="dv">19</span>, </span>
+<span id="cb11-5"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"blue"</span>,</span>
+<span id="cb11-6"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="st">"Precipitação Acumulada (24h) nas Estações"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="05-geoestatistica_slides_files/figure-revealjs/unnamed-chunk-4-1.png" width="960"></p>
+</figure>
 </div>
+</div>
+</div>
+</div>
+</section>
+<section id="visualização-espacial-exploratória-1" class="slide level2">
+<h2>3. Visualização Espacial Exploratória</h2>
+<div style="font-size: 70%;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Mapa de pontos com escala de cores</span></span>
-<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">spplot</span>(pluvio[<span class="st">'acumulado_24h'</span>], </span>
-<span id="cb5-3"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">scales =</span> <span class="fu">list</span>(<span class="at">draw =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb5-4"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">key.space =</span> <span class="st">"right"</span>, </span>
-<span id="cb5-5"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">colorkey =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb5-6"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="st">"Distribuição Espacial da Chuva"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Mapa de pontos com escala de cores</span></span>
+<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a>sp<span class="sc">::</span><span class="fu">spplot</span>(pluvio[<span class="st">'acumulado_24h'</span>], </span>
+<span id="cb12-3"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">scales =</span> <span class="fu">list</span>(<span class="at">draw =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb12-4"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">key.space =</span> <span class="st">"right"</span>, </span>
+<span id="cb12-5"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">colorkey =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb12-6"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="st">"Distribuição Espacial da Chuva"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="05-geoestatistica_slides_files/figure-revealjs/unnamed-chunk-5-1.png" width="960"></p>
+</figure>
+</div>
+</div>
 </div>
 </div>
 </section>
 <section id="o-semivariograma-experimental-1" class="slide level2">
 <h2>4. O Semivariograma Experimental</h2>
-<div style="font-size: 80%;">
+<div style="font-size: 70%;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gstat)</span>
-<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular o variograma experimental</span></span>
-<span id="cb6-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># A fórmula 'acumulado_24h ~ 1' indica que estamos assumindo</span></span>
-<span id="cb6-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># uma média constante em toda a área (Krigagem Ordinária)</span></span>
-<span id="cb6-6"><a href="" aria-hidden="true" tabindex="-1"></a>var_exp <span class="ot">&lt;-</span> <span class="fu">variogram</span>(acumulado_24h <span class="sc">~</span> <span class="dv">1</span>, </span>
-<span id="cb6-7"><a href="" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> pluvio,</span>
-<span id="cb6-8"><a href="" aria-hidden="true" tabindex="-1"></a>                     <span class="at">cutoff =</span> <span class="dv">40000</span>,  <span class="co"># Distância máxima de 40km</span></span>
-<span id="cb6-9"><a href="" aria-hidden="true" tabindex="-1"></a>                     <span class="at">width =</span> <span class="dv">3000</span>)    <span class="co"># Intervalos (lags) de 3km</span></span>
-<span id="cb6-10"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar</span></span>
-<span id="cb6-12"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(var_exp, </span>
-<span id="cb6-13"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Semivariograma Experimental - Chuva RJ"</span>,</span>
-<span id="cb6-14"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Distância (m)"</span>,</span>
-<span id="cb6-15"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Semivariância"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gstat)</span>
+<span id="cb13-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular o variograma experimental</span></span>
+<span id="cb13-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># A fórmula 'acumulado_24h ~ 1' indica que estamos assumindo</span></span>
+<span id="cb13-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># uma média constante em toda a área (Krigagem Ordinária)</span></span>
+<span id="cb13-6"><a href="" aria-hidden="true" tabindex="-1"></a>var_exp <span class="ot">&lt;-</span> <span class="fu">variogram</span>(acumulado_24h <span class="sc">~</span> <span class="dv">1</span>, </span>
+<span id="cb13-7"><a href="" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> pluvio,</span>
+<span id="cb13-8"><a href="" aria-hidden="true" tabindex="-1"></a>                     <span class="at">cutoff =</span> <span class="dv">40000</span>,  <span class="co"># Distância máxima de 40km</span></span>
+<span id="cb13-9"><a href="" aria-hidden="true" tabindex="-1"></a>                     <span class="at">width =</span> <span class="dv">3000</span>)    <span class="co"># Intervalos (lags) de 3km</span></span>
+<span id="cb13-10"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar</span></span>
+<span id="cb13-12"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(var_exp, </span>
+<span id="cb13-13"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Semivariograma Experimental - Chuva RJ"</span>,</span>
+<span id="cb13-14"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Distância (m)"</span>,</span>
+<span id="cb13-15"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Semivariância"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</section>
+<section id="o-semivariograma-experimental-2" class="slide level2">
+<h2>4. O Semivariograma Experimental</h2>
+<div style="font-size: 70%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="05-geoestatistica_slides_files/figure-revealjs/unnamed-chunk-7-1.png" width="960"></p>
+</figure>
+</div>
+</div>
 </div>
 </div>
 </section>
 <section id="ajustando-o-modelo-teórico" class="slide level2">
 <h2>5. Ajustando o Modelo Teórico</h2>
-<div style="font-size: 80%;">
+<div style="font-size: 70%;">
 <p>Podemos fazer isso de forma manual ou automática. A biblioteca <code>automap</code> facilita muito esse processo testando vários modelos.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(automap)</span>
-<span id="cb7-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># O autofitVariogram testa modelos (Esférico, Exponencial, Gaussiano)</span></span>
-<span id="cb7-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># e escolhe o de melhor ajuste baseado no erro residual</span></span>
-<span id="cb7-5"><a href="" aria-hidden="true" tabindex="-1"></a>var_auto <span class="ot">&lt;-</span> <span class="fu">autofitVariogram</span>(acumulado_24h <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb7-6"><a href="" aria-hidden="true" tabindex="-1"></a>                             <span class="at">input_data =</span> pluvio,</span>
-<span id="cb7-7"><a href="" aria-hidden="true" tabindex="-1"></a>                             <span class="at">model =</span> <span class="fu">c</span>(<span class="st">"Sph"</span>, <span class="st">"Exp"</span>, <span class="st">"Gau"</span>))</span>
-<span id="cb7-8"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar o ajuste</span></span>
-<span id="cb7-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(var_auto)</span>
-<span id="cb7-11"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver os parâmetros estimados (Efeito Pepita, Patamar, Alcance)</span></span>
-<span id="cb7-13"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(var_auto<span class="sc">$</span>var_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(automap)</span>
+<span id="cb14-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># O autofitVariogram testa modelos (Esférico, Exponencial, Gaussiano)</span></span>
+<span id="cb14-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># e escolhe o de melhor ajuste baseado no erro residual</span></span>
+<span id="cb14-5"><a href="" aria-hidden="true" tabindex="-1"></a>var_auto <span class="ot">&lt;-</span> <span class="fu">autofitVariogram</span>(acumulado_24h <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb14-6"><a href="" aria-hidden="true" tabindex="-1"></a>                             <span class="at">input_data =</span> pluvio,</span>
+<span id="cb14-7"><a href="" aria-hidden="true" tabindex="-1"></a>                             <span class="at">model =</span> <span class="fu">c</span>(<span class="st">"Sph"</span>, <span class="st">"Exp"</span>, <span class="st">"Gau"</span>))</span>
+<span id="cb14-8"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar o ajuste</span></span>
+<span id="cb14-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(var_auto)</span>
+<span id="cb14-11"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver os parâmetros estimados (Efeito Pepita, Patamar, Alcance)</span></span>
+<span id="cb14-13"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(var_auto<span class="sc">$</span>var_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</section>
+<section id="ajustando-o-modelo-teórico-1" class="slide level2">
+<h2>5. Ajustando o Modelo Teórico</h2>
+<div style="font-size: 60%;">
+<p>Podemos fazer isso de forma manual ou automática. A biblioteca <code>automap</code> facilita muito esse processo testando vários modelos.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="05-geoestatistica_slides_files/figure-revealjs/unnamed-chunk-9-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  model    psill    range
+1   Nug   0.0000     0.00
+2   Exp 246.4825 50614.84</code></pre>
+</div>
 </div>
 </div>
 </section>
@@ -464,20 +585,20 @@ Prof.&nbsp;Wagner Tassinari
 <div style="font-size: 75%;">
 <p>Para criar um mapa contínuo, precisamos definir uma grade (grid) de pontos onde a krigagem fará as estimativas.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Obter os limites da área (bounding box)</span></span>
-<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a>bbox <span class="ot">&lt;-</span> <span class="fu">bbox</span>(pluvio)</span>
-<span id="cb8-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Criar uma sequência de coordenadas a cada 500 metros</span></span>
-<span id="cb8-5"><a href="" aria-hidden="true" tabindex="-1"></a>x_grid <span class="ot">&lt;-</span> <span class="fu">seq</span>(bbox[<span class="dv">1</span>,<span class="dv">1</span>], bbox[<span class="dv">1</span>,<span class="dv">2</span>], <span class="at">by =</span> <span class="dv">500</span>)</span>
-<span id="cb8-6"><a href="" aria-hidden="true" tabindex="-1"></a>y_grid <span class="ot">&lt;-</span> <span class="fu">seq</span>(bbox[<span class="dv">2</span>,<span class="dv">1</span>], bbox[<span class="dv">2</span>,<span class="dv">2</span>], <span class="at">by =</span> <span class="dv">500</span>)</span>
-<span id="cb8-7"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Criar a grade completa combinando X e Y</span></span>
-<span id="cb8-9"><a href="" aria-hidden="true" tabindex="-1"></a>grade <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> x_grid, <span class="at">y =</span> y_grid)</span>
-<span id="cb8-10"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Converter a grade para objeto espacial</span></span>
-<span id="cb8-12"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">coordinates</span>(grade) <span class="ot">&lt;-</span> <span class="er">~</span> x <span class="sc">+</span> y</span>
-<span id="cb8-13"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">proj4string</span>(grade) <span class="ot">&lt;-</span> <span class="fu">proj4string</span>(pluvio)</span>
-<span id="cb8-14"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">gridded</span>(grade) <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Obter os limites da área (bounding box)</span></span>
+<span id="cb16-2"><a href="" aria-hidden="true" tabindex="-1"></a>bbox <span class="ot">&lt;-</span> <span class="fu">bbox</span>(pluvio)</span>
+<span id="cb16-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Criar uma sequência de coordenadas a cada 500 metros</span></span>
+<span id="cb16-5"><a href="" aria-hidden="true" tabindex="-1"></a>x_grid <span class="ot">&lt;-</span> <span class="fu">seq</span>(bbox[<span class="dv">1</span>,<span class="dv">1</span>], bbox[<span class="dv">1</span>,<span class="dv">2</span>], <span class="at">by =</span> <span class="dv">500</span>)</span>
+<span id="cb16-6"><a href="" aria-hidden="true" tabindex="-1"></a>y_grid <span class="ot">&lt;-</span> <span class="fu">seq</span>(bbox[<span class="dv">2</span>,<span class="dv">1</span>], bbox[<span class="dv">2</span>,<span class="dv">2</span>], <span class="at">by =</span> <span class="dv">500</span>)</span>
+<span id="cb16-7"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Criar a grade completa combinando X e Y</span></span>
+<span id="cb16-9"><a href="" aria-hidden="true" tabindex="-1"></a>grade <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> x_grid, <span class="at">y =</span> y_grid)</span>
+<span id="cb16-10"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Converter a grade para objeto espacial</span></span>
+<span id="cb16-12"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">coordinates</span>(grade) <span class="ot">&lt;-</span> <span class="er">~</span> x <span class="sc">+</span> y</span>
+<span id="cb16-13"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">proj4string</span>(grade) <span class="ot">&lt;-</span> <span class="fu">proj4string</span>(pluvio)</span>
+<span id="cb16-14"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">gridded</span>(grade) <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </section>
@@ -485,16 +606,16 @@ Prof.&nbsp;Wagner Tassinari
 <h2>7. Executando a Krigagem Ordinária</h2>
 <div style="font-size: 80%;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Executar a krigagem</span></span>
-<span id="cb9-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Usa o modelo de variograma ajustado pelo automap</span></span>
-<span id="cb9-3"><a href="" aria-hidden="true" tabindex="-1"></a>krigagem <span class="ot">&lt;-</span> <span class="fu">krige</span>(acumulado_24h <span class="sc">~</span> <span class="dv">1</span>, </span>
-<span id="cb9-4"><a href="" aria-hidden="true" tabindex="-1"></a>                  <span class="at">locations =</span> pluvio, </span>
-<span id="cb9-5"><a href="" aria-hidden="true" tabindex="-1"></a>                  <span class="at">newdata =</span> grade, </span>
-<span id="cb9-6"><a href="" aria-hidden="true" tabindex="-1"></a>                  <span class="at">model =</span> var_auto<span class="sc">$</span>var_model)</span>
-<span id="cb9-7"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># O resultado contém duas informações principais:</span></span>
-<span id="cb9-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># var1.pred: O valor estimado (predição)</span></span>
-<span id="cb9-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># var1.var: A variância do erro (incerteza)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Executar a krigagem</span></span>
+<span id="cb17-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Usa o modelo de variograma ajustado pelo automap</span></span>
+<span id="cb17-3"><a href="" aria-hidden="true" tabindex="-1"></a>krigagem <span class="ot">&lt;-</span> <span class="fu">krige</span>(acumulado_24h <span class="sc">~</span> <span class="dv">1</span>, </span>
+<span id="cb17-4"><a href="" aria-hidden="true" tabindex="-1"></a>                  <span class="at">locations =</span> pluvio, </span>
+<span id="cb17-5"><a href="" aria-hidden="true" tabindex="-1"></a>                  <span class="at">newdata =</span> grade, </span>
+<span id="cb17-6"><a href="" aria-hidden="true" tabindex="-1"></a>                  <span class="at">model =</span> var_auto<span class="sc">$</span>var_model)</span>
+<span id="cb17-7"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># O resultado contém duas informações principais:</span></span>
+<span id="cb17-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># var1.pred: O valor estimado (predição)</span></span>
+<span id="cb17-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># var1.var: A variância do erro (incerteza)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </section>
@@ -502,11 +623,11 @@ Prof.&nbsp;Wagner Tassinari
 <h2>8. Visualizando o Mapa de Chuva (Predição)</h2>
 <div style="font-size: 80%;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotar o mapa de predição</span></span>
-<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">spplot</span>(krigagem, <span class="st">"var1.pred"</span>, </span>
-<span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="st">"Mapa de Precipitação Estimada (Krigagem Ordinária)"</span>,</span>
-<span id="cb10-4"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">col.regions =</span> <span class="fu">terrain.colors</span>(<span class="dv">50</span>),</span>
-<span id="cb10-5"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">sp.layout =</span> <span class="fu">list</span>(<span class="st">"sp.points"</span>, pluvio, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">cex =</span> <span class="fl">0.5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotar o mapa de predição</span></span>
+<span id="cb18-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">spplot</span>(krigagem, <span class="st">"var1.pred"</span>, </span>
+<span id="cb18-3"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="st">"Mapa de Precipitação Estimada (Krigagem Ordinária)"</span>,</span>
+<span id="cb18-4"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">col.regions =</span> <span class="fu">terrain.colors</span>(<span class="dv">50</span>),</span>
+<span id="cb18-5"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">sp.layout =</span> <span class="fu">list</span>(<span class="st">"sp.points"</span>, pluvio, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">cex =</span> <span class="fl">0.5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Interpretação:</strong> O mapa mostra a superfície contínua de chuva. As áreas mais escuras representam maior volume de chuva. Os pontos pretos são as estações originais.</p>
 </div>
@@ -516,11 +637,11 @@ Prof.&nbsp;Wagner Tassinari
 <div style="font-size: 80%;">
 <p>Uma das grandes vantagens da krigagem é saber onde a estimativa é menos confiável.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotar o mapa de variância</span></span>
-<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">spplot</span>(krigagem, <span class="st">"var1.var"</span>, </span>
-<span id="cb11-3"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="st">"Variância do Erro de Predição (Incerteza)"</span>,</span>
-<span id="cb11-4"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">col.regions =</span> <span class="fu">heat.colors</span>(<span class="dv">50</span>),</span>
-<span id="cb11-5"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">sp.layout =</span> <span class="fu">list</span>(<span class="st">"sp.points"</span>, pluvio, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">cex =</span> <span class="fl">0.5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotar o mapa de variância</span></span>
+<span id="cb19-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">spplot</span>(krigagem, <span class="st">"var1.var"</span>, </span>
+<span id="cb19-3"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="st">"Variância do Erro de Predição (Incerteza)"</span>,</span>
+<span id="cb19-4"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">col.regions =</span> <span class="fu">heat.colors</span>(<span class="dv">50</span>),</span>
+<span id="cb19-5"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">sp.layout =</span> <span class="fu">list</span>(<span class="st">"sp.points"</span>, pluvio, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">cex =</span> <span class="fl">0.5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Interpretação:</strong> A variância é <strong>menor</strong> perto das estações (onde temos dados reais) e <strong>maior</strong> nas áreas sem estações pluviométricas. Isso indica onde precisaríamos instalar novas estações!</p>
 </div>
@@ -530,22 +651,22 @@ Prof.&nbsp;Wagner Tassinari
 <div style="font-size: 75%;">
 <p>Como saber se nosso modelo ficou bom? Usamos a validação cruzada <em>Leave-One-Out</em>. O R remove uma estação, estima o valor para ela usando as outras, e compara com o valor real.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Executar validação cruzada</span></span>
-<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a>cv <span class="ot">&lt;-</span> <span class="fu">krige.cv</span>(acumulado_24h <span class="sc">~</span> <span class="dv">1</span>, </span>
-<span id="cb12-3"><a href="" aria-hidden="true" tabindex="-1"></a>               <span class="at">locations =</span> pluvio, </span>
-<span id="cb12-4"><a href="" aria-hidden="true" tabindex="-1"></a>               <span class="at">model =</span> var_auto<span class="sc">$</span>var_model)</span>
-<span id="cb12-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular o Erro Quadrático Médio (RMSE)</span></span>
-<span id="cb12-7"><a href="" aria-hidden="true" tabindex="-1"></a>rmse <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(cv<span class="sc">$</span>residual<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb12-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"RMSE:"</span>, rmse, <span class="st">"mm</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb12-9"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico de Observado vs Predito</span></span>
-<span id="cb12-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cv<span class="sc">$</span>observed, cv<span class="sc">$</span>var1.pred, </span>
-<span id="cb12-12"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Chuva Observada (mm)"</span>, </span>
-<span id="cb12-13"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Chuva Estimada (mm)"</span>,</span>
-<span id="cb12-14"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Validação Cruzada: Observado vs Estimado"</span>,</span>
-<span id="cb12-15"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span>
-<span id="cb12-16"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>) <span class="co"># Linha de referência perfeita</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Executar validação cruzada</span></span>
+<span id="cb20-2"><a href="" aria-hidden="true" tabindex="-1"></a>cv <span class="ot">&lt;-</span> <span class="fu">krige.cv</span>(acumulado_24h <span class="sc">~</span> <span class="dv">1</span>, </span>
+<span id="cb20-3"><a href="" aria-hidden="true" tabindex="-1"></a>               <span class="at">locations =</span> pluvio, </span>
+<span id="cb20-4"><a href="" aria-hidden="true" tabindex="-1"></a>               <span class="at">model =</span> var_auto<span class="sc">$</span>var_model)</span>
+<span id="cb20-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular o Erro Quadrático Médio (RMSE)</span></span>
+<span id="cb20-7"><a href="" aria-hidden="true" tabindex="-1"></a>rmse <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(cv<span class="sc">$</span>residual<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb20-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"RMSE:"</span>, rmse, <span class="st">"mm</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb20-9"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico de Observado vs Predito</span></span>
+<span id="cb20-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cv<span class="sc">$</span>observed, cv<span class="sc">$</span>var1.pred, </span>
+<span id="cb20-12"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Chuva Observada (mm)"</span>, </span>
+<span id="cb20-13"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Chuva Estimada (mm)"</span>,</span>
+<span id="cb20-14"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Validação Cruzada: Observado vs Estimado"</span>,</span>
+<span id="cb20-15"><a href="" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span>
+<span id="cb20-16"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>) <span class="co"># Linha de referência perfeita</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </section>
