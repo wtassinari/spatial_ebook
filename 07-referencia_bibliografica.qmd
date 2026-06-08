@@ -6,6 +6,8 @@ A seguir, apresentamos uma seleção de referências fundamentais para o aprofun
 
 - **Bivand, R.S.; Pebesma, E.; Gomez-Rubio, V.** *Applied Spatial Data Analysis with R*. Springer, 2ª ed., 2013.
 
+- **Brown, Evan.** The Variogram Basics: A visual introduction to one of the most useful geostatistical concepts. CSEG Recorder, v. 47, n. 1, jan. 2022. [Disponível aqui](https://csegrecorder.com/articles/view/the-variogram-basics-a-visual-intro-to-useful-geostatistical-concepts). Acesso em: 8 jun. 2026.
+
 - **Cressie, N.** Statistics for Spatial Data, 1993.
 
 - **Comber, L.** [GeoComputation and Spatial Analysis practicals](https://bookdown.org/lexcomber/GEOG3195/).
