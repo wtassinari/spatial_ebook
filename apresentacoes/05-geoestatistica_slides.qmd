@@ -19,6 +19,8 @@ format:
 
 ## O que é Geoestatística?
 
+<div style="font-size: 80%;">
+
 ### Definição
 
 A geoestatística lida com variáveis que são medidas em localizações **contínuas ou irregulares** no espaço, como temperatura, precipitação, concentração de poluentes ou altitude.
@@ -29,22 +31,27 @@ A geoestatística lida com variáveis que são medidas em localizações **cont�
 
 > "Todas as coisas se parecem, porém coisas mais próximas tendem a ser mais semelhantes do que aquelas mais distantes." — Waldo Tobler (1979) - **1ª Lei da Geografia**
 
+</div>
+
 ---
 
 ## Exemplos de Aplicação
 
+<div style="font-size: 80%;">
+
 - 🌧️ **Meteorologia**: Medição da quantidade de chuva em diferentes locais de uma cidade
 - 🌡️ **Climatologia**: Distribuição de temperatura em uma região
 - 🏭 **Meio Ambiente**: Concentração de poluentes no ar em pontos georreferenciados
-- 🌽 **Agricultura de Precisão**: Análise da produtividade agrícola em diferentes talhões
+- 🌽 **Agricultura de Precisão**: Análise da produtividade agrícola em diferentes áreas de cultivo
 - 🧪 **Pedologia**: Teor de elementos químicos (ex: argila, fósforo) no solo
 - 🏥 **Epidemiologia**: Incidência de doenças em diferentes áreas
 
+</div>
 ---
 
 ## Diferenças entre Tipos de Dados Espaciais
 
-<div style="font-size: 80%;">
+<div style="font-size: 70%;">
 
 | Tipo | Característica | O que analisamos? | Exemplo |
 |------|----------------|-------------------|---------|
@@ -58,6 +65,8 @@ A geoestatística lida com variáveis que são medidas em localizações **cont�
 
 ## O Semivariograma: A Base da Análise
 
+<div style="font-size: 80%;">
+
 ### O que é?
 
 Uma das principais ferramentas da geoestatística. Ele mede o quanto dois pontos próximos no espaço se parecem (ou se diferem) com relação ao valor de uma variável.
@@ -66,23 +75,28 @@ Uma das principais ferramentas da geoestatística. Ele mede o quanto dois pontos
 
 Se dois pontos estão **muito próximos**, é esperado que seus valores sejam **parecidos**. Já se estiverem **distantes**, a diferença entre os valores tende a **aumentar**.
 
+</div>
 ---
 
 ## O Semivariograma Experimental
 
-<div style="font-size: 80%;">
+<div style="font-size: 70%;">
 
 Calculado para diferentes distâncias entre os pontos, usando a fórmula:
 
 $$\hat{\gamma}(h) = \frac{1}{2N(h)}\sum_{i=1}^{N(h)}[z(x_i) - z(x_i + h)]^2$$
 
 Onde:
+
 - $\hat{\gamma}(h)$: valor estimado da semivariância para a distância $h$
+
 - $N(h)$: número de pares de pontos separados por uma distância $h$
+
 - $z(x_i)$: valor observado da variável na localização $x_i$
+
 - $z(x_i + h)$: valor observado em um ponto a uma distância $h$ de $x_i$
 
-**Em resumo:** Representa a *diferença média ao quadrado* entre os valores da variável em pares de pontos separados pela distância $h$.
+> **Em resumo:** Representa a *diferença média ao quadrado* entre os valores da variável em pares de pontos separados pela distância $h$.
 
 </div>
 
@@ -92,13 +106,13 @@ Onde:
 
 ![](figuras/variograma1.png){fig-align="center" width="60%"}
 
-<div style="font-size: 70%;">
+<div style="font-size: 65%;">
 
 📌 **Efeito Pepita ($C_0$)**: É a variação observada mesmo quando a distância entre os pontos é muito pequena ou zero. Pode indicar erro de medição ou variação em microescala.
 
-📌 **Patamar ($C$)**: É o valor em que o variograma se estabiliza, indicando que a partir de certa distância, a variabilidade não aumenta mais.
+📌 **Patamar ($C$)**: Corresponde ao valor em que o semivariograma atinge a estabilização, indicando que, a partir dessa distância, não há mais dependência espacial entre as observações. Nesse ponto podemos dizer que a semivariância atinge seu valor máximo.
 
-📌 **Alcance ($a$)**: É a distância a partir da qual dois pontos deixam de estar correlacionados. Após essa distância, tornam-se independentes.
+📌 **Alcance ($a$)**: É a distância até a qual existe dependência espacial entre as observações. Após essa distância, as observações tornam-se independentes.
 
 </div>
 
@@ -106,7 +120,7 @@ Onde:
 
 ## Modelos Teóricos de Semivariograma
 
-<div style="font-size: 80%;">
+<div style="font-size: 70%;">
 
 O semivariograma experimental é apenas um conjunto de pontos (uma estimativa). Para realizar interpolações (como a krigagem), precisamos ajustar uma função matemática contínua, chamada de **modelo teórico**.
 
@@ -124,45 +138,74 @@ A escolha do modelo depende do comportamento da variável estudada.
 
 ## Comparação Visual dos Modelos
 
-![](figuras/variograma2.png){fig-align="center" width="70%"}
+<div style="font-size: 70%;">
 
-<div style="font-size: 70%; text-align: center;">
+![](figuras/variograma2.png){fig-align="center" width="60%"}
+</div>
+
+<div style="font-size: 60%; text-align: center;">
 Diferentes modelos teóricos (Esférico, Exponencial, Gaussiano) ajustados aos mesmos dados experimentais. A escolha do modelo afeta diretamente os resultados da interpolação espacial.
 </div>
 
 ---
 
-## Interpolação Espacial: Krigagem (Kriging)
+### Interpolação Espacial: Krigagem (Kriging)
 
-### O que é?
+<div style="font-size: 50%;">
+
+**O que é ?**
 
 Método geoestatístico de interpolação que utiliza a estrutura de dependência espacial dos dados (via semivariograma) para estimar valores em locais não amostrados.
 
-### Vantagens sobre outros métodos (ex: IDW)
+</div>
 
-- É o **melhor estimador linear não viciado** (BLUE).
-- Produz um mapa suavizado e estatisticamente robusto.
-- Fornece não apenas a estimativa, mas também a **variância do erro de predição** (uma medida de incerteza).
+![](figuras/geoestatistica2026.png){fig-align="center" width="120%"}
+
+
+<div style="font-size: 40%; text-align: center;">
+> Fonte: Elaboração própria com auxílio de IA (ChatGPT), baseada em Isaaks e Srivastava (1989) e Webster e Oliver (2007).
+
+</div>
 
 ---
 
-## Exemplo: Teor de Argila no Solo
+### Interpolação Espacial: Krigagem (Kriging)
 
-![](figuras/geoestatistica7.png){fig-align="center" width="70%"}
+<div style="font-size: 70%;">
 
-<div style="font-size: 60%;">
-Comparação de métodos de interpolação:
-- **Krigagem**: Suavizado e robusto, considera a dependência espacial.
+#### Vantagens sobre outros métodos:
+
+- É o **melhor estimador linear não viciado**.
+- Produz um mapa suavizado e estatisticamente robusto.
+- Fornece não apenas a estimativa, mas também a **variância do erro de predição** (uma medida de incerteza).
+
+
+#### Comparação de alguns métodos de interpolação:
+
+- **Krigagem (geoestatística)**: Suavizado e robusto, considera a dependência espacial.
+
 - **Inverso da Distância (IDW)**: Maior detalhamento local, mas pode gerar "olhos de boi" ao redor das amostras.
+
 - **Média Simples**: Suaviza demais, perde a variabilidade local.
+
 - **Vizinho Mais Próximo**: Gera polígonos abruptos (Polígonos de Thiessen/Voronoi).
+</div>
+
+---
+
+### Interpolação Espacial: Krigagem (Kriging)
+
+![](figuras/geoestatistica2026_2.png){fig-align="center" width="90%"}
+<div style="font-size: 40%; text-align: center;">
+> Fonte: Elaboração própria com auxílio do ChatGPT, adaptada de Lima (2007, Laboratório 5 – Geoestatística Linear, INPE).
+
 </div>
 
 ---
 
 ## Bibliotecas do R para Geoestatística
 
-<div style="font-size: 90%;">
+<div style="font-size: 70%;">
 
 ```{r}
 #| eval: false
@@ -192,11 +235,15 @@ library(leaflet)      # Mapas interativos
 
 ## Aplicação Prática: Pluviosidade no RJ
 
+<div style="font-size: 80%;">
+
 ### O Problema
 
 Temos dados de chuva acumulada (em 24h) de estações pluviométricas do sistema Alerta Rio espalhadas pela cidade do Rio de Janeiro. 
 
 **Objetivo:** Interpolar esses valores para estimar a precipitação em toda a cidade, criando um mapa contínuo de chuva.
+
+</div>
 
 ---
 
@@ -205,18 +252,20 @@ Temos dados de chuva acumulada (em 24h) de estações pluviométricas do sistema
 <div style="font-size: 80%;">
 
 ```{r}
-#| eval: false
+#| eval: true
 #| echo: true
 
 # Ler os dados
 pluvio <- read.csv("dados/chuva/pluviosidade.csv", sep=";")
+head(pluvio)
 
 # Analisar a distribuição da chuva em 24h
-quantil <- quantile(pluvio$acumulado_24h, seq(0, 1, 0.2))
-print(quantil)
-
-# Resumo estatístico
 summary(pluvio$acumulado_24h)
+
+
+# Pelos quantis
+quantil <- quantile(pluvio$acumulado_24h, seq(0,1,0.2))
+quantil
 ```
 
 </div>
@@ -228,7 +277,7 @@ summary(pluvio$acumulado_24h)
 <div style="font-size: 80%;">
 
 ```{r}
-#| eval: false
+#| eval: true
 #| echo: true
 
 # Informar ao R quais colunas são as coordenadas
@@ -249,26 +298,34 @@ class(pluvio)
 
 ## 3. Visualização Espacial Exploratória
 
-<div style="font-size: 80%;">
+<div style="font-size: 70%;">
 
 ```{r}
-#| eval: false
+#| eval: true
 #| echo: true
 
 # Bubble plot: tamanho do círculo proporcional à chuva
-bubble(pluvio, "acumulado_24h", 
+sp::bubble(pluvio, "acumulado_24h", 
        key.entries = quantil, 
        pch = 19, 
        col = "blue",
        main = "Precipitação Acumulada (24h) nas Estações")
 ```
 
+</div>
+
+---
+
+## 3. Visualização Espacial Exploratória
+
+<div style="font-size: 70%;">
+
 ```{r}
-#| eval: false
+#| eval: true
 #| echo: true
 
 # Mapa de pontos com escala de cores
-spplot(pluvio['acumulado_24h'], 
+sp::spplot(pluvio['acumulado_24h'], 
        scales = list(draw = TRUE), 
        key.space = "right", 
        colorkey = TRUE,
@@ -281,7 +338,7 @@ spplot(pluvio['acumulado_24h'],
 
 ## 4. O Semivariograma Experimental
 
-<div style="font-size: 80%;">
+<div style="font-size: 70%;">
 
 ```{r}
 #| eval: false
@@ -308,9 +365,38 @@ plot(var_exp,
 
 ---
 
+## 4. O Semivariograma Experimental
+
+<div style="font-size: 70%;">
+
+```{r}
+#| eval: true
+#| echo: false
+
+library(gstat)
+
+# Calcular o variograma experimental
+# A fórmula 'acumulado_24h ~ 1' indica que estamos assumindo
+# uma média constante em toda a área (Krigagem Ordinária)
+var_exp <- variogram(acumulado_24h ~ 1, 
+                     data = pluvio,
+                     cutoff = 40000,  # Distância máxima de 40km
+                     width = 3000)    # Intervalos (lags) de 3km
+
+# Visualizar
+plot(var_exp, 
+     main = "Semivariograma Experimental - Chuva RJ",
+     xlab = "Distância (m)",
+     ylab = "Semivariância")
+```
+
+</div>
+
+---
+
 ## 5. Ajustando o Modelo Teórico
 
-<div style="font-size: 80%;">
+<div style="font-size: 70%;">
 
 Podemos fazer isso de forma manual ou automática. A biblioteca `automap` facilita muito esse processo testando vários modelos.
 
@@ -334,6 +420,36 @@ print(var_auto$var_model)
 ```
 
 </div>
+
+---
+
+## 5. Ajustando o Modelo Teórico
+
+<div style="font-size: 60%;">
+
+Podemos fazer isso de forma manual ou automática. A biblioteca `automap` facilita muito esse processo testando vários modelos.
+
+```{r}
+#| eval: true
+#| echo: false
+
+library(automap)
+
+# O autofitVariogram testa modelos (Esférico, Exponencial, Gaussiano)
+# e escolhe o de melhor ajuste baseado no erro residual
+var_auto <- autofitVariogram(acumulado_24h ~ 1,
+                             input_data = pluvio,
+                             model = c("Sph", "Exp", "Gau"))
+
+# Visualizar o ajuste
+plot(var_auto)
+
+# Ver os parâmetros estimados (Efeito Pepita, Patamar, Alcance)
+print(var_auto$var_model)
+```
+
+</div>
+
 
 ---
 

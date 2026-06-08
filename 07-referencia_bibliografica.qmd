@@ -16,11 +16,18 @@ A seguir, apresentamos uma seleção de referências fundamentais para o aprofun
 
 - **Hijmans, R.J.** [Spatial Data Science with R](https://rspatial.org/raster/index.html).
 
+- **Isaaks, E. H.; Srivastava, R. M.** An Introduction to Applied Geostatistics.
+New York: Oxford University Press, 1989.
+
 - **Lovelace, R.; Nowosad, J.; Muenchow, J.** [Geocomputation with R](https://geocompr.robinlovelace.net/), 2021.
+
+- **Lima, F. B.** Laboratório 5 – Geoestatística Linear. São José dos Campos: Instituto Nacional de Pesquisas Espaciais (INPE), 2007. Disponível em: [Wiki DPI/INPE – Laboratório 5 – Geoestatística Linear. Acesso em: 8 jun. 2026](https://wiki.dpi.inpe.br/lib/exe/fetch.php?media=1_lab5.pdf).
 
 - **Peterson, E.** [Spatial Epidemiology Workshop](https://bookdown.org/epeterson_2010/spatial_epidemiology_workshop), 2010.
 
 - **Solymosi, R.; Medina, J.** [Crime Mapping in R](https://maczokni.github.io/crime_mapping_textbook/). University of Manchester.
 
 - **Waller, L.A.; Gotway, C.A.** *Applied Spatial Statistics for Public Health Data*. Wiley-Interscience, 2004.
+
+- **Webster, R.; Oliver, M. A.** Geostatistics for Environmental Scientists. 2. ed. Chichester: John Wiley & Sons, 2007.
 
