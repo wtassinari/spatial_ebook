@@ -181,7 +181,7 @@ variogram.emp
 - `cutoff = 20000`: só serão considerados pares de pontos com até 20 km de distância (Distância máxima entre os pontos amostrados).
 :::
 
-
+Este *output* do R mostra os dados que serão utilizados para gerar o **variograma experimental** calculado para a variável `acumulado_24h` (chuva) em função das coordenadas espaciais `x` e `y`. A tabela apresenta, para cada distância média (`dist`, em metros), o número de pares de pontos considerados (`np`), a semivariância média (ou variabilidade média) (`gamma`), que mede o quão diferentes são os valores da variável entre esses pares, quanto maior o `gamma`, maior a dissimilaridade. Observa-se que de maneira geral `gamma` aumenta com a distância indicando perda de correlação espacial, mas com algumas oscilações possivelmente devido ao número reduzido de pares (`np`) ou à variabilidade amostral. Esse passo é fundamental para modelar a dependência espacial antes de aplicar métodos como a **krigagem**, que estima valores em locais não amostrados.
 
 ```{r, echo=T}
 # Variogram plot
@@ -642,10 +642,6 @@ pal <- colorNumeric(
 
 ```{r, echo=T, echo=T, message=FALSE, warning=FALSE, out.width= "100%"}
 # 6. Construindo o mapa interativo
-# NOTA IMPORTANTE: Este código deve ser executado interativamente no RStudio
-# A renderização em documento Quarto pode causar conflitos com dependências jQuery do leaflet
-# Para usar este código, copie e execute diretamente no console do R
-
 leaflet(data = estacoes.longlat, options = leafletOptions(attributionControl = FALSE)) |>
   addProviderTiles("CartoDB.Positron", group = "Ruas") |>
   addProviderTiles("Esri.WorldImagery", options = providerTileOptions(opacity = 0.7), group = "Satélite") |>

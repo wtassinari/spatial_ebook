@@ -8,7 +8,7 @@ A seguir, apresentamos uma seleção de referências fundamentais para o aprofun
 
 - **Brown, Evan.** The Variogram Basics: A visual introduction to one of the most useful geostatistical concepts. CSEG Recorder, v. 47, n. 1, jan. 2022. [Disponível aqui](https://csegrecorder.com/articles/view/the-variogram-basics-a-visual-intro-to-useful-geostatistical-concepts). Acesso em: 8 jun. 2026.
 
-- **Cressie, N.** Statistics for Spatial Data, 1993.
+- **Cressie, N.** Statistics for Spatial Data. New York: Wiley, 1993.
 
 - **Comber, L.** [GeoComputation and Spatial Analysis practicals](https://bookdown.org/lexcomber/GEOG3195/).
 
@@ -24,6 +24,8 @@ New York: Oxford University Press, 1989.
 - **Lovelace, R.; Nowosad, J.; Muenchow, J.** [Geocomputation with R](https://geocompr.robinlovelace.net/), 2021.
 
 - **Lima, F. B.** Laboratório 5 – Geoestatística Linear. São José dos Campos: Instituto Nacional de Pesquisas Espaciais (INPE), 2007. Disponível em: [Wiki DPI/INPE – Laboratório 5 – Geoestatística Linear. Acesso em: 8 jun. 2026](https://wiki.dpi.inpe.br/lib/exe/fetch.php?media=1_lab5.pdf).
+
+- **Moraga, P.** Spatial Data Science with R. [Disponível aqui.](https://www.paulamoraga.com/book-spatial/index.html)
 
 - **Peterson, E.** [Spatial Epidemiology Workshop](https://bookdown.org/epeterson_2010/spatial_epidemiology_workshop), 2010.
 

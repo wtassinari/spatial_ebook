@@ -78,7 +78,7 @@ Se dois pontos estão **muito próximos**, é esperado que seus valores sejam **
 </div>
 ---
 
-## O Semivariograma Experimental
+## O Semivariograma Experimental (ou empírico)
 
 <div style="font-size: 70%;">
 
@@ -358,7 +358,7 @@ var_exp <- variogram(acumulado_24h ~ 1,
 plot(var_exp, 
      main = "Semivariograma Experimental - Chuva RJ",
      xlab = "Distância (m)",
-     ylab = "Semivariância")
+     ylab = "Semivariância", pch = 19, col = "darkblue")
 ```
 
 </div>
@@ -387,229 +387,454 @@ var_exp <- variogram(acumulado_24h ~ 1,
 plot(var_exp, 
      main = "Semivariograma Experimental - Chuva RJ",
      xlab = "Distância (m)",
-     ylab = "Semivariância")
+     ylab = "Semivariância", pch = 19, col = "darkblue")
 ```
 
 </div>
 
 ---
 
-## 5. Ajustando o Modelo Teórico
-
-<div style="font-size: 70%;">
-
-Podemos fazer isso de forma manual ou automática. A biblioteca `automap` facilita muito esse processo testando vários modelos.
-
-```{r}
-#| eval: false
-#| echo: true
-
-library(automap)
-
-# O autofitVariogram testa modelos (Esférico, Exponencial, Gaussiano)
-# e escolhe o de melhor ajuste baseado no erro residual
-var_auto <- autofitVariogram(acumulado_24h ~ 1,
-                             input_data = pluvio,
-                             model = c("Sph", "Exp", "Gau"))
-
-# Visualizar o ajuste
-plot(var_auto)
-
-# Ver os parâmetros estimados (Efeito Pepita, Patamar, Alcance)
-print(var_auto$var_model)
-```
-
-</div>
-
----
-
-## 5. Ajustando o Modelo Teórico
+### 5. Ajustando o Modelo Teórico (Forma Manual)
 
 <div style="font-size: 60%;">
 
-Podemos fazer isso de forma manual ou automática. A biblioteca `automap` facilita muito esse processo testando vários modelos.
+Observando os parâmetros do semivariograma experimental (no slide anterior), vamos escolher um modelo teórico (ex: exponencial) e ajustar seus parâmetros (nugget = efeito pepita, sill = contribuição, range = alcance) de forma manual para obter uma curva que se encaixe bem aos pontos experimentais.
+</div>
 
 ```{r}
-#| eval: true
-#| echo: false
+#==============================================================================
+# SEMIVARIOGRAMA TEÓRICO - MODELO EXPONENCIAL
+# Versão simples e didática - foco nos parâmetros essenciais
+#==============================================================================
 
-library(automap)
+# Parâmetros do modelo
+nugget <- 15      # Efeito pepita (C0)
+psill  <- 80      # Contribuição estrutural (C1)  
+range  <- 12000   # Alcance (a)
 
-# O autofitVariogram testa modelos (Esférico, Exponencial, Gaussiano)
-# e escolhe o de melhor ajuste baseado no erro residual
-var_auto <- autofitVariogram(acumulado_24h ~ 1,
-                             input_data = pluvio,
-                             model = c("Sph", "Exp", "Gau"))
+# Cálculos
+sill <- nugget + psill           # Patamar total = 95
+alcance_pratico <- 3 * range     # 36000 m (95% do patamar)
 
-# Visualizar o ajuste
-plot(var_auto)
+# Criar curva
+h <- seq(0, 45000, by = 100)
+gamma <- nugget + psill * (1 - exp(-h / range))
 
-# Ver os parâmetros estimados (Efeito Pepita, Patamar, Alcance)
-print(var_auto$var_model)
+# Gráfico simples
+par(mar = c(4.5, 4.5, 3, 2), bg = "white", family = "sans")
+
+plot(h, gamma, 
+     type = "l", 
+     lwd = 2.5,
+     col = "#2E86AB",
+     xlab = "Distância (h) em metros", 
+     ylab = expression(gamma(h)),
+     main = "Semivariograma Teorico - Modelo Exponencial",
+     xlim = c(0, 45000),
+     ylim = c(0, sill + 10),
+     cex.lab = 1.2,
+     cex.main = 1.4,
+     font.main = 2)
+
+# Linha do patamar
+abline(h = sill, col = "#D64933", lwd = 2, lty = 2)
+
+# Linha do alcance prático
+abline(v = alcance_pratico, col = "#F18F01", lwd = 2, lty = 2)
+
+# Efeito pepita (linha vertical na origem)
+segments(x0 = 0, y0 = 0, x1 = 0, y1 = nugget, col = "#58586B", lwd = 2)
+
+# Legendas simples
+text(alcance_pratico + 2000, 15, 
+     labels = paste0("Alcance ~ ", round(alcance_pratico/1000), " km"), 
+     col = "#F18F01", font = 2, cex = 0.9)
+
+text(20000, sill + 3, 
+     labels = paste0("Patamar = ", sill), 
+     col = "#D64933", font = 2, cex = 0.9)
+
+text(5000, nugget/2, 
+     labels = paste0("Efeito Pepita = ", nugget), 
+     col = "#58586B", font = 2, cex = 0.9)
+
+# Destacar o ponto onde começa o patamar (opcional)
+points(alcance_pratico, 
+       nugget + psill * (1 - exp(-alcance_pratico / range)), 
+       pch = 19, cex = 1.5, col = "#F18F01")
+
+# Grid suave
+grid(col = "gray90", lty = 1)
+
+# Colocar a curva por cima do grid
+lines(h, gamma, lwd = 2.5, col = "#2E86AB")
+
+
 ```
 
-</div>
 
 
 ---
 
-## 6. Preparando a Grade para Interpolação
+### 5. Ajustando o Modelo Teórico (Forma Manual)
 
-<div style="font-size: 75%;">
+<div style="font-size: 80%;">
 
+
+```{r}
+#| eval: true
+#| echo: true
+
+## 2) Modelo exponencial
+exp.fit  = fit.variogram(var_exp, 
+                         model = vgm(psill = 80, model = "Exp",
+                                     range = 12000, nugget = 15))
+
+plot(var_exp, exp.fit, main = "Modelo Exponencial", col.line = "red", pch = 19, col = "darkblue")
+
+```
+
+</div>
+
+---
+
+### 6. Preparando a Grade para Interpolação
+    
+<div style="font-size: 65%;">
+    
 Para criar um mapa contínuo, precisamos definir uma grade (grid) de pontos onde a krigagem fará as estimativas.
 
 ```{r}
 #| eval: false
 #| echo: true
 
-# 1. Obter os limites da área (bounding box)
-bbox <- bbox(pluvio)
+# Importando o contorno do Rio
+library(sf)
+contorno.rio_sf <- st_read("dados/chuva/MUNIC_2K_2022_IPP_SIRGAS.shp")
+# Convertendo para sp
+contorno.rio <- as(contorno.rio_sf, "Spatial")
 
-# 2. Criar uma sequência de coordenadas a cada 500 metros
-x_grid <- seq(bbox[1,1], bbox[1,2], by = 500)
-y_grid <- seq(bbox[2,1], bbox[2,2], by = 500)
+# Criando grade para interpolacao com a  resolucao de 50m
+library(raster)
+r <- raster(contorno.rio, res = 50)
 
-# 3. Criar a grade completa combinando X e Y
-grade <- expand.grid(x = x_grid, y = y_grid)
+# Criando um objeto formato raster
+rp <- rasterize(contorno.rio, r, 0) 
 
-# 4. Converter a grade para objeto espacial
-coordinates(grade) <- ~ x + y
-proj4string(grade) <- proj4string(pluvio)
-gridded(grade) <- TRUE
+# Trasnsformando o objeto raster no formato SpatialPixelsDataFrame
+grid <- as(rp, "SpatialPixelsDataFrame") 
+plot(grid)
+  
 ```
 
 </div>
 
 ---
 
-## 7. Executando a Krigagem Ordinária
+### 6. Preparando a Grade para Interpolação
+    
+<div style="font-size: 65%;">
+    
+```{r}
+# Importando o contorno do Rio
+library(sf)
+contorno.rio_sf <- st_read("dados/chuva/MUNIC_2K_2022_IPP_SIRGAS.shp", quiet = TRUE)
+# Convertendo para sp
+contorno.rio <- as(contorno.rio_sf, "Spatial")
 
+# Criando grade para interpolacao com a  resolucao de 50m
+library(raster)
+r <- raster(contorno.rio, res = 50)
+
+# Criando um objeto formato raster
+rp <- rasterize(contorno.rio, r, 0) 
+
+# Trasnsformando o objeto raster no formato SpatialPixelsDataFrame
+grid <- as(rp, "SpatialPixelsDataFrame") 
+plot(grid)
+  
+```
+
+</div>
+
+---
+
+### 7. Executando a Krigagem Ordinária
+  
 <div style="font-size: 80%;">
-
+    
 ```{r}
 #| eval: false
 #| echo: true
 
-# Executar a krigagem
-# Usa o modelo de variograma ajustado pelo automap
-krigagem <- krige(acumulado_24h ~ 1, 
-                  locations = pluvio, 
-                  newdata = grade, 
-                  model = var_auto$var_model)
+# Colocando os dados de chuva e o grid na mesma projecao
+library(sp)
+proj4string(pluvio) = CRS(proj4string(contorno.rio))
 
-# O resultado contém duas informações principais:
-# var1.pred: O valor estimado (predição)
-# var1.var: A variância do erro (incerteza)
+# Executando a interpolação espacial por krigagem 
+mapa_chuva_exp <- krige(acumulado_24h ~1, pluvio, grid, model =exp.fit)
+plot.exp <- plot(mapa_chuva_exp, main = "Modelo Exponencial")
+
 ```
-
+  
 </div>
 
 ---
+    
+### 7. Executando a Krigagem Ordinária
+  
 
-## 8. Visualizando o Mapa de Chuva (Predição)
-
-<div style="font-size: 80%;">
-
+    
 ```{r}
-#| eval: false
-#| echo: true
+# Colocando os dados de chuva e o grid na mesma projecao
+library(sp)
+proj4string(pluvio) = CRS(proj4string(contorno.rio))
 
-# Plotar o mapa de predição
-spplot(krigagem, "var1.pred", 
-       main = "Mapa de Precipitação Estimada (Krigagem Ordinária)",
-       col.regions = terrain.colors(50),
-       sp.layout = list("sp.points", pluvio, pch = 19, col = "black", cex = 0.5))
+# Executando a interpolação espacial por krigagem 
+mapa_chuva_exp <- krige(acumulado_24h ~1, pluvio, grid, model =exp.fit)
+plot.exp <- plot(mapa_chuva_exp, main = "Modelo Exponencial")
 ```
-
-**Interpretação:**
-O mapa mostra a superfície contínua de chuva. As áreas mais escuras representam maior volume de chuva. Os pontos pretos são as estações originais.
-
-</div>
-
----
-
-## 9. Visualizando a Incerteza (Variância)
-
-<div style="font-size: 80%;">
-
-Uma das grandes vantagens da krigagem é saber onde a estimativa é menos confiável.
-
-```{r}
-#| eval: false
-#| echo: true
-
-# Plotar o mapa de variância
-spplot(krigagem, "var1.var", 
-       main = "Variância do Erro de Predição (Incerteza)",
-       col.regions = heat.colors(50),
-       sp.layout = list("sp.points", pluvio, pch = 19, col = "black", cex = 0.5))
-```
-
-**Interpretação:**
-A variância é **menor** perto das estações (onde temos dados reais) e **maior** nas áreas sem estações pluviométricas. Isso indica onde precisaríamos instalar novas estações!
-
-</div>
-
----
-
-## 10. Validação Cruzada (Cross-Validation)
-
-<div style="font-size: 75%;">
-
-Como saber se nosso modelo ficou bom? Usamos a validação cruzada *Leave-One-Out*.
-O R remove uma estação, estima o valor para ela usando as outras, e compara com o valor real.
-
-```{r}
-#| eval: false
-#| echo: true
-
-# Executar validação cruzada
-cv <- krige.cv(acumulado_24h ~ 1, 
-               locations = pluvio, 
-               model = var_auto$var_model)
-
-# Calcular o Erro Quadrático Médio (RMSE)
-rmse <- sqrt(mean(cv$residual^2))
-cat("RMSE:", rmse, "mm\n")
-
-# Gráfico de Observado vs Predito
-plot(cv$observed, cv$var1.pred, 
-     xlab = "Chuva Observada (mm)", 
-     ylab = "Chuva Estimada (mm)",
-     main = "Validação Cruzada: Observado vs Estimado",
-     pch = 19, col = "blue")
-abline(0, 1, col = "red", lwd = 2) # Linha de referência perfeita
-```
-
-</div>
-
----
-
-## Resumo do Fluxo Geoestatístico
-
-<div style="font-size: 80%;">
-
-1. **Exploração**: Mapear os pontos e entender a distribuição da variável.
-2. **Semivariograma Experimental**: Calcular a dependência espacial real dos dados.
-3. **Modelo Teórico**: Ajustar uma função matemática ao semivariograma.
-4. **Interpolação (Krigagem)**: Estimar valores para toda a área de estudo.
-5. **Incerteza**: Avaliar o mapa de variância para entender a confiabilidade.
-6. **Validação**: Usar validação cruzada para medir o erro do modelo.
-
-</div>
-
----
-
-## Referências Bibliográficas
 
 <div style="font-size: 65%;">
 
-1. **Bivand, R. S., Pebesma, E., & Gomez-Rubio, V.** (2013). Applied Spatial Data Analysis with R (2nd ed.). Springer.
-2. **Cressie, N.** (1993). Statistics for Spatial Data (Revised edition). New York: Wiley.
-3. **Druck, S., Carvalho, M.S., Câmara, G., & Monteiro, A.V.M.** (eds). (2004). Análise Espacial de Dados Geográficos. Brasília: EMBRAPA.
-4. **Lovelace, R., Nowosad, J., & Muenchow, J.** (2021). Geocomputation with R.
-5. **Waller, L. A., & Gotway, C. A.** (2004). Applied Spatial Statistics for Public Health Data. Wiley-Interscience.
-6. **Moraga, P.** Spatial Data Science with R. Disponível em: https://www.paulamoraga.com/book-spatial/index.html
+**Interpretação:** O mapa mostra a superfície contínua de chuva. As áreas mais escuras representam maior volume de chuva. Os pontos pretos são as estações originais.
+  
+</div>
+
+---
+
+#### 8. Ajustando o Modelo Teórico (Forma Automática)
+
+<div style="font-size: 70%;">
+
+A função `autoKrige()` do pacote automap é utilizada para realizar a krigagem de forma automatizada, combinando os passos de ajuste do variograma e interpolação espacial em um único processo.
+
+```{r}
+#| eval: false
+#| echo: true
+
+# Modelo Exponencial automático
+library(automap)
+auto.krige <- autoKrige(acumulado_24h ~ x + y, pluvio, grid, model = 'Exp')
+
+# Extraindo os valores
+auto.krige$var_model
+```
+
+</div>
+
+---
+
+#### 8. Ajustando o Modelo Teórico (Forma Automática)
+
+<div style="font-size: 60%;">
+
+```{r}
+# Modelo Exponencial automático
+library(automap)
+auto.krige <- autoKrige(acumulado_24h ~ x + y, pluvio, grid, model = 'Exp')
+
+# Extraindo os valores
+auto.krige$var_model
+```
+
+A primeira linha (`Nug`) corresponde ao efeito pepita, com valor de 0, indicando que não há variabilidade não explicada ou erro de medição, ou seja, pontos muito próximos têm valores extremamente similares, sugerindo alta continuidade espacial nos dados de chuva.
+
+A segunda linha (`Exp`) representa o modelo exponencial ajustado, com patamar parcial de 176,53 (variabilidade estrutural) e alcance de aproximadamente 33 km. Isso significa que a correlação espacial entre as estações se mantém até cerca de 33 km de distância; além disso, os valores se tornam independentes. O patamar total (soma do efeito pepita com o patamar parcial) é também 176,53, indicando a variância total do processo de chuva na região.
+
+</div>
+
+---
+
+#### 9. Executando a Krigagem Ordinária (Automática)
+  
+<div style="font-size: 80%;">
+    
+```{r}
+#| eval: false
+#| echo: true
+
+# O autoKrige já executou a krigagem e armazenou o resultado
+mapa_chuva_exp2 <- auto.krige$krige_output
+
+# Plotar o resultado
+plot(mapa_chuva_exp2, main = "Modelo Exponencial - Krigagem Automática")
+
+```
+</div>
+
+---
+
+#### 9. Executando a Krigagem Ordinária (Automática)
+  
+<div style="font-size: 80%;">
+    
+```{r}
+# O autoKrige já executou a krigagem e armazenou o resultado
+mapa_chuva_exp2 <- auto.krige$krige_output
+
+# Plotar o resultado
+plot(mapa_chuva_exp2, main = "Modelo Exponencial - Krigagem Automática")
+
+```
+
+</div>
+
+---
+
+#### Fazendo o mapa interativo da krigagem com as estações
+
+<div style="font-size: 60%;">
+
+```{r}
+#| eval: false
+#| echo: true
+
+library(leaflet)
+library(leaflet.extras2)
+
+
+# 1. Importando e transformando as estações pluviométricas
+estacoes.sf <- read_sf("dados/chuva/Estac_C3_B5es_Alerta_Rio.shp")
+estacoes.longlat <- st_transform(estacoes.sf, 4326)  # EPSG:4326 = WGS84
+estacoes.longlat$coords <- st_coordinates(estacoes.longlat)
+estacoes.longlat$X <- estacoes.longlat$coords[, 1]
+estacoes.longlat$Y <- estacoes.longlat$coords[, 2]
+
+# 2. Importando e transformando a malha de bairros
+bairros.sf <- read_sf("dados/chuva/BAIRROS_2K_2022_IPP_SIRGAS.shp")
+bairros.longlat <- st_transform(bairros.sf, 4326)
+bairros.longlat <- st_make_valid(bairros.longlat)  # Corrige geometrias se necessário
+
+# 3. Convertendo o resultado da krigagem para raster
+raster_chuva <- raster(auto.krige$krige_output["var1.pred"])
+
+# 4. Projetando o raster para WGS84
+raster_chuva_longlat <- projectRaster(raster_chuva, crs = CRS("+proj=longlat +datum=WGS84"))
+
+# 5. Definindo a paleta de cores da superfície interpolada
+pal <- colorNumeric(
+  palette = c("#000066", "#00c8f8", "#F0E68C", "#FFFF00", "#FF8C00"),
+  domain = values(raster_chuva_longlat),
+  na.color = "transparent",
+  reverse = TRUE
+)
+
+# 6. Construindo o mapa interativo
+leaflet(data = estacoes.longlat, options = leafletOptions(attributionControl = FALSE)) |>
+  addProviderTiles("CartoDB.Positron", group = "Ruas") |>
+  addProviderTiles("Esri.WorldImagery", options = providerTileOptions(opacity = 0.7), group = "Satélite") |>
+  addProviderTiles("CartoDB.Voyager", group = "Voyager") |>
+  # Escala (distância)
+  addScaleBar(position = "bottomleft") |>
+  # Define a visualização inicial
+  setView(lng = -43.42, lat = -22.90, zoom = 10.4) |>
+  # Adicionando os marcadores das estações
+  addMarkers(~X, ~Y, popup = ~as.character(est), label = ~as.character(est), group = "Estações") |>
+  # Adicionando a malha de bairros
+  addPolygons(data = bairros.longlat,
+              weight = 3,
+              color = "darkblue",
+              smoothFactor = 1,
+              fill = FALSE,
+              labelOptions = labelOptions(
+                style = list("font-weight" = "normal", padding = "3px 8px"),
+                textsize = "13px",
+                direction = "auto"),
+              group = "Bairros") |>
+  # Adicionando o raster de chuva interpolada
+  addRasterImage(raster_chuva_longlat, colors = pal, opacity = 0.8, group = "Chuva: 1 semana") |>
+  # Legenda
+  addLegend(pal = pal, values = values(raster_chuva_longlat),
+            title = "Chuva Acumulada - 1 semana",
+            group = "Chuva: 1 semana") |>
+  # Controle das camadas
+  addLayersControl(
+    baseGroups = c("Voyager", "Ruas", "Satélite"),
+    overlayGroups = c("Estações", "Bairros", "Chuva: 1 semana"),
+    options = layersControlOptions(collapsed = FALSE),
+    position = "bottomleft") |>
+  # Oculta os bairros inicialmente
+  hideGroup(group = c("Bairros"))
+
+```
+
+</div>
+
+---
+
+#### Fazendo o mapa interativo da krigagem com as estações
+
+<div style="font-size: 90%;">
+
+```{r}
+library(leaflet)
+library(leaflet.extras2)
+
+
+# 1. Importando e transformando as estações pluviométricas
+estacoes.sf <- read_sf("dados/chuva/Estac_C3_B5es_Alerta_Rio.shp")
+estacoes.longlat <- st_transform(estacoes.sf, 4326)  # EPSG:4326 = WGS84
+estacoes.longlat$coords <- st_coordinates(estacoes.longlat)
+estacoes.longlat$X <- estacoes.longlat$coords[, 1]
+estacoes.longlat$Y <- estacoes.longlat$coords[, 2]
+
+# 2. Importando e transformando a malha de bairros
+bairros.sf <- read_sf("dados/chuva/BAIRROS_2K_2022_IPP_SIRGAS.shp")
+bairros.longlat <- st_transform(bairros.sf, 4326)
+bairros.longlat <- st_make_valid(bairros.longlat)  # Corrige geometrias se necessário
+
+# 3. Convertendo o resultado da krigagem para raster
+raster_chuva <- raster(auto.krige$krige_output["var1.pred"])
+
+# 4. Projetando o raster para WGS84
+raster_chuva_longlat <- projectRaster(raster_chuva, crs = CRS("+proj=longlat +datum=WGS84"))
+
+# 5. Definindo a paleta de cores da superfície interpolada
+pal <- colorNumeric(
+  palette = c("#000066", "#00c8f8", "#F0E68C", "#FFFF00", "#FF8C00"),
+  domain = values(raster_chuva_longlat),
+  na.color = "transparent",
+  reverse = TRUE
+)
+
+# 6. Construindo o mapa interativo
+leaflet(data = estacoes.longlat, options = leafletOptions(attributionControl = FALSE)) |>
+  addProviderTiles("CartoDB.Positron", group = "Ruas") |>
+  addProviderTiles("Esri.WorldImagery", options = providerTileOptions(opacity = 0.7), group = "Satélite") |>
+  addProviderTiles("CartoDB.Voyager", group = "Voyager") |>
+  # Escala (distância)
+  addScaleBar(position = "bottomleft") |>
+  # Define a visualização inicial
+  setView(lng = -43.42, lat = -22.90, zoom = 10.4) |>
+  # Adicionando os marcadores das estações
+  addMarkers(~X, ~Y, popup = ~as.character(est), label = ~as.character(est), group = "Estações") |>
+  # Adicionando a malha de bairros
+  addPolygons(data = bairros.longlat,
+              weight = 3,
+              color = "darkblue",
+              smoothFactor = 1,
+              fill = FALSE,
+              labelOptions = labelOptions(
+                style = list("font-weight" = "normal", padding = "3px 8px"),
+                textsize = "13px",
+                direction = "auto"),
+              group = "Bairros") |>
+  # Adicionando o raster de chuva interpolada
+  addRasterImage(raster_chuva_longlat, colors = pal, opacity = 0.8, group = "Chuva: 1 semana") |>
+  # Legenda
+  addLegend(pal = pal, values = values(raster_chuva_longlat),
+            title = "Chuva Acumulada - 1 semana",
+            group = "Chuva: 1 semana") |>
+  # Controle das camadas
+  addLayersControl(
+    baseGroups = c("Voyager", "Ruas", "Satélite"),
+    overlayGroups = c("Estações", "Bairros", "Chuva: 1 semana"),
+    options = layersControlOptions(collapsed = FALSE),
+    position = "bottomleft") |>
+  # Oculta os bairros inicialmente
+  hideGroup(group = c("Bairros"))
+
+```
 
 </div>
