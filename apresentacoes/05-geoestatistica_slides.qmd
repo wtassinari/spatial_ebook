@@ -597,7 +597,7 @@ plot.exp <- plot(mapa_chuva_exp, main = "Modelo Exponencial")
 
 <div style="font-size: 65%;">
 
-**Interpretação:** O mapa mostra a superfície contínua de chuva. As áreas mais escuras representam maior volume de chuva. Os pontos pretos são as estações originais.
+**Interpretação:** O mapa mostra a superfície contínua de chuva. As áreas mais claras, em amarelo, representam maior volume de chuva zacumulada nas últimas 24hs. 
   
 </div>
 
@@ -607,7 +607,7 @@ plot.exp <- plot(mapa_chuva_exp, main = "Modelo Exponencial")
 
 <div style="font-size: 70%;">
 
-A função `autoKrige()` do pacote automap é utilizada para realizar a krigagem de forma automatizada, combinando os passos de ajuste do variograma e interpolação espacial em um único processo.
+A função `autoKrige()` do pacote `automap` é utilizada para realizar a krigagem de forma automatizada, combinando os passos de ajuste do variograma e interpolação espacial em um único processo.
 
 ```{r}
 #| eval: false
@@ -640,7 +640,7 @@ auto.krige$var_model
 
 A primeira linha (`Nug`) corresponde ao efeito pepita, com valor de 0, indicando que não há variabilidade não explicada ou erro de medição, ou seja, pontos muito próximos têm valores extremamente similares, sugerindo alta continuidade espacial nos dados de chuva.
 
-A segunda linha (`Exp`) representa o modelo exponencial ajustado, com patamar parcial de 176,53 (variabilidade estrutural) e alcance de aproximadamente 33 km. Isso significa que a correlação espacial entre as estações se mantém até cerca de 33 km de distância; além disso, os valores se tornam independentes. O patamar total (soma do efeito pepita com o patamar parcial) é também 176,53, indicando a variância total do processo de chuva na região.
+A segunda linha (`Exp`) representa o modelo exponencial ajustado, com patamar parcial de 176,53 (variabilidade estrutural) e alcance de aproximadamente 33 km. Isso significa que a correlação espacial entre as estações se mantém até cerca de 33 km de distância; além disso, os valores se tornam independentes. O patamar total (soma do efeito pepita com o patamar parcial) é também 176,53, indicando a semivariância total do processo de chuva na região.
 
 </div>
 
