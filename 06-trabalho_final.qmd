@@ -71,13 +71,13 @@ O trabalho deverá conter as seguintes etapas:
   - Ajuste do modelo com variáveis explicativas;
   - Teste de Moran nos resíduos para verificar adequação do modelo.
 
-- **Modelo 2: Regressão Espacial SAR (Spatial Autoregressive)**
-  - Incorporação da dependência espacial na variável resposta;
-  - Interpretação do coeficiente de autocorrelação espacial (ρ).
-
-- **Modelo 3: Regressão Espacial CAR (Conditional Autoregressive)**
+- **Modelo 2: Regressão Espacial SEM (Spatial Error Model))**
   - Incorporação da dependência espacial no termo de erro;
   - Interpretação do coeficiente de autocorrelação espacial (λ).
+
+- **Modelo 3: Regressão Geograficamente Ponderada (GWR)**
+  - Interpretação dos coeficientes de regressão ao longo da área de estudo apenas das variáveis explicativas que julgar pertinentes a incorporação do modelo.
+  - Plotar o mapa temátios dos coeficientes, dos  $R^2$ e dos resíduos do modelo.
 
 - **Comparação de Modelos:**
   - Cálculo do AIC (Akaike Information Criterion) para cada modelo;
